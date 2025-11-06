@@ -5,14 +5,14 @@ field_type: greenfield
 start_date: 2025-10-23
 workflow_path: greenfield-level-3.yaml
 
-current_phase: Planning
-current_workflow: prd
-current_agent: pm
+current_phase: Solutioning
+current_workflow: create-architecture
+current_agent: architect
 phase_1_complete: true
-phase_2_complete: false
+phase_2_complete: true
 phase_3_complete: false
 phase_4_complete: false
 
-next_action: High-level requirements and epic definitions
-next_command: prd
-next_agent: pm
+next_action: System-wide architecture document
+next_command: create-architecture
+next_agent: architect
