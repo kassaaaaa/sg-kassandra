@@ -1,0 +1,18 @@
+project_name: IBE160
+project_type: software
+project_level: 3
+field_type: greenfield
+start_date: 2025-10-23
+workflow_path: greenfield-level-3.yaml
+
+current_phase: Planning
+current_workflow: prd
+current_agent: pm
+phase_1_complete: true
+phase_2_complete: false
+phase_3_complete: false
+phase_4_complete: false
+
+next_action: High-level requirements and epic definitions
+next_command: prd
+next_agent: pm
