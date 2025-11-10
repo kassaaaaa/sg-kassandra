@@ -21,7 +21,7 @@
 
 Kite schools operate in a dynamic environment where weather conditions are unpredictable. The current process of managing bookings, scheduling instructors, and communicating with students is often manual, fragmented, and inefficient. This leads to operational overhead, scheduling conflicts, and a suboptimal experience for both customers and staff.
 
-KiteOps will be a centralized platform that provides a simple and intuitive way for customers to book lessons, for instructors to manage their availability, and for managers to have a comprehensive overview of all school operations with intelligent, rule-based automation to handle the complexities of weather-dependent scheduling.
+KiteOps will be a centralized platform that provides a simple and intuitive way for customers to book lessons, for instructors to manage their availability, and for managers to have a comprehensive overview of all school operations. Its key differentiator is an **intelligent, rule-based automation engine** designed to handle the complexities of weather-dependent scheduling, significantly reducing manual overhead and optimizing resource utilization, which is a common pain point in the industry.
 
 ---
 
@@ -30,54 +30,54 @@ KiteOps will be a centralized platform that provides a simple and intuitive way 
 ### Functional Requirements
 
 **General & System**
-*   FR001: The system shall provide role-based access control for Guest, Customer, Instructor, and Manager roles.
-*   FR002: The system shall allow users to register for Customer, Instructor, or Manager accounts with email verification.
-*   FR003: The system shall allow registered users to log in.
-*   FR004: The system shall integrate with a weather API to fetch real-time weather data for scheduling.
-*   FR005: The system's intelligent scheduling engine shall consider student skill level, weather suitability, and instructor load balancing when assigning instructors.
-*   FR006: The system shall automatically send email and SMS notifications to all relevant parties (customer, instructor, manager) for booking confirmations, changes, and cancellations.
-*   FR007: The system shall send automatic lesson reminders to customers and instructors (e.g., 24 hours prior).
-*   FR008: The system shall perform an overlap check to prevent an individual instructor from creating conflicting entries on their own calendar.
+*   FR001: The system shall provide role-based access control for Guest, Customer, Instructor, and Manager roles. (Scope: MVP)
+*   FR002: The system shall allow users to register for Customer, Instructor, or Manager accounts with email verification. (Scope: MVP)
+*   FR003: The system shall allow registered users to log in. (Scope: MVP)
+*   FR004: The system shall integrate with a weather API to fetch real-time weather data for scheduling. (Scope: MVP)
+*   FR005: The system's intelligent scheduling engine shall consider student skill level, weather suitability, and instructor load balancing when assigning instructors. (Dependencies: FR004, FR019) (Scope: MVP)
+*   FR006: The system shall automatically send email and SMS notifications to all relevant parties (customer, instructor, manager) for booking confirmations, changes, and cancellations. (Scope: MVP)
+*   FR007: The system shall send automatic lesson reminders to customers and instructors (e.g., 24 hours prior). (Scope: MVP)
+*   FR008: The system shall perform an overlap check to prevent an individual instructor from creating conflicting entries on their own calendar. (Scope: MVP)
 
 **Guest & Customer**
-*   FR009: Unregistered guests shall be able to start the booking process by providing contact information at the final confirmation step.
-*   FR010: Customers shall be able to filter available lessons by skill level, lesson type, and date.
-*   FR011: Customers shall be shown a booking summary with assigned instructor, date, time, location, and weather summary before confirming.
-*   FR012: Customers must accept cancellation, rebooking, and refund/credit policies before confirming a booking. These policies must be clearly displayed.
-*   FR013: Customers shall receive a confirmation screen with a booking reference number after a successful booking.
-*   FR014: Customers shall be able to manage system-initiated rebooking proposals (e.g., due to weather) via a dedicated link sent by email.
-*   FR015: Registered customers shall have a dashboard to view their upcoming and past lessons.
+*   FR009: Unregistered guests shall be able to start the booking process by providing contact information at the final confirmation step. (Scope: MVP)
+*   FR010: Customers shall be able to filter available lessons by skill level, lesson type, and date. (Scope: MVP)
+*   FR011: Customers shall be shown a booking summary with assigned instructor, date, time, location, and weather summary before confirming. (Scope: MVP)
+*   FR012: Customers must accept cancellation, rebooking, and refund/credit policies before confirming a booking. These policies must be clearly displayed. (Scope: MVP)
+*   FR013: Customers shall receive a confirmation screen with a booking reference number after a successful booking. (Scope: MVP)
+*   FR014: Customers shall be able to manage system-initiated rebooking proposals (e.g., due to weather) via a dedicated link sent by email. (Scope: MVP)
+*   FR015: Registered customers shall have a dashboard to view their upcoming and past lessons. (Scope: MVP)
 
 **Instructor**
-*   FR016: Instructors shall be able to create and manage a professional profile including certifications, lesson types they can teach, and availability preferences.
-*   FR017: Instructors shall have a dashboard displaying a summary of today's and upcoming lessons, and current weather.
-*   FR018: Instructors shall be able to view and manage their schedule on an interactive calendar with month, week, day, and agenda views.
-*   FR019: Instructors shall be able to add, modify, or remove their availability and block off personal time and recurrence (e.g., every Monday, weekly, bi-weekly).
-*   FR020: Instructors shall be able to create new lessons for new or existing students.
-*   FR021: Instructors shall be able to rebook or cancel lessons from their calendar.
+*   FR016: Instructors shall be able to create and manage a professional profile including certifications, lesson types they can teach, and availability preferences. (Scope: MVP)
+*   FR017: Instructors shall have a dashboard displaying a summary of today's and upcoming lessons, and current weather. (Scope: MVP)
+*   FR018: Instructors shall be able to view and manage their schedule on an interactive calendar with month, week, day, and agenda views. (Scope: MVP)
+*   FR019: Instructors shall be able to add, modify, or remove their availability and block off personal time and recurrence (e.g., every Monday, weekly, bi-weekly). (Scope: MVP)
+*   FR020: Instructors shall be able to create new lessons for new or existing students. (Scope: MVP)
+*   FR021: Instructors shall be able to rebook or cancel lessons from their calendar. (Scope: MVP)
 
 **Manager**
-*   FR022: Managers shall be able to configure school-wide settings, including weather parameters, lesson types, and the school logo.
-*   FR023: Managers shall have a dashboard with an operational overview, instructor availability summary, and rebooking alerts.
-*   FR024: Managers shall be able to view a master calendar with filtering options for instructors and lesson types.
-*   FR025: Managers shall be able to manually add, edit, or cancel any booking in the system.
-*   FR026: Managers shall be able to manually assign or reassign instructors to lessons, overriding any suggestions from the intelligent scheduling engine.
-*   FR027: The system shall alert managers to lessons impacted by bad weather and propose rebooking solutions.
-*   FR028: Managers shall be able to view, search, and filter a list of all customers and manage their profiles.
-*   FR029: Managers shall be able to send broadcast or direct messages to customers and instructors.
+*   FR022: Managers shall be able to configure school-wide settings, including weather parameters, lesson types, and the school logo. (Scope: MVP)
+*   FR023: Managers shall have a dashboard with an operational overview, instructor availability summary, and rebooking alerts. (Scope: MVP)
+*   FR024: Managers shall be able to view a master calendar with filtering options for instructors and lesson types. (Scope: MVP)
+*   FR025: Managers shall be able to manually add, edit, or cancel any booking in the system. (Scope: MVP)
+*   FR026: Managers shall be able to manually assign or reassign instructors to lessons, overriding any suggestions from the intelligent scheduling engine. (Scope: MVP)
+*   FR027: The system shall alert managers to lessons impacted by bad weather and propose rebooking solutions. (Scope: MVP)
+*   FR028: Managers shall be able to view, search, and filter a list of all customers and manage their profiles. (Scope: MVP)
+*   FR029: Managers shall be able to send broadcast or direct messages to customers and instructors. (Scope: MVP)
 
 **Risk Mitigation & Edge Cases**
-*   FR030: The system must have a fallback mechanism in case the primary weather API is unavailable, such as using a secondary API or cached data.
-*   FR031: The scheduling engine's logic must be transparent and configurable by the Manager, with an option for manual override.
-*   FR032: The system must log all outgoing notifications and provide a way to monitor their delivery status.
-*   FR033: The system should implement rate limiting or a CAPTCHA on the guest booking form to prevent abuse.
-*   FR034: Rebooking links sent to users must be single-use and expire after a configurable amount of time to ensure security.
-*   FR035: The system shall provide clear validation and warnings when a Manager configures settings outside of normal parameters.
-*   FR036: All automated rebookings must require a final confirmation from a Manager before notifications are sent to customers.
-*   FR037: The system shall allow a Manager to mark a lesson as 'Instructor No-Show' and trigger an emergency re-assignment or cancellation workflow.
-*   FR038: The system shall allow an Instructor or Manager to mark a booking as 'Customer No-Show', and this status should be logged for reporting and potential billing.
-*   FR039: The system shall allow an Instructor to end a lesson prematurely and log the actual duration, with a note explaining the reason (e.g., "Ended after 45 mins due to high wind").
-*   FR040: The system shall support the creation of multi-session bookings (e.g., a 3-day clinic) for a single student or group.
+*   FR030: The system must have a fallback mechanism in case the primary weather API is unavailable, such as using a secondary API or cached data. (Scope: MVP)
+*   FR031: The scheduling engine's logic must be transparent and configurable by the Manager, with an option for manual override. (Scope: MVP)
+*   FR032: The system must log all outgoing notifications and provide a way to monitor their delivery status. (Scope: MVP)
+*   FR033: The system should implement rate limiting or a CAPTCHA on the guest booking form to prevent abuse. (Scope: MVP)
+*   FR034: Rebooking links sent to users must be single-use and expire after a configurable amount of time to ensure security. (Scope: MVP)
+*   FR035: The system shall provide clear validation and warnings when a Manager configures settings outside of normal parameters. (Scope: MVP)
+*   FR036: All automated rebookings must require a final confirmation from a Manager before notifications are sent to customers. (Scope: MVP)
+*   FR037: The system shall allow a Manager to mark a lesson as 'Instructor No-Show' and trigger an emergency re-assignment or cancellation workflow. (Scope: MVP)
+*   FR038: The system shall allow an Instructor or Manager to mark a booking as 'Customer No-Show', and this status should be logged for reporting and potential billing. (Scope: MVP)
+*   FR039: The system shall allow an Instructor to end a lesson prematurely and log the actual duration, with a note explaining the reason (e.g., "Ended after 45 mins due to high wind"). (Scope: MVP)
+*   FR040: The system shall support the creation of multi-session bookings (e.g., a 3-day clinic) for a single student or group. (Scope: MVP)
 
 ### Non-Functional Requirements
 
@@ -125,6 +125,15 @@ KiteOps will be a centralized platform that provides a simple and intuitive way 
 *   **Manager Navigation:** The main navigation will be structured as: **Dashboard**, **Calendar**, **People** (with an Instructors/Customers sub-menu), and **Settings**.
 *   **Manager Calendar:** Will include a "Heat Map View" to visualize booking density.
 
+#### API & Data Models
+*   **API:** RESTful API built on Supabase (PostgREST) for data access and real-time subscriptions.
+*   **Data Models:** Core entities include `Users` (with roles), `Customers`, `Instructors`, `Lessons`, `Bookings`, `Availability`, `Notifications`, and `SchoolSettings`. Detailed schema to be defined in the architecture phase.
+
+#### Mobile Considerations
+*   **Responsive Design:** All interfaces will be fully responsive, adapting to various mobile screen sizes (NFR02).
+*   **Touch-Optimized Interactions:** Key interactions (e.g., calendar drag-and-drop for availability) will be optimized for touch input.
+*   **Offline Capabilities:** Limited offline capabilities for viewing schedules (e.g., cached data) will be explored for instructors in areas with poor connectivity.
+
 ### 3. Design Constraints
 
 *   **Framework:** Next.js 14+ with App Router.
@@ -141,6 +150,26 @@ This mapping clarifies the logical build order for the project.
 *   **Foundation Layer:** The first features to be built are the core user authentication (FR001-FR003) and the instructor profile/availability management (FR016, FR019).
 *   **Central Hub - The Scheduling Engine:** The "Intelligent Scheduling Engine" (FR005) is the most critical component, connecting weather data, instructor skills, and availability. It depends on the Foundation Layer.
 *   **Dependent Flows:** All customer booking flows and manager oversight features rely on the Foundation Layer and the Scheduling Engine being in place.
+*   **DevOps & Test Strategy:** Detailed DevOps practices and test strategies will be documented in a separate artifact if the Enterprise Method is formally adopted, ensuring comprehensive coverage for deployment and quality assurance.
+
+---
+
+## Innovation and Validation
+
+The core innovation of KiteOps lies in its **Intelligent Scheduling Engine**. This engine utilizes a rule-based approach to optimize lesson assignments by considering dynamic factors like real-time weather, student skill levels, and instructor availability.
+
+**Validation Approach:**
+*   **Rule-based Logic Testing:** Thorough unit and integration testing of the scheduling engine's algorithms to ensure rules are applied correctly.
+*   **Scenario Simulation:** Simulation of various booking and weather scenarios to validate the engine's decision-making and efficiency.
+*   **User Acceptance Testing (UAT):** Managers will validate the engine's suggestions and manual override capabilities in real-world conditions.
+*   **Performance Monitoring:** Key metrics such as instructor utilization rates and customer booking completion times will be monitored post-launch to measure the engine's effectiveness against the stated goals.
+
+---
+
+## Technical Unknowns
+
+*   **Scheduling Engine Scalability:** The long-term scalability of the intelligent scheduling engine under heavy load (e.g., hundreds of simultaneous booking requests or complex rebooking scenarios) requires further investigation and performance testing.
+*   **Weather API Rate Limits:** Potential limitations and costs associated with high-volume calls to the integrated weather API need to be assessed.
 
 ---
 

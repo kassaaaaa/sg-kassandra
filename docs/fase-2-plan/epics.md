@@ -35,6 +35,8 @@ Each epic includes:
 
 *   **Story 1.1: Project & Database Setup**
     *   As a Developer, I want to initialize the Next.js project and create the core database schema for all user roles, so that we have a foundation for user management.
+    *   **Covers:** Foundational setup for all FRs.
+    *   **Scope:** MVP
     *   **Acceptance Criteria:**
         1.  A new Next.js project is created and configured with Supabase and Tailwind.
         2.  The database schema is created in Supabase, including tables for `User Profiles`, `Customers`, `Instructors`, `Managers`, and `Availability Calendar`.
@@ -42,13 +44,19 @@ Each epic includes:
 
 *   **Story 1.2: User Registration & Login**
     *   As a User, I want to be able to register for an account (as a Customer, Instructor, or Manager) and log in, so that I can access the system.
+    *   **Covers:** FR001, FR002, FR003.
+    *   **Scope:** MVP
     *   **Acceptance Criteria:**
         1.  A user can register with an email and password.
         2.  The system sends a verification email.
         3.  A registered user can log in and is directed to a basic, role-specific landing page.
+        4.  All authentication flows must adhere to security best practices, including password hashing (NFR03).
 
 *   **Story 1.3: Instructor Profile Creation**
     *   As an Instructor, I want to complete my professional profile after my first login, so that the system knows my qualifications.
+    *   **Covers:** FR016.
+    *   **Scope:** MVP
+    *   **Prerequisites:** Story 1.2
     *   **Acceptance Criteria:**
         1.  After their first login, an instructor is prompted to complete their profile.
         2.  The profile includes fields for certifications, lesson types they can teach, and availability preferences.
@@ -56,6 +64,9 @@ Each epic includes:
 
 *   **Story 1.4: Instructor Availability Management**
     *   As an Instructor, I want to add, view, and manage my availability on an interactive calendar, so that the system knows when I can teach.
+    *   **Covers:** FR008, FR018, FR019.
+    *   **Scope:** MVP
+    *   **Prerequisites:** Story 1.3
     *   **Acceptance Criteria:**
         1.  An instructor can access their calendar.
         2.  They can create availability blocks by clicking and dragging on the calendar.
@@ -64,13 +75,19 @@ Each epic includes:
 
 *   **Story 1.5: Basic Instructor Dashboard**
     *   As an Instructor, I want to see a simple, mobile-friendly dashboard with my schedule for today and tomorrow, so that I can quickly see my upcoming work.
+    *   **Covers:** FR017.
+    *   **Scope:** MVP
     *   **Acceptance Criteria:**
         1.  The instructor dashboard is the landing page after login.
         2.  It displays a "glanceable" view of the schedule for today and tomorrow.
         3.  The dashboard is optimized for mobile viewing.
+        4.  The dashboard page must load in under 3 seconds (NFR01).
+        5.  The interface must be intuitive, allowing the instructor to understand their schedule without documentation (NFR02).
 
 *   **Story 1.6: Initial School Configuration**
     *   As a Manager, I want to configure the basic settings for my kite school after my first login, so that the system is set up for scheduling and branding.
+    *   **Covers:** FR022.
+    *   **Scope:** MVP
     *   **Acceptance Criteria:**
         1.  After their first login, a manager is prompted to complete the school setup.
         2.  The manager can define core lesson types and their default durations.
@@ -79,6 +96,8 @@ Each epic includes:
 
 *   **Story 1.7: Basic Customer Role**
     *   As a Developer, I want to set up the basic shell for the Customer role, so that they can log in and see a placeholder dashboard.
+    *   **Covers:** FR001, FR015.
+    *   **Scope:** MVP
     *   **Acceptance Criteria:**
         1.  A user can register as a Customer.
         2.  After login, they are taken to a basic dashboard indicating their role.
@@ -93,12 +112,17 @@ Each epic includes:
 
 *   **Story 2.1: Weather API Integration**
     *   As a Developer, I want to integrate with the OpenWeatherMap API, so that the system has access to real-time weather forecasts for scheduling.
+    *   **Covers:** FR004, FR030.
+    *   **Scope:** MVP
     *   **Acceptance Criteria:**
         1.  The system can fetch and store weather data for the school's location.
         2.  A fallback mechanism is in place for when the API is unavailable.
+        3.  The system remains resilient and functional even if the primary weather API fails, using fallbacks or cached data (NFR05).
 
 *   **Story 2.2: Implement Scheduling Engine V1**
     *   As a Developer, I want to build the first version of the intelligent scheduling engine that optimizes for instructor skill utilization.
+    *   **Covers:** FR005, FR031.
+    *   **Scope:** MVP
     *   **Acceptance Criteria:**
         1.  The engine's weather check is only applied to bookings scheduled within the next 7 days.
         2.  The engine filters the pool of available instructors to only those qualified to teach the selected lesson type.
@@ -108,6 +132,9 @@ Each epic includes:
 
 *   **Story 2.3: Guest Booking - Lesson Selection**
     *   As a Guest, I want to search for lessons and see a list of available time slots, so that I can choose a lesson that works for me.
+    *   **Covers:** FR010.
+    *   **Scope:** MVP
+    *   **Prerequisites:** Story 2.2
     *   **Acceptance Criteria:**
         1.  A guest can filter lessons by date, skill level, and lesson type.
         2.  The system uses the Scheduling Engine to display a list of available time slots.
@@ -115,13 +142,19 @@ Each epic includes:
 
 *   **Story 2.4: Guest Booking - Confirmation**
     *   As a Guest, I want to select a time slot, provide my contact details, and confirm my booking, so that my lesson is reserved.
+    *   **Covers:** FR009, FR011, FR012, FR013.
+    *   **Scope:** MVP
     *   **Acceptance Criteria:**
         1.  After selecting a slot, the user is shown a summary with the assigned instructor and lesson details.
         2.  The user must enter their contact information and accept the cancellation/refund policies.
         3.  Upon confirmation, the booking is created.
+        4.  The booking confirmation action must be completed in under 2 seconds (NFR01).
+        5.  All customer data submitted must be handled securely and encrypted in transit (NFR03).
 
 *   **Story 2.5: Booking Notifications**
     *   As a User (Customer, Instructor, or Manager), I want to receive an email/SMS notification when a booking is created, so that everyone is aware of the new lesson.
+    *   **Covers:** FR006, FR007, FR032.
+    *   **Scope:** MVP
     *   **Acceptance Criteria:**
         1.  When a booking is confirmed, an automated notification is sent to the customer, instructor, and manager.
         2.  The system logs the status of all outgoing notifications.
@@ -136,13 +169,19 @@ Each epic includes:
 
 *   **Story 3.1: Manager Dashboard & Action Queue**
     *   As a Manager, I want a dashboard with an operational overview and a clear "Action Items" queue, so I can immediately see the status of my school and what requires my attention.
+    *   **Covers:** FR023, FR027.
+    *   **Scope:** MVP
     *   **Acceptance Criteria:**
         1.  The dashboard is the manager's landing page.
         2.  It displays a summary of today's lessons and instructor availability.
         3.  It features a prominent "Action Items" queue for pending approvals.
+        4.  The dashboard page must load in under 3 seconds (NFR01).
+        5.  The interface must be intuitive, allowing the manager to understand the operational overview without documentation (NFR02).
 
 *   **Story 3.2: Master Calendar View**
     *   As a Manager, I want to view a master calendar of all bookings and availability with powerful filtering and visualization tools, so I can have a complete overview of my operations.
+    *   **Covers:** FR024.
+    *   **Scope:** MVP
     *   **Acceptance Criteria:**
         1.  The manager can access a master calendar view.
         2.  The calendar displays all lessons and instructor availability.
@@ -151,6 +190,8 @@ Each epic includes:
 
 *   **Story 3.3: Manual Booking Management**
     *   As a Manager, I want to be able to manually add, edit, and cancel any booking, overriding the scheduling engine if necessary, so I have full control over the schedule.
+    *   **Covers:** FR025, FR026.
+    *   **Scope:** MVP
     *   **Acceptance Criteria:**
         1.  From the calendar, a manager can create a new booking for any customer.
         2.  A manager can edit any detail of an existing booking.
@@ -158,12 +199,17 @@ Each epic includes:
 
 *   **Story 3.4: User Management**
     *   As a Manager, I want to be able to view and manage the profiles of all customers and instructors, so I can maintain user records.
+    *   **Covers:** FR028.
+    *   **Scope:** MVP
     *   **Acceptance Criteria:**
         1.  A manager can access searchable lists of all customers and instructors.
         2.  They can view and edit the profile details for any user.
+        3.  The user management interface must provide the necessary hooks to support data access, export, and deletion requests to ensure GDPR compliance (NFR04).
 
 *   **Story 3.5: Weather Rebooking Workflow**
     *   As a Manager, I want the system to alert me to lessons at risk due to bad weather and let me approve the proposed rebookings, so I can proactively manage my schedule.
+    *   **Covers:** FR014, FR027, FR036.
+    *   **Scope:** MVP
     *   **Acceptance Criteria:**
         1.  The system flags at-risk bookings and places them in the manager's "Action Items" queue.
         2.  The manager can review the system's suggested new time slots.
@@ -171,6 +217,8 @@ Each epic includes:
 
 *   **Story 3.6: Broadcast Communication**
     *   As a Manager, I want to send broadcast messages to groups of users (e.g., all instructors), so I can communicate important information efficiently.
+    *   **Covers:** FR029.
+    *   **Scope:** MVP
     *   **Acceptance Criteria:**
         1.  A manager can compose a message and select a recipient group.
         2.  The system shows a confirmation step with the recipient count before sending.
