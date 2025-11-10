@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KiteOps - Design Direction Mockups</title>
+    <style>
+        body { font-family: 'Inter', sans-serif; background-color: #F5F5F5; color: #111111; margin: 0; padding: 2rem; }
+        h1, h2, h3, h4 { font-family: 'Manrope', sans-serif; color: #0A2540; }
+        .container { max-width: 1400px; margin: auto; }
+        .design-direction-showcase { display: grid; grid-template-columns: repeat(auto-fit, minmax(450px, 1fr)); gap: 3rem; }
+        .direction-card { background-color: #FFFFFF; border-radius: 12px; box-shadow: 0 6px 12px rgba(0,0,0,0.1); overflow: hidden; display: flex; flex-direction: column; }
+        .direction-header { background-color: #0A2540; color: white; padding: 1.5rem; }
+        .direction-header h3 { color: white; margin-top: 0; margin-bottom: 0.5rem; }
+        .direction-header p { font-size: 0.9rem; opacity: 0.8; margin-bottom: 0; }
+        .mockup-container { padding: 1.5rem; flex-grow: 1; display: flex; flex-direction: column; gap: 1.5rem; }
+        .mockup-screen { border: 1px solid #E0E0E0; border-radius: 8px; padding: 1rem; background-color: #F8F8F8; }
+        .mockup-screen h4 { margin-top: 0; color: #0A2540; }
+
+        /* Common UI elements for mockups */
+        .header-bar { background-color: #0A2540; color: white; padding: 1rem; display: flex; justify-content: space-between; align-items: center; border-radius: 8px 8px 0 0; }
+        .header-bar .logo { font-weight: bold; font-size: 1.2rem; }
+        .header-bar .nav-icon { font-size: 1.5rem; cursor: pointer; }
+        .search-bar { display: flex; gap: 0.5rem; padding: 0.8rem; background-color: #FFFFFF; border-radius: 8px; border: 1px solid #E0E0E0; box-shadow: 0 2px 4px rgba(0,0,0,0.05); }
+        .search-bar input { flex-grow: 1; border: none; outline: none; font-size: 1rem; }
+        .search-bar button { background-color: #00C49A; color: white; border: none; padding: 0.5rem 1rem; border-radius: 6px; cursor: pointer; }
+        .filter-tags { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 1rem; }
+        .filter-tag { background-color: #E0E0E0; padding: 0.4rem 0.8rem; border-radius: 20px; font-size: 0.85rem; color: #333; }
+        .lesson-card { background-color: #FFFFFF; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.05); padding: 1rem; display: flex; gap: 1rem; align-items: center; }
+        .lesson-card.list-item { flex-direction: column; align-items: flex-start; }
+        .lesson-card img { width: 80px; height: 80px; object-fit: cover; border-radius: 4px; }
+        .lesson-card-info { flex-grow: 1; }
+        .lesson-card-info h5 { margin: 0 0 0.2rem 0; color: #0A2540; font-size: 1.1rem; }
+        .lesson-card-info p { margin: 0; font-size: 0.9rem; color: #555555; }
+        .lesson-card-actions { display: flex; gap: 0.5rem; margin-top: 0.5rem; }
+        .lesson-card-actions button { background-color: #00C49A; color: white; border: none; padding: 0.4rem 0.8rem; border-radius: 6px; cursor: pointer; font-size: 0.85rem; }
+        .lesson-card-actions button.secondary { background-color: #E0E0E0; color: #333; }
+        .lesson-detail-section { background-color: #FFFFFF; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.05); padding: 1.5rem; }
+        .lesson-detail-section h3 { margin-top: 0; color: #0A2540; }
+        .lesson-detail-section .meta { display: flex; justify-content: space-between; margin-bottom: 1rem; font-size: 0.9rem; color: #555555; }
+        .lesson-detail-section .instructor-info { display: flex; align-items: center; gap: 0.8rem; margin-top: 1rem; }
+        .lesson-detail-section .instructor-info img { width: 50px; height: 50px; border-radius: 50%; object-fit: cover; }
+        .lesson-detail-section .instructor-info span { font-weight: 500; color: #0A2540; }
+        .booking-summary { background-color: #F8F8F8; border-radius: 8px; padding: 1rem; margin-top: 1.5rem; }
+        .booking-summary p { margin: 0.5rem 0; display: flex; justify-content: space-between; }
+        .booking-summary .total { font-weight: bold; font-size: 1.1rem; color: #0A2540; }
+        .book-now-btn { width: 100%; padding: 1rem; background-color: #00C49A; color: white; border: none; border-radius: 8px; font-size: 1.1rem; font-weight: bold; cursor: pointer; margin-top: 1rem; }
+        .nav-footer { background-color: #0A2540; color: white; padding: 1rem; display: flex; justify-content: space-around; border-radius: 0 0 8px 8px; }
+        .nav-footer div { text-align: center; font-size: 0.8rem; opacity: 0.7; }
+        .nav-footer div.active { opacity: 1; font-weight: bold; color: #00C49A; }
+    </style>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@700&family=Inter:wght@400;500&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <div class="container">
+        <h1>🎨 Design Direction Mockups</h1>
+        <p>These mockups explore different visual and interaction approaches for key screens in KiteOps, applying the "Professional & Dynamic" color theme. Review them to see which direction best aligns with your vision for the user experience.</p>
+
+        <div class="design-direction-showcase">
+
+            <!-- Direction 1: Card-Based Explorer (Customer - Search Results) -->
+            <div class="direction-card">
+                <div class="direction-header">
+                    <h3>1. Card-Based Explorer</h3>
+                    <p>Personality: Professional & Engaging</p>
+                    <p>Best for: Users who want to quickly browse and compare options with rich visual information.</p>
+                </div>
+                <div class="mockup-container">
+                    <div class="mockup-screen">
+                        <h4>Search Results: Cards</h4>
+                        <div class="header-bar">
+                            <div class="logo">KiteOps</div>
+                            <div class="nav-icon">☰</div>
+                        </div>
+                        <div class="search-bar">
+                            <input type="text" placeholder="Search lessons, instructors...">
+                            <button>🔍</button>
+                        </div>
+                        <div class="filter-tags">
+                            <span class="filter-tag">Beginner</span>
+                            <span class="filter-tag">Morning</span>
+                            <span class="filter-tag">Any Instructor</span>
+                        </div>
+                        <div style="margin-top: 1rem; display: grid; gap: 1rem;">
+                            <div class="lesson-card">
+                                <img src="https://via.placeholder.com/80x80?text=Lesson" alt="Lesson Image">
+                                <div class="lesson-card-info">
+                                    <h5>Beginner Kiteboarding - Group</h5>
+                                    <p>Instructor: Sarah J. | Nov 15, 10:00 AM | 3 hrs</p>
+                                    <p>📍 Main Beach</p>
+                                </div>
+                                <div class="lesson-card-actions">
+                                    <button>$150</button>
+                                    <button class="secondary">View</button>
+                                </div>
+                            </div>
+                            <div class="lesson-card">
+                                <img src="https://via.placeholder.com/80x80?text=Lesson" alt="Lesson Image">
+                                <div class="lesson-card-info">
+                                    <h5>Intermediate Private Lesson</h5>
+                                    <p>Instructor: Mark T. | Nov 16, 2:00 PM | 2 hrs</p>
+                                    <p>📍 North Bay</p>
+                                </div>
+                                <div class="lesson-card-actions">
+                                    <button>$200</button>
+                                    <button class="secondary">View</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mockup-screen">
+                        <h4>Lesson Detail: Card-Based</h4>
+                        <div class="header-bar">
+                            <div class="logo">KiteOps</div>
+                            <div class="nav-icon">☰</div>
+                        </div>
+                        <div class="lesson-detail-section">
+                            <h3>Beginner Kiteboarding - Group</h3>
+                            <div class="meta">
+                                <span>Nov 15, 10:00 AM - 1:00 PM</span>
+                                <span>3 hours</span>
+                            </div>
+                            <p>Learn the basics of kiteboarding in a fun group setting. All gear provided.</p>
+                            <div class="instructor-info">
+                                <img src="https://via.placeholder.com/50x50?text=SJ" alt="Instructor Sarah J.">
+                                <span>Instructor: Sarah J.</span>
+                            </div>
+                            <div class="booking-summary">
+                                <p>Lesson Price: <span>$150.00</span></p>
+                                <p>Tax: <span>$15.00</span></p>
+                                <p class="total">Total: <span>$165.00</span></p>
+                            </div>
+                            <button class="book-now-btn">Book Now</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Direction 2: List-Based Efficiency (Customer - Search Results) -->
+            <div class="direction-card">
+                <div class="direction-header">
+                    <h3>2. List-Based Efficiency</h3>
+                    <p>Personality: Efficient & Data-Focused</p>
+                    <p>Best for: Users who prioritize quick scanning of information and comparing details in a structured format.</p>
+                </div>
+                <div class="mockup-container">
+                    <div class="mockup-screen">
+                        <h4>Search Results: List</h4>
+                        <div class="header-bar">
+                            <div class="logo">KiteOps</div>
+                            <div class="nav-icon">☰</div>
+                        </div>
+                        <div class="search-bar">
+                            <input type="text" placeholder="Search lessons, instructors...">
+                            <button>🔍</button>
+                        </div>
+                        <div class="filter-tags">
+                            <span class="filter-tag">Beginner</span>
+                            <span class="filter-tag">Morning</span>
+                            <span class="filter-tag">Any Instructor</span>
+                        </div>
+                        <div style="margin-top: 1rem; display: grid; gap: 0.5rem;">
+                            <div class="lesson-card list-item">
+                                <h5>Beginner Kiteboarding - Group</h5>
+                                <p>Instructor: Sarah J. | Nov 15, 10:00 AM | 3 hrs | $150</p>
+                                <p>📍 Main Beach</p>
+                                <div class="lesson-card-actions">
+                                    <button>Book</button>
+                                    <button class="secondary">Details</button>
+                                </div>
+                            </div>
+                            <div class="lesson-card list-item">
+                                <h5>Intermediate Private Lesson</h5>
+                                <p>Instructor: Mark T. | Nov 16, 2:00 PM | 2 hrs | $200</p>
+                                <p>📍 North Bay</p>
+                                <div class="lesson-card-actions">
+                                    <button>Book</button>
+                                    <button class="secondary">Details</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mockup-screen">
+                        <h4>Lesson Detail: List-Based</h4>
+                        <div class="header-bar">
+                            <div class="logo">KiteOps</div>
+                            <div class="nav-icon">☰</div>
+                        </div>
+                        <div class="lesson-detail-section">
+                            <h3>Beginner Kiteboarding - Group</h3>
+                            <div class="meta">
+                                <span>Nov 15, 10:00 AM - 1:00 PM</span>
+                                <span>3 hours</span>
+                            </div>
+                            <p>Learn the basics of kiteboarding in a fun group setting. All gear provided.</p>
+                            <div class="instructor-info">
+                                <img src="https://via.placeholder.com/50x50?text=SJ" alt="Instructor Sarah J.">
+                                <span>Instructor: Sarah J.</span>
+                            </div>
+                            <div class="booking-summary">
+                                <p>Lesson Price: <span>$150.00</span></p>
+                                <p>Tax: <span>$15.00</span></p>
+                                <p class="total">Total: <span>$165.00</span></p>
+                            </div>
+                            <button class="book-now-btn">Confirm Booking</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Direction 3: Minimalist Focus (Customer - Search Results) -->
+            <div class="direction-card">
+                <div class="direction-header">
+                    <h3>3. Minimalist Focus</h3>
+                    <p>Personality: Clean & Unobtrusive</p>
+                    <p>Best for: Users who prefer a very clean interface with minimal distractions, focusing on the core task.</p>
+                </div>
+                <div class="mockup-container">
+                    <div class="mockup-screen">
+                        <h4>Search Results: Minimal</h4>
+                        <div class="header-bar" style="background-color: #FFFFFF; color: #0A2540; border-bottom: 1px solid #E0E0E0;">
+                            <div class="logo">KiteOps</div>
+                            <div class="nav-icon">☰</div>
+                        </div>
+                        <div class="search-bar" style="background-color: #F5F5F5; border: none; box-shadow: none;">
+                            <input type="text" placeholder="Find your next lesson...">
+                            <button style="background-color: #0A2540;">🔍</button>
+                        </div>
+                        <div class="filter-tags" style="justify-content: center;">
+                            <span class="filter-tag" style="background-color: #00C49A; color: white;">Beginner</span>
+                            <span class="filter-tag">Anytime</span>
+                        </div>
+                        <div style="margin-top: 1rem; display: grid; gap: 1.5rem;">
+                            <div class="lesson-card" style="box-shadow: none; border: 1px solid #E0E0E0;">
+                                <div class="lesson-card-info">
+                                    <h5>Beginner Kiteboarding - Group</h5>
+                                    <p>Sarah J. | Nov 15, 10:00 AM | 3 hrs</p>
+                                </div>
+                                <div class="lesson-card-actions">
+                                    <button style="background-color: #0A2540;">$150</button>
+                                </div>
+                            </div>
+                            <div class="lesson-card" style="box-shadow: none; border: 1px solid #E0E0E0;">
+                                <div class="lesson-card-info">
+                                    <h5>Intermediate Private Lesson</h5>
+                                    <p>Mark T. | Nov 16, 2:00 PM | 2 hrs</p>
+                                </div>
+                                <div class="lesson-card-actions">
+                                    <button style="background-color: #0A2540;">$200</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mockup-screen">
+                        <h4>Lesson Detail: Minimal</h4>
+                        <div class="header-bar" style="background-color: #FFFFFF; color: #0A2540; border-bottom: 1px solid #E0E0E0;">
+                            <div class="logo">KiteOps</div>
+                            <div class="nav-icon">☰</div>
+                        </div>
+                        <div class="lesson-detail-section" style="box-shadow: none; border: 1px solid #E0E0E0;">
+                            <h3>Beginner Kiteboarding - Group</h3>
+                            <div class="meta">
+                                <span>Nov 15, 10:00 AM - 1:00 PM</span>
+                                <span>3 hours</span>
+                            </div>
+                            <p>Learn the basics of kiteboarding in a fun group setting. All gear provided.</p>
+                            <div class="instructor-info">
+                                <img src="https://via.placeholder.com/50x50?text=SJ" alt="Instructor Sarah J.">
+                                <span>Instructor: Sarah J.</span>
+                            </div>
+                            <div class="booking-summary" style="background-color: #FFFFFF; border: 1px solid #E0E0E0;">
+                                <p>Lesson Price: <span>$150.00</span></p>
+                                <p>Tax: <span>$15.00</span></p>
+                                <p class="total">Total: <span>$165.00</span></p>
+                            </div>
+                            <button class="book-now-btn" style="background-color: #0A2540;">Book Now</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+</body>
+</html>

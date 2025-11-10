@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KiteOps - Final App Showcase</title>
+    <style>
+        /* Global Styles from ux-design-specification.md */
+        body { font-family: 'Inter', sans-serif; background-color: #F5F5F5; color: #111111; margin: 0; padding: 2rem; }
+        h1, h2, h3, h4, h5, h6 { font-family: 'Manrope', sans-serif; color: #0A2540; }
+        .container { max-width: 1600px; margin: auto; }
+        .showcase-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(400px, 1fr)); gap: 2rem; }
+        .screen-mockup { background-color: #FFFFFF; border-radius: 12px; box-shadow: 0 8px 16px rgba(0,0,0,0.1); display: flex; flex-direction: column; }
+        .screen-header { padding: 1rem 1.5rem; border-bottom: 1px solid #E0E0E0; }
+        .screen-header h3 { margin: 0; }
+        .screen-content { padding: 1.5rem; flex-grow: 1; }
+
+        /* Component Styles based on Minimalist Focus & Professional/Dynamic Theme */
+        .btn { border: none; padding: 10px 20px; border-radius: 6px; font-weight: 500; cursor: pointer; transition: all 0.2s ease; }
+        .btn-primary { background-color: #0A2540; color: white; }
+        .btn-primary:hover { background-color: #2C3E44; }
+        .btn-secondary { background-color: #E0E0E0; color: #333; }
+        .btn-secondary:hover { background-color: #d0d0d0; }
+        .btn-destructive { background-color: #dc3545; color: white; }
+        .input { width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 6px; background-color: #FFFFFF; color: #111111; }
+        .input:focus { border-color: #00C49A; outline: none; box-shadow: 0 0 0 2px #00c49a40; }
+        .label { display: block; margin-bottom: 0.5rem; font-weight: 500; }
+        .card { background-color: #FFFFFF; border-radius: 8px; border: 1px solid #E0E0E0; padding: 1.5rem; }
+        .modal-overlay { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background-color: rgba(15, 33, 38, 0.6); display: flex; align-items: center; justify-content: center; }
+        .modal-content { background-color: #FFFFFF; padding: 2rem; border-radius: 12px; width: 90%; max-width: 500px; }
+        .alert { padding: 1rem; border-radius: 6px; margin-bottom: 1rem; border-left: 4px solid; }
+        .alert-success { background-color: #28a74520; color: #28a745; border-color: #28a745; }
+        .alert-warning { background-color: #ffc10720; color: #ffc107; border-color: #ffc107; }
+        .badge { background-color: #00C49A; color: white; padding: 0.3rem 0.6rem; border-radius: 12px; font-size: 0.8rem; font-weight: 500; }
+        .avatar { width: 40px; height: 40px; border-radius: 50%; background-color: #0A2540; color: white; display: flex; align-items: center; justify-content: center; font-weight: bold; }
+        
+        /* Custom Component: Lesson Card */
+        .lesson-card { display: flex; flex-direction: column; gap: 1rem; }
+        .lesson-card-header { display: flex; justify-content: space-between; align-items: baseline; }
+        .lesson-card-header h5 { margin: 0; font-size: 1.2rem; }
+        .lesson-card-header .price { font-size: 1.1rem; font-weight: bold; color: #0A2540; }
+        .lesson-card .instructor { font-size: 0.9rem; color: #555; }
+        .time-slots { display: flex; flex-wrap: wrap; gap: 0.8rem; }
+        .time-slot { background-color: #E0E0E0; padding: 0.8rem 1rem; border-radius: 6px; cursor: pointer; transition: all 0.2s ease; }
+        .time-slot:hover { background-color: #d0d0d0; }
+        .time-slot.selected { background-color: #00C49A; color: white; }
+
+        /* Custom Component: Weather Conflict Card */
+        .weather-conflict-card { border-left: 4px solid #ffc107; }
+        .weather-conflict-card .conflict-details { display: flex; justify-content: space-between; }
+        .weather-conflict-card .actions { display: flex; gap: 1rem; margin-top: 1rem; }
+    </style>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@700&family=Inter:wght@400;500&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <div class="container">
+        <h1>✨ KiteOps - Final App Showcase</h1>
+        <p>This showcase brings together all our design decisions into a set of interactive mockups for the key screens of KiteOps.</p>
+
+        <div class="showcase-grid">
+
+            <!-- Screen 1: Customer - Search/Home -->
+            <div class="screen-mockup">
+                <div class="screen-header"><h3>1. Customer - Search</h3></div>
+                <div class="screen-content">
+                    <h2>Find Your Perfect Lesson</h2>
+                    <p>Select your skill level and desired date to find available kite surfing lessons.</p>
+                    <div style="display: flex; flex-direction: column; gap: 1.5rem;">
+                        <div>
+                            <label class="label" for="lesson-type">Lesson Type</label>
+                            <select id="lesson-type" class="input"><option>Group Lesson</option><option>Private Lesson</option></select>
+                        </div>
+                        <div>
+                            <label class="label" for="skill-level">Skill Level</label>
+                            <select id="skill-level" class="input"><option>Beginner</option><option>Intermediate</option><option>Advanced</option></select>
+                        </div>
+                        <div>
+                            <label class="label" for="date">Date</label>
+                            <input type="date" id="date" class="input" value="2025-11-15">
+                        </div>
+                        <button class="btn btn-primary" style="padding: 1rem;">Search Availability</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Screen 2: Customer - Search Results -->
+            <div class="screen-mockup">
+                <div class="screen-header"><h3>2. Customer - Search Results</h3></div>
+                <div class="screen-content">
+                    <h4>Available Lessons for Nov 15, 2025</h4>
+                    <div style="display: flex; flex-direction: column; gap: 1.5rem;">
+                        <div class="card lesson-card">
+                            <div class="lesson-card-header">
+                                <h5>Beginner Group Lesson</h5>
+                                <span class="price">$150</span>
+                            </div>
+                            <p class="instructor">with Sarah J.</p>
+                            <div class="time-slots">
+                                <div class="time-slot">09:00 AM</div>
+                                <div class="time-slot selected">10:00 AM</div>
+                                <div class="time-slot">11:00 AM</div>
+                            </div>
+                        </div>
+                        <div class="card lesson-card">
+                            <div class="lesson-card-header">
+                                <h5>Private Refresher</h5>
+                                <span class="price">$200</span>
+                            </div>
+                            <p class="instructor">with Mark T.</p>
+                            <div class="time-slots">
+                                <div class="time-slot">02:00 PM</div>
+                                <div class="time-slot">03:00 PM</div>
+                            </div>
+                        </div>
+                        <button class="btn btn-primary" style="padding: 1rem; margin-top: 1rem;">Book Selected Lesson</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Screen 3: Customer - Booking Modal -->
+            <div class="screen-mockup">
+                <div class="screen-header"><h3>3. Customer - Booking Modal</h3></div>
+                <div class="screen-content">
+                    <div class="modal-overlay">
+                        <div class="modal-content">
+                            <h3>Confirm Your Booking</h3>
+                            <p>You're booking the <strong>Beginner Group Lesson</strong> with <strong>Sarah J.</strong> at <strong>10:00 AM on Nov 15, 2025</strong>.</p>
+                            <div style="display: flex; flex-direction: column; gap: 1rem;">
+                                <div><label class="label" for="name">Full Name</label><input type="text" id="name" class="input" placeholder="John Doe"></div>
+                                <div><label class="label" for="email">Email</label><input type="email" id="email" class="input" placeholder="john.doe@example.com"></div>
+                                <button class="btn btn-primary" style="padding: 1rem;">Confirm Booking ($150)</button>
+                                <button class="btn btn-secondary" style="text-align: center;">Cancel</button>
+                            </div>
+                        </div>
+                    </div>
+                    <p>This screen demonstrates the modal overlay for the final booking step.</p>
+                </div>
+            </div>
+
+            <!-- Screen 4: Instructor - Dashboard -->
+            <div class="screen-mockup">
+                <div class="screen-header"><h3>4. Instructor - Dashboard</h3></div>
+                <div class="screen-content">
+                    <h3>Welcome, Sarah!</h3>
+                    <p>Here's your overview for today, Nov 15, 2025.</p>
+                    <div class="card">
+                        <h4>Upcoming Lessons</h4>
+                        <div style="display: flex; align-items: center; gap: 1rem; padding: 1rem 0; border-bottom: 1px solid #E0E0E0;">
+                            <div class="avatar">JD</div>
+                            <div>
+                                <strong>John Doe</strong> (Beginner)<br>
+                                10:00 AM - 1:00 PM
+                            </div>
+                            <span class="badge">Confirmed</span>
+                        </div>
+                        <div style="display: flex; align-items: center; gap: 1rem; padding: 1rem 0;">
+                            <div class="avatar">AW</div>
+                            <div>
+                                <strong>Anna White</strong> (Beginner)<br>
+                                2:00 PM - 5:00 PM
+                            </div>
+                            <span class="badge">Confirmed</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Screen 5: Instructor - Calendar -->
+            <div class="screen-mockup">
+                <div class="screen-header"><h3>5. Instructor - Calendar</h3></div>
+                <div class="screen-content">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem;">
+                        <h3>Your Availability</h3>
+                        <button class="btn btn-primary">Add Availability</button>
+                    </div>
+                    <div class="card">
+                        <!-- This would be a full calendar component -->
+                        <p>Full calendar view showing lessons, available slots, and blocked times.</p>
+                        <img src="https://via.placeholder.com/300x200?text=Calendar+Component" alt="Calendar Placeholder" style="width: 100%; border-radius: 6px;">
+                    </div>
+                </div>
+            </div>
+
+            <!-- Screen 6: Manager - Dashboard -->
+            <div class="screen-mockup">
+                <div class="screen-header"><h3>6. Manager - Dashboard</h3></div>
+                <div class="screen-content">
+                    <h3>Manager Dashboard</h3>
+                    <div class="alert alert-warning">
+                        <strong>Weather Alert:</strong> 2 lessons need review due to low wind forecast. 
+                        <a href="#" style="color: #0A2540; font-weight: bold;">Go to Resolution Center</a>
+                    </div>
+                    <div class="card">
+                        <h4>Today's Schedule Overview</h4>
+                        <p><strong>Instructors on duty:</strong> 4</p>
+                        <p><strong>Total Lessons:</strong> 12</p>
+                        <p><strong>Revenue:</strong> $1,800</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Screen 7: Manager - Resolution Center -->
+            <div class="screen-mockup">
+                <div class="screen-header"><h3>7. Manager - Resolution Center</h3></div>
+                <div class="screen-content">
+                    <h3>Weather Conflict Resolution</h3>
+                    <div class="card weather-conflict-card">
+                        <div class="conflict-details">
+                            <div>
+                                <h5>Lesson for John Doe (10:00 AM)</h5>
+                                <p>Instructor: Sarah J.</p>
+                            </div>
+                            <div>
+                                <strong>Low Wind Forecast</strong>
+                                <p>5 knots</p>
+                            </div>
+                        </div>
+                        <div class="actions">
+                            <button class="btn btn-primary">Auto-Rebook</button>
+                            <button class="btn btn-secondary">Manual Rebook</button>
+                            <button class="btn btn-destructive">Cancel Lesson</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+</body>
+</html>

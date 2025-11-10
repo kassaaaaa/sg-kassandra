@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KiteOps - Customer Booking Journey</title>
+    <style>
+        /* Global Styles from ux-design-specification.md */
+        body { font-family: 'Inter', sans-serif; background-color: #F5F5F5; color: #111111; margin: 0; display: flex; align-items: center; justify-content: center; min-height: 100vh; }
+        h1, h2, h3, h4, h5, h6 { font-family: 'Manrope', sans-serif; color: #0A2540; }
+        .app-container { width: 100%; max-width: 420px; height: 800px; background-color: #FFFFFF; border-radius: 24px; box-shadow: 0 12px 24px rgba(0,0,0,0.15); display: flex; flex-direction: column; overflow: hidden; }
+        .screen { display: none; flex-direction: column; height: 100%; }
+        .screen.active { display: flex; }
+        .screen-header { padding: 1.5rem; border-bottom: 1px solid #E0E0E0; text-align: center; }
+        .screen-header h3 { margin: 0; }
+        .screen-content { padding: 1.5rem; flex-grow: 1; overflow-y: auto; }
+        .controls { padding: 1.5rem; border-top: 1px solid #E0E0E0; }
+
+        /* Component Styles */
+        .btn { width: 100%; border: none; padding: 1rem; border-radius: 8px; font-size: 1rem; font-weight: 500; cursor: pointer; transition: all 0.2s ease; }
+        .btn-primary { background-color: #0A2540; color: white; }
+        .btn-primary:hover { background-color: #2C3E44; }
+        .btn-secondary { background-color: #E0E0E0; color: #333; }
+        .input { width: 100%; padding: 12px; border: 1px solid #ccc; border-radius: 8px; background-color: #FFFFFF; color: #111111; box-sizing: border-box; }
+        .label { display: block; margin-bottom: 0.5rem; font-weight: 500; }
+        .card { background-color: #FFFFFF; border-radius: 12px; border: 1px solid #E0E0E0; padding: 1.5rem; }
+        .modal-overlay { position: absolute; top: 0; left: 0; right: 0; bottom: 0; background-color: rgba(15, 33, 38, 0.6); display: none; align-items: center; justify-content: center; padding: 1rem; }
+        .modal-overlay.active { display: flex; }
+        .modal-content { background-color: #FFFFFF; padding: 2rem; border-radius: 12px; width: 100%; }
+        
+        /* Custom Component: Lesson Card */
+        .lesson-card { display: flex; flex-direction: column; gap: 1rem; }
+        .lesson-card-header { display: flex; justify-content: space-between; align-items: baseline; }
+        .lesson-card-header h5 { margin: 0; font-size: 1.2rem; }
+        .lesson-card-header .price { font-size: 1.1rem; font-weight: bold; color: #0A2540; }
+        .lesson-card .instructor { font-size: 0.9rem; color: #555; }
+        .time-slots { display: flex; flex-wrap: wrap; gap: 0.8rem; }
+        .time-slot { background-color: #E0E0E0; padding: 0.8rem 1rem; border-radius: 6px; cursor: pointer; transition: all 0.2s ease; }
+        .time-slot:hover { background-color: #d0d0d0; }
+        .time-slot.selected { background-color: #00C49A; color: white; }
+    </style>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@700&family=Inter:wght@400;500&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <div class="app-container">
+
+        <!-- Step 1: Search Form -->
+        <div id="step1" class="screen active">
+            <div class="screen-header"><h3>Find a Lesson</h3></div>
+            <div class="screen-content">
+                <div style="display: flex; flex-direction: column; gap: 1.5rem;">
+                    <div>
+                        <label class="label" for="lesson-type">Lesson Type</label>
+                        <select id="lesson-type" class="input"><option>Group Lesson</option><option>Private Lesson</option></select>
+                    </div>
+                    <div>
+                        <label class="label" for="skill-level">Skill Level</label>
+                        <select id="skill-level" class="input"><option>Beginner</option><option>Intermediate</option><option>Advanced</option></select>
+                    </div>
+                    <div>
+                        <label class="label" for="date">Date</label>
+                        <input type="date" id="date" class="input" value="2025-11-15">
+                    </div>
+                </div>
+            </div>
+            <div class="controls">
+                <button class="btn btn-primary" onclick="goToStep(2)">Search Availability</button>
+            </div>
+        </div>
+
+        <!-- Step 2: Search Results -->
+        <div id="step2" class="screen">
+            <div class="screen-header"><h3>Available Lessons</h3></div>
+            <div class="screen-content">
+                <div style="display: flex; flex-direction: column; gap: 1.5rem;">
+                    <div class="card lesson-card">
+                        <div class="lesson-card-header">
+                            <h5>Beginner Group Lesson</h5>
+                            <span class="price">$150</span>
+                        </div>
+                        <p class="instructor">with Sarah J.</p>
+                        <div class="time-slots">
+                            <div class="time-slot" onclick="selectTime(this)">09:00 AM</div>
+                            <div class="time-slot" onclick="selectTime(this)">10:00 AM</div>
+                            <div class="time-slot" onclick="selectTime(this)">11:00 AM</div>
+                        </div>
+                    </div>
+                    <div class="card lesson-card">
+                        <div class="lesson-card-header">
+                            <h5>Private Refresher</h5>
+                            <span class="price">$200</span>
+                        </div>
+                        <p class="instructor">with Mark T.</p>
+                        <div class="time-slots">
+                            <div class="time-slot" onclick="selectTime(this)">02:00 PM</div>
+                            <div class="time-slot" onclick="selectTime(this)">03:00 PM</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="controls">
+                <button id="bookBtn" class="btn btn-primary" onclick="goToStep(3)" disabled>Book Selected Lesson</button>
+            </div>
+        </div>
+
+        <!-- Step 3: Booking Modal -->
+        <div id="step3" class="screen">
+            <!-- This screen is just a backdrop for the modal -->
+            <div class="screen-header"><h3>Available Lessons</h3></div>
+            <div class="screen-content">
+                <!-- Content from step 2 is duplicated to show the modal overlay -->
+                <div style="display: flex; flex-direction: column; gap: 1.5rem;">
+                    <div class="card lesson-card">
+                        <div class="lesson-card-header"><h5>Beginner Group Lesson</h5><span class="price">$150</span></div>
+                        <p class="instructor">with Sarah J.</p>
+                        <div class="time-slots"><div class="time-slot">09:00 AM</div><div class="time-slot selected">10:00 AM</div><div class="time-slot">11:00 AM</div></div>
+                    </div>
+                    <div class="card lesson-card">
+                        <div class="lesson-card-header"><h5>Private Refresher</h5><span class="price">$200</span></div>
+                        <p class="instructor">with Mark T.</p>
+                        <div class="time-slots"><div class="time-slot">02:00 PM</div><div class="time-slot">03:00 PM</div></div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-overlay active">
+                <div class="modal-content">
+                    <h3>Confirm Your Booking</h3>
+                    <p>You're booking the <strong>Beginner Group Lesson</strong> at <strong>10:00 AM</strong>.</p>
+                    <div style="display: flex; flex-direction: column; gap: 1rem; margin-top: 1.5rem;">
+                        <div><label class="label" for="name">Full Name</label><input type="text" id="name" class="input" placeholder="John Doe"></div>
+                        <div><label class="label" for="email">Email</label><input type="email" id="email" class="input" placeholder="john.doe@example.com"></div>
+                        <button class="btn btn-primary" onclick="goToStep(4)">Confirm Booking ($150)</button>
+                        <button class="btn btn-secondary" onclick="goToStep(2)">Cancel</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Step 4: Success Message -->
+        <div id="step4" class="screen">
+            <div class="screen-content" style="display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center;">
+                <div style="font-size: 4rem;">🎉</div>
+                <h2>Booking Confirmed!</h2>
+                <p>Your lesson is booked. A confirmation email has been sent to you.</p>
+            </div>
+            <div class="controls">
+                <button class="btn btn-primary" onclick="goToStep(1)">Book Another Lesson</button>
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        let currentStep = 1;
+        const bookBtn = document.getElementById('bookBtn');
+
+        function goToStep(step) {
+            document.getElementById('step' + currentStep).classList.remove('active');
+            document.getElementById('step' + step).classList.add('active');
+            currentStep = step;
+        }
+
+        function selectTime(element) {
+            // Clear previous selections
+            const allTimeSlots = document.querySelectorAll('.time-slot');
+            allTimeSlots.forEach(slot => slot.classList.remove('selected'));
+
+            // Select the new one
+            element.classList.add('selected');
+            bookBtn.disabled = false;
+        }
+    </script>
+
+</body>
+</html>
