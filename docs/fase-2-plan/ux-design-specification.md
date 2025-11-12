@@ -533,26 +533,55 @@ Accessibility is a core principle of the UX design. KiteOps will adhere to the *
         -   **Manual:** Regular manual testing will be conducted for keyboard navigation and screen reader compatibility (e.g., using VoiceOver or NVDA).
     
     ## 8. Cross-Workflow Alignment
-    
-    > [!WARNING]
-    > **Action Required:** This section is a placeholder. The validation report identified that the impact of this UX design on the project's epics and user stories has not been assessed.
-    
-    This UX design process has implications for the project's epics and user stories. The following items need to be reviewed and updated in the `epics.md` file:
-    
-    -   **New User Stories:** Have any new user stories been identified as a result of designing the user journeys? (e.g., a story for the manager's "Resolution Center").
-    -   **Updated User Stories:** Do any existing stories need to be updated with more specific acceptance criteria based on the UX patterns defined here?
-    -   **Epics:** Does the detailed UX design impact how any of the major epics are structured or prioritized?
-    
-    A thorough review of `epics.md` against this specification is required before implementation begins.
+
+This UX Design Specification has been reviewed against the `epics.md` document. The following new user stories and modifications to existing stories have been identified to ensure the implementation aligns with the approved design.
+
+### 8.1. New User Stories Identified
+
+The detailed UX design has revealed the need for the following new stories to be added to `epics.md`:
+
+1.  **New Story (to be added to Epic 1): `Implement Core UI Component Library`**
+    *   **Description:** As a Developer, I want to set up and configure the `shadcn/ui` design system and implement the core UX patterns, so that all subsequent UI development is consistent and efficient.
+    *   **Rationale:** The UX specification defines a specific design system, custom components, and strict consistency rules (Sections 2.1, 5, and 6). Implementing this foundation is a prerequisite for all other UI-facing stories and should be tracked as a distinct piece of work.
+    *   **Proposed Acceptance Criteria:**
+        1.  `shadcn/ui` is installed and configured in the Next.js project.
+        2.  The color palette, typography, and spacing from the UX spec are configured as Tailwind CSS theme variables.
+        3.  The core UX patterns for buttons, forms, and modals (Section 6) are implemented or configured for project-wide use.
+        4.  The custom `Lesson Card` component (Section 5.2.1) is created and available for use.
+
+2.  **New Story (to be added to Epic 3): `Build Manager Resolution Center UI`**
+    *   **Description:** As a Manager, I want a dedicated 'Resolution Center' page, so I can view and manage all lessons flagged for weather-related issues in a focused workspace.
+    *   **Rationale:** The UX specification proposes a dedicated page for managers to handle weather conflicts (Section 3.4.3). The existing story (3.5) focuses on the *workflow*, but not on building the UI itself. This new story covers the creation of the page and its components.
+    *   **Proposed Acceptance Criteria:**
+        1.  A "Resolution Center" link is available in the manager's main navigation.
+        2.  The page provides a list view for all lessons that have weather-related conflicts.
+        3.  Each conflict in the list is displayed using the `Weather Conflict Card` component as defined in the UX spec (Section 5.2.3).
+        4.  The page layout is responsive and adheres to the accessibility standards defined in this specification.
+
+### 8.2. Modifications to Existing User Stories
+
+The following user stories in `epics.md` require updates to their acceptance criteria to reflect the specific design decisions made in this document.
+
+1.  **Story 1.4: `Instructor Availability Management`**
+    *   **Modification:** Add an acceptance criterion to enforce the specified user journey.
+    *   **Additional AC:** "The user journey for adding and editing availability must follow the 'Modal Form' flow defined in the UX Design Specification (Section 3.4.2)."
+
+2.  **Story 2.3: `Guest Booking - Lesson Selection`**
+    *   **Modification:** Add acceptance criteria to enforce the chosen design direction and use of the custom `Lesson Card` component.
+    *   **Additional AC:** "The search results page must implement the 'Minimalist Focus' design direction (Section 4.1)." and "Each available lesson shown in the results must be displayed using the `Lesson Card` custom component (Section 5.2.1)."
+
+3.  **Story 2.4: `Guest Booking - Confirmation`**
+    *   **Modification:** Add an acceptance criterion to enforce the specified modal-based booking flow.
+    *   **Additional AC:** "The booking confirmation process must use the 'Single-Page Booking (in a Modal)' flow as defined in the UX Design Specification (Section 3.4.1)."
+
+4.  **Story 3.5: `Weather Rebooking Workflow`**
+    *   **Modification:** Add a prerequisite dependency on the new `Build Manager Resolution Center UI` story.
+    *   **Updated Prerequisite:** This story now depends on the successful completion of the `Build Manager Resolution Center UI` story.
+
+### 8.3. Epic Alignment Summary
+
+The current epic structure remains valid. The new stories can be incorporated into the existing epics without requiring re-structuring. The proposed changes ensure that the detailed UX design is directly translated into actionable development tasks, reducing ambiguity and aligning the final product with the design vision.
     
     ## 9. Appendices
     
-    ### 9.1. Missing Collaborative Artifacts
-    
-    > [!IMPORTANT]
-    > The validation report noted a critical failure: the primary visual collaboration artifacts were not generated. The following files must be created by running the `*create-design` workflow and used in a collaborative session with the user to finalize the visual design:
-    >
-    > -   `ux-color-themes.html`: An interactive visualizer to explore and select the final color palette.
-    > -   `ux-design-directions.html`: A presentation of 6-8 distinct design mockups to facilitate the selection of the final design direction.
-    >
-    > The choices for color and design direction in this document are **proposals** and are not final until this collaborative step is completed.
+
