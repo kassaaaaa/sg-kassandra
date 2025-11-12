@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KiteOps Design Direction Showcase</title>
+    <style>
+        body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol"; margin: 0; padding: 20px; background-color: #F5F5F5; color: #111111; }
+        h1 { text-align: center; color: #0A2540; margin-bottom: 40px; }
+        .mockup-container { display: flex; flex-wrap: wrap; gap: 30px; justify-content: center; max-width: 1400px; margin: 0 auto; }
+        .mockup-card { background-color: #FFFFFF; border-radius: 8px; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08); overflow: hidden; width: 450px; flex-shrink: 0; }
+        .mockup-header { padding: 15px 20px; background-color: #0A2540; color: #FFFFFF; font-size: 18px; font-weight: 600; text-align: center; }
+        .mockup-content { padding: 20px; }
+        .mockup-image { width: 100%; height: 250px; background-color: #E0E0E0; display: flex; align-items: center; justify-content: center; color: #999999; font-size: 14px; border-bottom: 1px solid #EEEEEE; }
+        .mockup-image.placeholder { background-color: #F0F0F0; }
+        .mockup-image.placeholder::before { content: 'Screen Mockup Placeholder'; }
+
+        /* Common Styles for UI elements based on "Professional & Trustworthy" theme */
+        .search-bar { display: flex; border: 1px solid #999999; border-radius: 5px; overflow: hidden; margin-bottom: 20px; }
+        .search-bar input { flex-grow: 1; padding: 10px; border: none; outline: none; font-size: 14px; color: #111111; }
+        .search-bar button { background-color: #4A90E2; color: #FFFFFF; border: none; padding: 10px 15px; cursor: pointer; font-weight: 600; }
+        .search-bar button:hover { background-color: #3a7bd9; }
+
+        .lesson-card { background-color: #FFFFFF; border: 1px solid #EEEEEE; border-radius: 8px; padding: 15px; margin-bottom: 15px; box-shadow: 0 2px 5px rgba(0,0,0,0.05); }
+        .lesson-card h3 { margin-top: 0; margin-bottom: 5px; color: #0A2540; font-size: 16px; }
+        .lesson-card p { margin-bottom: 5px; font-size: 13px; color: #555555; }
+        .lesson-card .price { font-weight: 600; color: #0A2540; }
+        .lesson-card .book-btn { background-color: #0A2540; color: #FFFFFF; padding: 8px 12px; border-radius: 5px; text-decoration: none; display: inline-block; margin-top: 10px; font-size: 13px; }
+        .lesson-card .book-btn:hover { background-color: #071a2e; }
+
+        .filter-sidebar { width: 120px; padding: 15px; background-color: #F8F8F8; border-right: 1px solid #EEEEEE; }
+        .filter-sidebar h4 { margin-top: 0; color: #0A2540; font-size: 14px; margin-bottom: 10px; }
+        .filter-sidebar label { display: block; margin-bottom: 8px; font-size: 13px; color: #555555; }
+        .filter-sidebar input[type="checkbox"] { margin-right: 5px; }
+
+        .map-placeholder { background-color: #E0E0E0; height: 150px; display: flex; align-items: center; justify-content: center; color: #999999; font-size: 14px; margin-bottom: 15px; }
+
+        .design-philosophy { font-size: 13px; line-height: 1.6; color: #555555; margin-top: 15px; }
+        .design-philosophy strong { color: #0A2540; }
+    </style>
+</head>
+<body>
+    <h1>KiteOps Design Direction Showcase - Customer Search Results</h1>
+
+    <div class="mockup-container">
+
+        <!-- Direction 1: Minimalist Focus (Current Proposal) -->
+        <div class="mockup-card">
+            <div class="mockup-header">1. Minimalist Focus</div>
+            <div class="mockup-content">
+                <div class="search-bar">
+                    <input type="text" placeholder="Search lessons by type, skill, date...">
+                    <button>Search</button>
+                </div>
+                <div class="lesson-card">
+                    <h3>Beginner Kiteboarding - Group</h3>
+                    <p>Instructor: Jane Doe</p>
+                    <p>Time: 10:00 AM - 12:00 PM</p>
+                    <p class="price">$120</p>
+                    <a href="#" class="book-btn">Book Now</a>
+                </div>
+                <div class="lesson-card">
+                    <h3>Intermediate Hydrofoil - Private</h3>
+                    <p>Instructor: John Smith</p>
+                    <p>Time: 01:00 PM - 03:00 PM</p>
+                    <p class="price">$250</p>
+                    <a href="#" class="book-btn">Book Now</a>
+                </div>
+                <div class="design-philosophy">
+                    <strong>Personality:</strong> Professional & Efficient<br>
+                    <strong>Layout:</strong> Single column, list-based<br>
+                    <strong>Density:</strong> Spacious<br>
+                    <strong>Navigation:</strong> Top nav (implied)<br>
+                    <strong>Rationale:</strong> Prioritizes a clean, unobtrusive interface with minimal distractions, allowing users to focus on the core task.
+                </div>
+            </div>
+        </div>
+
+        <!-- Direction 2: Card Gallery -->
+        <div class="mockup-card">
+            <div class="mockup-header">2. Card Gallery</div>
+            <div class="mockup-content">
+                <div class="search-bar">
+                    <input type="text" placeholder="Search lessons...">
+                    <button>Search</button>
+                </div>
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
+                    <div class="lesson-card" style="padding: 10px;">
+                        <div class="mockup-image placeholder" style="height: 80px; margin-bottom: 10px;"></div>
+                        <h3>Beginner Group</h3>
+                        <p class="price">$120</p>
+                        <a href="#" class="book-btn" style="width: 100%; text-align: center;">Book</a>
+                    </div>
+                    <div class="lesson-card" style="padding: 10px;">
+                        <div class="mockup-image placeholder" style="height: 80px; margin-bottom: 10px;"></div>
+                        <h3>Intermediate Private</h3>
+                        <p class="price">$250</p>
+                        <a href="#" class="book-btn" style="width: 100%; text-align: center;">Book</a>
+                    </div>
+                    <div class="lesson-card" style="padding: 10px;">
+                        <div class="mockup-image placeholder" style="height: 80px; margin-bottom: 10px;"></div>
+                        <h3>Advanced Wave</h3>
+                        <p class="price">$180</p>
+                        <a href="#" class="book-btn" style="width: 100%; text-align: center;">Book</a>
+                    </div>
+                    <div class="lesson-card" style="padding: 10px;">
+                        <div class="mockup-image placeholder" style="height: 80px; margin-bottom: 10px;"></div>
+                        <h3>Kids Camp</h3>
+                        <p class="price">$300</p>
+                        <a href="#" class="book-btn" style="width: 100%; text-align: center;">Book</a>
+                    </div>
+                </div>
+                <div class="design-philosophy">
+                    <strong>Personality:</strong> Engaging & Visual<br>
+                    <strong>Layout:</strong> Grid of cards, image-focused<br>
+                    <strong>Density:</strong> Balanced<br>
+                    <strong>Navigation:</strong> Top nav (implied)<br>
+                    <strong>Rationale:</strong> Emphasizes visual appeal and quick scanning of options, ideal for users who prefer browsing over detailed reading.
+                </div>
+            </div>
+        </div>
+
+        <!-- Direction 3: Dense Dashboard -->
+        <div class="mockup-card">
+            <div class="mockup-header">3. Dense Dashboard</div>
+            <div class="mockup-content">
+                <div class="search-bar">
+                    <input type="text" placeholder="Search lessons...">
+                    <button>Search</button>
+                </div>
+                <div style="border: 1px solid #EEEEEE; border-radius: 8px; overflow: hidden; margin-bottom: 15px;">
+                    <table style="width: 100%; border-collapse: collapse; font-size: 13px;">
+                        <thead style="background-color: #F8F8F8;">
+                            <tr>
+                                <th style="padding: 10px; text-align: left; color: #0A2540;">Lesson</th>
+                                <th style="padding: 10px; text-align: left; color: #0A2540;">Instructor</th>
+                                <th style="padding: 10px; text-align: left; color: #0A2540;">Time</th>
+                                <th style="padding: 10px; text-align: left; color: #0A2540;">Price</th>
+                                <th style="padding: 10px; text-align: left; color: #0A2540;"></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td style="padding: 10px; border-bottom: 1px solid #EEEEEE;">Beginner Group</td>
+                                <td style="padding: 10px; border-bottom: 1px solid #EEEEEE;">Jane Doe</td>
+                                <td style="padding: 10px; border-bottom: 1px solid #EEEEEE;">10 AM</td>
+                                <td style="padding: 10px; border-bottom: 1px solid #EEEEEE;">$120</td>
+                                <td style="padding: 10px; border-bottom: 1px solid #EEEEEE;"><a href="#" class="book-btn" style="padding: 5px 8px;">Book</a></td>
+                            </tr>
+                            <tr>
+                                <td style="padding: 10px; border-bottom: 1px solid #EEEEEE;">Intermediate Private</td>
+                                <td style="padding: 10px; border-bottom: 1px solid #EEEEEE;">John Smith</td>
+                                <td style="padding: 10px; border-bottom: 1px solid #EEEEEE;">1 PM</td>
+                                <td style="padding: 10px; border-bottom: 1px solid #EEEEEE;">$250</td>
+                                <td style="padding: 10px; border-bottom: 1px solid #EEEEEE;"><a href="#" class="book-btn" style="padding: 5px 8px;">Book</a></td>
+                            </tr>
+                            <tr>
+                                <td style="padding: 10px; border-bottom: 1px solid #EEEEEE;">Advanced Wave</td>
+                                <td style="padding: 10px; border-bottom: 1px solid #EEEEEE;">Sarah Lee</td>
+                                <td style="padding: 10px; border-bottom: 1px solid #EEEEEE;">3 PM</td>
+                                <td style="padding: 10px; border-bottom: 1px solid #EEEEEE;">$180</td>
+                                <td style="padding: 10px; border-bottom: 1px solid #EEEEEE;"><a href="#" class="book-btn" style="padding: 5px 8px;">Book</a></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="design-philosophy">
+                    <strong>Personality:</strong> Data-Rich & Functional<br>
+                    <strong>Layout:</strong> Table-based, compact<br>
+                    <strong>Density:</strong> Dense<br>
+                    <strong>Navigation:</strong> Top nav (implied)<br>
+                    <strong>Rationale:</strong> Designed for power users who need to quickly scan and compare many options, prioritizing information density over visual flair.
+                </div>
+            </div>
+        </div>
+
+        <!-- Direction 4: Sidebar Filter -->
+        <div class="mockup-card">
+            <div class="mockup-header">4. Sidebar Filter</div>
+            <div style="display: flex;">
+                <div class="filter-sidebar">
+                    <h4>Filters</h4>
+                    <label><input type="checkbox"> Beginner</label>
+                    <label><input type="checkbox"> Intermediate</label>
+                    <label><input type="checkbox"> Private</label>
+                    <label><input type="checkbox"> Group</label>
+                    <button class="book-btn" style="background-color: #4A90E2; margin-top: 15px; width: 100%;">Apply</button>
+                </div>
+                <div class="mockup-content" style="flex-grow: 1;">
+                    <div class="search-bar">
+                        <input type="text" placeholder="Search lessons...">
+                        <button>Search</button>
+                    </div>
+                    <div class="lesson-card">
+                        <h3>Beginner Kiteboarding - Group</h3>
+                        <p>Instructor: Jane Doe</p>
+                        <p>Time: 10:00 AM - 12:00 PM</p>
+                        <p class="price">$120</p>
+                        <a href="#" class="book-btn">Book Now</a>
+                    </div>
+                    <div class="lesson-card">
+                        <h3>Intermediate Hydrofoil - Private</h3>
+                        <p>Instructor: John Smith</p>
+                        <p>Time: 01:00 PM - 03:00 PM</p>
+                        <p class="price">$250</p>
+                        <a href="#" class="book-btn">Book Now</a>
+                    </div>
+                </div>
+            </div>
+            <div class="mockup-content">
+                <div class="design-philosophy">
+                    <strong>Personality:</strong> Organized & Controllable<br>
+                    <strong>Layout:</strong> Two-column with persistent sidebar<br>
+                    <strong>Density:</strong> Balanced<br>
+                    <strong>Navigation:</strong> Sidebar for filters, top nav (implied)<br>
+                    <strong>Rationale:</strong> Provides extensive filtering options upfront, giving users fine-grained control over their search results.
+                </div>
+            </div>
+        </div>
+
+        <!-- Direction 5: Map-Centric -->
+        <div class="mockup-card">
+            <div class="mockup-header">5. Map-Centric</div>
+            <div class="mockup-content">
+                <div class="search-bar">
+                    <input type="text" placeholder="Search location or lesson...">
+                    <button>Search</button>
+                </div>
+                <div class="map-placeholder">Interactive Map View</div>
+                <div class="lesson-card" style="margin-bottom: 0;">
+                    <h3>Beginner Kiteboarding - Group</h3>
+                    <p>Location: Beach A</p>
+                    <p>Time: 10:00 AM</p>
+                    <p class="price">$120</p>
+                    <a href="#" class="book-btn">View on Map</a>
+                </div>
+                <div class="design-philosophy">
+                    <strong>Personality:</strong> Exploratory & Location-Aware<br>
+                    <strong>Layout:</strong> Map-first with results overlay/list<br>
+                    <strong>Density:</strong> Balanced<br>
+                    <strong>Navigation:</strong> Top search, map interaction<br>
+                    <strong>Rationale:</strong> Ideal for users who prioritize location when booking lessons, offering a visual way to discover options.
+                </div>
+            </div>
+        </div>
+
+        <!-- Direction 6: Progressive Disclosure -->
+        <div class="mockup-card">
+            <div class="mockup-header">6. Progressive Disclosure</div>
+            <div class="mockup-content">
+                <div class="search-bar">
+                    <input type="text" placeholder="Search lessons...">
+                    <button>Search</button>
+                </div>
+                <div class="lesson-card">
+                    <h3>Beginner Kiteboarding - Group</h3>
+                    <p>Instructor: Jane Doe</p>
+                    <p class="price">$120</p>
+                    <a href="#" class="book-btn" style="background-color: #4A90E2;">View Details</a>
+                </div>
+                <div class="lesson-card">
+                    <h3>Intermediate Hydrofoil - Private</h3>
+                    <p>Instructor: John Smith</p>
+                    <p class="price">$250</p>
+                    <a href="#" class="book-btn" style="background-color: #4A90E2;">View Details</a>
+                </div>
+                <div class="design-philosophy">
+                    <strong>Personality:</strong> Simple & Guided<br>
+                    <strong>Layout:</strong> Single column, minimal initial info<br>
+                    <strong>Density:</strong> Spacious (initially)<br>
+                    <strong>Navigation:</strong> Top search, clear CTAs<br>
+                    <strong>Rationale:</strong> Reduces cognitive load by showing only essential information initially, revealing more details as the user expresses interest.
+                </div>
+            </div>
+        </div>
+
+    </div>
+</body>
+</html>

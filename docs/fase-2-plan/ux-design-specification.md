@@ -30,21 +30,17 @@ KiteOps will be a **web application** with a **responsive design** that works se
 ## 2. Design System & Visual Foundation
 
 ### 2.1. Design System
-**Proposed System:** shadcn/ui
+**Chosen System:** shadcn/ui
 **Version:** CLI v0.8.0 (as of Nov 2025)
-**Rationale:** Selected for its seamless integration with Tailwind CSS and Next.js, providing a highly customizable and performant component foundation. It allows for full control over the codebase, ensuring a unique brand experience while leveraging accessible, well-built components.
-> [!NOTE]
-> **Pending User Validation:** This choice is a proposal. The final decision will be made collaboratively after reviewing the benefits and alternatives.
+**Rationale:** Selected for its seamless integration with Tailwind CSS and Next.js, providing a highly customizable and performant component foundation. It allows for full control over the codebase, ensuring a unique brand experience while leveraging accessible, well-built components. This choice was made collaboratively, balancing the need for a unique brand experience with the efficiency of leveraging a robust, accessible component foundation.
 
 ### 2.2. Color Palette
-**Proposed Theme:** Professional & Dynamic
+**Chosen Theme:** Professional & Trustworthy
 
-A clean, ocean-inspired palette built on neutral sand and deep navy bases, accented by turquoise for energy. This theme is a starting point for discussion.
-> [!NOTE]
-> **Pending User Validation:** The final color theme will be selected collaboratively using the `ux-color-themes.html` visualization tool, which still needs to be generated.
+This theme uses deep, authoritative blues and clean neutrals to convey reliability and professionalism. The accent blue adds a touch of modern clarity without being overly playful. This choice was made collaboratively after reviewing several options in the `ux-color-themes.html` visualizer.
 
 -   **Primary (Deep Navy):** `#0A2540` (Used for main actions, key elements, and primary text)
--   **Accent (Turquoise):** `#00C49A` (Used for accents, secondary actions, and highlighting information)
+-   **Accent (Sky Blue):** `#4A90E2` (Used for accents, secondary actions, and highlighting information)
 -   **Background (Light Gray):** `#F5F5F5` (Used for page backgrounds in the light theme)
 -   **Surface (White):** `#FFFFFF` (Used for cards, modals, and other surfaces on top of the background)
 -   **Text (Neutral):** A grayscale palette will be used for text, ranging from `#111111` (headings) to `#555555` (body) to `#999999` (subtle text).
@@ -58,9 +54,9 @@ A clean, ocean-inspired palette built on neutral sand and deep navy bases, accen
 > [!WARNING]
 > **Verification Required:** The following color combinations must be verified with a reliable contrast checker tool to ensure they meet the WCAG 2.1 AA standard (4.5:1 for normal text, 3:1 for large text).
 > - **Primary on Surface:** `#0A2540` on `#FFFFFF`
-> - **Accent on Surface:** `#00C49A` on `#FFFFFF`
+> - **Accent on Surface:** `#4A90E2` on `#FFFFFF`
 > - **White text on Primary:** `#FFFFFF` on `#0A2540`
-> - **White text on Accent:** `#FFFFFF` on `#00C49A`
+> - **White text on Accent:** `#FFFFFF` on `#4A90E2`
 > - **Headings on Background:** `#111111` on `#F5F5F5`
 > - **Body Text on Background:** `#555555` on `#F5F5F5`
 
@@ -82,7 +78,7 @@ A clean, ocean-inspired palette built on neutral sand and deep navy bases, accen
 ## 3. Core Experience & User Journeys
 
 ### 3.1. The Defining Experience
-The defining experience of KiteOps is: **“It’s the app where lessons automatically adapt to the wind.”**
+The defining experience of KiteOps is: **“It’s the app where lessons adapt to the wind.”**
 
 This encapsulates the core value proposition of the platform: an intelligent, weather-aware system that proactively manages schedules to maximize safety and lesson quality, while minimizing manual coordination for customers, instructors, and managers.
 
@@ -130,6 +126,13 @@ This pattern is central to the KiteOps value proposition. It's how the system in
 -   The Manager's dashboard must be fully responsive to allow for quick decisions on both desktop and mobile.
 -   Customers and Instructors will primarily interact with this flow via notifications (email, SMS, push notifications on mobile).
 
+**Inspiration from Similar Patterns:**
+-   **Airlines:** The way airlines handle delays and cancellations provides a model for proactive communication and rebooking options.
+
+**Experience Goals:**
+-   **Speed:** The entire process, from system detection to user notification, should feel almost instantaneous, ideally completing within a couple of minutes of a manager's decision.
+-   **Shareability:** The value proposition for managers is the significant time saved, which becomes a key talking point. For customers, the "smart" nature of the app adapting to weather is the shareable story.
+
 ### 3.3. Core Experience Principles
 
 These principles will guide every UX decision to ensure a cohesive and high-quality user experience.
@@ -137,7 +140,7 @@ These principles will guide every UX decision to ensure a cohesive and high-qual
 -   **Speed:** Key actions should feel effortless and immediate. Booking is confirmed in seconds, and weather-related schedule changes are communicated instantly after a manager's decision.
 -   **Guidance:** The system is a proactive guide. It surfaces weather-related issues and suggests solutions, making complex scheduling decisions simple and intuitive.
 -   **Flexibility:** The system prioritizes intelligent automation but always provides manual overrides for the Manager. Customers retain the flexibility to adjust their schedule if an automatic change doesn't suit them.
--   **Feedback:** Communication is key. System-initiated changes are framed positively and reassuringly ("Good news! We found a better time for you."). Standard UI feedback is subtle and responsive.
+-   **Feedback:** Communication is key. System-initiated changes are framed positively and reassuringly ("We found a better time for you."). Standard UI feedback is subtle and responsive.
 
 ### 3.4. User Journeys
 
@@ -145,9 +148,7 @@ These principles will guide every UX decision to ensure a cohesive and high-qual
 
 **User Goal:** To quickly and easily find and book a kite surfing lesson that matches their skill level and schedule.
 
-**Approach:** Single-Page Booking (in a Modal).
-> [!NOTE]
-> **Pending User Validation:** This approach is a proposal. The final interaction model will be confirmed collaboratively.
+**Approach:** Single-Page Booking (in a Modal). This approach was chosen collaboratively for its speed and efficiency, allowing the user to book a lesson without losing the context of their search results.
 
 This approach is chosen for its speed and efficiency, allowing the user to book a lesson without losing the context of their search results.
 
@@ -200,9 +201,7 @@ graph TD
 
 **User Goal:** To easily and quickly add, modify, and view their teaching availability.
 
-**Approach:** Modal Form.
-> [!NOTE]
-> **Pending User Validation:** This approach is a proposal. The final interaction model will be confirmed collaboratively.
+**Approach:** Modal Form. This approach was chosen collaboratively for its consistency with the customer booking flow and for providing a clear, structured way to input availability details.
 
 This approach is chosen for its consistency with the customer booking flow and for providing a clear, structured way to input availability details.
 
@@ -251,9 +250,7 @@ graph TD
 
 **User Goal:** To efficiently handle weather-related schedule changes and ensure lessons happen in the best possible conditions, with minimal disruption to customers and instructors.
 
-**Approach:** Dedicated "Resolution Center" Page.
-> [!NOTE]
-> **Pending User Validation:** This approach is a proposal. The final interaction model will be confirmed collaboratively.
+**Approach:** Dedicated "Resolution Center" Page. This approach was chosen collaboratively to provide a focused workspace for the manager to handle weather-related conflicts, which is scalable and keeps the main dashboard clean.
 
 This approach provides a focused workspace for the manager to handle weather-related conflicts, which is scalable and keeps the main dashboard clean.
 
@@ -309,13 +306,10 @@ graph TD
 
 ## 4. Design Direction & Visual Decisions
 
-### 4.1. Proposed Design Direction
+### 4.1. Chosen Design Direction
 **Direction:** Minimalist Focus
 
-> [!NOTE]
-> **Pending User Validation:** This proposed direction is a starting point. The final direction will be chosen collaboratively after reviewing the 6-8 design mockups in the `ux-design-directions.html` artifact (which still needs to be generated).
-
-This direction prioritizes a clean, unobtrusive interface with minimal distractions, allowing users to focus on the core task of finding and booking lessons. It leverages ample whitespace and a clear visual hierarchy to guide the user's attention.
+This direction was chosen collaboratively after reviewing several mockups in the `ux-design-directions.html` showcase. It prioritizes a clean, unobtrusive interface with minimal distractions, allowing users to focus on the core task of finding and booking lessons. It leverages ample whitespace and a clear visual hierarchy to guide the user's attention.
 
 **Layout Decisions:**
 -   **Navigation Pattern:** Top navigation bar for primary actions, with a hamburger menu for secondary navigation (mobile-first approach).

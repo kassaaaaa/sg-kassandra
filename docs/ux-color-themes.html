@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KiteOps Color Theme Visualizer</title>
+    <style>
+        body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol"; margin: 0; padding: 20px; background-color: #f4f7f6; color: #333; }
+        h1 { text-align: center; color: #0A2540; margin-bottom: 40px; }
+        .theme-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; max-width: 1200px; margin: 0 auto; }
+        .theme-card { background-color: #fff; border-radius: 8px; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08); overflow: hidden; transition: transform 0.2s ease-in-out; }
+        .theme-card:hover { transform: translateY(-5px); }
+        .theme-header { padding: 20px; text-align: center; color: #fff; }
+        .theme-content { padding: 20px; }
+        .color-swatch-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(80px, 1fr)); gap: 10px; margin-bottom: 20px; }
+        .color-swatch { height: 60px; border-radius: 4px; display: flex; align-items: center; justify-content: center; font-size: 12px; color: #fff; text-shadow: 0 1px 2px rgba(0,0,0,0.3); }
+        .color-swatch.dark-text { color: #333; text-shadow: none; }
+        .component-example { margin-bottom: 15px; padding: 10px; border-radius: 4px; border: 1px solid #eee; }
+        .btn { padding: 10px 15px; border: none; border-radius: 5px; cursor: pointer; font-size: 14px; font-weight: 600; transition: background-color 0.2s ease; }
+        .btn-primary { background-color: var(--primary-color); color: var(--surface-color); }
+        .btn-primary:hover { background-color: var(--primary-hover-color); }
+        .btn-secondary { background-color: var(--accent-color); color: var(--surface-color); }
+        .btn-secondary:hover { background-color: var(--accent-hover-color); }
+        .btn-disabled { background-color: var(--neutral-light); color: var(--neutral-dark); cursor: not-allowed; }
+        input[type="text"] { width: calc(100% - 22px); padding: 10px; border: 1px solid var(--neutral-medium); border-radius: 5px; margin-top: 5px; }
+        .card-example { background-color: var(--surface-color); padding: 15px; border-radius: 8px; box-shadow: 0 2px 5px rgba(0,0,0,0.05); color: var(--text-color); }
+        .card-example h4 { margin-top: 0; color: var(--primary-color); }
+        .card-example p { font-size: 13px; line-height: 1.5; color: var(--text-color-body); }
+        .theme-description { font-size: 14px; line-height: 1.6; color: #555; margin-top: 15px; }
+        .theme-personality { font-weight: bold; margin-top: 10px; }
+    </style>
+</head>
+<body>
+    <h1>KiteOps Color Theme Visualizer</h1>
+
+    <div class="theme-grid">
+
+        <!-- Theme 1: Professional & Trustworthy -->
+        <div class="theme-card" style="--primary-color: #0A2540; --primary-hover-color: #071a2e; --accent-color: #4A90E2; --accent-hover-color: #3a7bd9; --background-color: #F5F5F5; --surface-color: #FFFFFF; --text-color: #111111; --text-color-body: #555555; --neutral-light: #E0E0E0; --neutral-medium: #999999; --neutral-dark: #555555; --success-color: #28a745; --warning-color: #ffc107; --error-color: #dc3545;">
+            <div class="theme-header" style="background-color: var(--primary-color);">
+                <h2>1. Professional & Trustworthy</h2>
+            </div>
+            <div class="theme-content">
+                <div class="color-swatch-grid">
+                    <div class="color-swatch" style="background-color: var(--primary-color);">Primary</div>
+                    <div class="color-swatch" style="background-color: var(--accent-color);">Accent</div>
+                    <div class="color-swatch" style="background-color: var(--success-color);">Success</div>
+                    <div class="color-swatch dark-text" style="background-color: var(--warning-color);">Warning</div>
+                    <div class="color-swatch" style="background-color: var(--error-color);">Error</div>
+                    <div class="color-swatch dark-text" style="background-color: var(--background-color);">Background</div>
+                    <div class="color-swatch dark-text" style="background-color: var(--surface-color);">Surface</div>
+                    <div class="color-swatch" style="background-color: var(--text-color);">Text</div>
+                </div>
+                <div class="component-example">
+                    <button class="btn btn-primary">Primary Action</button>
+                    <button class="btn btn-secondary">Secondary Action</button>
+                    <button class="btn btn-disabled">Disabled</button>
+                </div>
+                <div class="component-example">
+                    <input type="text" placeholder="Text Input Example" style="color: var(--text-color);">
+                </div>
+                <div class="card-example">
+                    <h4>Lesson Reminder</h4>
+                    <p>Your lesson is scheduled for tomorrow at 10 AM. Don't forget your gear!</p>
+                </div>
+                <div class="theme-description">
+                    <p>This theme uses deep, authoritative blues and clean neutrals to convey reliability and professionalism. The accent blue adds a touch of modern clarity without being overly playful.</p>
+                    <p class="theme-personality">Personality: Reliable, Efficient, Secure</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Theme 2: Energetic & Modern -->
+        <div class="theme-card" style="--primary-color: #00C49A; --primary-hover-color: #00a882; --accent-color: #FF6B6B; --accent-hover-color: #ff4f4f; --background-color: #FFFFFF; --surface-color: #F8F8F8; --text-color: #222222; --text-color-body: #666666; --neutral-light: #EEEEEE; --neutral-medium: #AAAAAA; --neutral-dark: #666666; --success-color: #28a745; --warning-color: #ffc107; --error-color: #dc3545;">
+            <div class="theme-header" style="background-color: var(--primary-color);">
+                <h2>2. Energetic & Modern</h2>
+            </div>
+            <div class="theme-content">
+                <div class="color-swatch-grid">
+                    <div class="color-swatch" style="background-color: var(--primary-color);">Primary</div>
+                    <div class="color-swatch" style="background-color: var(--accent-color);">Accent</div>
+                    <div class="color-swatch" style="background-color: var(--success-color);">Success</div>
+                    <div class="color-swatch dark-text" style="background-color: var(--warning-color);">Warning</div>
+                    <div class="color-swatch" style="background-color: var(--error-color);">Error</div>
+                    <div class="color-swatch dark-text" style="background-color: var(--background-color);">Background</div>
+                    <div class="color-swatch dark-text" style="background-color: var(--surface-color);">Surface</div>
+                    <div class="color-swatch" style="background-color: var(--text-color);">Text</div>
+                </div>
+                <div class="component-example">
+                    <button class="btn btn-primary">Primary Action</button>
+                    <button class="btn btn-secondary">Secondary Action</button>
+                    <button class="btn btn-disabled">Disabled</button>
+                </div>
+                <div class="component-example">
+                    <input type="text" placeholder="Text Input Example" style="color: var(--text-color);">
+                </div>
+                <div class="card-example">
+                    <h4>New Lesson Available!</h4>
+                    <p>Exciting new lesson slots just opened up. Book now before they're gone!</p>
+                </div>
+                <div class="theme-description">
+                    <p>This vibrant theme uses a fresh turquoise as primary, paired with a lively coral red accent. It aims for a dynamic, modern feel that suggests energy and forward-thinking design.</p>
+                    <p class="theme-personality">Personality: Dynamic, Innovative, Engaging</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Theme 3: Calm & Focused -->
+        <div class="theme-card" style="--primary-color: #5B84B1; --primary-hover-color: #4a729e; --accent-color: #8FD14F; --accent-hover-color: #7ac03e; --background-color: #F0F4F8; --surface-color: #FFFFFF; --text-color: #333333; --text-color-body: #777777; --neutral-light: #E8EBF0; --neutral-medium: #BBBBBB; --neutral-dark: #777777; --success-color: #28a745; --warning-color: #ffc107; --error-color: #dc3545;">
+            <div class="theme-header" style="background-color: var(--primary-color);">
+                <h2>3. Calm & Focused</h2>
+            </div>
+            <div class="theme-content">
+                <div class="color-swatch-grid">
+                    <div class="color-swatch" style="background-color: var(--primary-color);">Primary</div>
+                    <div class="color-swatch" style="background-color: var(--accent-color);">Accent</div>
+                    <div class="color-swatch" style="background-color: var(--success-color);">Success</div>
+                    <div class="color-swatch dark-text" style="background-color: var(--warning-color);">Warning</div>
+                    <div class="color-swatch" style="background-color: var(--error-color);">Error</div>
+                    <div class="color-swatch dark-text" style="background-color: var(--background-color);">Background</div>
+                    <div class="color-swatch dark-text" style="background-color: var(--surface-color);">Surface</div>
+                    <div class="color-swatch" style="background-color: var(--text-color);">Text</div>
+                </div>
+                <div class="component-example">
+                    <button class="btn btn-primary">Primary Action</button>
+                    <button class="btn btn-secondary">Secondary Action</button>
+                    <button class="btn btn-disabled">Disabled</button>
+                </div>
+                <div class="component-example">
+                    <input type="text" placeholder="Text Input Example" style="color: var(--text-color);">
+                </div>
+                <div class="card-example">
+                    <h4>Your Schedule Overview</h4>
+                    <p>A clear view of your upcoming lessons and availability for the week.</p>
+                </div>
+                <div class="theme-description">
+                    <p>This theme uses soft, muted blues and greens to create a serene and focused environment. It's designed to reduce cognitive load and promote a sense of calm and clarity for complex tasks.</p>
+                    <p class="theme-personality">Personality: Serene, Clear, Intuitive</p>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</body>
+</html>
