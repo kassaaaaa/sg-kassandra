@@ -30,13 +30,18 @@ KiteOps will be a **web application** with a **responsive design** that works se
 ## 2. Design System & Visual Foundation
 
 ### 2.1. Design System
-**Chosen System:** shadcn/ui
+**Proposed System:** shadcn/ui
+**Version:** CLI v0.8.0 (as of Nov 2025)
 **Rationale:** Selected for its seamless integration with Tailwind CSS and Next.js, providing a highly customizable and performant component foundation. It allows for full control over the codebase, ensuring a unique brand experience while leveraging accessible, well-built components.
+> [!NOTE]
+> **Pending User Validation:** This choice is a proposal. The final decision will be made collaboratively after reviewing the benefits and alternatives.
 
 ### 2.2. Color Palette
-**Chosen Theme:** Professional & Dynamic
+**Proposed Theme:** Professional & Dynamic
 
-A clean, ocean-inspired palette built on neutral sand and deep navy bases, accented by turquoise for energy.
+A clean, ocean-inspired palette built on neutral sand and deep navy bases, accented by turquoise for energy. This theme is a starting point for discussion.
+> [!NOTE]
+> **Pending User Validation:** The final color theme will be selected collaboratively using the `ux-color-themes.html` visualization tool, which still needs to be generated.
 
 -   **Primary (Deep Navy):** `#0A2540` (Used for main actions, key elements, and primary text)
 -   **Accent (Turquoise):** `#00C49A` (Used for accents, secondary actions, and highlighting information)
@@ -49,12 +54,23 @@ A clean, ocean-inspired palette built on neutral sand and deep navy bases, accen
 -   **Warning:** `#ffc107`
 -   **Error:** `#dc3545`
 
+**Accessibility Check (WCAG AA):**
+> [!WARNING]
+> **Verification Required:** The following color combinations must be verified with a reliable contrast checker tool to ensure they meet the WCAG 2.1 AA standard (4.5:1 for normal text, 3:1 for large text).
+> - **Primary on Surface:** `#0A2540` on `#FFFFFF`
+> - **Accent on Surface:** `#00C49A` on `#FFFFFF`
+> - **White text on Primary:** `#FFFFFF` on `#0A2540`
+> - **White text on Accent:** `#FFFFFF` on `#00C49A`
+> - **Headings on Background:** `#111111` on `#F5F5F5`
+> - **Body Text on Background:** `#555555` on `#F5F5F5`
+
 ### 2.3. Typography
 
 - **Font Family (Headings):** "Manrope", a modern, bold, and clean sans-serif font that reflects the brand's personality.
 - **Font Family (Body):** "Inter", a highly readable and versatile sans-serif font suitable for UI text.
 - **Type Scale:** A standard typographic scale will be used to create a clear hierarchy (e.g., h1, h2, h3, p, small).
 - **Font Weights:** A range of font weights (e.g., Regular, Medium, Bold) will be used to add emphasis and structure.
+- **Line Height:** A base line height of **1.5** will be used for body text to ensure readability, with adjustments for headings.
 
 ### 2.4. Spacing and Layout
 
@@ -129,7 +145,11 @@ These principles will guide every UX decision to ensure a cohesive and high-qual
 
 **User Goal:** To quickly and easily find and book a kite surfing lesson that matches their skill level and schedule.
 
-**Approach:** Single-Page Booking (in a Modal). This approach is chosen for its speed and efficiency, allowing the user to book a lesson without losing the context of their search results.
+**Approach:** Single-Page Booking (in a Modal).
+> [!NOTE]
+> **Pending User Validation:** This approach is a proposal. The final interaction model will be confirmed collaboratively.
+
+This approach is chosen for its speed and efficiency, allowing the user to book a lesson without losing the context of their search results.
 
 **Flow Steps:**
 
@@ -180,7 +200,11 @@ graph TD
 
 **User Goal:** To easily and quickly add, modify, and view their teaching availability.
 
-**Approach:** Modal Form. This approach is chosen for its consistency with the customer booking flow and for providing a clear, structured way to input availability details.
+**Approach:** Modal Form.
+> [!NOTE]
+> **Pending User Validation:** This approach is a proposal. The final interaction model will be confirmed collaboratively.
+
+This approach is chosen for its consistency with the customer booking flow and for providing a clear, structured way to input availability details.
 
 **Flow Steps:**
 
@@ -227,7 +251,11 @@ graph TD
 
 **User Goal:** To efficiently handle weather-related schedule changes and ensure lessons happen in the best possible conditions, with minimal disruption to customers and instructors.
 
-**Approach:** Dedicated "Resolution Center" Page. This approach provides a focused workspace for the manager to handle weather-related conflicts, which is scalable and keeps the main dashboard clean.
+**Approach:** Dedicated "Resolution Center" Page.
+> [!NOTE]
+> **Pending User Validation:** This approach is a proposal. The final interaction model will be confirmed collaboratively.
+
+This approach provides a focused workspace for the manager to handle weather-related conflicts, which is scalable and keeps the main dashboard clean.
 
 **Flow Steps:**
 
@@ -281,8 +309,11 @@ graph TD
 
 ## 4. Design Direction & Visual Decisions
 
-### 4.1. Chosen Design Direction
+### 4.1. Proposed Design Direction
 **Direction:** Minimalist Focus
+
+> [!NOTE]
+> **Pending User Validation:** This proposed direction is a starting point. The final direction will be chosen collaboratively after reviewing the 6-8 design mockups in the `ux-design-directions.html` artifact (which still needs to be generated).
 
 This direction prioritizes a clean, unobtrusive interface with minimal distractions, allowing users to focus on the core task of finding and booking lessons. It leverages ample whitespace and a clear visual hierarchy to guide the user's attention.
 
@@ -313,6 +344,14 @@ This direction prioritizes a clean, unobtrusive interface with minimal distracti
 ### 5.1. Component Library Strategy
 We will leverage `shadcn/ui` for standard UI components, which provides a robust and accessible foundation that integrates seamlessly with Tailwind CSS. This allows us to focus our custom design efforts on unique components that directly support KiteOps' core functionality.
 
+### 5.1.1. Customization Needs
+While `shadcn/ui` provides an excellent base, some components will require specific styling overrides to align with our brand identity. This includes:
+-   **Buttons:** Customizing the corner radius and hover/focus states to match our design direction.
+-   **Inputs:** Adjusting the color and thickness of borders to align with the palette.
+-   **Modals:** Ensuring the overlay color and border styles are consistent with the overall theme.
+> [!NOTE]
+> This list is not exhaustive and will be updated as the high-fidelity design process progresses.
+
 ### 5.2. Custom Component Design
 
 #### 5.2.1. Lesson Card
@@ -333,7 +372,14 @@ We will leverage `shadcn/ui` for standard UI components, which provides a robust
 -   **Time Slot Selection:** Clicking an available time slot within the card marks it as selected. Only one time slot can be selected per lesson card at a time.
 -   **Booking Initiation:** Once a time slot is selected, a clear call-to-action (e.g., a "Book Now" button, possibly at the bottom of the card or a floating action button) becomes active, leading to the booking modal.
 
-**Variants:** Not applicable at this stage; a single, responsive design will be prioritized.
+**Variants:**
+-   **Standard:** Default card view.
+-   **Featured:** A variant with a "Featured" badge or slightly different background color could be used to highlight specific lessons. (Future consideration).
+
+**Accessibility:**
+-   **Focus Order:** The card will be navigable via keyboard, with a logical focus order moving from the lesson name to the time slots and then to the book button.
+-   **ARIA Attributes:** Time slots will use `role="radio"` and be part of a `role="radiogroup"` to ensure they are understood by screen readers. The selected state will be communicated using `aria-checked="true"`.
+-   **Contrast:** Text and background colors will adhere to WCAG AA contrast requirements.
 
 #### 5.2.2. Availability Calendar (Instructor)
 
@@ -358,6 +404,16 @@ We will leverage `shadcn/ui` for standard UI components, which provides a robust
 -   **Blocking Time:** Triggers the "Block Day" modal/popover.
 -   **Detail View:** Clicking on a lesson or availability block reveals more information or editing options.
 
+**Variants:**
+-   **Weekly View:** The default view, showing a full week at a glance.
+-   **Monthly View:** A higher-level overview of the month.
+-   **Daily View:** A detailed, hour-by-hour view for a specific day.
+
+**Accessibility:**
+-   **Keyboard Navigation:** The calendar grid, including all events and buttons, will be fully navigable using the keyboard (arrow keys for dates, tab for events).
+-   **ARIA Attributes:** The calendar will use a `grid` role, and events will be announced clearly by screen readers (e.g., "Lesson: Beginner Kiteboarding, 10 AM to 12 PM").
+-   **Live Regions:** Updates to the calendar (e.g., adding a new availability slot) will be announced using ARIA live regions.
+
 #### 5.2.3. Weather Conflict Card (Manager)
 
 **Purpose:** To provide managers with a clear, actionable alert for weather-related lesson conflicts, enabling quick and informed resolution.
@@ -380,58 +436,73 @@ We will leverage `shadcn/ui` for standard UI components, which provides a robust
 
 **Variants:** Not applicable.
 
-#### 5.2.3. Weather Conflict Card (Manager)
-*This section will be filled in during the design process.*
+**Accessibility:**
+-   **Focus Management:** When a card is interacted with, focus will be managed logically between the details and the action buttons.
+-   **Alerts:** The appearance of a new conflict card will be announced via an ARIA live region to ensure managers are aware of urgent issues.
+-   **Descriptive Text:** Buttons will have descriptive `aria-label` attributes if their visible text is not sufficient (e.g., `aria-label="Automatically rebook lesson for John Doe"`).
+
+
 
 ## 6. UX Pattern Decisions & Consistency Rules
 
 To ensure a consistent and intuitive user experience across KiteOps, the following UX patterns will be adopted:
 
 ### 6.1. Button Hierarchy
--   **Primary Action:** Solid, dark background (`#0A2540`) with white text. Used for the single most important action on a screen (e.g., "Confirm Booking", "Save Changes").
--   **Secondary Action:** Light gray background (`#E0E0E0`) with dark text. Used for supporting actions that are less prominent than the primary action (e.g., "View Details", "Cancel").
--   **Tertiary/Link Action:** No background, just colored text (Accent Turquoise: `#00C49A`). Used for less critical actions or navigation within content.
--   **Destructive Action:** Solid red background (`#dc3545`) with white text. Used for actions that permanently delete or remove data (e.g., "Delete Account", "Cancel Lesson").
+-   **Primary Action:** Solid, dark background (`#0A2540`) with white text. Used for the single most important action on a screen.
+    -   *Example:* The "Confirm Booking" button in the booking modal.
+-   **Secondary Action:** Light gray background (`#E0E0E0`) with dark text. Used for supporting actions.
+    -   *Example:* A "View Details" button on a lesson card.
+-   **Tertiary/Link Action:** No background, just colored text (Accent Turquoise: `#00C49A`). Used for less critical actions or navigation.
+    -   *Example:* A "Forgot Password?" link on the login page.
+-   **Destructive Action:** Solid red background (`#dc3545`) with white text. Used for actions that permanently delete data.
+    -   *Example:* The final "Yes, Cancel Lesson" button in a confirmation modal.
 
 ### 6.2. Feedback Patterns
--   **Success:** A green toast/snackbar notification appearing briefly at the bottom-right of the screen (e.g., "Booking Confirmed!").
+-   **Success:** A green toast/snackbar notification appearing briefly at the bottom-right of the screen.
+    -   *Example:* "Booking Confirmed!" after a successful booking.
 -   **Error (Validation):** Inline error messages displayed directly below the relevant form field in red text.
--   **Error (System):** A red toast/snackbar notification for system-level errors or failures.
--   **Loading:** A subtle spinner or skeleton loader will be used for content that is actively loading, providing visual feedback without blocking interaction.
+    -   *Example:* "Please enter a valid email address." below the email input field.
+-   **Error (System):** A red toast/snackbar notification for system-level errors.
+    -   *Example:* "Could not connect to the server. Please try again later."
+-   **Loading:** A subtle spinner or skeleton loader will be used for content that is actively loading.
+    -   *Example:* Displaying shimmering placeholder cards while search results are being fetched.
 
 ### 6.3. Form Patterns
 -   **Label Position:** Labels will be placed above their corresponding input fields for clear association and readability.
 -   **Required Field Indicator:** An asterisk (*) will denote required fields.
--   **Validation Timing:** Form validation will occur on blur (when the user leaves an input field) to provide immediate feedback without interrupting typing.
+-   **Validation Timing:** Form validation will occur on blur (when the user leaves an input field) to provide immediate feedback.
 -   **Error Display:** Inline error messages will appear below the input field in red text.
 
 ### 6.4. Modal Patterns
--   **Size Variants:** A standard medium size will be used for most modals, with larger variants available for more complex interactions if necessary.
--   **Dismiss Behavior:** Modals can be dismissed by clicking the "X" icon in the corner, pressing the Escape key, or clicking the overlay outside the modal content.
--   **Focus Management:** Focus will be programmatically trapped within the modal when it is open, ensuring accessibility and preventing accidental interaction with background elements.
+-   **Size Variants:** A standard medium size will be used for most modals.
+-   **Dismiss Behavior:** Modals can be dismissed by clicking the "X" icon, pressing the Escape key, or clicking the overlay.
+-   **Focus Management:** Focus will be programmatically trapped within the modal when it is open.
 
 ### 6.5. Navigation Patterns
--   **Active State Indication:** The currently active navigation item will be clearly highlighted with a visual cue (e.g., bold text, a colored underline, or a background fill) using the Accent (Turquoise) color.
--   **Back Button Behavior:** The browser's back button will function as expected, allowing users to navigate back through their history.
+-   **Active State Indication:** The currently active navigation item will be clearly highlighted with a visual cue (e.g., bold text, a colored underline).
+-   **Back Button Behavior:** The browser's back button will function as expected.
 
 ### 6.6. Empty State Patterns
--   **First Use:** A welcoming message with clear instructions and a primary call-to-action to guide new users (e.g., "Welcome! Start by adding your first lesson.").
--   **No Results:** A helpful message explaining why no content is displayed and suggesting alternative actions (e.g., "No lessons found for this date. Try adjusting your filters or searching another day.").
+-   **First Use:** A welcoming message with clear instructions and a primary call-to-action.
+    -   *Example:* On an instructor's empty calendar, show "Welcome! Add your availability to start getting booked." with an "Add Availability" button.
+-   **No Results:** A helpful message explaining why no content is displayed and suggesting alternative actions.
+    -   *Example:* "No lessons found for this date. Try adjusting your filters or searching another day."
 
 ### 6.7. Confirmation Patterns
--   **Destructive Actions:** All destructive actions (e.g., deleting a lesson, canceling an account) will require explicit confirmation via a modal dialog, clearly stating the action and its consequences.
+-   **Destructive Actions:** All destructive actions will require explicit confirmation via a modal dialog.
+    -   *Example:* A modal asking "Are you sure you want to cancel this lesson? This action cannot be undone."
 
 ### 6.8. Notification Patterns
 -   **Placement:** Toast/snackbar notifications will appear in the bottom-right corner of the screen.
--   **Duration:** Notifications will auto-dismiss after 5 seconds but can be manually closed by the user.
+-   **Duration:** Notifications will auto-dismiss after 5 seconds but can be manually closed.
 
 ### 6.9. Search Patterns
--   **Trigger:** Search will be initiated manually by clicking a "Search" button after entering criteria.
+-   **Trigger:** Search will be initiated manually by clicking a "Search" button.
 -   **Results Display:** Search results will be displayed on the same page, dynamically updating below the search form.
 
 ### 6.10. Date/Time Patterns
 -   **Format:** Dates and times will be displayed in a user-friendly, localized format (e.g., "Nov 15, 2025, 10:00 AM").
--   **Timezone Handling:** Timezones will be clearly indicated where relevant, especially for instructors and managers managing schedules across different locations.
+-   **Timezone Handling:** Timezones will be clearly indicated where relevant.
 
 ## 7. Responsive & Accessibility Strategy
 
@@ -459,9 +530,35 @@ Accessibility is a core principle of the UX design. KiteOps will adhere to the *
     -   **Focus Indicators:** A clear and visible focus state will be provided for all interactive elements.
     -   **Semantic HTML:** HTML5 elements (`<nav>`, `<main>`, `<button>`, etc.) will be used appropriately to provide semantic meaning and structure.
     -   **ARIA Roles:** ARIA (Accessible Rich Internet Applications) attributes will be used where necessary to enhance the accessibility of custom and dynamic components.
+        -   **Screen Reader Considerations:** Content will be structured logically to be easily interpreted by screen readers. Dynamic content changes will be announced using ARIA live regions. All controls will have clear, descriptive labels.
     -   **Alt Text:** All meaningful images will have descriptive alternative text.
     -   **Form Labels:** All form inputs will have properly associated labels.
-
--   **Testing Strategy:**
-    -   **Automated:** Lighthouse and axe DevTools will be used for automated accessibility checks.
-    -   **Manual:** Regular manual testing will be conducted for keyboard navigation and screen reader compatibility (e.g., using VoiceOver or NVDA).
+    
+    -   **Testing Strategy:**
+        -   **Automated:** Lighthouse and axe DevTools will be used for automated accessibility checks.
+        -   **Manual:** Regular manual testing will be conducted for keyboard navigation and screen reader compatibility (e.g., using VoiceOver or NVDA).
+    
+    ## 8. Cross-Workflow Alignment
+    
+    > [!WARNING]
+    > **Action Required:** This section is a placeholder. The validation report identified that the impact of this UX design on the project's epics and user stories has not been assessed.
+    
+    This UX design process has implications for the project's epics and user stories. The following items need to be reviewed and updated in the `epics.md` file:
+    
+    -   **New User Stories:** Have any new user stories been identified as a result of designing the user journeys? (e.g., a story for the manager's "Resolution Center").
+    -   **Updated User Stories:** Do any existing stories need to be updated with more specific acceptance criteria based on the UX patterns defined here?
+    -   **Epics:** Does the detailed UX design impact how any of the major epics are structured or prioritized?
+    
+    A thorough review of `epics.md` against this specification is required before implementation begins.
+    
+    ## 9. Appendices
+    
+    ### 9.1. Missing Collaborative Artifacts
+    
+    > [!IMPORTANT]
+    > The validation report noted a critical failure: the primary visual collaboration artifacts were not generated. The following files must be created by running the `*create-design` workflow and used in a collaborative session with the user to finalize the visual design:
+    >
+    > -   `ux-color-themes.html`: An interactive visualizer to explore and select the final color palette.
+    > -   `ux-design-directions.html`: A presentation of 6-8 distinct design mockups to facilitate the selection of the final design direction.
+    >
+    > The choices for color and design direction in this document are **proposals** and are not final until this collaborative step is completed.
