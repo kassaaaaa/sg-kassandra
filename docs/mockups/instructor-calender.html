@@ -117,11 +117,11 @@
 </div>
 <h1 class="text-text-heading text-xl font-bold leading-tight tracking-[-0.015em] font-heading dark:text-white">November 10 – 16, 2025</h1>
 </div>
-<div class="flex bg-gray-100 p-1 rounded-lg dark:bg-gray-800">
-<button class="px-3 py-1 text-sm font-medium text-text-body rounded-md dark:text-gray-400">Month</button>
-<button class="px-3 py-1 text-sm font-medium text-primary bg-surface rounded-md shadow-sm dark:bg-gray-700 dark:text-white">Week</button>
-<button class="px-3 py-1 text-sm font-medium text-text-body rounded-md dark:text-gray-400">Day</button>
-<button class="px-3 py-1 text-sm font-medium text-text-body rounded-md dark:text-gray-400">Agenda</button>
+<div id="view-selector" class="flex bg-gray-100 p-1 rounded-lg dark:bg-gray-800">
+<button id="month-view-btn" class="px-3 py-1 text-sm font-medium text-text-body rounded-md dark:text-gray-400">Month</button>
+<button id="week-view-btn" class="px-3 py-1 text-sm font-medium text-text-body rounded-md dark:text-gray-400">Week</button>
+<button id="day-view-btn" class="px-3 py-1 text-sm font-medium text-text-body rounded-md dark:text-gray-400">Day</button>
+<button id="agenda-view-btn" class="px-3 py-1 text-sm font-medium text-text-body rounded-md dark:text-gray-400">Agenda</button>
 </div>
 </div>
 <div class="flex flex-wrap items-center gap-4 py-2 mb-4">
@@ -130,112 +130,265 @@
 <div class="flex items-center gap-2"><div class="size-3 rounded-sm bg-available border border-available-border"></div><span class="text-xs text-text-body dark:text-gray-400">Available</span></div>
 <div class="flex items-center gap-2"><div class="size-3 rounded-sm bg-blocked pattern-diagonal-lines"></div><span class="text-xs text-text-body dark:text-gray-400">Blocked</span></div>
 </div>
-<div class="flex-1 grid grid-cols-[auto,1fr] bg-surface rounded-xl border border-border-light overflow-hidden dark:bg-background-dark dark:border-gray-700">
-<div class="grid grid-rows-[auto,repeat(12,1fr)] border-r border-border-light dark:border-gray-700">
-<div class="h-12"></div> 
-<div class="flex justify-end pr-2 -mt-3"><span class="text-xs text-gray-400">8 AM</span></div>
-<div class="flex justify-end pr-2 -mt-3"><span class="text-xs text-gray-400">9 AM</span></div>
-<div class="flex justify-end pr-2 -mt-3"><span class="text-xs text-gray-400">10 AM</span></div>
-<div class="flex justify-end pr-2 -mt-3"><span class="text-xs text-gray-400">11 AM</span></div>
-<div class="flex justify-end pr-2 -mt-3"><span class="text-xs text-gray-400">12 PM</span></div>
-<div class="flex justify-end pr-2 -mt-3"><span class="text-xs text-gray-400">1 PM</span></div>
-<div class="flex justify-end pr-2 -mt-3"><span class="text-xs text-gray-400">2 PM</span></div>
-<div class="flex justify-end pr-2 -mt-3"><span class="text-xs text-gray-400">3 PM</span></div>
-<div class="flex justify-end pr-2 -mt-3"><span class="text-xs text-gray-400">4 PM</span></div>
-<div class="flex justify-end pr-2 -mt-3"><span class="text-xs text-gray-400">5 PM</span></div>
-<div class="flex justify-end pr-2 -mt-3"><span class="text-xs text-gray-400">6 PM</span></div>
-<div class="flex justify-end pr-2 -mt-3"><span class="text-xs text-gray-400">7 PM</span></div>
-</div>
-<div class="grid grid-cols-7">
-<div class="flex flex-col border-r border-border-light dark:border-gray-700">
-<div class="h-12 flex flex-col items-center justify-center border-b border-border-light dark:border-gray-700"><span class="text-sm font-medium text-text-body dark:text-gray-400">Mon</span><span class="text-lg font-bold text-text-heading dark:text-white">10</span></div>
-<div class="relative grid grid-rows-12 h-[720px]">
-<div class="row-span-12 border-t border-dashed border-border-light dark:border-gray-700/50 -mt-px"></div>
-<div class="row-start-2 row-span-1 border-t border-dashed border-border-light dark:border-gray-700/50"></div>
-<div class="row-start-3 row-span-1 border-t border-dashed border-border-light dark:border-gray-700/50"></div>
-<div class="row-start-4 row-span-1 border-t border-dashed border-border-light dark:border-gray-700/50"></div>
-<div class="row-start-5 row-span-1 border-t border-dashed border-border-light dark:border-gray-700/50"></div>
-<div class="row-start-6 row-span-1 border-t border-dashed border-border-light dark:border-gray-700/50"></div>
-<div class="row-start-7 row-span-1 border-t border-dashed border-border-light dark:border-gray-700/50"></div>
-<div class="row-start-8 row-span-1 border-t border-dashed border-border-light dark:border-gray-700/50"></div>
-<div class="row-start-9 row-span-1 border-t border-dashed border-border-light dark:border-gray-700/50"></div>
-<div class="row-start-10 row-span-1 border-t border-dashed border-border-light dark:border-gray-700/50"></div>
-<div class="row-start-11 row-span-1 border-t border-dashed border-border-light dark:border-gray-700/50"></div>
-<div class="row-start-12 row-span-1 border-t border-dashed border-border-light dark:border-gray-700/50"></div>
-<div class="absolute top-[calc(2/12*100%)] h-[calc(2/12*100%)] w-full p-1">
-<div class="bg-accent rounded-md p-2 h-full flex flex-col justify-center text-white overflow-hidden">
-<p class="text-xs font-bold truncate">Advanced Hydrofoil</p>
-<p class="text-xs truncate">Jane Doe</p>
-</div>
-</div>
-</div>
-</div>
-<div class="flex flex-col border-r border-border-light dark:border-gray-700">
-<div class="h-12 flex flex-col items-center justify-center border-b border-border-light dark:border-gray-700"><span class="text-sm font-medium text-text-body dark:text-gray-400">Tue</span><span class="text-lg font-bold text-text-heading dark:text-white">11</span></div>
-<div class="relative grid grid-rows-12 h-[720px]">
-<div class="row-span-12 border-t border-dashed border-border-light dark:border-gray-700/50 -mt-px"></div><div class="row-start-2 row-span-1 border-t border-dashed border-border-light dark:border-gray-700/50"></div><div class="row-start-3 row-span-1 border-t border-dashed border-border-light dark:border-gray-700/50"></div><div class="row-start-4 row-span-1 border-t border-dashed border-border-light dark:border-gray-700/50"></div><div class="row-start-5 row-span-1 border-t border-dashed border-border-light dark:border-gray-700/50"></div><div class="row-start-6 row-span-1 border-t border-dashed border-border-light dark:border-gray-700/50"></div><div class="row-start-7 row-span-1 border-t border-dashed border-border-light dark:border-gray-700/50"></div><div class="row-start-8 row-span-1 border-t border-dashed border-border-light dark:border-gray-700/50"></div><div class="row-start-9 row-span-1 border-t border-dashed border-border-light dark:border-gray-700/50"></div><div class="row-start-10 row-span-1 border-t border-dashed border-border-light dark:border-gray-700/50"></div><div class="row-start-11 row-span-1 border-t border-dashed border-border-light dark:border-gray-700/50"></div><div class="row-start-12 row-span-1 border-t border-dashed border-border-light dark:border-gray-700/50"></div>
-<div class="absolute top-[calc(0/12*100%)] h-[calc(3/12*100%)] w-full p-1">
-<div class="bg-blocked pattern-diagonal-lines rounded-md p-2 h-full flex flex-col justify-center text-text-body overflow-hidden">
-<p class="text-xs font-bold truncate">Personal Time</p>
-</div>
-</div>
-</div>
-</div>
-<div class="flex flex-col border-r border-border-light dark:border-gray-700">
-<div class="h-12 flex flex-col items-center justify-center border-b border-border-light dark:border-gray-700"><span class="text-sm font-medium text-text-body dark:text-gray-400">Wed</span><span class="text-lg font-bold text-text-heading dark:text-white">12</span></div>
-<div class="relative grid grid-rows-12 h-[720px]">
-<div class="row-span-12 border-t border-dashed border-border-light dark:border-gray-700/50 -mt-px"></div><div class="row-start-2 row-span-1 border-t border-dashed border-border-light dark:border-gray-700/50"></div><div class="row-start-3 row-span-1 border-t border-dashed border-border-light dark:border-gray-700/50"></div><div class="row-start-4 row-span-1 border-t border-dashed border-border-light dark:border-gray-700/50"></div><div class="row-start-5 row-span-1 border-t border-dashed border-border-light dark:border-gray-700/50"></div><div class="row-start-6 row-span-1 border-t border-dashed border-border-light dark:border-gray-700/50"></div><div class="row-start-7 row-span-1 border-t border-dashed border-border-light dark:border-gray-700/50"></div><div class="row-start-8 row-span-1 border-t border-dashed border-border-light dark:border-gray-700/50"></div><div class="row-start-9 row-span-1 border-t border-dashed border-border-light dark:border-gray-700/50"></div><div class="row-start-10 row-span-1 border-t border-dashed border-border-light dark:border-gray-700/50"></div><div class="row-start-11 row-span-1 border-t border-dashed border-border-light dark:border-gray-700/50"></div><div class="row-start-12 row-span-1 border-t border-dashed border-border-light dark:border-gray-700/50"></div>
-<div class="absolute top-[calc(4/12*100%)] h-[calc(2/12*100%)] w-full p-1">
-<div class="bg-pending rounded-md p-2 h-full flex flex-col justify-center text-yellow-900 overflow-hidden">
-<p class="text-xs font-bold truncate">Beginner Lesson</p>
-<p class="text-xs truncate">Mike Smith</p>
-<p class="text-xs font-semibold mt-1">Pending</p>
-</div>
-</div>
-</div>
-</div>
-<div class="flex flex-col border-r border-border-light dark:border-gray-700">
-<div class="h-12 flex flex-col items-center justify-center border-b border-border-light dark:border-gray-700"><span class="text-sm font-medium text-text-body dark:text-gray-400">Thu</span><span class="text-lg font-bold text-text-heading dark:text-white">13</span></div>
-<div class="relative grid grid-rows-12 h-[720px]">
-<div class="row-span-12 border-t border-dashed border-border-light dark:border-gray-700/50 -mt-px"></div><div class="row-start-2 row-span-1 border-t border-dashed border-border-light dark:border-gray-700/50"></div><div class="row-start-3 row-span-1 border-t border-dashed border-border-light dark:border-gray-700/50"></div><div class="row-start-4 row-span-1 border-t border-dashed border-border-light dark:border-gray-700/50"></div><div class="row-start-5 row-span-1 border-t border-dashed border-border-light dark:border-gray-700/50"></div><div class="row-start-6 row-span-1 border-t border-dashed border-border-light dark:border-gray-700/50"></div><div class="row-start-7 row-span-1 border-t border-dashed border-border-light dark:border-gray-700/50"></div><div class="row-start-8 row-span-1 border-t border-dashed border-border-light dark:border-gray-700/50"></div><div class="row-start-9 row-span-1 border-t border-dashed border-border-light dark:border-gray-700/50"></div><div class="row-start-10 row-span-1 border-t border-dashed border-border-light dark:border-gray-700/50"></div><div class="row-start-11 row-span-1 border-t border-dashed border-border-light dark:border-gray-700/50"></div><div class="row-start-12 row-span-1 border-t border-dashed border-border-light dark:border-gray-700/50"></div>
-</div>
-</div>
-<div class="flex flex-col border-r border-border-light dark:border-gray-700">
-<div class="h-12 flex flex-col items-center justify-center border-b border-border-light dark:border-gray-700"><span class="text-sm font-medium text-text-body dark:text-gray-400">Fri</span><span class="text-lg font-bold text-text-heading dark:text-white">14</span></div>
-<div class="relative grid grid-rows-12 h-[720px]">
-<div class="row-span-12 border-t border-dashed border-border-light dark:border-gray-700/50 -mt-px"></div><div class="row-start-2 row-span-1 border-t border-dashed border-border-light dark:border-gray-700/50"></div><div class="row-start-3 row-span-1 border-t border-dashed border-border-light dark:border-gray-700/50"></div><div class="row-start-4 row-span-1 border-t border-dashed border-border-light dark:border-gray-700/50"></div><div class="row-start-5 row-span-1 border-t border-dashed border-border-light dark:border-gray-700/50"></div><div class="row-start-6 row-span-1 border-t border-dashed border-border-light dark:border-gray-700/50"></div><div class="row-start-7 row-span-1 border-t border-dashed border-border-light dark:border-gray-700/50"></div><div class="row-start-8 row-span-1 border-t border-dashed border-border-light dark:border-gray-700/50"></div><div class="row-start-9 row-span-1 border-t border-dashed border-border-light dark:border-gray-700/50"></div><div class="row-start-10 row-span-1 border-t border-dashed border-border-light dark:border-gray-700/50"></div><div class="row-start-11 row-span-1 border-t border-dashed border-border-light dark:border-gray-700/50"></div><div class="row-start-12 row-span-1 border-t border-dashed border-border-light dark:border-gray-700/50"></div>
-<div class="absolute top-[calc(1/12*100%)] h-[calc(3/12*100%)] w-full p-1">
-<div class="bg-accent rounded-md p-2 h-full flex flex-col justify-center text-white overflow-hidden">
-<p class="text-xs font-bold truncate">Group Lesson</p>
-<p class="text-xs truncate">3 students</p>
-</div>
-</div>
-</div>
-</div>
-<div class="flex flex-col border-r border-border-light dark:border-gray-700">
-<div class="h-12 flex flex-col items-center justify-center border-b border-border-light dark:border-gray-700"><span class="text-sm font-medium text-text-body dark:text-gray-400">Sat</span><span class="text-lg font-bold text-accent">15</span></div>
-<div class="relative grid grid-rows-12 h-[720px]">
-<div class="row-span-12 border-t border-dashed border-border-light dark:border-gray-700/50 -mt-px"></div><div class="row-start-2 row-span-1 border-t border-dashed border-border-light dark:border-gray-700/50"></div><div class="row-start-3 row-span-1 border-t border-dashed border-border-light dark:border-gray-700/50"></div><div class="row-start-4 row-span-1 border-t border-dashed border-border-light dark:border-gray-700/50"></div><div class="row-start-5 row-span-1 border-t border-dashed border-border-light dark:border-gray-700/50"></div><div class="row-start-6 row-span-1 border-t border-dashed border-border-light dark:border-gray-700/50"></div><div class="row-start-7 row-span-1 border-t border-dashed border-border-light dark:border-gray-700/50"></div><div class="row-start-8 row-span-1 border-t border-dashed border-border-light dark:border-gray-700/50"></div><div class="row-start-9 row-span-1 border-t border-dashed border-border-light dark:border-gray-700/50"></div><div class="row-start-10 row-span-1 border-t border-dashed border-border-light dark:border-gray-700/50"></div><div class="row-start-11 row-span-1 border-t border-dashed border-border-light dark:border-gray-700/50"></div><div class="row-start-12 row-span-1 border-t border-dashed border-border-light dark:border-gray-700/50"></div>
-<div class="absolute top-0 h-full w-full p-1 flex flex-col gap-1">
-<div class="bg-available border-2 border-dashed border-available-border rounded-md p-2 h-full flex flex-col items-center justify-center text-green-800 overflow-hidden">
-<p class="text-xs font-bold truncate">Available</p>
-</div>
-</div>
-</div>
-</div>
-<div class="flex flex-col">
-<div class="h-12 flex flex-col items-center justify-center border-b border-border-light dark:border-gray-700"><span class="text-sm font-medium text-text-body dark:text-gray-400">Sun</span><span class="text-lg font-bold text-accent">16</span></div>
-<div class="relative grid grid-rows-12 h-[720px]">
-<div class="row-span-12 border-t border-dashed border-border-light dark:border-gray-700/50 -mt-px"></div><div class="row-start-2 row-span-1 border-t border-dashed border-border-light dark:border-gray-700/50"></div><div class="row-start-3 row-span-1 border-t border-dashed border-border-light dark:border-gray-700/50"></div><div class="row-start-4 row-span-1 border-t border-dashed border-border-light dark:border-gray-700/50"></div><div class="row-start-5 row-span-1 border-t border-dashed border-border-light dark:border-gray-700/50"></div><div class="row-start-6 row-span-1 border-t border-dashed border-border-light dark:border-gray-700/50"></div><div class="row-start-7 row-span-1 border-t border-dashed border-border-light dark:border-gray-700/50"></div><div class="row-start-8 row-span-1 border-t border-dashed border-border-light dark:border-gray-700/50"></div><div class="row-start-9 row-span-1 border-t border-dashed border-border-light dark:border-gray-700/50"></div><div class="row-start-10 row-span-1 border-t border-dashed border-border-light dark:border-gray-700/50"></div><div class="row-start-11 row-span-1 border-t border-dashed border-border-light dark:border-gray-700/50"></div><div class="row-start-12 row-span-1 border-t border-dashed border-border-light dark:border-gray-700/50"></div>
-<div class="absolute top-0 h-full w-full p-1 flex flex-col gap-1">
-<div class="bg-available border-2 border-dashed border-available-border rounded-md p-2 h-full flex flex-col items-center justify-center text-green-800 overflow-hidden">
-<p class="text-xs font-bold truncate">Available</p>
-</div>
-</div>
-</div>
-</div>
-</div>
+<div class="flex-1">
+    <!-- Week View (Visible by default) -->
+    <div id="week-view" class="grid grid-cols-[auto,1fr] bg-surface rounded-xl border border-border-light overflow-hidden dark:bg-background-dark dark:border-gray-700">
+        <div class="grid grid-rows-[auto,repeat(12,1fr)] border-r border-border-light dark:border-gray-700">
+            <div class="h-12"></div>
+            <div class="flex justify-end pr-2 -mt-3"><span class="text-xs text-gray-400">8 AM</span></div>
+            <div class="flex justify-end pr-2 -mt-3"><span class="text-xs text-gray-400">9 AM</span></div>
+            <div class="flex justify-end pr-2 -mt-3"><span class="text-xs text-gray-400">10 AM</span></div>
+            <div class="flex justify-end pr-2 -mt-3"><span class="text-xs text-gray-400">11 AM</span></div>
+            <div class="flex justify-end pr-2 -mt-3"><span class="text-xs text-gray-400">12 PM</span></div>
+            <div class="flex justify-end pr-2 -mt-3"><span class="text-xs text-gray-400">1 PM</span></div>
+            <div class="flex justify-end pr-2 -mt-3"><span class="text-xs text-gray-400">2 PM</span></div>
+            <div class="flex justify-end pr-2 -mt-3"><span class="text-xs text-gray-400">3 PM</span></div>
+            <div class="flex justify-end pr-2 -mt-3"><span class="text-xs text-gray-400">4 PM</span></div>
+            <div class="flex justify-end pr-2 -mt-3"><span class="text-xs text-gray-400">5 PM</span></div>
+            <div class="flex justify-end pr-2 -mt-3"><span class="text-xs text-gray-400">6 PM</span></div>
+            <div class="flex justify-end pr-2 -mt-3"><span class="text-xs text-gray-400">7 PM</span></div>
+        </div>
+        <div class="grid grid-cols-7">
+            <div class="flex flex-col border-r border-border-light dark:border-gray-700">
+                <div class="h-12 flex flex-col items-center justify-center border-b border-border-light dark:border-gray-700"><span class="text-sm font-medium text-text-body dark:text-gray-400">Mon</span><span class="text-lg font-bold text-text-heading dark:text-white">10</span></div>
+                <div class="relative grid grid-rows-12 h-[720px]">
+                    <div class="row-span-12 border-t border-dashed border-border-light dark:border-gray-700/50 -mt-px"></div>
+                    <div class="row-start-2 row-span-1 border-t border-dashed border-border-light dark:border-gray-700/50"></div>
+                    <div class="row-start-3 row-span-1 border-t border-dashed border-border-light dark:border-gray-700/50"></div>
+                    <div class="row-start-4 row-span-1 border-t border-dashed border-border-light dark:border-gray-700/50"></div>
+                    <div class="row-start-5 row-span-1 border-t border-dashed border-border-light dark:border-gray-700/50"></div>
+                    <div class="row-start-6 row-span-1 border-t border-dashed border-border-light dark:border-gray-700/50"></div>
+                    <div class="row-start-7 row-span-1 border-t border-dashed border-border-light dark:border-gray-700/50"></div>
+                    <div class="row-start-8 row-span-1 border-t border-dashed border-border-light dark:border-gray-700/50"></div>
+                    <div class="row-start-9 row-span-1 border-t border-dashed border-border-light dark:border-gray-700/50"></div>
+                    <div class="row-start-10 row-span-1 border-t border-dashed border-border-light dark:border-gray-700/50"></div>
+                    <div class="row-start-11 row-span-1 border-t border-dashed border-border-light dark:border-gray-700/50"></div>
+                    <div class="row-start-12 row-span-1 border-t border-dashed border-border-light dark:border-gray-700/50"></div>
+                    <div class="absolute top-[calc(2/12*100%)] h-[calc(2/12*100%)] w-full p-1">
+                        <div class="bg-accent rounded-md p-2 h-full flex flex-col justify-center text-white overflow-hidden">
+                            <p class="text-xs font-bold truncate">Advanced Hydrofoil</p>
+                            <p class="text-xs truncate">Jane Doe</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="flex flex-col border-r border-border-light dark:border-gray-700">
+                <div class="h-12 flex flex-col items-center justify-center border-b border-border-light dark:border-gray-700"><span class="text-sm font-medium text-text-body dark:text-gray-400">Tue</span><span class="text-lg font-bold text-text-heading dark:text-white">11</span></div>
+                <div class="relative grid grid-rows-12 h-[720px]">
+                    <div class="row-span-12 border-t border-dashed border-border-light dark:border-gray-700/50 -mt-px"></div><div class="row-start-2 row-span-1 border-t border-dashed border-border-light dark:border-gray-700/50"></div><div class="row-start-3 row-span-1 border-t border-dashed border-border-light dark:border-gray-700/50"></div><div class="row-start-4 row-span-1 border-t border-dashed border-border-light dark:border-gray-700/50"></div><div class="row-start-5 row-span-1 border-t border-dashed border-border-light dark:border-gray-700/50"></div><div class="row-start-6 row-span-1 border-t border-dashed border-border-light dark:border-gray-700/50"></div><div class="row-start-7 row-span-1 border-t border-dashed border-border-light dark:border-gray-700/50"></div><div class="row-start-8 row-span-1 border-t border-dashed border-border-light dark:border-gray-700/50"></div><div class="row-start-9 row-span-1 border-t border-dashed border-border-light dark:border-gray-700/50"></div><div class="row-start-10 row-span-1 border-t border-dashed border-border-light dark:border-gray-700/50"></div><div class="row-start-11 row-span-1 border-t border-dashed border-border-light dark:border-gray-700/50"></div><div class="row-start-12 row-span-1 border-t border-dashed border-border-light dark:border-gray-700/50"></div>
+                    <div class="absolute top-[calc(0/12*100%)] h-[calc(3/12*100%)] w-full p-1">
+                        <div class="bg-blocked pattern-diagonal-lines rounded-md p-2 h-full flex flex-col justify-center text-text-body overflow-hidden">
+                            <p class="text-xs font-bold truncate">Personal Time</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="flex flex-col border-r border-border-light dark:border-gray-700">
+                <div class="h-12 flex flex-col items-center justify-center border-b border-border-light dark:border-gray-700"><span class="text-sm font-medium text-text-body dark:text-gray-400">Wed</span><span class="text-lg font-bold text-text-heading dark:text-white">12</span></div>
+                <div class="relative grid grid-rows-12 h-[720px]">
+                    <div class="row-span-12 border-t border-dashed border-border-light dark:border-gray-700/50 -mt-px"></div><div class="row-start-2 row-span-1 border-t border-dashed border-border-light dark:border-gray-700/50"></div><div class="row-start-3 row-span-1 border-t border-dashed border-border-light dark:border-gray-700/50"></div><div class="row-start-4 row-span-1 border-t border-dashed border-border-light dark:border-gray-700/50"></div><div class="row-start-5 row-span-1 border-t border-dashed border-border-light dark:border-gray-700/50"></div><div class="row-start-6 row-span-1 border-t border-dashed border-border-light dark:border-gray-700/50"></div><div class="row-start-7 row-span-1 border-t border-dashed border-border-light dark:border-gray-700/50"></div><div class="row-start-8 row-span-1 border-t border-dashed border-border-light dark:border-gray-700/50"></div><div class="row-start-9 row-span-1 border-t border-dashed border-border-light dark:border-gray-700/50"></div><div class="row-start-10 row-span-1 border-t border-dashed border-border-light dark:border-gray-700/50"></div><div class="row-start-11 row-span-1 border-t border-dashed border-border-light dark:border-gray-700/50"></div><div class="row-start-12 row-span-1 border-t border-dashed border-border-light dark:border-gray-700/50"></div>
+                    <div class="absolute top-[calc(4/12*100%)] h-[calc(2/12*100%)] w-full p-1">
+                        <div class="bg-pending rounded-md p-2 h-full flex flex-col justify-center text-yellow-900 overflow-hidden">
+                            <p class="text-xs font-bold truncate">Beginner Lesson</p>
+                            <p class="text-xs truncate">Mike Smith</p>
+                            <p class="text-xs font-semibold mt-1">Pending</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="flex flex-col border-r border-border-light dark:border-gray-700">
+                <div class="h-12 flex flex-col items-center justify-center border-b border-border-light dark:border-gray-700"><span class="text-sm font-medium text-text-body dark:text-gray-400">Thu</span><span class="text-lg font-bold text-text-heading dark:text-white">13</span></div>
+                <div class="relative grid grid-rows-12 h-[720px]">
+                    <div class="row-span-12 border-t border-dashed border-border-light dark:border-gray-700/50 -mt-px"></div><div class="row-start-2 row-span-1 border-t border-dashed border-border-light dark:border-gray-700/50"></div><div class="row-start-3 row-span-1 border-t border-dashed border-border-light dark:border-gray-700/50"></div><div class="row-start-4 row-span-1 border-t border-dashed border-border-light dark:border-gray-700/50"></div><div class="row-start-5 row-span-1 border-t border-dashed border-border-light dark:border-gray-700/50"></div><div class="row-start-6 row-span-1 border-t border-dashed border-border-light dark:border-gray-700/50"></div><div class="row-start-7 row-span-1 border-t border-dashed border-border-light dark:border-gray-700/50"></div><div class="row-start-8 row-span-1 border-t border-dashed border-border-light dark:border-gray-700/50"></div><div class="row-start-9 row-span-1 border-t border-dashed border-border-light dark:border-gray-700/50"></div><div class="row-start-10 row-span-1 border-t border-dashed border-border-light dark:border-gray-700/50"></div><div class="row-start-11 row-span-1 border-t border-dashed border-border-light dark:border-gray-700/50"></div><div class="row-start-12 row-span-1 border-t border-dashed border-border-light dark:border-gray-700/50"></div>
+                </div>
+            </div>
+            <div class="flex flex-col border-r border-border-light dark:border-gray-700">
+                <div class="h-12 flex flex-col items-center justify-center border-b border-border-light dark:border-gray-700"><span class="text-sm font-medium text-text-body dark:text-gray-400">Fri</span><span class="text-lg font-bold text-text-heading dark:text-white">14</span></div>
+                <div class="relative grid grid-rows-12 h-[720px]">
+                    <div class="row-span-12 border-t border-dashed border-border-light dark:border-gray-700/50 -mt-px"></div><div class="row-start-2 row-span-1 border-t border-dashed border-border-light dark:border-gray-700/50"></div><div class="row-start-3 row-span-1 border-t border-dashed border-border-light dark:border-gray-700/50"></div><div class="row-start-4 row-span-1 border-t border-dashed border-border-light dark:border-gray-700/50"></div><div class="row-start-5 row-span-1 border-t border-dashed border-border-light dark:border-gray-700/50"></div><div class="row-start-6 row-span-1 border-t border-dashed border-border-light dark:border-gray-700/50"></div><div class="row-start-7 row-span-1 border-t border-dashed border-border-light dark:border-gray-700/50"></div><div class="row-start-8 row-span-1 border-t border-dashed border-border-light dark:border-gray-700/50"></div><div class="row-start-9 row-span-1 border-t border-dashed border-border-light dark:border-gray-700/50"></div><div class="row-start-10 row-span-1 border-t border-dashed border-border-light dark:border-gray-700/50"></div><div class="row-start-11 row-span-1 border-t border-dashed border-border-light dark:border-gray-700/50"></div><div class="row-start-12 row-span-1 border-t border-dashed border-border-light dark:border-gray-700/50"></div>
+                    <div class="absolute top-[calc(1/12*100%)] h-[calc(3/12*100%)] w-full p-1">
+                        <div class="bg-accent rounded-md p-2 h-full flex flex-col justify-center text-white overflow-hidden">
+                            <p class="text-xs font-bold truncate">Group Lesson</p>
+                            <p class="text-xs truncate">3 students</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="flex flex-col border-r border-border-light dark:border-gray-700">
+                <div class="h-12 flex flex-col items-center justify-center border-b border-border-light dark:border-gray-700"><span class="text-sm font-medium text-text-body dark:text-gray-400">Sat</span><span class="text-lg font-bold text-accent">15</span></div>
+                <div class="relative grid grid-rows-12 h-[720px]">
+                    <div class="row-span-12 border-t border-dashed border-border-light dark:border-gray-700/50 -mt-px"></div><div class="row-start-2 row-span-1 border-t border-dashed border-border-light dark:border-gray-700/50"></div><div class="row-start-3 row-span-1 border-t border-dashed border-border-light dark:border-gray-700/50"></div><div class="row-start-4 row-span-1 border-t border-dashed border-border-light dark:border-gray-700/50"></div><div class="row-start-5 row-span-1 border-t border-dashed border-border-light dark:border-gray-700/50"></div><div class="row-start-6 row-span-1 border-t border-dashed border-border-light dark:border-gray-700/50"></div><div class="row-start-7 row-span-1 border-t border-dashed border-border-light dark:border-gray-700/50"></div><div class="row-start-8 row-span-1 border-t border-dashed border-border-light dark:border-gray-700/50"></div><div class="row-start-9 row-span-1 border-t border-dashed border-border-light dark:border-gray-700/50"></div><div class="row-start-10 row-span-1 border-t border-dashed border-border-light dark:border-gray-700/50"></div><div class="row-start-11 row-span-1 border-t border-dashed border-border-light dark:border-gray-700/50"></div><div class="row-start-12 row-span-1 border-t border-dashed border-border-light dark:border-gray-700/50"></div>
+                    <div class="absolute top-0 h-full w-full p-1 flex flex-col gap-1">
+                        <div class="bg-available border-2 border-dashed border-available-border rounded-md p-2 h-full flex flex-col items-center justify-center text-green-800 overflow-hidden">
+                            <p class="text-xs font-bold truncate">Available</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="flex flex-col">
+                <div class="h-12 flex flex-col items-center justify-center border-b border-border-light dark:border-gray-700"><span class="text-sm font-medium text-text-body dark:text-gray-400">Sun</span><span class="text-lg font-bold text-accent">16</span></div>
+                <div class="relative grid grid-rows-12 h-[720px]">
+                    <div class="row-span-12 border-t border-dashed border-border-light dark:border-gray-700/50 -mt-px"></div><div class="row-start-2 row-span-1 border-t border-dashed border-border-light dark:border-gray-700/50"></div><div class="row-start-3 row-span-1 border-t border-dashed border-border-light dark:border-gray-700/50"></div><div class="row-start-4 row-span-1 border-t border-dashed border-border-light dark:border-gray-700/50"></div><div class="row-start-5 row-span-1 border-t border-dashed border-border-light dark:border-gray-700/50"></div><div class="row-start-6 row-span-1 border-t border-dashed border-border-light dark:border-gray-700/50"></div><div class="row-start-7 row-span-1 border-t border-dashed border-border-light dark:border-gray-700/50"></div><div class="row-start-8 row-span-1 border-t border-dashed border-border-light dark:border-gray-700/50"></div><div class="row-start-9 row-span-1 border-t border-dashed border-border-light dark:border-gray-700/50"></div><div class="row-start-10 row-span-1 border-t border-dashed border-border-light dark:border-gray-700/50"></div><div class="row-start-11 row-span-1 border-t border-dashed border-border-light dark:border-gray-700/50"></div><div class="row-start-12 row-span-1 border-t border-dashed border-border-light dark:border-gray-700/50"></div>
+                    <div class="absolute top-0 h-full w-full p-1 flex flex-col gap-1">
+                        <div class="bg-available border-2 border-dashed border-available-border rounded-md p-2 h-full flex flex-col items-center justify-center text-green-800 overflow-hidden">
+                            <p class="text-xs font-bold truncate">Available</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Month View (Hidden by default) -->
+    <div id="month-view" class="hidden bg-surface rounded-xl border border-border-light overflow-hidden dark:bg-background-dark dark:border-gray-700">
+        <div class="grid grid-cols-7 text-center font-bold">
+            <div class="py-2 border-b border-r">Sun</div>
+            <div class="py-2 border-b border-r">Mon</div>
+            <div class="py-2 border-b border-r">Tue</div>
+            <div class="py-2 border-b border-r">Wed</div>
+            <div class="py-2 border-b border-r">Thu</div>
+            <div class="py-2 border-b border-r">Fri</div>
+            <div class="py-2 border-b">Sat</div>
+        </div>
+        <div class="grid grid-cols-7 grid-rows-5 h-[720px]">
+            <!-- Generate a simple month grid -->
+            <script>
+                const monthView = document.getElementById('month-view').querySelector('.grid.grid-cols-7.grid-rows-5');
+                const events = {
+                    13: { title: 'Advanced Hydrofoil', color: 'bg-accent' },
+                    14: { title: 'Personal Time', color: 'bg-blocked' },
+                    15: { title: 'Beginner Lesson', color: 'bg-pending' },
+                    17: { title: 'Group Lesson', color: 'bg-accent' },
+                };
+
+                for (let i = 1; i <= 35; i++) {
+                    const day = document.createElement('div');
+                    day.className = 'border-r border-b p-2 text-sm text-left';
+                    if ((i % 7) === 0) { // Last column
+                        day.classList.remove('border-r');
+                    }
+                    const dayNumber = (i > 3 && i < 35) ? (i - 3) : '';
+                    day.innerHTML = `<span class="font-medium">${dayNumber}</span>`;
+
+                    if (events[i]) {
+                        const event = events[i];
+                        let textColor = 'text-white';
+                        if (event.color === 'bg-blocked') {
+                            textColor = 'text-text-body';
+                        } else if (event.color === 'bg-pending') {
+                            textColor = 'text-yellow-900';
+                        }
+                        day.innerHTML += `<div class="${event.color} ${textColor} rounded-md p-1 mt-1 text-xs truncate">${event.title}</div>`;
+                    }
+                    monthView.appendChild(day);
+                }
+            </script>
+        </div>
+    </div>
+
+    <!-- Day View (Hidden by default) -->
+    <div id="day-view" class="hidden">
+        <!-- Content for Day View -->
+        <div class="bg-surface rounded-xl border border-border-light p-4 dark:bg-background-dark dark:border-gray-700 h-[720px] overflow-y-auto">
+            <h3 class="text-lg font-bold mb-4">Monday, November 10</h3>
+            <div class="space-y-4">
+                <div class="flex items-center gap-4">
+                    <span class="font-semibold text-sm w-20">10:00 AM</span>
+                    <div class="flex-1 bg-accent text-white rounded-md p-2 text-sm">Advanced Hydrofoil - Jane Doe</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Agenda View (Hidden by default) -->
+    <div id="agenda-view" class="hidden">
+        <div class="bg-surface rounded-xl border border-border-light p-4 dark:bg-background-dark dark:border-gray-700 h-[720px] overflow-y-auto">
+            <h3 class="text-lg font-bold mb-4">Upcoming Agenda</h3>
+            <div class="space-y-4">
+                <div>
+                    <p class="font-bold">Monday, November 10</p>
+                    <ul class="list-disc list-inside mt-2 ml-4 space-y-2">
+                        <li><span class="font-semibold">10:00 AM:</span> Advanced Hydrofoil with Jane Doe</li>
+                    </ul>
+                </div>
+                <div>
+                    <p class="font-bold">Tuesday, November 11</p>
+                    <ul class="list-disc list-inside mt-2 ml-4 space-y-2">
+                        <li><span class="font-semibold">08:00 AM:</span> Personal Time (Blocked)</li>
+                    </ul>
+                </div>
+                <div>
+                    <p class="font-bold">Wednesday, November 12</p>
+                    <ul class="list-disc list-inside mt-2 ml-4 space-y-2">
+                        <li><span class="font-semibold">12:00 PM:</span> Beginner Lesson with Mike Smith (Pending)</li>
+                    </ul>
+                </div>
+                 <div>
+                    <p class="font-bold">Friday, November 14</p>
+                    <ul class="list-disc list-inside mt-2 ml-4 space-y-2">
+                        <li><span class="font-semibold">09:00 AM:</span> Group Lesson (3 students)</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 </main>
 </div>
+<script>
+    const viewSelector = document.getElementById('view-selector');
+    const viewButtons = {
+        month: document.getElementById('month-view-btn'),
+        week: document.getElementById('week-view-btn'),
+        day: document.getElementById('day-view-btn'),
+        agenda: document.getElementById('agenda-view-btn'),
+    };
+    const views = {
+        month: document.getElementById('month-view'),
+        week: document.getElementById('week-view'),
+        day: document.getElementById('day-view'),
+        agenda: document.getElementById('agenda-view'),
+    };
+
+    const activeClasses = ['text-primary', 'bg-surface', 'shadow-sm', 'dark:bg-gray-700', 'dark:text-white'];
+    const inactiveClasses = ['text-text-body', 'dark:text-gray-400'];
+
+    function switchView(viewName) {
+        // Hide all views
+        Object.values(views).forEach(view => view.classList.add('hidden'));
+        // Show the selected view
+        if (views[viewName]) {
+            views[viewName].classList.remove('hidden');
+        }
+
+        // Update button styles
+        Object.entries(viewButtons).forEach(([name, button]) => {
+            if (name === viewName) {
+                button.classList.add(...activeClasses);
+                button.classList.remove(...inactiveClasses);
+            } else {
+                button.classList.remove(...activeClasses);
+                button.classList.add(...inactiveClasses);
+            }
+        });
+    }
+
+    viewSelector.addEventListener('click', (event) => {
+        const clickedButton = event.target.closest('button');
+        if (!clickedButton) return;
+
+        if (clickedButton.id === 'month-view-btn') {
+            switchView('month');
+        } else if (clickedButton.id === 'week-view-btn') {
+            switchView('week');
+        } else if (clickedButton.id === 'day-view-btn') {
+            switchView('day');
+        } else if (clickedButton.id === 'agenda-view-btn') {
+            switchView('agenda');
+        }
+    });
+
+    // Set initial view to 'week'
+    switchView('week');
+</script>
 </body></html>
