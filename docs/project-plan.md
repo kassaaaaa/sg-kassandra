@@ -10,17 +10,25 @@
 - [x] /run-agent-task analyst \*workflow-init
   - [x] File: bmm-workflow-status.yaml
 - [x] Brainstorming
-  - [x] /run-agent-task analyst \*brainstorm "Root Cause Analysis and Solution Design for Player Inactivity"
+  - [x] /run-agent-task analyst \*brainstorm "KiteOps User Flows"
     - [x] File: brainstorming-session-results-date.md
-  - [x] /run-agent-task analyst \*brainstorm "User Flow Deviations & Edge Cases"
+  - [x] /run-agent-task analyst \*brainstorm "Detailed User Flows for KiteOps"
     - [x] File: brainstorming-session-results-date.md
-  - [x] /run-agent-task analyst \*brainstorm "Brainstorm what it means to have a paid user"
+  - [x] /run-agent-task analyst \*brainstorm "KiteOps Scheduling Logic"
+    - [x] File: brainstorming-session-results-date.md
+  - [x] /run-agent-task analyst \*brainstorm "KiteOps Communication System"
+    - [x] File: brainstorming-session-results-date.md
+  - [x] /run-agent-task analyst \*brainstorm "AI Functionality for KiteOps"
     - [x] File: brainstorming-session-results-date.md
 - [ ] Research
-  - [x] /run-agent-task analyst \*research "Which AI library should we use for orchestrating LLM interactions?"
+  - [x] /run-agent-task analyst \*research "Market Research Report: KiteOps"
+    - [x] File: research-technical-date.md
+  - [x] /run-agent-task analyst \*research "Technical: Calendar and Booking System for KiteOps"
+    - [x] File: research-technical-date.md
+  - [x] /run-agent-task analyst \*research "Technical: Pydantic for KiteOps AI"
     - [x] File: research-technical-date.md
 - [x] Product Brief
-  - [x] /run-agent-task analyst \*product-brief "Read the two brainstorming sessions the research session and the @proposal.md file, and create a product brief for the project."
+  - [x] /run-agent-task analyst \*product-brief "Read the brainstorming sessions the research session and the @proposal.md file, and create a product brief for the project."
     - [x] File: product-brief.md
 
 ## Fase 1
