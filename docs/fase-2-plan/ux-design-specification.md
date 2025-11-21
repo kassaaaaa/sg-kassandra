@@ -35,30 +35,33 @@ KiteOps will be a **web application** with a **responsive design** that works se
 **Rationale:** Selected for its seamless integration with Tailwind CSS and Next.js, providing a highly customizable and performant component foundation. It allows for full control over the codebase, ensuring a unique brand experience while leveraging accessible, well-built components. This choice was made collaboratively, balancing the need for a unique brand experience with the efficiency of leveraging a robust, accessible component foundation.
 
 ### 2.2. Color Palette
-**Chosen Theme:** Professional & Trustworthy
+**Chosen Theme:** Official KiteOps Theme
 
-This theme uses deep, authoritative blues and clean neutrals to convey reliability and professionalism. The accent blue adds a touch of modern clarity without being overly playful. This choice was made collaboratively after reviewing several options in the `ux-color-themes.html` visualizer.
+This theme combines a professional, trustworthy navy blue with energetic accents of sky blue and turquoise. It creates a clean, modern, and highly functional aesthetic that aligns with the core brand values of efficiency and reliability. The official, consolidated palette is defined in `ux-color-themes.html`.
 
 -   **Primary (Deep Navy):** `#0A2540` (Used for main actions, key elements, and primary text)
--   **Accent (Sky Blue):** `#4A90E2` (Used for accents, secondary actions, and highlighting information)
--   **Background (Light Gray):** `#F5F5F5` (Used for page backgrounds in the light theme)
--   **Surface (White):** `#FFFFFF` (Used for cards, modals, and other surfaces on top of the background)
--   **Text (Neutral):** A grayscale palette will be used for text, ranging from `#111111` (headings) to `#555555` (body) to `#999999` (subtle text).
+-   **Accent (Sky Blue):** `#4A90E2` (Used for accents, highlighting information, and confirmed states)
+-   **Secondary Accent (Turquoise):** `#48D1CC` (Used for key visual elements in the booking process)
+-   **Background (Light Gray):** `#F5F5F5` (Used for page backgrounds)
+-   **Surface (White):** `#FFFFFF` (Used for cards, modals, and other surfaces)
+-   **Text (Neutral):** A grayscale palette will be used, primarily `#111111` (headings) and `#555555` (body).
+-   **Borders:** `#EAEAEA` or `#E0E0E0`
 
 **Semantic Colors:**
 -   **Success:** `#28a745`
 -   **Warning:** `#ffc107`
 -   **Error:** `#dc3545`
+-   **Pending:** `#FBBF24`
+-   **Available (Calendar):** Background `#ECFDF5`, Border `#10B981`
 
 **Accessibility Check (WCAG AA):**
 > [!WARNING]
 > **Verification Required:** The following color combinations must be verified with a reliable contrast checker tool to ensure they meet the WCAG 2.1 AA standard (4.5:1 for normal text, 3:1 for large text).
 > - **Primary on Surface:** `#0A2540` on `#FFFFFF`
-> - **Accent on Surface:** `#4A90E2` on `#FFFFFF`
-> - **White text on Primary:** `#FFFFFF` on `#0A2540`
-> - **White text on Accent:** `#FFFFFF` on `#4A90E2`
-> - **Headings on Background:** `#111111` on `#F5F5F5`
-> - **Body Text on Background:** `#555555` on `#F5F5F5`
+-   **Accent on Surface:** `#4A90E2` on `#FFFFFF`
+-   **White text on Primary:** `#FFFFFF` on `#0A2540`
+-   **Headings on Background:** `#111111` on `#F5F5F5`
+-   **Body Text on Background:** `#555555` on `#F5F5F5`
 
 ### 2.3. Typography
 
@@ -340,9 +343,9 @@ We will leverage `shadcn/ui` for standard UI components, which provides a robust
 
 ### 5.1.1. Customization Needs
 While `shadcn/ui` provides an excellent base, some components will require specific styling overrides to align with our brand identity. This includes:
--   **Buttons:** Customizing the corner radius and hover/focus states to match our design direction.
--   **Inputs:** Adjusting the color and thickness of borders to align with the palette.
--   **Modals:** Ensuring the overlay color and border styles are consistent with the overall theme.
+-   **Buttons:** Customizing the corner radius (`rounded-lg`) and hover/focus states to match our design direction.
+-   **Inputs:** Adjusting the color and thickness of borders (`border-border-light`) to align with the palette.
+-   **Cards & Modals:** Ensuring consistent border radius (`rounded-xl`), shadows (`shadow-md`), and border styles.
 > [!NOTE]
 > This list is not exhaustive and will be updated as the high-fidelity design process progresses.
 
@@ -350,29 +353,31 @@ While `shadcn/ui` provides an excellent base, some components will require speci
 
 #### 5.2.1. Lesson Card
 
-**Purpose:** To provide a quick, scannable summary of a lesson type and its available time slots, allowing for easy selection.
+**Purpose:** To provide a quick, scannable summary of a lesson, its key details, and available time slots, allowing for easy selection.
 
 **Anatomy:**
--   **Lesson Name:** Prominently displayed (e.g., "Beginner Kiteboarding - Group").
--   **Instructor:** Name of the instructor.
--   **Price:** Cost of the lesson.
--   **Available Time Slots:** A series of interactive elements (e.g., buttons or chips) displaying available times for that lesson type.
+-   **Main Content Area (Left):**
+    -   **Icon & Title:** A prominent icon and the lesson title (e.g., "Private Beginner's Course").
+    -   **Description:** A brief, one-line description of the lesson.
+    -   **Details:** A section with key-value pairs for Price, Duration, and Instructor, each with an associated icon.
+-   **Time Slot Area (Right):**
+    -   **Label:** "Available Times:".
+    -   **Time Buttons:** A vertical list of buttons, each representing an available time slot.
 
 **States:**
--   **Default:** Time slots are displayed clearly.
--   **Selected:** When a user clicks an available time slot, its background color changes to the Accent (Turquoise) color, and the text color changes to white, indicating it has been chosen.
+-   **Default:** Time slot buttons are styled as secondary actions (e.g., light blue background).
+-   **Hover:** The background of a time slot button changes on hover to indicate interactivity.
+-   **Booked/Unavailable:** The time slot is styled as disabled (e.g., grayed out, `cursor-not-allowed`).
 
 **Behavior:**
--   **Time Slot Selection:** Clicking an available time slot within the card marks it as selected. Only one time slot can be selected per lesson card at a time.
--   **Booking Initiation:** Once a time slot is selected, a clear call-to-action (e.g., a "Book Now" button, possibly at the bottom of the card or a floating action button) becomes active, leading to the booking modal.
+-   **Time Slot Selection:** Clicking an available time slot button initiates the booking process for that specific time, likely opening the booking modal.
 
 **Variants:**
--   **Standard:** Default card view.
--   **Featured:** A variant with a "Featured" badge or slightly different background color could be used to highlight specific lessons. (Future consideration).
+-   **Standard:** Default card view as seen in `customer-booking.html`.
 
 **Accessibility:**
--   **Focus Order:** The card will be navigable via keyboard, with a logical focus order moving from the lesson name to the time slots and then to the book button.
--   **ARIA Attributes:** Time slots will use `role="radio"` and be part of a `role="radiogroup"` to ensure they are understood by screen readers. The selected state will be communicated using `aria-checked="true"`.
+-   **Focus Order:** The card will be navigable via keyboard, with a logical focus order.
+-   **ARIA Attributes:** Time slot buttons will have descriptive `aria-label`s, such as "Book lesson at 09:00".
 -   **Contrast:** Text and background colors will adhere to WCAG AA contrast requirements.
 
 #### 5.2.2. Availability Calendar (Instructor)
@@ -380,60 +385,55 @@ While `shadcn/ui` provides an excellent base, some components will require speci
 **Purpose:** To provide instructors with a clear, interactive overview of their schedule, enabling them to efficiently manage their availability for lessons.
 
 **Anatomy:**
--   **Calendar Grid:** A visual representation of days and weeks, showing time slots.
--   **Lesson Blocks:** Clearly marked blocks indicating scheduled lessons, displaying key details like student name and lesson type on hover or click.
--   **Availability Blocks:** Blocks indicating times the instructor has marked themselves as available.
--   **Blocked Times:** Clearly marked blocks indicating periods when the instructor is unavailable.
--   **Action Buttons:** "Add Availability" and "Block Day" buttons, as defined in the user journey.
+-   **Layout:** A two-part layout featuring a persistent left sidebar for navigation and user info, and a main content area for the calendar.
+-   **Header:** Contains the calendar title, navigation controls (Today, next/prev week), view switcher (Month, Week, Day), and primary actions ("+ Add availability", "Block time").
+-   **Legend:** A visual key explaining the color-coding for different event types.
+-   **Calendar Grid:** A visual representation of days and weeks, with time slots along the Y-axis.
+-   **Event Blocks:** Color-coded blocks representing lessons or blocked time.
 
-**States:**
--   **Default:** Displays a monthly or weekly view with lessons, available slots, and blocked times clearly differentiated by color or styling.
--   **Adding Availability:** The "Add Availability" modal is open, allowing the instructor to input new time slots.
--   **Blocking Day:** The "Block Day" modal/popover is open, allowing the instructor to mark a full day or range as unavailable.
--   **Editing/Viewing:** Clicking on an existing lesson or availability block opens a modal or popover to view/edit details.
+**Color-Coding and States:**
+-   **Confirmed Lesson:** Solid block with `Accent` color (`#4A90E2`). Displays lesson and student name.
+-   **Pending Lesson:** Solid block with `Pending` color (`#FBBF24`). Displays lesson, student name, and "Pending" status.
+-   **Available:** A dashed-border block with a light green background (`#ECFDF5` and `#10B981`).
+-   **Blocked:** A gray block with a diagonal line pattern (`#F3F4F6`).
 
 **Behavior:**
--   **Navigation:** Easy navigation between days, weeks, and months.
--   **Adding Availability:** Triggers the "Add Availability" modal.
--   **Blocking Time:** Triggers the "Block Day" modal/popover.
--   **Detail View:** Clicking on a lesson or availability block reveals more information or editing options.
+-   **Navigation:** Easy navigation between days, weeks, and months using header controls.
+-   **Adding Availability/Blocking Time:** Triggers a modal form for inputting details.
+-   **Detail View:** Hovering or clicking on an event block could reveal more details in a popover.
 
 **Variants:**
 -   **Weekly View:** The default view, showing a full week at a glance.
--   **Monthly View:** A higher-level overview of the month.
--   **Daily View:** A detailed, hour-by-hour view for a specific day.
+-   **Monthly, Daily, Agenda Views:** Alternative views accessible via the view switcher.
 
 **Accessibility:**
--   **Keyboard Navigation:** The calendar grid, including all events and buttons, will be fully navigable using the keyboard (arrow keys for dates, tab for events).
--   **ARIA Attributes:** The calendar will use a `grid` role, and events will be announced clearly by screen readers (e.g., "Lesson: Beginner Kiteboarding, 10 AM to 12 PM").
--   **Live Regions:** Updates to the calendar (e.g., adding a new availability slot) will be announced using ARIA live regions.
+-   **Keyboard Navigation:** The calendar grid, including all events and buttons, will be fully navigable using the keyboard.
+-   **ARIA Attributes:** The calendar will use a `grid` role, and events will be announced clearly by screen readers.
+-   **Live Regions:** Updates to the calendar will be announced using ARIA live regions.
 
 #### 5.2.3. Weather Conflict Card (Manager)
 
 **Purpose:** To provide managers with a clear, actionable alert for weather-related lesson conflicts, enabling quick and informed resolution.
 
 **Anatomy:**
--   **Header:** Clearly states the nature of the conflict (e.g., "Weather Alert: Low Wind").
--   **Affected Lesson Details:** Displays the lesson name, customer, instructor, and original scheduled time.
--   **Weather Information:** Briefly summarizes the problematic weather condition (e.g., "Forecast: 5 knots wind speed").
--   **Suggested Resolution (Optional):** If the system can identify a suitable alternative, it may suggest a new time/date.
--   **Action Buttons:** Prominent buttons for "Auto-Rebook", "Manual Rebook", and "Cancel Lesson".
+-   **Visual Indicator:** A prominent left border with the `Warning` color (`#ffc107`).
+-   **Header:** An icon (`warning`) and title ("Resolution Center").
+-   **Conflict Summary:** A large-text summary of the number of conflicts (e.g., "3 Lessons Need Review").
+-   **Description:** A brief explanation of the weather issue (e.g., "Strong offshore winds are forecast...").
+-   **Action Button:** A single, clear primary action button, such as "Review Lessons", to navigate the user to the dedicated resolution page.
 
 **States:**
--   **Default:** The card is displayed in the Manager's "Resolution Center" or dashboard, clearly indicating an unresolved conflict.
--   **Processing:** After an action button is clicked, the card may show a loading indicator while the system processes the request.
--   **Resolved:** Once an action is completed, the card either disappears from the active list or moves to a "Resolved" section, providing a summary of the action taken.
+-   **Default:** The card is displayed on the Manager's dashboard as an actionable alert.
 
 **Behavior:**
--   **Clicking Action Buttons:** Initiates the corresponding rebooking or cancellation workflow as defined in the Manager's user journey.
--   **Dismissal:** Resolved conflicts can be dismissed by the manager.
+-   **Clicking Action Button:** Navigates the manager to the "Resolution Center" page where they can handle each conflict individually.
 
 **Variants:** Not applicable.
 
 **Accessibility:**
--   **Focus Management:** When a card is interacted with, focus will be managed logically between the details and the action buttons.
--   **Alerts:** The appearance of a new conflict card will be announced via an ARIA live region to ensure managers are aware of urgent issues.
--   **Descriptive Text:** Buttons will have descriptive `aria-label` attributes if their visible text is not sufficient (e.g., `aria-label="Automatically rebook lesson for John Doe"`).
+-   **Focus Management:** The card and its action button will be focusable.
+-   **Alerts:** The appearance of this card should be announced via an ARIA live region to ensure managers are aware of urgent issues.
+-   **Descriptive Text:** The action button will have a clear, descriptive label.
 
 
 
@@ -443,13 +443,13 @@ To ensure a consistent and intuitive user experience across KiteOps, the followi
 
 ### 6.1. Button Hierarchy
 -   **Primary Action:** Solid, dark background (`#0A2540`) with white text. Used for the single most important action on a screen.
-    -   *Example:* The "Confirm Booking" button in the booking modal.
--   **Secondary Action:** Light gray background (`#E0E0E0`) with dark text. Used for supporting actions.
-    -   *Example:* A "View Details" button on a lesson card.
--   **Tertiary/Link Action:** No background, just colored text (Accent Turquoise: `#00C49A`). Used for less critical actions or navigation.
+    -   *Example:* The "Review Lessons" button on the manager dashboard.
+-   **Secondary Action:** Light gray background (`#EAEAEA` or another light shade) with dark text. Used for supporting actions.
+    -   *Example:* The "Block time" button in the instructor calendar header.
+-   **Tertiary/Link Action:** No background, just colored text. Used for less critical actions or navigation.
     -   *Example:* A "Forgot Password?" link on the login page.
 -   **Destructive Action:** Solid red background (`#dc3545`) with white text. Used for actions that permanently delete data.
-    -   *Example:* The final "Yes, Cancel Lesson" button in a confirmation modal.
+    -   *Example:* A "Cancel Lesson" button.
 
 ### 6.2. Feedback Patterns
 -   **Success:** A green toast/snackbar notification appearing briefly at the bottom-right of the screen.
@@ -473,7 +473,7 @@ To ensure a consistent and intuitive user experience across KiteOps, the followi
 -   **Focus Management:** Focus will be programmatically trapped within the modal when it is open.
 
 ### 6.5. Navigation Patterns
--   **Active State Indication:** The currently active navigation item will be clearly highlighted with a visual cue (e.g., bold text, a colored underline).
+-   **Active State Indication:** The currently active navigation item will be clearly highlighted with a visual cue (e.g., a colored background, as seen in the instructor calendar sidebar).
 -   **Back Button Behavior:** The browser's back button will function as expected.
 
 ### 6.6. Empty State Patterns

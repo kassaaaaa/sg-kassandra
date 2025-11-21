@@ -3,241 +3,94 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>KiteOps - Color Theme Visualizer</title>
+    <title>KiteOps - Official Color Theme</title>
     <style>
         body { font-family: 'Inter', sans-serif; background-color: #F5F5F5; color: #333; margin: 0; padding: 2rem; }
         h1, h2, h3 { font-family: 'Manrope', sans-serif; }
         .container { max-width: 1200px; margin: auto; }
         .theme-section { background-color: #fff; border-radius: 8px; padding: 2rem; margin-bottom: 2rem; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
         .palette { display: flex; flex-wrap: wrap; gap: 1rem; margin-bottom: 2rem; }
-        .swatch { width: 100px; height: 100px; border-radius: 8px; display: flex; flex-direction: column; justify-content: flex-end; padding: 0.5rem; color: white; font-weight: bold; }
-        .swatch span { background-color: rgba(0,0,0,0.3); padding: 2px 4px; border-radius: 4px; font-size: 0.8rem; }
+        .swatch { width: 100px; height: 100px; border-radius: 8px; display: flex; flex-direction: column; justify-content: flex-end; padding: 0.5rem; color: white; font-weight: bold; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
+        .swatch span { background-color: rgba(0,0,0,0.4); padding: 2px 5px; border-radius: 4px; font-size: 0.8rem; display: inline-block; }
         .components { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 2rem; }
-        .component-card { border: 1px solid #eee; border-radius: 8px; padding: 1.5rem; }
-        
-        /* Theme-specific styles will be here */
-
+        .component-card { border: 1px solid #EAEAEA; border-radius: 8px; padding: 1.5rem; background-color: #FFFFFF; }
     </style>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@700&family=Inter:wght@400;500&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
 </head>
 <body>
 
     <div class="container">
-        <h1>🎨 Color Theme Visualizer</h1>
-        <p>Explore the theme options below to see how the KiteOps brand personality can come to life. Each theme includes the color palette and examples of how UI components will look.</p>
+        <h1>🎨 Official KiteOps Color Theme</h1>
+        <p>This document presents the single, consolidated color theme for the KiteOps application, derived from the latest design sketches. This theme should be used for all UI development.</p>
 
-        <!-- Theme 1: Professional & Dynamic -->
-        <div class="theme-section" id="theme1">
-            <h2>1. Professional & Dynamic</h2>
-            <p>This theme uses the deep navy and turquoise you suggested, creating a look that is both trustworthy and energetic. It's clean, performance-oriented, and perfect for the core brand.</p>
+        <!-- Official KiteOps Theme -->
+        <div class="theme-section" id="official-theme">
+            <h2>KiteOps Professional</h2>
+            <p>This theme combines a professional, trustworthy navy blue with energetic accents of sky blue and turquoise. It creates a clean, modern, and highly functional aesthetic that aligns with the core brand values of efficiency and reliability.</p>
             
-            <h3>Color Palette</h3>
+            <h3>Core Palette</h3>
             <div class="palette">
                 <div class="swatch" style="background-color: #0A2540;"><span>#0A2540</span></div>
-                <div class="swatch" style="background-color: #00C49A;"><span>#00C49A</span></div>
-                <div class="swatch" style="background-color: #F5F5F5; color: #333;"><span>#F5F5F5</span></div>
+                <div class="swatch" style="background-color: #4A90E2;"><span>#4A90E2</span></div>
+                <div class="swatch" style="background-color: #48D1CC;"><span>#48D1CC</span></div>
+                <div class="swatch" style="background-color: #F5F5F5; color: #333; border: 1px solid #eee;"><span>#F5F5F5</span></div>
                 <div class="swatch" style="background-color: #FFFFFF; color: #333; border: 1px solid #eee;"><span>#FFFFFF</span></div>
+                <div class="swatch" style="background-color: #111111;"><span>#111111</span></div>
+                <div class="swatch" style="background-color: #555555;"><span>#555555</span></div>
+                <div class="swatch" style="background-color: #EAEAEA; color: #333; border: 1px solid #ddd;"><span>#EAEAEA</span></div>
+            </div>
+
+            <h3>Semantic & Status Colors</h3>
+            <div class="palette">
                 <div class="swatch" style="background-color: #28a745;"><span>#28a745</span></div>
                 <div class="swatch" style="background-color: #ffc107;"><span>#ffc107</span></div>
                 <div class="swatch" style="background-color: #dc3545;"><span>#dc3545</span></div>
+                <div class="swatch" style="background-color: #FBBF24;"><span>#FBBF24</span></div>
+                <div class="swatch" style="background-color: #ECFDF5; color: #10B981; border: 1px solid #10B981;"><span>#ECFDF5</span></div>
             </div>
 
             <h3>Component Examples</h3>
             <div class="components">
                 <div class="component-card">
                     <h4>Buttons</h4>
-                    <button class="t1-btn t1-btn-primary">Primary Action</button>
-                    <button class="t1-btn t1-btn-secondary">Secondary</button>
-                    <button class="t1-btn t1-btn-destructive">Delete</button>
+                    <button class="btn btn-primary">Primary Action</button>
+                    <button class="btn btn-secondary">Secondary</button>
+                    <button class="btn btn-destructive">Delete</button>
                 </div>
                 <div class="component-card">
                     <h4>Form Input</h4>
-                    <label for="t1-input">Your Name</label>
-                    <input type="text" id="t1-input" class="t1-input" placeholder="e.g., John Doe">
-                    <input type="text" class="t1-input t1-input-error" value="Invalid input">
+                    <label for="main-input" style="font-weight: 500; display: block; margin-bottom: 0.5rem;">Your Name</label>
+                    <input type="text" id="main-input" class="input" placeholder="e.g., Alex Manager">
+                    <input type="text" class="input input-error" value="Invalid input" style="margin-top: 1rem;">
                 </div>
                 <div class="component-card">
-                    <h4>Alert</h4>
-                    <div class="t1-alert t1-alert-success">Your lesson is confirmed!</div>
-                    <div class="t1-alert t1-alert-warning">High winds forecasted.</div>
+                    <h4>Alerts</h4>
+                    <div class="alert alert-success">Your lesson is confirmed!</div>
+                    <div class="alert alert-warning">High winds forecasted. Review lesson.</div>
+                    <div class="alert alert-pending">This booking is awaiting confirmation.</div>
                 </div>
             </div>
         </div>
-
-        <!-- Theme 2: Vibrant & Energetic -->
-        <div class="theme-section" id="theme2">
-            <h2>2. Vibrant & Energetic</h2>
-            <p>This theme dials up the energy with a brighter blue and a more prominent accent color. It feels active, modern, and optimistic. A great choice for a consumer-facing, high-energy brand.</p>
-            
-            <h3>Color Palette</h3>
-            <div class="palette">
-                <div class="swatch" style="background-color: #0052FF;"><span>#0052FF</span></div>
-                <div class="swatch" style="background-color: #FFD000;"><span>#FFD000</span></div>
-                <div class="swatch" style="background-color: #F0F2F5; color: #333;"><span>#F0F2F5</span></div>
-                <div class="swatch" style="background-color: #FFFFFF; color: #333; border: 1px solid #eee;"><span>#FFFFFF</span></div>
-                <div class="swatch" style="background-color: #36B37E;"><span>#36B37E</span></div>
-                <div class="swatch" style="background-color: #FFAB00;"><span>#FFAB00</span></div>
-                <div class="swatch" style="background-color: #FF5630;"><span>#FF5630</span></div>
-            </div>
-
-            <h3>Component Examples</h3>
-            <div class="components">
-                <div class="component-card">
-                    <h4>Buttons</h4>
-                    <button class="t2-btn t2-btn-primary">Primary Action</button>
-                    <button class="t2-btn t2-btn-secondary">Secondary</button>
-                    <button class="t2-btn t2-btn-destructive">Delete</button>
-                </div>
-                <div class="component-card">
-                    <h4>Form Input</h4>
-                    <label for="t2-input">Your Name</label>
-                    <input type="text" id="t2-input" class="t2-input" placeholder="e.g., Jane Doe">
-                    <input type="text" class="t2-input t2-input-error" value="Invalid input">
-                </div>
-                <div class="component-card">
-                    <h4>Alert</h4>
-                    <div class="t2-alert t2-alert-success">Your lesson is confirmed!</div>
-                    <div class="t2-alert t2-alert-warning">High winds forecasted.</div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Theme 3: Minimal & Clean -->
-        <div class="theme-section" id="theme3">
-            <h2>3. Minimal & Clean</h2>
-            <p>This theme focuses on a clean, almost monochromatic look with a single, subtle accent color. It feels calm, focused, and highly professional. It puts the content first and is very easy on the eyes.</p>
-            
-            <h3>Color Palette</h3>
-            <div class="palette">
-                <div class="swatch" style="background-color: #222222;"><span>#222222</span></div>
-                <div class="swatch" style="background-color: #3668FF;"><span>#3668FF</span></div>
-                <div class="swatch" style="background-color: #FAFAFA; color: #333;"><span>#FAFAFA</span></div>
-                <div class="swatch" style="background-color: #FFFFFF; color: #333; border: 1px solid #eee;"><span>#FFFFFF</span></div>
-                <div class="swatch" style="background-color: #2E7D32;"><span>#2E7D32</span></div>
-                <div class="swatch" style="background-color: #ED6C02;"><span>#ED6C02</span></div>
-                <div class="swatch" style="background-color: #D32F2F;"><span>#D32F2F</span></div>
-            </div>
-
-            <h3>Component Examples</h3>
-            <div class="components">
-                <div class="component-card">
-                    <h4>Buttons</h4>
-                    <button class="t3-btn t3-btn-primary">Primary Action</button>
-                    <button class="t3-btn t3-btn-secondary">Secondary</button>
-                    <button class="t3-btn t3-btn-destructive">Delete</button>
-                </div>
-                <div class="component-card">
-                    <h4>Form Input</h4>
-                    <label for="t3-input">Your Name</label>
-                    <input type="text" id="t3-input" class="t3-input" placeholder="e.g., Alex Doe">
-                    <input type="text" class="t3-input t3-input-error" value="Invalid input">
-                </div>
-                <div class="component-card">
-                    <h4>Alert</h4>
-                    <div class="t3-alert t3-alert-success">Your lesson is confirmed!</div>
-                    <div class="t3-alert t3-alert-warning">High winds forecasted.</div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Theme 4: Calm & Controlled -->
-        <div class="theme-section" id="theme4">
-            <h2>4. Calm & Controlled</h2>
-            <p>A subtle, sophisticated, and almost monochromatic theme based on your custom palette. It creates a very calm, clean, and controlled feeling, suitable for a high-end, professional tool.</p>
-            
-            <h3>Color Palette</h3>
-            <div class="palette">
-                <div class="swatch" style="background-color: #0F2126;"><span>#0F2126</span></div>
-                <div class="swatch" style="background-color: #A8BBC9;"><span>#A8BBC9</span></div>
-                <div class="swatch" style="background-color: #F8F8F8; color: #333;"><span>#F8F8F8</span></div>
-                <div class="swatch" style="background-color: #FFFFFF; color: #333; border: 1px solid #eee;"><span>#FFFFFF</span></div>
-                <div class="swatch" style="background-color: #2E7D32;"><span>#2E7D32</span></div>
-                <div class="swatch" style="background-color: #ED6C02;"><span>#ED6C02</span></div>
-                <div class="swatch" style="background-color: #D32F2F;"><span>#D32F2F</span></div>
-            </div>
-
-            <h3>Component Examples</h3>
-            <div class="components">
-                <div class="component-card" style="background-color: #F8F8F8;">
-                    <h4>Buttons</h4>
-                    <button class="t4-btn t4-btn-primary">Primary Action</button>
-                    <button class="t4-btn t4-btn-secondary">Secondary</button>
-                    <button class="t4-btn t4-btn-destructive">Delete</button>
-                </div>
-                <div class="component-card" style="background-color: #F8F8F8;">
-                    <h4>Form Input</h4>
-                    <label for="t4-input" style="color: #0F2126;">Your Name</label>
-                    <input type="text" id="t4-input" class="t4-input" placeholder="e.g., Sam Doe">
-                    <input type="text" class="t4-input t4-input-error" value="Invalid input">
-                </div>
-                <div class="component-card" style="background-color: #F8F8F8;">
-                    <h4>Alert</h4>
-                    <div class="t4-alert t4-alert-success">Your lesson is confirmed!</div>
-                    <div class="t4-alert t4-alert-warning">High winds forecasted.</div>
-                </div>
-            </div>
-        </div>
-
     </div>
 
     <style>
-        /* Theme 1 Styles */
-        .t1-btn { border: none; padding: 10px 20px; border-radius: 6px; font-weight: 500; cursor: pointer; transition: all 0.2s ease; }
-        .t1-btn-primary { background-color: #0A2540; color: white; }
-        .t1-btn-primary:hover { background-color: #0a2540e0; }
-        .t1-btn-secondary { background-color: #e0e0e0; color: #333; }
-        .t1-btn-secondary:hover { background-color: #d0d0d0; }
-        .t1-btn-destructive { background-color: #dc3545; color: white; }
-        .t1-input { width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 6px; }
-        .t1-input:focus { border-color: #00C49A; outline: none; box-shadow: 0 0 0 2px #00c49a40; }
-        .t1-input-error { border-color: #dc3545; }
-        .t1-alert { padding: 1rem; border-radius: 6px; margin-bottom: 1rem; }
-        .t1-alert-success { background-color: #28a74520; color: #28a745; border-left: 4px solid #28a745; }
-        .t1-alert-warning { background-color: #ffc10720; color: #ffc107; border-left: 4px solid #ffc107; }
+        .btn { border: none; padding: 10px 20px; border-radius: 8px; font-weight: 600; cursor: pointer; transition: all 0.2s ease; font-family: 'Inter', sans-serif; }
+        .btn-primary { background-color: #0A2540; color: white; }
+        .btn-primary:hover { background-color: #1E3A5F; }
+        .btn-secondary { background-color: #EAEAEA; color: #333; }
+        .btn-secondary:hover { background-color: #dcdcdc; }
+        .btn-destructive { background-color: #dc3545; color: white; }
+        
+        .input { width: 100%; padding: 10px; border: 1px solid #E0E0E0; border-radius: 8px; background-color: #FFFFFF; color: #111111; }
+        .input:focus { border-color: #4A90E2; outline: none; box-shadow: 0 0 0 3px #4a90e230; }
+        .input-error { border-color: #dc3545; }
 
-        /* Theme 2 Styles */
-        .t2-btn { border: none; padding: 10px 20px; border-radius: 6px; font-weight: 500; cursor: pointer; transition: all 0.2s ease; }
-        .t2-btn-primary { background-color: #0052FF; color: white; }
-        .t2-btn-primary:hover { background-color: #0045d9; }
-        .t2-btn-secondary { background-color: #e0e0e0; color: #333; }
-        .t2-btn-secondary:hover { background-color: #d0d0d0; }
-        .t2-btn-destructive { background-color: #FF5630; color: white; }
-        .t2-input { width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 6px; }
-        .t2-input:focus { border-color: #FFD000; outline: none; box-shadow: 0 0 0 2px #ffd00040; }
-        .t2-input-error { border-color: #FF5630; }
-        .t2-alert { padding: 1rem; border-radius: 6px; margin-bottom: 1rem; }
-        .t2-alert-success { background-color: #36B37E20; color: #36B37E; border-left: 4px solid #36B37E; }
-        .t2-alert-warning { background-color: #FFAB0020; color: #FFAB00; border-left: 4px solid #FFAB00; }
-
-        /* Theme 3 Styles */
-        .t3-btn { border: none; padding: 10px 20px; border-radius: 6px; font-weight: 500; cursor: pointer; transition: all 0.2s ease; }
-        .t3-btn-primary { background-color: #222222; color: white; }
-        .t3-btn-primary:hover { background-color: #444; }
-        .t3-btn-secondary { background-color: #e9e9e9; color: #333; }
-        .t3-btn-secondary:hover { background-color: #d9d9d9; }
-        .t3-btn-destructive { background-color: #D32F2F; color: white; }
-        .t3-input { width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 6px; }
-        .t3-input:focus { border-color: #3668FF; outline: none; box-shadow: 0 0 0 2px #3668ff40; }
-        .t3-input-error { border-color: #D32F2F; }
-        .t3-alert { padding: 1rem; border-radius: 6px; margin-bottom: 1rem; }
-        .t3-alert-success { background-color: #2E7D3220; color: #2E7D32; border-left: 4px solid #2E7D32; }
-        .t3-alert-warning { background-color: #ED6C0220; color: #ED6C02; border-left: 4px solid #ED6C02; }
-
-        /* Theme 4 Styles */
-        .t4-btn { border: none; padding: 10px 20px; border-radius: 6px; font-weight: 500; cursor: pointer; transition: all 0.2s ease; }
-        .t4-btn-primary { background-color: #0F2126; color: white; }
-        .t4-btn-primary:hover { background-color: #2C3E44; }
-        .t4-btn-secondary { background-color: #ABBFCA; color: #0F2126; }
-        .t4-btn-secondary:hover { background-color: #9AA9B4; }
-        .t4-btn-destructive { background-color: #D32F2F; color: white; }
-        .t4-input { width: 100%; padding: 10px; border: 1px solid #B2C3CD; border-radius: 6px; background-color: #FFFFFF; color: #0F2126; }
-        .t4-input:focus { border-color: #A8BBC9; outline: none; box-shadow: 0 0 0 2px #a8bbc960; }
-        .t4-input-error { border-color: #D32F2F; }
-        .t4-alert { padding: 1rem; border-radius: 6px; margin-bottom: 1rem; }
-        .t4-alert-success { background-color: #2E7D3220; color: #2E7D32; border-left: 4px solid #2E7D32; }
-        .t4-alert-warning { background-color: #ED6C0220; color: #ED6C02; border-left: 4px solid #ED6C02; }
+        .alert { padding: 1rem; border-radius: 8px; margin-bottom: 1rem; border-left: 5px solid; }
+        .alert-success { background-color: #28a74520; color: #20853a; border-color: #28a745; }
+        .alert-warning { background-color: #ffc10720; color: #b98900; border-color: #ffc107; }
+        .alert-pending { background-color: #FBBF2420; color: #b48b1a; border-color: #FBBF24; }
     </style>
 </body>
 </html>
