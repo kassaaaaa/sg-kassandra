@@ -1,80 +1,103 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>KiteOps Application Mockups</title>
     <style>
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-            margin: 0;
-            display: flex;
-            height: 100vh;
-            background-color: #F5F5F5;
-        }
-        .sidebar {
-            width: 250px;
-            background-color: #0A2540;
-            color: #FFFFFF;
-            padding: 20px;
-            flex-shrink: 0;
-        }
-        .sidebar h1 {
-            margin: 0 0 30px 0;
-            font-size: 24px;
-            text-align: center;
-        }
-        .sidebar ul {
-            list-style: none;
-            padding: 0;
-            margin: 0;
-        }
-        .sidebar li a {
-            display: block;
-            padding: 12px 15px;
-            color: #FFFFFF;
-            text-decoration: none;
-            border-radius: 5px;
-            margin-bottom: 8px;
-            transition: background-color 0.2s;
-        }
-        .sidebar li a:hover, .sidebar li a.active {
-            background-color: #4A90E2;
-        }
-        .content {
-            flex-grow: 1;
-            padding: 0;
-            overflow: hidden;
-        }
-        iframe {
-            width: 100%;
-            height: 100%;
-            border: none;
-        }
+      body {
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+          Helvetica, Arial, sans-serif;
+        margin: 0;
+        display: flex;
+        height: 100vh;
+        background-color: #f5f5f5;
+      }
+      .sidebar {
+        width: 250px;
+        background-color: #0a2540;
+        color: #ffffff;
+        padding: 20px;
+        flex-shrink: 0;
+      }
+      .sidebar h1 {
+        margin: 0 0 30px 0;
+        font-size: 24px;
+        text-align: center;
+      }
+      .sidebar ul {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+      }
+      .sidebar li a {
+        display: block;
+        padding: 12px 15px;
+        color: #ffffff;
+        text-decoration: none;
+        border-radius: 5px;
+        margin-bottom: 8px;
+        transition: background-color 0.2s;
+      }
+      .sidebar li a:hover,
+      .sidebar li a.active {
+        background-color: #4a90e2;
+      }
+      .content {
+        flex-grow: 1;
+        padding: 0;
+        overflow: hidden;
+      }
+      iframe {
+        width: 100%;
+        height: 100%;
+        border: none;
+      }
     </style>
-</head>
-<body>
+  </head>
+  <body>
     <nav class="sidebar">
-        <h1>KiteOps Mockups</h1>
-        <ul>
-            <li><a href="stitch/customer-booking.html" target="mockup-frame" class="nav-link active">Customer Booking</a></li>
-            <li><a href="stitch/instructor-calender.html" target="mockup-frame" class="nav-link">Instructor Calendar</a></li>
-            <li><a href="stitch/manager-dashboard.html" target="mockup-frame" class="nav-link">Manager Dashboard</a></li>
-        </ul>
+      <h1>KiteOps Mockups</h1>
+      <ul>
+        <li>
+          <a
+            href="mockups/customer-booking.html"
+            target="mockup-frame"
+            class="nav-link active"
+            >Customer Booking</a
+          >
+        </li>
+        <li>
+          <a
+            href="mockups/instructor-calender.html"
+            target="mockup-frame"
+            class="nav-link"
+            >Instructor Calendar</a
+          >
+        </li>
+        <li>
+          <a
+            href="mockups/manager-dashboard.html"
+            target="mockup-frame"
+            class="nav-link"
+            >Manager Dashboard</a
+          >
+        </li>
+      </ul>
     </nav>
     <main class="content">
-        <iframe name="mockup-frame" src="stitch/customer-booking.html"></iframe>
+      <iframe name="mockup-frame" src="stitch/customer-booking.html"></iframe>
     </main>
 
     <script>
-        const links = document.querySelectorAll('.nav-link');
-        links.forEach(link => {
-            link.addEventListener('click', function(e) {
-                // No need for preventDefault as target is handled by iframe
-                links.forEach(l => l.classList.remove('active'));
-                this.classList.add('active');
-            });
+      const links = document.querySelectorAll(".nav-link");
+      links.forEach((link) => {
+        link.addEventListener("click", function (e) {
+          // No need for preventDefault as target is handled by iframe
+          links.forEach((l) => l.classList.remove("active"));
+          this.classList.add("active");
         });
+      });
     </script>
-</body>
+  </body>
 </html>
