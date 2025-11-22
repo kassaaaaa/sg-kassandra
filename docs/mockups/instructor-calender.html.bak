@@ -107,10 +107,10 @@
 <header class="flex flex-wrap justify-between items-center gap-4 pb-6 border-b border-border-light dark:border-gray-700">
 <p class="text-text-heading text-4xl font-black leading-tight tracking-[-0.033em] font-heading dark:text-white">My Calendar</p>
 <div class="flex flex-1 gap-3 flex-wrap justify-start sm:justify-end">
-<button class="flex min-w-[84px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 px-4 bg-primary text-white text-sm font-bold leading-normal tracking-[0.015em] hover:bg-primary/90">
+<button id="add-availability-btn" class="flex min-w-[84px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 px-4 bg-primary text-white text-sm font-bold leading-normal tracking-[0.015em] hover:bg-primary/90">
 <span class="truncate">+ Add availability</span>
 </button>
-<button class="flex min-w-[84px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 px-4 bg-surface text-text-heading border border-border-light text-sm font-bold leading-normal tracking-[0.015em] hover:bg-gray-50 dark:bg-gray-800 dark:border-gray-600 dark:text-white dark:hover:bg-gray-700">
+<button id="block-time-btn" class="flex min-w-[84px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 px-4 bg-surface text-text-heading border border-border-light text-sm font-bold leading-normal tracking-[0.015em] hover:bg-gray-50 dark:bg-gray-800 dark:border-gray-600 dark:text-white dark:hover:bg-gray-700">
 <span class="truncate">Block time</span>
 </button>
 </div>
@@ -126,7 +126,7 @@
 <span class="material-symbols-outlined text-text-heading dark:text-white">chevron_right</span>
 </button>
 </div>
-<h1 class="text-text-heading text-xl font-bold leading-tight tracking-[-0.015em] font-heading dark:text-white">November 10 – 16, 2025</h1>
+<h1 id="calendar-title" class="text-text-heading text-xl font-bold leading-tight tracking-[-0.015em] font-heading dark:text-white">November 2025</h1>
 </div>
 <div id="view-selector" class="flex bg-gray-100 p-1 rounded-lg dark:bg-gray-800">
 <button id="month-view-btn" class="px-3 py-1 text-sm font-medium text-text-body rounded-md dark:text-gray-400">Month</button>
@@ -142,8 +142,8 @@
 <div class="flex items-center gap-2"><div class="size-3 rounded-sm bg-blocked pattern-diagonal-lines"></div><span class="text-xs text-text-body dark:text-gray-400">Blocked</span></div>
 </div>
 <div class="flex-1">
-    <!-- Week View (Visible by default) -->
-    <div id="week-view" class="grid grid-cols-[auto,1fr] bg-surface rounded-xl border border-border-light overflow-hidden dark:bg-background-dark dark:border-gray-700">
+    <!-- Week View -->
+    <div id="week-view" class="hidden grid-cols-[auto,1fr] bg-surface rounded-xl border border-border-light overflow-hidden dark:bg-background-dark dark:border-gray-700">
         <div class="grid grid-rows-[auto,repeat(12,1fr)] border-r border-border-light dark:border-gray-700">
             <div class="h-12"></div>
             <div class="flex justify-end pr-2 -mt-3"><span class="text-xs text-gray-400">8 AM</span></div>
@@ -163,20 +163,9 @@
             <div class="flex flex-col border-r border-border-light dark:border-gray-700">
                 <div class="h-12 flex flex-col items-center justify-center border-b border-border-light dark:border-gray-700"><span class="text-sm font-medium text-text-body dark:text-gray-400">Mon</span><span class="text-lg font-bold text-text-heading dark:text-white">10</span></div>
                 <div class="relative grid grid-rows-12 h-[720px]">
-                    <div class="row-span-12 border-t border-dashed border-border-light dark:border-gray-700/50 -mt-px"></div>
-                    <div class="row-start-2 row-span-1 border-t border-dashed border-border-light dark:border-gray-700/50"></div>
-                    <div class="row-start-3 row-span-1 border-t border-dashed border-border-light dark:border-gray-700/50"></div>
-                    <div class="row-start-4 row-span-1 border-t border-dashed border-border-light dark:border-gray-700/50"></div>
-                    <div class="row-start-5 row-span-1 border-t border-dashed border-border-light dark:border-gray-700/50"></div>
-                    <div class="row-start-6 row-span-1 border-t border-dashed border-border-light dark:border-gray-700/50"></div>
-                    <div class="row-start-7 row-span-1 border-t border-dashed border-border-light dark:border-gray-700/50"></div>
-                    <div class="row-start-8 row-span-1 border-t border-dashed border-border-light dark:border-gray-700/50"></div>
-                    <div class="row-start-9 row-span-1 border-t border-dashed border-border-light dark:border-gray-700/50"></div>
-                    <div class="row-start-10 row-span-1 border-t border-dashed border-border-light dark:border-gray-700/50"></div>
-                    <div class="row-start-11 row-span-1 border-t border-dashed border-border-light dark:border-gray-700/50"></div>
-                    <div class="row-start-12 row-span-1 border-t border-dashed border-border-light dark:border-gray-700/50"></div>
-                    <div class="absolute top-[calc(2/12*100%)] h-[calc(2/12*100%)] w-full p-1">
-                        <div class="bg-accent rounded-md p-2 h-full flex flex-col justify-center text-white overflow-hidden">
+                    <div class="row-span-12 border-t border-dashed border-border-light dark:border-gray-700/50 -mt-px"></div><div class="row-start-2 row-span-1 border-t border-dashed border-border-light dark:border-gray-700/50"></div><div class="row-start-3 row-span-1 border-t border-dashed border-border-light dark:border-gray-700/50"></div><div class="row-start-4 row-span-1 border-t border-dashed border-border-light dark:border-gray-700/50"></div><div class="row-start-5 row-span-1 border-t border-dashed border-border-light dark:border-gray-700/50"></div><div class="row-start-6 row-span-1 border-t border-dashed border-border-light dark:border-gray-700/50"></div><div class="row-start-7 row-span-1 border-t border-dashed border-border-light dark:border-gray-700/50"></div><div class="row-start-8 row-span-1 border-t border-dashed border-border-light dark:border-gray-700/50"></div><div class="row-start-9 row-span-1 border-t border-dashed border-border-light dark:border-gray-700/50"></div><div class="row-start-10 row-span-1 border-t border-dashed border-border-light dark:border-gray-700/50"></div><div class="row-start-11 row-span-1 border-t border-dashed border-border-light dark:border-gray-700/50"></div><div class="row-start-12 row-span-1 border-t border-dashed border-border-light dark:border-gray-700/50"></div>
+                    <div class="absolute top-[calc(2/12*100%)] h-[calc(2/12*100%)] w-full p-1 event-item cursor-pointer">
+                        <div class="bg-accent rounded-md p-2 h-full flex flex-col justify-center text-white overflow-hidden hover:bg-accent/90">
                             <p class="text-xs font-bold truncate">Advanced Hydrofoil</p>
                             <p class="text-xs truncate">Jane Doe</p>
                         </div>
@@ -198,8 +187,8 @@
                 <div class="h-12 flex flex-col items-center justify-center border-b border-border-light dark:border-gray-700"><span class="text-sm font-medium text-text-body dark:text-gray-400">Wed</span><span class="text-lg font-bold text-text-heading dark:text-white">12</span></div>
                 <div class="relative grid grid-rows-12 h-[720px]">
                     <div class="row-span-12 border-t border-dashed border-border-light dark:border-gray-700/50 -mt-px"></div><div class="row-start-2 row-span-1 border-t border-dashed border-border-light dark:border-gray-700/50"></div><div class="row-start-3 row-span-1 border-t border-dashed border-border-light dark:border-gray-700/50"></div><div class="row-start-4 row-span-1 border-t border-dashed border-border-light dark:border-gray-700/50"></div><div class="row-start-5 row-span-1 border-t border-dashed border-border-light dark:border-gray-700/50"></div><div class="row-start-6 row-span-1 border-t border-dashed border-border-light dark:border-gray-700/50"></div><div class="row-start-7 row-span-1 border-t border-dashed border-border-light dark:border-gray-700/50"></div><div class="row-start-8 row-span-1 border-t border-dashed border-border-light dark:border-gray-700/50"></div><div class="row-start-9 row-span-1 border-t border-dashed border-border-light dark:border-gray-700/50"></div><div class="row-start-10 row-span-1 border-t border-dashed border-border-light dark:border-gray-700/50"></div><div class="row-start-11 row-span-1 border-t border-dashed border-border-light dark:border-gray-700/50"></div><div class="row-start-12 row-span-1 border-t border-dashed border-border-light dark:border-gray-700/50"></div>
-                    <div class="absolute top-[calc(4/12*100%)] h-[calc(2/12*100%)] w-full p-1">
-                        <div class="bg-pending rounded-md p-2 h-full flex flex-col justify-center text-yellow-900 overflow-hidden">
+                    <div class="absolute top-[calc(4/12*100%)] h-[calc(2/12*100%)] w-full p-1 event-item cursor-pointer">
+                        <div class="bg-pending rounded-md p-2 h-full flex flex-col justify-center text-yellow-900 overflow-hidden hover:bg-yellow-300">
                             <p class="text-xs font-bold truncate">Beginner Lesson</p>
                             <p class="text-xs truncate">Mike Smith</p>
                             <p class="text-xs font-semibold mt-1">Pending</p>
@@ -217,8 +206,8 @@
                 <div class="h-12 flex flex-col items-center justify-center border-b border-border-light dark:border-gray-700"><span class="text-sm font-medium text-text-body dark:text-gray-400">Fri</span><span class="text-lg font-bold text-text-heading dark:text-white">14</span></div>
                 <div class="relative grid grid-rows-12 h-[720px]">
                     <div class="row-span-12 border-t border-dashed border-border-light dark:border-gray-700/50 -mt-px"></div><div class="row-start-2 row-span-1 border-t border-dashed border-border-light dark:border-gray-700/50"></div><div class="row-start-3 row-span-1 border-t border-dashed border-border-light dark:border-gray-700/50"></div><div class="row-start-4 row-span-1 border-t border-dashed border-border-light dark:border-gray-700/50"></div><div class="row-start-5 row-span-1 border-t border-dashed border-border-light dark:border-gray-700/50"></div><div class="row-start-6 row-span-1 border-t border-dashed border-border-light dark:border-gray-700/50"></div><div class="row-start-7 row-span-1 border-t border-dashed border-border-light dark:border-gray-700/50"></div><div class="row-start-8 row-span-1 border-t border-dashed border-border-light dark:border-gray-700/50"></div><div class="row-start-9 row-span-1 border-t border-dashed border-border-light dark:border-gray-700/50"></div><div class="row-start-10 row-span-1 border-t border-dashed border-border-light dark:border-gray-700/50"></div><div class="row-start-11 row-span-1 border-t border-dashed border-border-light dark:border-gray-700/50"></div><div class="row-start-12 row-span-1 border-t border-dashed border-border-light dark:border-gray-700/50"></div>
-                    <div class="absolute top-[calc(1/12*100%)] h-[calc(3/12*100%)] w-full p-1">
-                        <div class="bg-accent rounded-md p-2 h-full flex flex-col justify-center text-white overflow-hidden">
+                    <div class="absolute top-[calc(1/12*100%)] h-[calc(3/12*100%)] w-full p-1 event-item cursor-pointer">
+                        <div class="bg-accent rounded-md p-2 h-full flex flex-col justify-center text-white overflow-hidden hover:bg-accent/90">
                             <p class="text-xs font-bold truncate">Group Lesson</p>
                             <p class="text-xs truncate">3 students</p>
                         </div>
@@ -229,7 +218,7 @@
                 <div class="h-12 flex flex-col items-center justify-center border-b border-border-light dark:border-gray-700"><span class="text-sm font-medium text-text-body dark:text-gray-400">Sat</span><span class="text-lg font-bold text-accent">15</span></div>
                 <div class="relative grid grid-rows-12 h-[720px]">
                     <div class="row-span-12 border-t border-dashed border-border-light dark:border-gray-700/50 -mt-px"></div><div class="row-start-2 row-span-1 border-t border-dashed border-border-light dark:border-gray-700/50"></div><div class="row-start-3 row-span-1 border-t border-dashed border-border-light dark:border-gray-700/50"></div><div class="row-start-4 row-span-1 border-t border-dashed border-border-light dark:border-gray-700/50"></div><div class="row-start-5 row-span-1 border-t border-dashed border-border-light dark:border-gray-700/50"></div><div class="row-start-6 row-span-1 border-t border-dashed border-border-light dark:border-gray-700/50"></div><div class="row-start-7 row-span-1 border-t border-dashed border-border-light dark:border-gray-700/50"></div><div class="row-start-8 row-span-1 border-t border-dashed border-border-light dark:border-gray-700/50"></div><div class="row-start-9 row-span-1 border-t border-dashed border-border-light dark:border-gray-700/50"></div><div class="row-start-10 row-span-1 border-t border-dashed border-border-light dark:border-gray-700/50"></div><div class="row-start-11 row-span-1 border-t border-dashed border-border-light dark:border-gray-700/50"></div><div class="row-start-12 row-span-1 border-t border-dashed border-border-light dark:border-gray-700/50"></div>
-                    <div class="absolute top-0 h-full w-full p-1 flex flex-col gap-1">
+                    <div class="absolute top-0 h-full w-full p-1">
                         <div class="bg-available border-2 border-dashed border-available-border rounded-md p-2 h-full flex flex-col items-center justify-center text-green-800 overflow-hidden">
                             <p class="text-xs font-bold truncate">Available</p>
                         </div>
@@ -240,7 +229,7 @@
                 <div class="h-12 flex flex-col items-center justify-center border-b border-border-light dark:border-gray-700"><span class="text-sm font-medium text-text-body dark:text-gray-400">Sun</span><span class="text-lg font-bold text-accent">16</span></div>
                 <div class="relative grid grid-rows-12 h-[720px]">
                     <div class="row-span-12 border-t border-dashed border-border-light dark:border-gray-700/50 -mt-px"></div><div class="row-start-2 row-span-1 border-t border-dashed border-border-light dark:border-gray-700/50"></div><div class="row-start-3 row-span-1 border-t border-dashed border-border-light dark:border-gray-700/50"></div><div class="row-start-4 row-span-1 border-t border-dashed border-border-light dark:border-gray-700/50"></div><div class="row-start-5 row-span-1 border-t border-dashed border-border-light dark:border-gray-700/50"></div><div class="row-start-6 row-span-1 border-t border-dashed border-border-light dark:border-gray-700/50"></div><div class="row-start-7 row-span-1 border-t border-dashed border-border-light dark:border-gray-700/50"></div><div class="row-start-8 row-span-1 border-t border-dashed border-border-light dark:border-gray-700/50"></div><div class="row-start-9 row-span-1 border-t border-dashed border-border-light dark:border-gray-700/50"></div><div class="row-start-10 row-span-1 border-t border-dashed border-border-light dark:border-gray-700/50"></div><div class="row-start-11 row-span-1 border-t border-dashed border-border-light dark:border-gray-700/50"></div><div class="row-start-12 row-span-1 border-t border-dashed border-border-light dark:border-gray-700/50"></div>
-                    <div class="absolute top-0 h-full w-full p-1 flex flex-col gap-1">
+                    <div class="absolute top-0 h-full w-full p-1">
                         <div class="bg-available border-2 border-dashed border-available-border rounded-md p-2 h-full flex flex-col items-center justify-center text-green-800 overflow-hidden">
                             <p class="text-xs font-bold truncate">Available</p>
                         </div>
@@ -250,156 +239,629 @@
         </div>
     </div>
 
-    <!-- Month View (Hidden by default) -->
-    <div id="month-view" class="hidden bg-surface rounded-xl border border-border-light overflow-hidden dark:bg-background-dark dark:border-gray-700">
-        <div class="grid grid-cols-7 text-center font-bold">
-            <div class="py-2 border-b border-r">Sun</div>
-            <div class="py-2 border-b border-r">Mon</div>
-            <div class="py-2 border-b border-r">Tue</div>
-            <div class="py-2 border-b border-r">Wed</div>
-            <div class="py-2 border-b border-r">Thu</div>
-            <div class="py-2 border-b border-r">Fri</div>
-            <div class="py-2 border-b">Sat</div>
-        </div>
-        <div class="grid grid-cols-7 grid-rows-5 h-[720px]">
-            <!-- Generate a simple month grid -->
-            <script>
-                const monthView = document.getElementById('month-view').querySelector('.grid.grid-cols-7.grid-rows-5');
-                const events = {
-                    13: { title: 'Advanced Hydrofoil', color: 'bg-accent' },
-                    14: { title: 'Personal Time', color: 'bg-blocked' },
-                    15: { title: 'Beginner Lesson', color: 'bg-pending' },
-                    17: { title: 'Group Lesson', color: 'bg-accent' },
-                };
-
-                for (let i = 1; i <= 35; i++) {
-                    const day = document.createElement('div');
-                    day.className = 'border-r border-b p-2 text-sm text-left';
-                    if ((i % 7) === 0) { // Last column
-                        day.classList.remove('border-r');
-                    }
-                    const dayNumber = (i > 3 && i < 35) ? (i - 3) : '';
-                    day.innerHTML = `<span class="font-medium">${dayNumber}</span>`;
-
-                    if (events[i]) {
-                        const event = events[i];
-                        let textColor = 'text-white';
-                        if (event.color === 'bg-blocked') {
-                            textColor = 'text-text-body';
-                        } else if (event.color === 'bg-pending') {
-                            textColor = 'text-yellow-900';
-                        }
-                        day.innerHTML += `<div class="${event.color} ${textColor} rounded-md p-1 mt-1 text-xs truncate">${event.title}</div>`;
-                    }
-                    monthView.appendChild(day);
-                }
-            </script>
+    <!-- Month View -->
+    <div id="month-view" class="hidden grid grid-cols-7 grid-rows-[auto,1fr] overflow-auto bg-surface rounded-xl border border-border-light dark:bg-background-dark dark:border-gray-700">
+        <div class="pb-2 text-center text-sm font-medium text-text-body dark:text-gray-400 border-b border-border-light dark:border-gray-700">Sun</div>
+        <div class="pb-2 text-center text-sm font-medium text-text-body dark:text-gray-400 border-b border-border-light dark:border-gray-700">Mon</div>
+        <div class="pb-2 text-center text-sm font-medium text-text-body dark:text-gray-400 border-b border-border-light dark:border-gray-700">Tue</div>
+        <div class="pb-2 text-center text-sm font-medium text-text-body dark:text-gray-400 border-b border-border-light dark:border-gray-700">Wed</div>
+        <div class="pb-2 text-center text-sm font-medium text-text-body dark:text-gray-400 border-b border-border-light dark:border-gray-700">Thu</div>
+        <div class="pb-2 text-center text-sm font-medium text-text-body dark:text-gray-400 border-b border-border-light dark:border-gray-700">Fri</div>
+        <div class="pb-2 text-center text-sm font-medium text-text-body dark:text-gray-400 border-b border-border-light dark:border-gray-700">Sat</div>
+        <div class="grid grid-rows-6 col-span-7 row-start-2 border-t border-l border-border-light dark:border-gray-700 h-[720px]">
+            <div class="grid grid-cols-7 row-span-1">
+                <div class="border-b border-r border-border-light p-2 text-gray-400 dark:border-gray-700 dark:text-gray-500">26</div>
+                <div class="border-b border-r border-border-light p-2 text-gray-400 dark:border-gray-700 dark:text-gray-500">27</div>
+                <div class="border-b border-r border-border-light p-2 text-gray-400 dark:border-gray-700 dark:text-gray-500">28</div>
+                <div class="border-b border-r border-border-light p-2 text-gray-400 dark:border-gray-700 dark:text-gray-500">29</div>
+                <div class="border-b border-r border-border-light p-2 text-gray-400 dark:border-gray-700 dark:text-gray-500">30</div>
+                <div class="border-b border-r border-border-light p-2 text-gray-400 dark:border-gray-700 dark:text-gray-500">31</div>
+                <div class="border-b border-r border-border-light p-2 dark:border-gray-700">1</div>
+            </div>
+            <div class="grid grid-cols-7 row-span-1">
+                <div class="border-b border-r border-border-light p-2 dark:border-gray-700">2</div>
+                <div class="border-b border-r border-border-light p-2 dark:border-gray-700">3</div>
+                <div class="border-b border-r border-border-light p-2 dark:border-gray-700">4</div>
+                <div class="border-b border-r border-border-light p-2 dark:border-gray-700">5</div>
+                <div class="border-b border-r border-border-light p-2 dark:border-gray-700">6</div>
+                <div class="border-b border-r border-border-light p-2 dark:border-gray-700">7</div>
+                <div class="relative border-b border-r border-border-light p-2 dark:border-gray-700">8
+                    <div class="mt-1 flex flex-col gap-1">
+                        <div class="rounded bg-pending p-1 text-xs text-yellow-900 event-item cursor-pointer">J. Appleseed - Pending</div>
+                    </div>
+                </div>
+            </div>
+            <div class="grid grid-cols-7 row-span-1">
+                <div class="border-b border-r border-border-light p-2 dark:border-gray-700">9</div>
+                <div class="relative border-b border-r border-border-light p-2 dark:border-gray-700">10
+                    <div class="mt-1 flex flex-col gap-1">
+                        <div class="rounded bg-accent p-1 text-xs text-white event-item cursor-pointer">J. Appleseed - Confirmed</div>
+                        <div class="rounded bg-accent p-1 text-xs text-white event-item cursor-pointer">S. Connor - Confirmed</div>
+                    </div>
+                </div>
+                <div class="border-b border-r border-border-light p-2 dark:border-gray-700">11</div>
+                <div class="relative border-b border-r border-border-light p-2 dark:border-gray-700">12
+                     <div class="mt-1 flex flex-col gap-1">
+                        <div class="rounded bg-pending p-1 text-xs text-yellow-900 event-item cursor-pointer">J. Appleseed - Pending</div>
+                    </div>
+                </div>
+                <div class="border-b border-r border-border-light p-2 dark:border-gray-700">13</div>
+                <div class="relative border-b border-r border-border-light p-2 dark:border-gray-700">14
+                    <div class="mt-1 flex flex-col gap-1">
+                        <div class="rounded bg-accent p-1 text-xs text-white event-item cursor-pointer">J. Appleseed - Confirmed</div>
+                    </div>
+                </div>
+                <div class="relative border-b border-r border-border-light bg-blue-50 p-2 dark:bg-blue-900/20 dark:border-gray-700"><span class="font-bold text-accent">15</span></div>
+            </div>
+            <div class="grid grid-cols-7 row-span-1">
+                <div class="border-b border-r border-border-light p-2 dark:border-gray-700">16</div>
+                <div class="relative border-b border-r border-border-light p-2 dark:border-gray-700">17
+                    <div class="mt-1 flex flex-col gap-1">
+                        <div class="rounded bg-blocked p-1 text-xs text-white">J. Appleseed - Blocked</div>
+                    </div>
+                </div>
+                <div class="border-b border-r border-border-light p-2 dark:border-gray-700">18</div>
+                <div class="border-b border-r border-border-light p-2 dark:border-gray-700">19</div>
+                <div class="border-b border-r border-border-light p-2 dark:border-gray-700">20</div>
+                <div class="border-b border-r border-border-light p-2 dark:border-gray-700">21</div>
+                <div class="border-b border-r border-border-light p-2 dark:border-gray-700">22</div>
+            </div>
+            <div class="grid grid-cols-7 row-span-1">
+                <div class="border-b border-r border-border-light p-2 dark:border-gray-700">23</div>
+                <div class="border-b border-r border-border-light p-2 dark:border-gray-700">24</div>
+                <div class="border-b border-r border-border-light p-2 dark:border-gray-700">25</div>
+                <div class="border-b border-r border-border-light p-2 dark:border-gray-700">26</div>
+                <div class="border-b border-r border-border-light p-2 dark:border-gray-700">27</div>
+                <div class="border-b border-r border-border-light p-2 dark:border-gray-700">28</div>
+                <div class="border-b border-r border-border-light p-2 dark:border-gray-700">29</div>
+            </div>
+            <div class="grid grid-cols-7 row-span-1">
+                <div class="border-b border-r border-border-light p-2 dark:border-gray-700">30</div>
+                <div class="border-b border-r border-border-light p-2 text-gray-400 dark:border-gray-700 dark:text-gray-500">1</div>
+                <div class="border-b border-r border-border-light p-2 text-gray-400 dark:border-gray-700 dark:text-gray-500">2</div>
+                <div class="border-b border-r border-border-light p-2 text-gray-400 dark:border-gray-700 dark:text-gray-500">3</div>
+                <div class="border-b border-r border-border-light p-2 text-gray-400 dark:border-gray-700 dark:text-gray-500">4</div>
+                <div class="border-b border-r border-border-light p-2 text-gray-400 dark:border-gray-700 dark:text-gray-500">5</div>
+                <div class="border-b border-r border-border-light p-2 text-gray-400 dark:border-gray-700 dark:text-gray-500">6</div>
+            </div>
         </div>
     </div>
 
-    <!-- Day View (Hidden by default) -->
-    <div id="day-view" class="hidden">
-        <!-- Content for Day View -->
-        <div class="bg-surface rounded-xl border border-border-light p-4 dark:bg-background-dark dark:border-gray-700 h-[720px] overflow-y-auto">
-            <h3 class="text-lg font-bold mb-4">Monday, November 10</h3>
-            <div class="space-y-4">
-                <div class="flex items-center gap-4">
-                    <span class="font-semibold text-sm w-20">10:00 AM</span>
-                    <div class="flex-1 bg-accent text-white rounded-md p-2 text-sm">Advanced Hydrofoil - Jane Doe</div>
+    <!-- Day View -->
+    <div id="day-view" class="hidden grid grid-cols-[auto,1fr] bg-surface rounded-xl border border-border-light overflow-hidden dark:bg-background-dark dark:border-gray-700 h-[720px]">
+        <div class="grid grid-rows-[repeat(13,minmax(0,1fr))] pr-4 text-right">
+            <div class="h-10"></div>
+            <div class="-mt-3"><span class="text-xs text-gray-400">8 AM</span></div>
+            <div class="-mt-3"><span class="text-xs text-gray-400">9 AM</span></div>
+            <div class="-mt-3"><span class="text-xs text-gray-400">10 AM</span></div>
+            <div class="-mt-3"><span class="text-xs text-gray-400">11 AM</span></div>
+            <div class="-mt-3"><span class="text-xs text-gray-400">12 PM</span></div>
+            <div class="-mt-3"><span class="text-xs text-gray-400">1 PM</span></div>
+            <div class="-mt-3"><span class="text-xs text-gray-400">2 PM</span></div>
+            <div class="-mt-3"><span class="text-xs text-gray-400">3 PM</span></div>
+            <div class="-mt-3"><span class="text-xs text-gray-400">4 PM</span></div>
+            <div class="-mt-3"><span class="text-xs text-gray-400">5 PM</span></div>
+            <div class="-mt-3"><span class="text-xs text-gray-400">6 PM</span></div>
+            <div class="-mt-3"><span class="text-xs text-gray-400">7 PM</span></div>
+        </div>
+        <div class="relative grid grid-cols-1 grid-rows-13">
+            <div class="row-start-1 row-span-1 border-t border-border-light dark:border-gray-700"></div>
+            <div class="row-start-2 row-span-1 border-t border-border-light dark:border-gray-700"></div>
+            <div class="row-start-3 row-span-1 border-t border-border-light dark:border-gray-700"></div>
+            <div class="row-start-4 row-span-1 border-t border-border-light dark:border-gray-700"></div>
+            <div class="row-start-5 row-span-1 border-t border-border-light dark:border-gray-700"></div>
+            <div class="row-start-6 row-span-1 border-t border-border-light dark:border-gray-700"></div>
+            <div class="row-start-7 row-span-1 border-t border-border-light dark:border-gray-700"></div>
+            <div class="row-start-8 row-span-1 border-t border-border-light dark:border-gray-700"></div>
+            <div class="row-start-9 row-span-1 border-t border-border-light dark:border-gray-700"></div>
+            <div class="row-start-10 row-span-1 border-t border-border-light dark:border-gray-700"></div>
+            <div class="row-start-11 row-span-1 border-t border-border-light dark:border-gray-700"></div>
+            <div class="row-start-12 row-span-1 border-t border-border-light dark:border-gray-700"></div>
+            <div class="row-start-13 row-span-1 border-t border-border-light dark:border-gray-700"></div>
+            <div class="absolute top-[calc(1/13*100%)] h-[calc(2/13*100%)] w-full pr-1">
+                <div class="bg-blocked pattern-diagonal-lines rounded-md p-2 h-full flex flex-col text-text-body overflow-hidden border border-gray-200 dark:border-gray-600">
+                    <p class="text-xs font-bold truncate">Blocked for Wind Conditions</p>
+                    <p class="text-xs truncate">Too strong</p>
+                </div>
+            </div>
+            <div class="absolute top-[calc(4/13*100%)] h-[calc(2/13*100%)] w-full pr-1 event-item cursor-pointer">
+                <div class="bg-accent rounded-md p-2 h-full flex flex-col text-white overflow-hidden hover:bg-accent/90">
+                    <p class="text-xs font-bold truncate">Beginner Lesson</p>
+                    <p class="text-xs truncate">John Appleseed - 2 students</p>
+                </div>
+            </div>
+            <div class="absolute top-[calc(6.5/13*100%)] h-[calc(2/13*100%)] w-full pr-1 event-item cursor-pointer">
+                <div class="bg-pending rounded-md p-2 h-full flex flex-col text-yellow-900 overflow-hidden hover:bg-yellow-300">
+                    <p class="text-xs font-bold truncate">Advanced Hydrofoil</p>
+                    <p class="text-xs truncate">Jane Doe - 1 student</p>
+                    <p class="text-xs font-semibold mt-1">Pending Confirmation</p>
+                </div>
+            </div>
+            <div class="absolute top-[calc(9/13*100%)] h-[calc(3/13*100%)] w-full pr-1 event-item cursor-pointer">
+                <div class="bg-accent rounded-md p-2 h-full flex flex-col text-white overflow-hidden hover:bg-accent/90">
+                    <p class="text-xs font-bold truncate">Group Lesson</p>
+                    <p class="text-xs truncate">Sara Connor - 4 students</p>
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- Agenda View (Hidden by default) -->
-    <div id="agenda-view" class="hidden">
-        <div class="bg-surface rounded-xl border border-border-light p-4 dark:bg-background-dark dark:border-gray-700 h-[720px] overflow-y-auto">
-            <h3 class="text-lg font-bold mb-4">Upcoming Agenda</h3>
-            <div class="space-y-4">
-                <div>
-                    <p class="font-bold">Monday, November 10</p>
-                    <ul class="list-disc list-inside mt-2 ml-4 space-y-2">
-                        <li><span class="font-semibold">10:00 AM:</span> Advanced Hydrofoil with Jane Doe</li>
-                    </ul>
+    <!-- Agenda View -->
+    <div id="agenda-view" class="hidden flex-col flex-1 overflow-y-auto bg-surface rounded-xl border-border-light dark:bg-background-dark dark:border-gray-700 p-4 sm:p-6 lg:p-8 h-[720px]">
+        <div class="flex flex-col space-y-8">
+            <div>
+                <h2 class="text-lg font-semibold text-text-heading dark:text-white pb-3 border-b border-border-light dark:border-gray-700 mb-4">Monday, Nov 10</h2>
+                <div class="space-y-3">
+                    <div class="flex items-center gap-4 p-3 rounded-lg border-l-4 border-accent bg-accent/10 dark:bg-accent/20 event-item cursor-pointer hover:bg-accent/20">
+                        <div class="w-24 text-sm font-medium text-text-heading dark:text-gray-300">10:00 AM - 12:00 PM</div>
+                        <div class="flex-1">
+                            <p class="font-semibold text-text-heading dark:text-white">Advanced Hydrofoil</p>
+                            <p class="text-sm text-text-body dark:text-gray-400">Jane Doe (Instructor: John Appleseed)</p>
+                        </div>
+                    </div>
                 </div>
-                <div>
-                    <p class="font-bold">Tuesday, November 11</p>
-                    <ul class="list-disc list-inside mt-2 ml-4 space-y-2">
-                        <li><span class="font-semibold">08:00 AM:</span> Personal Time (Blocked)</li>
-                    </ul>
+            </div>
+            <div>
+                <h2 class="text-lg font-semibold text-text-heading dark:text-white pb-3 border-b border-border-light dark:border-gray-700 mb-4">Tuesday, Nov 11</h2>
+                <div class="space-y-3">
+                    <div class="flex items-center gap-4 p-3 rounded-lg border-l-4 border-gray-400 bg-blocked">
+                        <div class="w-24 text-sm font-medium text-text-heading dark:text-gray-300">All day</div>
+                        <div class="flex-1">
+                            <p class="font-semibold text-text-heading dark:text-gray-900">Personal Time</p>
+                            <p class="text-sm text-text-body dark:text-gray-700">John Appleseed</p>
+                        </div>
+                    </div>
                 </div>
-                <div>
-                    <p class="font-bold">Wednesday, November 12</p>
-                    <ul class="list-disc list-inside mt-2 ml-4 space-y-2">
-                        <li><span class="font-semibold">12:00 PM:</span> Beginner Lesson with Mike Smith (Pending)</li>
-                    </ul>
+            </div>
+            <div>
+                <h2 class="text-lg font-semibold text-text-heading dark:text-white pb-3 border-b border-border-light dark:border-gray-700 mb-4">Wednesday, Nov 12</h2>
+                <div class="space-y-3">
+                    <div class="flex items-center gap-4 p-3 rounded-lg border-l-4 border-pending bg-pending/10 dark:bg-pending/20 event-item cursor-pointer hover:bg-pending/20">
+                        <div class="w-24 text-sm font-medium text-text-heading dark:text-gray-300">12:00 PM - 2:00 PM</div>
+                        <div class="flex-1">
+                            <p class="font-semibold text-text-heading dark:text-white">Beginner Lesson</p>
+                            <p class="text-sm text-text-body dark:text-gray-400">Mike Smith (Instructor: John Appleseed)</p>
+                        </div>
+                        <div class="text-sm font-medium text-yellow-600 dark:text-pending">Pending</div>
+                    </div>
                 </div>
-                 <div>
-                    <p class="font-bold">Friday, November 14</p>
-                    <ul class="list-disc list-inside mt-2 ml-4 space-y-2">
-                        <li><span class="font-semibold">09:00 AM:</span> Group Lesson (3 students)</li>
-                    </ul>
+            </div>
+            <div>
+                <h2 class="text-lg font-semibold text-text-heading dark:text-white pb-3 border-b border-border-light dark:border-gray-700 mb-4">Thursday, Nov 13</h2>
+                <div class="text-sm text-text-body dark:text-gray-400">No events scheduled.</div>
+            </div>
+            <div>
+                <h2 class="text-lg font-semibold text-text-heading dark:text-white pb-3 border-b border-border-light dark:border-gray-700 mb-4">Friday, Nov 14</h2>
+                <div class="space-y-3">
+                    <div class="flex items-center gap-4 p-3 rounded-lg border-l-4 border-accent bg-accent/10 dark:bg-accent/20 event-item cursor-pointer hover:bg-accent/20">
+                        <div class="w-24 text-sm font-medium text-text-heading dark:text-gray-300">9:00 AM - 12:00 PM</div>
+                        <div class="flex-1">
+                            <p class="font-semibold text-text-heading dark:text-white">Group Lesson</p>
+                            <p class="text-sm text-text-body dark:text-gray-400">3 Students (Instructor: John Appleseed)</p>
+                        </div>
+                    </div>
                 </div>
+            </div>
+            <div>
+                <h2 class="text-lg font-semibold text-text-heading dark:text-white pb-3 border-b border-border-light dark:border-gray-700 mb-4">Saturday, Nov 15</h2>
+                <div class="text-sm text-text-body dark:text-gray-400">No events scheduled.</div>
+            </div>
+            <div>
+                <h2 class="text-lg font-semibold text-text-heading dark:text-white pb-3 border-b border-border-light dark:border-gray-700 mb-4">Sunday, Nov 16</h2>
+                <div class="text-sm text-text-body dark:text-gray-400">No events scheduled.</div>
             </div>
         </div>
     </div>
 </div>
 </main>
 </div>
+
+<!-- Course Detail Modal -->
+<div id="course-detail-modal" class="hidden fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4">
+    <div class="bg-surface rounded-xl w-full max-w-lg shadow-xl dark:bg-gray-800">
+        <div class="flex items-start justify-between p-6 border-b border-border-light dark:border-gray-700">
+            <h2 class="text-xl font-bold font-heading text-text-heading dark:text-white">Private Lesson - Intermediate</h2>
+            <button id="close-course-detail-modal-btn" class="text-gray-400 hover:text-gray-600 dark:hover:text-gray-200">
+                <span class="material-symbols-outlined">close</span>
+            </button>
+        </div>
+        <div class="p-6 space-y-8">
+            <div class="space-y-4">
+                <h3 class="font-heading text-lg font-bold text-text-heading dark:text-white">Lesson Details</h3>
+                <div class="grid grid-cols-2 gap-x-4 gap-y-3">
+                    <div>
+                        <p class="text-sm font-medium text-text-body dark:text-gray-400">Date and Time</p>
+                        <p class="text-base text-text-heading dark:text-white">Mon, Nov 10, 2025 - 10:00 AM</p>
+                    </div>
+                    <div>
+                        <p class="text-sm font-medium text-text-body dark:text-gray-400">Duration</p>
+                        <p class="text-base text-text-heading dark:text-white">2 hours</p>
+                    </div>
+                    <div>
+                        <p class="text-sm font-medium text-text-body dark:text-gray-400">Location</p>
+                        <p class="text-base text-text-heading dark:text-white">Main Beach</p>
+                    </div>
+                </div>
+            </div>
+            <div class="border-t border-border-light dark:border-gray-700"></div>
+            <div class="space-y-4">
+                <h3 class="font-heading text-lg font-bold text-text-heading dark:text-white">Student Details</h3>
+                <div class="grid grid-cols-2 gap-x-4 gap-y-3">
+                    <div>
+                        <p class="text-sm font-medium text-text-body dark:text-gray-400">Student Name</p>
+                        <p class="text-base text-text-heading dark:text-white">Jane Doe</p>
+                    </div>
+                    <div>
+                        <p class="text-sm font-medium text-text-body dark:text-gray-400">Skill Level</p>
+                        <p class="text-base text-text-heading dark:text-white">Intermediate</p>
+                    </div>
+                    <div>
+                        <p class="text-sm font-medium text-text-body dark:text-gray-400">Age &amp; Gender</p>
+                        <p class="text-base text-text-heading dark:text-white">28, Female</p>
+                    </div>
+                    <div>
+                        <p class="text-sm font-medium text-text-body dark:text-gray-400">Experience</p>
+                        <p class="text-base text-text-heading dark:text-white">5 hours prior</p>
+                    </div>
+                    <div>
+                        <p class="text-sm font-medium text-text-body dark:text-gray-400">Language</p>
+                        <p class="text-base text-text-heading dark:text-white">English</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="flex items-center justify-end p-6 gap-3 border-t border-border-light dark:border-gray-700">
+            <button class="flex min-w-[84px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 px-4 bg-surface text-text-heading border border-border-light text-sm font-bold leading-normal tracking-[0.015em] hover:bg-gray-50 dark:bg-gray-700 dark:border-gray-600 dark:text-white dark:hover:bg-gray-600">
+                <span class="truncate">Rebook Lesson</span>
+            </button>
+            <button class="flex min-w-[84px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 px-4 bg-red-600 text-white text-sm font-bold leading-normal tracking-[0.015em] hover:bg-red-700">
+                <span class="truncate">Cancel Lesson</span>
+            </button>
+        </div>
+    </div>
+</div>
+
+<!-- Add Availability Modal -->
+<div id="add-availability-modal" class="hidden fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4">
+    <div class="relative flex w-full max-w-lg flex-col overflow-hidden rounded-xl bg-surface dark:bg-background-dark shadow-2xl">
+        <!-- Modal Header -->
+        <div class="flex items-center justify-between gap-4 p-6 border-b border-border-light">
+            <p class="font-display text-2xl font-bold text-text-heading dark:text-white">Add Availability</p>
+            <button id="close-add-availability-modal-btn" class="flex h-8 w-8 items-center justify-center rounded-full text-text-body hover:bg-gray-100 dark:hover:bg-gray-700">
+                <span class="material-symbols-outlined">close</span>
+            </button>
+        </div>
+        <!-- Modal Body -->
+        <div class="flex flex-col gap-6 p-6">
+            <!-- Date & Time Section -->
+            <div class="flex flex-col gap-4">
+                <label class="flex flex-col">
+                    <p class="text-text-body text-sm font-medium leading-normal pb-2">Date(s)</p>
+                    <div class="relative flex items-center">
+                        <input class="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-lg border border-border-light bg-surface text-text-body placeholder:text-text-body/60 focus:border-primary focus:ring-2 focus:ring-primary/20 h-12 p-3 text-base font-normal leading-normal dark:bg-background-dark dark:text-white" placeholder="Select date or date range" value="November 15, 2025"/>
+                        <div class="pointer-events-none absolute right-3 flex items-center justify-center text-text-body">
+                            <span class="material-symbols-outlined">calendar_today</span>
+                        </div>
+                    </div>
+                </label>
+                <div class="flex flex-wrap items-end gap-4">
+                    <label class="flex flex-col min-w-40 flex-1">
+                        <p class="text-text-body text-sm font-medium leading-normal pb-2">From</p>
+                        <input class="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-lg border border-border-light bg-surface text-text-body placeholder:text-text-body/60 focus:border-primary focus:ring-2 focus:ring-primary/20 h-12 p-3 text-base font-normal leading-normal dark:bg-background-dark dark:text-white" type="time" value="09:00"/>
+                    </label>
+                    <label class="flex flex-col min-w-40 flex-1">
+                        <p class="text-text-body text-sm font-medium leading-normal pb-2">To</p>
+                        <input class="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-lg border border-border-light bg-surface text-text-body placeholder:text-text-body/60 focus:border-primary focus:ring-2 focus:ring-primary/20 h-12 p-3 text-base font-normal leading-normal dark:bg-background-dark dark:text-white" type="time" value="17:00"/>
+                    </label>
+                </div>
+            </div>
+            <!-- Recurrence Section -->
+            <div class="flex flex-col gap-4">
+                <label class="flex flex-col">
+                    <p class="text-text-body text-sm font-medium leading-normal pb-2">Repeats</p>
+                    <select class="form-input flex w-full min-w-0 flex-1 appearance-none resize-none overflow-hidden rounded-lg border border-border-light bg-surface text-text-body placeholder:text-text-body/60 focus:border-primary focus:ring-2 focus:ring-primary/20 h-12 bg-right-2 bg-no-repeat p-3 text-base font-normal leading-normal dark:bg-background-dark dark:text-white">
+                        <option value="none">Does not repeat</option>
+                        <option value="daily">Repeats daily</option>
+                        <option selected="" value="weekly">Repeats weekly</option>
+                        <option value="monthly">Repeats monthly</option>
+                    </select>
+                </label>
+            </div>
+            <!-- Informational Text -->
+            <div class="flex items-center gap-3 rounded-lg bg-primary/5 p-4">
+                <div class="text-primary/80 flex items-center justify-center shrink-0">
+                    <span class="material-symbols-outlined">info</span>
+                </div>
+                <p class="text-text-body text-sm font-normal leading-normal flex-1 dark:text-gray-300">We will check for any overlapping events before saving.</p>
+            </div>
+        </div>
+        <!-- Modal Footer -->
+        <div class="flex flex-1 gap-3 flex-wrap px-6 py-4 justify-end items-center bg-gray-50 dark:bg-gray-900/50 border-t border-border-light">
+            <button class="flex min-w-[84px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-11 px-5 text-text-body text-base font-semibold leading-normal tracking-[0.015em] hover:bg-gray-200 dark:text-white dark:hover:bg-gray-700">
+                <span class="truncate">Cancel</span>
+            </button>
+            <button class="flex min-w-[84px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-11 px-5 bg-primary text-white text-base font-semibold leading-normal tracking-[0.015em] hover:bg-primary/90">
+                <span class="truncate">Save</span>
+            </button>
+        </div>
+    </div>
+</div>
+
+<!-- Block Time Modal -->
+<div id="block-time-modal" class="hidden fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4">
+    <div class="relative w-full max-w-lg rounded-xl bg-surface dark:bg-background-dark shadow-2xl p-8 m-4">
+        <!-- Modal Header -->
+        <div class="flex items-start justify-between mb-6">
+            <h2 class="text-text-heading dark:text-gray-100 font-display text-2xl font-bold">Block Time</h2>
+            <button id="close-block-time-modal-btn" class="text-gray-400 hover:text-gray-600 dark:hover:text-gray-200">
+                <span class="material-symbols-outlined">close</span>
+            </button>
+        </div>
+        <!-- Form -->
+        <div class="flex flex-col gap-6">
+            <!-- Date and Time Section -->
+            <div class="flex flex-col sm:flex-row gap-4">
+                <label class="flex flex-col flex-1 relative">
+                    <p class="text-text-body dark:text-gray-300 text-sm font-medium leading-normal pb-2">Date(s)</p>
+                    <div class="flex w-full items-stretch rounded-lg">
+                        <input id="block-time-date-input" class="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-l-lg text-text-heading dark:text-gray-200 dark:bg-background-dark focus:outline-0 focus:ring-2 focus:ring-primary/50 border border-border-light dark:border-gray-600 bg-surface focus:border-primary/50 h-12 placeholder:text-gray-400 p-3 text-base font-normal leading-normal" placeholder="Select date"/>
+                        <div id="block-time-calendar-icon" class="cursor-pointer text-text-body dark:text-gray-400 flex border border-l-0 border-border-light dark:border-gray-600 bg-gray-50 dark:bg-gray-800/50 items-center justify-center px-3 rounded-r-lg">
+                            <span class="material-symbols-outlined text-xl">calendar_today</span>
+                        </div>
+                    </div>
+                    <div id="block-time-datepicker" class="hidden absolute top-full mt-2 w-full bg-surface dark:bg-gray-700 rounded-lg shadow-lg p-4 border border-border-light dark:border-gray-600 z-30">
+                        <div class="flex items-center justify-between mb-4">
+                            <button class="p-1 rounded-full hover:bg-gray-100 dark:hover:bg-gray-600">
+                                <span class="material-symbols-outlined text-sm">chevron_left</span>
+                            </button>
+                            <p class="text-sm font-semibold text-text-heading dark:text-white">November 2025</p>
+                            <button class="p-1 rounded-full hover:bg-gray-100 dark:hover:bg-gray-600">
+                                <span class="material-symbols-outlined text-sm">chevron_right</span>
+                            </button>
+                        </div>
+                        <div class="grid grid-cols-7 gap-1 text-center">
+                            <span class="text-xs font-medium text-gray-400">Su</span>
+                            <span class="text-xs font-medium text-gray-400">Mo</span>
+                            <span class="text-xs font-medium text-gray-400">Tu</span>
+                            <span class="text-xs font-medium text-gray-400">We</span>
+                            <span class="text-xs font-medium text-gray-400">Th</span>
+                            <span class="text-xs font-medium text-gray-400">Fr</span>
+                            <span class="text-xs font-medium text-gray-400">Sa</span>
+                        </div>
+                        <div id="datepicker-days" class="grid grid-cols-7 gap-1 mt-2">
+                             <button class="datepicker-day text-xs text-gray-400 p-1 rounded-full hover:bg-gray-100 dark:hover:bg-gray-600" data-day="26">26</button>
+                             <button class="datepicker-day text-xs text-gray-400 p-1 rounded-full hover:bg-gray-100 dark:hover:bg-gray-600" data-day="27">27</button>
+                             <button class="datepicker-day text-xs text-gray-400 p-1 rounded-full hover:bg-gray-100 dark:hover:bg-gray-600" data-day="28">28</button>
+                             <button class="datepicker-day text-xs text-gray-400 p-1 rounded-full hover:bg-gray-100 dark:hover:bg-gray-600" data-day="29">29</button>
+                             <button class="datepicker-day text-xs text-gray-400 p-1 rounded-full hover:bg-gray-100 dark:hover:bg-gray-600" data-day="30">30</button>
+                             <button class="datepicker-day text-xs text-gray-400 p-1 rounded-full hover:bg-gray-100 dark:hover:bg-gray-600" data-day="31">31</button>
+                             <button class="datepicker-day text-xs text-text-heading dark:text-white p-1 rounded-full hover:bg-gray-100 dark:hover:bg-gray-600" data-day="1">1</button>
+                             <button class="datepicker-day text-xs text-text-heading dark:text-white p-1 rounded-full hover:bg-gray-100 dark:hover:bg-gray-600" data-day="2">2</button>
+                             <button class="datepicker-day text-xs text-text-heading dark:text-white p-1 rounded-full hover:bg-gray-100 dark:hover:bg-gray-600" data-day="3">3</button>
+                             <button class="datepicker-day text-xs text-text-heading dark:text-white p-1 rounded-full hover:bg-gray-100 dark:hover:bg-gray-600" data-day="4">4</button>
+                             <button class="datepicker-day text-xs text-text-heading dark:text-white p-1 rounded-full hover:bg-gray-100 dark:hover:bg-gray-600" data-day="5">5</button>
+                             <button class="datepicker-day text-xs text-text-heading dark:text-white p-1 rounded-full hover:bg-gray-100 dark:hover:bg-gray-600" data-day="6">6</button>
+                             <button class="datepicker-day text-xs text-text-heading dark:text-white p-1 rounded-full hover:bg-gray-100 dark:hover:bg-gray-600" data-day="7">7</button>
+                             <button class="datepicker-day text-xs text-text-heading dark:text-white p-1 rounded-full hover:bg-gray-100 dark:hover:bg-gray-600" data-day="8">8</button>
+                             <button class="datepicker-day text-xs text-text-heading dark:text-white p-1 rounded-full hover:bg-gray-100 dark:hover:bg-gray-600" data-day="9">9</button>
+                             <button class="datepicker-day text-xs text-text-heading dark:text-white p-1 rounded-full hover:bg-gray-100 dark:hover:bg-gray-600" data-day="10">10</button>
+                             <button class="datepicker-day text-xs text-text-heading dark:text-white p-1 rounded-full hover:bg-gray-100 dark:hover:bg-gray-600" data-day="11">11</button>
+                             <button class="datepicker-day text-xs text-text-heading dark:text-white p-1 rounded-full bg-primary text-white hover:bg-primary/90" data-day="12">12</button>
+                             <button class="datepicker-day text-xs text-text-heading dark:text-white p-1 rounded-full hover:bg-gray-100 dark:hover:bg-gray-600" data-day="13">13</button>
+                             <button class="datepicker-day text-xs text-text-heading dark:text-white p-1 rounded-full hover:bg-gray-100 dark:hover:bg-gray-600" data-day="14">14</button>
+                             <button class="datepicker-day text-xs text-text-heading dark:text-white p-1 rounded-full hover:bg-gray-100 dark:hover:bg-gray-600" data-day="15">15</button>
+                             <button class="datepicker-day text-xs text-text-heading dark:text-white p-1 rounded-full hover:bg-gray-100 dark:hover:bg-gray-600" data-day="16">16</button>
+                             <button class="datepicker-day text-xs text-text-heading dark:text-white p-1 rounded-full hover:bg-gray-100 dark:hover:bg-gray-600" data-day="17">17</button>
+                             <button class="datepicker-day text-xs text-text-heading dark:text-white p-1 rounded-full hover:bg-gray-100 dark:hover:bg-gray-600" data-day="18">18</button>
+                             <button class="datepicker-day text-xs text-text-heading dark:text-white p-1 rounded-full hover:bg-gray-100 dark:hover:bg-gray-600" data-day="19">19</button>
+                             <button class="datepicker-day text-xs text-text-heading dark:text-white p-1 rounded-full hover:bg-gray-100 dark:hover:bg-gray-600" data-day="20">20</button>
+                             <button class="datepicker-day text-xs text-text-heading dark:text-white p-1 rounded-full hover:bg-gray-100 dark:hover:bg-gray-600" data-day="21">21</button>
+                             <button class="datepicker-day text-xs text-text-heading dark:text-white p-1 rounded-full hover:bg-gray-100 dark:hover:bg-gray-600" data-day="22">22</button>
+                             <button class="datepicker-day text-xs text-text-heading dark:text-white p-1 rounded-full hover:bg-gray-100 dark:hover:bg-gray-600" data-day="23">23</button>
+                             <button class="datepicker-day text-xs text-text-heading dark:text-white p-1 rounded-full hover:bg-gray-100 dark:hover:bg-gray-600" data-day="24">24</button>
+                             <button class="datepicker-day text-xs text-text-heading dark:text-white p-1 rounded-full hover:bg-gray-100 dark:hover:bg-gray-600" data-day="25">25</button>
+                             <button class="datepicker-day text-xs text-text-heading dark:text-white p-1 rounded-full hover:bg-gray-100 dark:hover:bg-gray-600" data-day="26">26</button>
+                             <button class="datepicker-day text-xs text-text-heading dark:text-white p-1 rounded-full hover:bg-gray-100 dark:hover:bg-gray-600" data-day="27">27</button>
+                             <button class="datepicker-day text-xs text-text-heading dark:text-white p-1 rounded-full hover:bg-gray-100 dark:hover:bg-gray-600" data-day="28">28</button>
+                             <button class="datepicker-day text-xs text-text-heading dark:text-white p-1 rounded-full hover:bg-gray-100 dark:hover:bg-gray-600" data-day="29">29</button>
+                             <button class="datepicker-day text-xs text-text-heading dark:text-white p-1 rounded-full hover:bg-gray-100 dark:hover:bg-gray-600" data-day="30">30</button>
+                        </div>
+                    </div>
+                </label>
+            </div>
+            <div class="flex flex-col sm:flex-row gap-4">
+                <label class="flex flex-col min-w-40 flex-1">
+                    <p class="text-text-body dark:text-gray-300 text-sm font-medium leading-normal pb-2">From</p>
+                    <input class="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-lg text-text-heading dark:text-gray-200 dark:bg-background-dark focus:outline-0 focus:ring-2 focus:ring-primary/50 border border-border-light dark:border-gray-600 bg-surface focus:border-primary/50 h-12 placeholder:text-gray-400 p-3 text-base font-normal leading-normal" type="time" value="09:00"/>
+                </label>
+                <label class="flex flex-col min-w-40 flex-1">
+                    <p class="text-text-body dark:text-gray-300 text-sm font-medium leading-normal pb-2">To</p>
+                    <input class="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-lg text-text-heading dark:text-gray-200 dark:bg-background-dark focus:outline-0 focus:ring-2 focus:ring-primary/50 border border-border-light dark:border-gray-600 bg-surface focus:border-primary/50 h-12 placeholder:text-gray-400 p-3 text-base font-normal leading-normal" type="time" value="17:00"/>
+                </label>
+            </div>
+            <!-- Recurrence Section -->
+            <label class="flex flex-col w-full">
+                <p class="text-text-body dark:text-gray-300 text-sm font-medium leading-normal pb-2">Repeat</p>
+                <select class="form-select flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-lg text-text-heading dark:text-gray-200 dark:bg-background-dark focus:outline-0 focus:ring-2 focus:ring-primary/50 border border-border-light dark:border-gray-600 bg-surface focus:border-primary/50 h-12 p-3 text-base font-normal leading-normal">
+                    <option>Does not repeat</option>
+                    <option>Repeats daily</option>
+                    <option>Repeats weekly</option>
+                    <option>Repeats monthly</option>
+                </select>
+            </label>
+            <!-- Reason Section -->
+            <label class="flex flex-col w-full">
+                <p class="text-text-body dark:text-gray-300 text-sm font-medium leading-normal pb-2">Reason (Optional)</p>
+                <textarea class="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-lg text-text-heading dark:text-gray-200 dark:bg-background-dark focus:outline-0 focus:ring-2 focus:ring-primary/50 border border-border-light dark:border-gray-600 bg-surface min-h-28 placeholder:text-gray-400 p-3 text-base font-normal leading-normal" placeholder="e.g., Personal appointment, Equipment maintenance"></textarea>
+            </label>
+        </div>
+        <!-- Conflict Check Notice -->
+        <div class="flex items-center gap-2 mt-6 p-3 rounded-lg bg-primary/5 dark:bg-primary/10 border border-primary/10 dark:border-primary/20">
+            <span class="material-symbols-outlined text-lg text-primary/80 dark:text-blue-300">info</span>
+            <p class="text-sm text-primary/80 dark:text-blue-200">We'll check for any conflicting lessons or appointments.</p>
+        </div>
+        <!-- Divider -->
+        <hr class="my-8 border-t border-border-light dark:border-gray-700"/>
+        <!-- Footer Actions -->
+        <div class="flex flex-col-reverse sm:flex-row items-center justify-end gap-3">
+            <button class="font-medium text-text-body dark:text-gray-300 hover:text-black dark:hover:text-white px-4 py-2 rounded-lg">Cancel</button>
+            <button class="w-full sm:w-auto bg-primary hover:bg-opacity-90 text-white font-medium px-6 py-3 rounded-lg flex items-center justify-center">Save</button>
+        </div>
+    </div>
+</div>
+
 <script>
-    const viewSelector = document.getElementById('view-selector');
-    const viewButtons = {
-        month: document.getElementById('month-view-btn'),
-        week: document.getElementById('week-view-btn'),
-        day: document.getElementById('day-view-btn'),
-        agenda: document.getElementById('agenda-view-btn'),
-    };
-    const views = {
-        month: document.getElementById('month-view'),
-        week: document.getElementById('week-view'),
-        day: document.getElementById('day-view'),
-        agenda: document.getElementById('agenda-view'),
-    };
+    document.addEventListener('DOMContentLoaded', () => {
+        const viewSelector = document.getElementById('view-selector');
+        const calendarTitle = document.getElementById('calendar-title');
+        
+        const viewButtons = {
+            month: document.getElementById('month-view-btn'),
+            week: document.getElementById('week-view-btn'),
+            day: document.getElementById('day-view-btn'),
+            agenda: document.getElementById('agenda-view-btn'),
+        };
+        const views = {
+            month: document.getElementById('month-view'),
+            week: document.getElementById('week-view'),
+            day: document.getElementById('day-view'),
+            agenda: document.getElementById('agenda-view'),
+        };
 
-    const activeClasses = ['text-primary', 'bg-surface', 'shadow-sm', 'dark:bg-gray-700', 'dark:text-white'];
-    const inactiveClasses = ['text-text-body', 'dark:text-gray-400'];
+        const activeClasses = ['text-primary', 'bg-surface', 'shadow-sm', 'dark:bg-gray-700', 'dark:text-white'];
+        const inactiveClasses = ['text-text-body', 'dark:text-gray-400'];
 
-    function switchView(viewName) {
-        // Hide all views
-        Object.values(views).forEach(view => view.classList.add('hidden'));
-        // Show the selected view
-        if (views[viewName]) {
-            views[viewName].classList.remove('hidden');
+        function switchView(viewName) {
+            if (!calendarTitle) return;
+            
+            // Update calendar title
+            if (viewName === 'month') {
+                calendarTitle.textContent = 'November 2025';
+            } else if (viewName === 'week') {
+                calendarTitle.textContent = 'November 10 – 16, 2025';
+            } else if (viewName === 'day') {
+                calendarTitle.textContent = 'November 12, 2025';
+            } else if (viewName === 'agenda') {
+                calendarTitle.textContent = 'Nov 10 – 16, 2025';
+            }
+
+            // Hide all views
+            Object.values(views).forEach(view => {
+                if (view) {
+                    view.classList.add('hidden');
+                    view.classList.remove('grid', 'flex');
+                }
+            });
+            
+            // Show the selected view
+            if (views[viewName]) {
+                views[viewName].classList.remove('hidden');
+                if (viewName === 'week' || viewName === 'day' || viewName === 'month') {
+                    views[viewName].classList.add('grid');
+                }
+                if (viewName === 'agenda') {
+                    views[viewName].classList.add('flex');
+                }
+            }
+
+            // Update button styles
+            Object.entries(viewButtons).forEach(([name, button]) => {
+                if (button) {
+                    if (name === viewName) {
+                        button.classList.add(...activeClasses);
+                        button.classList.remove(...inactiveClasses);
+                    } else {
+                        button.classList.remove(...activeClasses);
+                        button.classList.add(...inactiveClasses);
+                    }
+                }
+            });
         }
 
-        // Update button styles
-        Object.entries(viewButtons).forEach(([name, button]) => {
-            if (name === viewName) {
-                button.classList.add(...activeClasses);
-                button.classList.remove(...inactiveClasses);
-            } else {
-                button.classList.remove(...activeClasses);
-                button.classList.add(...inactiveClasses);
+        if (viewSelector) {
+            viewSelector.addEventListener('click', (event) => {
+                const clickedButton = event.target.closest('button');
+                if (!clickedButton) return;
+
+                if (clickedButton.id === 'month-view-btn') {
+                    switchView('month');
+                } else if (clickedButton.id === 'week-view-btn') {
+                    switchView('week');
+                } else if (clickedButton.id === 'day-view-btn') {
+                    switchView('day');
+                } else if (clickedButton.id === 'agenda-view-btn') {
+                    switchView('agenda');
+                }
+            });
+        }
+
+        // Generic Modal Handling
+        function setupModal(modalId, openBtnId, closeBtnId) {
+            const modal = document.getElementById(modalId);
+            const openBtn = document.getElementById(openBtnId);
+            const closeBtn = document.getElementById(closeBtnId);
+
+            const open = () => modal && modal.classList.remove('hidden');
+            const close = () => modal && modal.classList.add('hidden');
+
+            if (openBtn) openBtn.addEventListener('click', open);
+            if (closeBtn) closeBtn.addEventListener('click', close);
+            if (modal) {
+                modal.addEventListener('click', (event) => {
+                    if (event.target === modal) {
+                        close();
+                    }
+                });
+                const cancelBtn = modal.querySelector('.font-medium.text-text-body');
+                if(cancelBtn) cancelBtn.addEventListener('click', close);
+            }
+        }
+
+        // Setup All Modals
+        setupModal('course-detail-modal', null, 'close-course-detail-modal-btn');
+        setupModal('add-availability-modal', 'add-availability-btn', 'close-add-availability-modal-btn');
+        setupModal('block-time-modal', 'block-time-btn', 'close-block-time-modal-btn');
+        
+        const eventItems = document.querySelectorAll('.event-item');
+        const courseDetailModal = document.getElementById('course-detail-modal');
+        eventItems.forEach(item => {
+            item.addEventListener('click', () => courseDetailModal && courseDetailModal.classList.remove('hidden'));
+        });
+
+        // Datepicker specific logic
+        const datepicker = document.getElementById('block-time-datepicker');
+        const datepickerIcon = document.getElementById('block-time-calendar-icon');
+        const dateInput = document.getElementById('block-time-date-input');
+        const datepickerDays = document.getElementById('datepicker-days');
+
+        if (datepickerIcon) {
+            datepickerIcon.addEventListener('click', (e) => {
+                e.stopPropagation();
+                datepicker.classList.toggle('hidden');
+            });
+        }
+
+        if (datepickerDays) {
+            datepickerDays.addEventListener('click', (event) => {
+                const target = event.target;
+                if (target.classList.contains('datepicker-day')) {
+                    const day = target.dataset.day;
+                    if (dateInput && day) {
+                        dateInput.value = `November ${day}, 2025`;
+                        datepicker.classList.add('hidden');
+                    }
+                }
+            });
+        }
+        
+        document.addEventListener('click', function(event) {
+            if (datepicker && !datepicker.contains(event.target) && datepickerIcon && !datepickerIcon.contains(event.target)) {
+                datepicker.classList.add('hidden');
             }
         });
-    }
 
-    viewSelector.addEventListener('click', (event) => {
-        const clickedButton = event.target.closest('button');
-        if (!clickedButton) return;
-
-        if (clickedButton.id === 'month-view-btn') {
-            switchView('month');
-        } else if (clickedButton.id === 'week-view-btn') {
-            switchView('week');
-        } else if (clickedButton.id === 'day-view-btn') {
-            switchView('day');
-        } else if (clickedButton.id === 'agenda-view-btn') {
-            switchView('agenda');
-        }
+        // Set initial view
+        switchView('month');
     });
-
-    // Set initial view to 'week'
-    switchView('week');
 </script>
 </body></html>
