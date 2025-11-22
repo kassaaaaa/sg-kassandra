@@ -601,70 +601,12 @@
         <div class="flex flex-col gap-6">
             <!-- Date and Time Section -->
             <div class="flex flex-col sm:flex-row gap-4">
-                <label class="flex flex-col flex-1 relative">
+                <label class="flex flex-col flex-1">
                     <p class="text-text-body dark:text-gray-300 text-sm font-medium leading-normal pb-2">Date(s)</p>
                     <div class="flex w-full items-stretch rounded-lg">
-                        <input id="block-time-date-input" class="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-l-lg text-text-heading dark:text-gray-200 dark:bg-background-dark focus:outline-0 focus:ring-2 focus:ring-primary/50 border border-border-light dark:border-gray-600 bg-surface focus:border-primary/50 h-12 placeholder:text-gray-400 p-3 text-base font-normal leading-normal" placeholder="Select date"/>
-                        <div id="block-time-calendar-icon" class="cursor-pointer text-text-body dark:text-gray-400 flex border border-l-0 border-border-light dark:border-gray-600 bg-gray-50 dark:bg-gray-800/50 items-center justify-center px-3 rounded-r-lg">
+                        <input class="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-l-lg text-text-heading dark:text-gray-200 dark:bg-background-dark focus:outline-0 focus:ring-2 focus:ring-primary/50 border border-border-light dark:border-gray-600 bg-surface focus:border-primary/50 h-12 placeholder:text-gray-400 p-3 text-base font-normal leading-normal" placeholder="Select date"/>
+                        <div class="text-text-body dark:text-gray-400 flex border border-l-0 border-border-light dark:border-gray-600 bg-gray-50 dark:bg-gray-800/50 items-center justify-center px-3 rounded-r-lg">
                             <span class="material-symbols-outlined text-xl">calendar_today</span>
-                        </div>
-                    </div>
-                    <div id="block-time-datepicker" class="hidden absolute top-full mt-2 w-full bg-surface dark:bg-gray-700 rounded-lg shadow-lg p-4 border border-border-light dark:border-gray-600 z-30">
-                        <div class="flex items-center justify-between mb-4">
-                            <button class="p-1 rounded-full hover:bg-gray-100 dark:hover:bg-gray-600">
-                                <span class="material-symbols-outlined text-sm">chevron_left</span>
-                            </button>
-                            <p class="text-sm font-semibold text-text-heading dark:text-white">November 2025</p>
-                            <button class="p-1 rounded-full hover:bg-gray-100 dark:hover:bg-gray-600">
-                                <span class="material-symbols-outlined text-sm">chevron_right</span>
-                            </button>
-                        </div>
-                        <div class="grid grid-cols-7 gap-1 text-center">
-                            <span class="text-xs font-medium text-gray-400">Su</span>
-                            <span class="text-xs font-medium text-gray-400">Mo</span>
-                            <span class="text-xs font-medium text-gray-400">Tu</span>
-                            <span class="text-xs font-medium text-gray-400">We</span>
-                            <span class="text-xs font-medium text-gray-400">Th</span>
-                            <span class="text-xs font-medium text-gray-400">Fr</span>
-                            <span class="text-xs font-medium text-gray-400">Sa</span>
-                        </div>
-                        <div id="datepicker-days" class="grid grid-cols-7 gap-1 mt-2">
-                             <button class="datepicker-day text-xs text-gray-400 p-1 rounded-full hover:bg-gray-100 dark:hover:bg-gray-600" data-day="26">26</button>
-                             <button class="datepicker-day text-xs text-gray-400 p-1 rounded-full hover:bg-gray-100 dark:hover:bg-gray-600" data-day="27">27</button>
-                             <button class="datepicker-day text-xs text-gray-400 p-1 rounded-full hover:bg-gray-100 dark:hover:bg-gray-600" data-day="28">28</button>
-                             <button class="datepicker-day text-xs text-gray-400 p-1 rounded-full hover:bg-gray-100 dark:hover:bg-gray-600" data-day="29">29</button>
-                             <button class="datepicker-day text-xs text-gray-400 p-1 rounded-full hover:bg-gray-100 dark:hover:bg-gray-600" data-day="30">30</button>
-                             <button class="datepicker-day text-xs text-gray-400 p-1 rounded-full hover:bg-gray-100 dark:hover:bg-gray-600" data-day="31">31</button>
-                             <button class="datepicker-day text-xs text-text-heading dark:text-white p-1 rounded-full hover:bg-gray-100 dark:hover:bg-gray-600" data-day="1">1</button>
-                             <button class="datepicker-day text-xs text-text-heading dark:text-white p-1 rounded-full hover:bg-gray-100 dark:hover:bg-gray-600" data-day="2">2</button>
-                             <button class="datepicker-day text-xs text-text-heading dark:text-white p-1 rounded-full hover:bg-gray-100 dark:hover:bg-gray-600" data-day="3">3</button>
-                             <button class="datepicker-day text-xs text-text-heading dark:text-white p-1 rounded-full hover:bg-gray-100 dark:hover:bg-gray-600" data-day="4">4</button>
-                             <button class="datepicker-day text-xs text-text-heading dark:text-white p-1 rounded-full hover:bg-gray-100 dark:hover:bg-gray-600" data-day="5">5</button>
-                             <button class="datepicker-day text-xs text-text-heading dark:text-white p-1 rounded-full hover:bg-gray-100 dark:hover:bg-gray-600" data-day="6">6</button>
-                             <button class="datepicker-day text-xs text-text-heading dark:text-white p-1 rounded-full hover:bg-gray-100 dark:hover:bg-gray-600" data-day="7">7</button>
-                             <button class="datepicker-day text-xs text-text-heading dark:text-white p-1 rounded-full hover:bg-gray-100 dark:hover:bg-gray-600" data-day="8">8</button>
-                             <button class="datepicker-day text-xs text-text-heading dark:text-white p-1 rounded-full hover:bg-gray-100 dark:hover:bg-gray-600" data-day="9">9</button>
-                             <button class="datepicker-day text-xs text-text-heading dark:text-white p-1 rounded-full hover:bg-gray-100 dark:hover:bg-gray-600" data-day="10">10</button>
-                             <button class="datepicker-day text-xs text-text-heading dark:text-white p-1 rounded-full hover:bg-gray-100 dark:hover:bg-gray-600" data-day="11">11</button>
-                             <button class="datepicker-day text-xs text-text-heading dark:text-white p-1 rounded-full bg-primary text-white hover:bg-primary/90" data-day="12">12</button>
-                             <button class="datepicker-day text-xs text-text-heading dark:text-white p-1 rounded-full hover:bg-gray-100 dark:hover:bg-gray-600" data-day="13">13</button>
-                             <button class="datepicker-day text-xs text-text-heading dark:text-white p-1 rounded-full hover:bg-gray-100 dark:hover:bg-gray-600" data-day="14">14</button>
-                             <button class="datepicker-day text-xs text-text-heading dark:text-white p-1 rounded-full hover:bg-gray-100 dark:hover:bg-gray-600" data-day="15">15</button>
-                             <button class="datepicker-day text-xs text-text-heading dark:text-white p-1 rounded-full hover:bg-gray-100 dark:hover:bg-gray-600" data-day="16">16</button>
-                             <button class="datepicker-day text-xs text-text-heading dark:text-white p-1 rounded-full hover:bg-gray-100 dark:hover:bg-gray-600" data-day="17">17</button>
-                             <button class="datepicker-day text-xs text-text-heading dark:text-white p-1 rounded-full hover:bg-gray-100 dark:hover:bg-gray-600" data-day="18">18</button>
-                             <button class="datepicker-day text-xs text-text-heading dark:text-white p-1 rounded-full hover:bg-gray-100 dark:hover:bg-gray-600" data-day="19">19</button>
-                             <button class="datepicker-day text-xs text-text-heading dark:text-white p-1 rounded-full hover:bg-gray-100 dark:hover:bg-gray-600" data-day="20">20</button>
-                             <button class="datepicker-day text-xs text-text-heading dark:text-white p-1 rounded-full hover:bg-gray-100 dark:hover:bg-gray-600" data-day="21">21</button>
-                             <button class="datepicker-day text-xs text-text-heading dark:text-white p-1 rounded-full hover:bg-gray-100 dark:hover:bg-gray-600" data-day="22">22</button>
-                             <button class="datepicker-day text-xs text-text-heading dark:text-white p-1 rounded-full hover:bg-gray-100 dark:hover:bg-gray-600" data-day="23">23</button>
-                             <button class="datepicker-day text-xs text-text-heading dark:text-white p-1 rounded-full hover:bg-gray-100 dark:hover:bg-gray-600" data-day="24">24</button>
-                             <button class="datepicker-day text-xs text-text-heading dark:text-white p-1 rounded-full hover:bg-gray-100 dark:hover:bg-gray-600" data-day="25">25</button>
-                             <button class="datepicker-day text-xs text-text-heading dark:text-white p-1 rounded-full hover:bg-gray-100 dark:hover:bg-gray-600" data-day="26">26</button>
-                             <button class="datepicker-day text-xs text-text-heading dark:text-white p-1 rounded-full hover:bg-gray-100 dark:hover:bg-gray-600" data-day="27">27</button>
-                             <button class="datepicker-day text-xs text-text-heading dark:text-white p-1 rounded-full hover:bg-gray-100 dark:hover:bg-gray-600" data-day="28">28</button>
-                             <button class="datepicker-day text-xs text-text-heading dark:text-white p-1 rounded-full hover:bg-gray-100 dark:hover:bg-gray-600" data-day="29">29</button>
-                             <button class="datepicker-day text-xs text-text-heading dark:text-white p-1 rounded-full hover:bg-gray-100 dark:hover:bg-gray-600" data-day="30">30</button>
                         </div>
                     </div>
                 </label>
@@ -711,157 +653,123 @@
 </div>
 
 <script>
-    document.addEventListener('DOMContentLoaded', () => {
-        const viewSelector = document.getElementById('view-selector');
-        const calendarTitle = document.getElementById('calendar-title');
+    const viewSelector = document.getElementById('view-selector');
+    const calendarTitle = document.getElementById('calendar-title');
+    
+    const viewButtons = {
+        month: document.getElementById('month-view-btn'),
+        week: document.getElementById('week-view-btn'),
+        day: document.getElementById('day-view-btn'),
+        agenda: document.getElementById('agenda-view-btn'),
+    };
+    const views = {
+        month: document.getElementById('month-view'),
+        week: document.getElementById('week-view'),
+        day: document.getElementById('day-view'),
+        agenda: document.getElementById('agenda-view'),
+    };
+
+    const activeClasses = ['text-primary', 'bg-surface', 'shadow-sm', 'dark:bg-gray-700', 'dark:text-white'];
+    const inactiveClasses = ['text-text-body', 'dark:text-gray-400'];
+
+    function switchView(viewName) {
+        // Update calendar title
+        if (viewName === 'month') {
+            calendarTitle.textContent = 'November 2025';
+        } else if (viewName === 'week') {
+            calendarTitle.textContent = 'November 10 – 16, 2025';
+        } else if (viewName === 'day') {
+            calendarTitle.textContent = 'November 12, 2025';
+        } else if (viewName === 'agenda') {
+            calendarTitle.textContent = 'Nov 10 – 16, 2025';
+        }
+
+        // Hide all views
+        Object.values(views).forEach(view => {
+            if (view) {
+                view.classList.add('hidden');
+                view.classList.remove('grid', 'flex');
+            }
+        });
         
-        const viewButtons = {
-            month: document.getElementById('month-view-btn'),
-            week: document.getElementById('week-view-btn'),
-            day: document.getElementById('day-view-btn'),
-            agenda: document.getElementById('agenda-view-btn'),
-        };
-        const views = {
-            month: document.getElementById('month-view'),
-            week: document.getElementById('week-view'),
-            day: document.getElementById('day-view'),
-            agenda: document.getElementById('agenda-view'),
-        };
-
-        const activeClasses = ['text-primary', 'bg-surface', 'shadow-sm', 'dark:bg-gray-700', 'dark:text-white'];
-        const inactiveClasses = ['text-text-body', 'dark:text-gray-400'];
-
-        function switchView(viewName) {
-            if (!calendarTitle) return;
-            
-            // Update calendar title
-            if (viewName === 'month') {
-                calendarTitle.textContent = 'November 2025';
-            } else if (viewName === 'week') {
-                calendarTitle.textContent = 'November 10 – 16, 2025';
-            } else if (viewName === 'day') {
-                calendarTitle.textContent = 'November 12, 2025';
-            } else if (viewName === 'agenda') {
-                calendarTitle.textContent = 'Nov 10 – 16, 2025';
+        // Show the selected view
+        if (views[viewName]) {
+            views[viewName].classList.remove('hidden');
+            if (viewName === 'week' || viewName === 'day' || viewName === 'month') {
+                 views[viewName].classList.add('grid');
             }
-
-            // Hide all views
-            Object.values(views).forEach(view => {
-                if (view) {
-                    view.classList.add('hidden');
-                    view.classList.remove('grid', 'flex');
-                }
-            });
-            
-            // Show the selected view
-            if (views[viewName]) {
-                views[viewName].classList.remove('hidden');
-                if (viewName === 'week' || viewName === 'day' || viewName === 'month') {
-                    views[viewName].classList.add('grid');
-                }
-                if (viewName === 'agenda') {
-                    views[viewName].classList.add('flex');
-                }
-            }
-
-            // Update button styles
-            Object.entries(viewButtons).forEach(([name, button]) => {
-                if (button) {
-                    if (name === viewName) {
-                        button.classList.add(...activeClasses);
-                        button.classList.remove(...inactiveClasses);
-                    } else {
-                        button.classList.remove(...activeClasses);
-                        button.classList.add(...inactiveClasses);
-                    }
-                }
-            });
-        }
-
-        if (viewSelector) {
-            viewSelector.addEventListener('click', (event) => {
-                const clickedButton = event.target.closest('button');
-                if (!clickedButton) return;
-
-                if (clickedButton.id === 'month-view-btn') {
-                    switchView('month');
-                } else if (clickedButton.id === 'week-view-btn') {
-                    switchView('week');
-                } else if (clickedButton.id === 'day-view-btn') {
-                    switchView('day');
-                } else if (clickedButton.id === 'agenda-view-btn') {
-                    switchView('agenda');
-                }
-            });
-        }
-
-        // Generic Modal Handling
-        function setupModal(modalId, openBtnId, closeBtnId) {
-            const modal = document.getElementById(modalId);
-            const openBtn = document.getElementById(openBtnId);
-            const closeBtn = document.getElementById(closeBtnId);
-
-            const open = () => modal && modal.classList.remove('hidden');
-            const close = () => modal && modal.classList.add('hidden');
-
-            if (openBtn) openBtn.addEventListener('click', open);
-            if (closeBtn) closeBtn.addEventListener('click', close);
-            if (modal) {
-                modal.addEventListener('click', (event) => {
-                    if (event.target === modal) {
-                        close();
-                    }
-                });
-                const cancelBtn = modal.querySelector('.font-medium.text-text-body');
-                if(cancelBtn) cancelBtn.addEventListener('click', close);
+            if (viewName === 'agenda') {
+                views[viewName].classList.add('flex');
             }
         }
 
-        // Setup All Modals
+        // Update button styles
+        Object.entries(viewButtons).forEach(([name, button]) => {
+            if (button) {
+                if (name === viewName) {
+                    button.classList.add(...activeClasses);
+                    button.classList.remove(...inactiveClasses);
+                } else {
+                    button.classList.remove(...activeClasses);
+                    button.classList.add(...inactiveClasses);
+                }
+            }
+        });
+    }
+
+    if (viewSelector) {
+        viewSelector.addEventListener('click', (event) => {
+            const clickedButton = event.target.closest('button');
+            if (!clickedButton) return;
+
+            if (clickedButton.id === 'month-view-btn') {
+                switchView('month');
+            } else if (clickedButton.id === 'week-view-btn') {
+                switchView('week');
+            } else if (clickedButton.id === 'day-view-btn') {
+                switchView('day');
+            } else if (clickedButton.id === 'agenda-view-btn') {
+                switchView('agenda');
+            }
+        });
+    }
+
+    // Generic Modal Handling
+    function setupModal(modalId, openBtnId, closeBtnId) {
+        const modal = document.getElementById(modalId);
+        const openBtn = document.getElementById(openBtnId);
+        const closeBtn = document.getElementById(closeBtnId);
+
+        const open = () => modal && modal.classList.remove('hidden');
+        const close = () => modal && modal.classList.add('hidden');
+
+        if (openBtn) openBtn.addEventListener('click', open);
+        if (closeBtn) closeBtn.addEventListener('click', close);
+        if (modal) {
+            modal.addEventListener('click', (event) => {
+                if (event.target === modal) {
+                    close();
+                }
+            });
+        }
+    }
+
+    // Setup All Modals
+    document.addEventListener('DOMContentLoaded', () => {
         setupModal('course-detail-modal', null, 'close-course-detail-modal-btn');
         setupModal('add-availability-modal', 'add-availability-btn', 'close-add-availability-modal-btn');
         setupModal('block-time-modal', 'block-time-btn', 'close-block-time-modal-btn');
         
+        // Add listeners for dynamically created event items
         const eventItems = document.querySelectorAll('.event-item');
         const courseDetailModal = document.getElementById('course-detail-modal');
         eventItems.forEach(item => {
             item.addEventListener('click', () => courseDetailModal && courseDetailModal.classList.remove('hidden'));
         });
-
-        // Datepicker specific logic
-        const datepicker = document.getElementById('block-time-datepicker');
-        const datepickerIcon = document.getElementById('block-time-calendar-icon');
-        const dateInput = document.getElementById('block-time-date-input');
-        const datepickerDays = document.getElementById('datepicker-days');
-
-        if (datepickerIcon) {
-            datepickerIcon.addEventListener('click', (e) => {
-                e.stopPropagation();
-                datepicker.classList.toggle('hidden');
-            });
-        }
-
-        if (datepickerDays) {
-            datepickerDays.addEventListener('click', (event) => {
-                const target = event.target;
-                if (target.classList.contains('datepicker-day')) {
-                    const day = target.dataset.day;
-                    if (dateInput && day) {
-                        dateInput.value = `November ${day}, 2025`;
-                        datepicker.classList.add('hidden');
-                    }
-                }
-            });
-        }
-        
-        document.addEventListener('click', function(event) {
-            if (datepicker && !datepicker.contains(event.target) && datepickerIcon && !datepickerIcon.contains(event.target)) {
-                datepicker.classList.add('hidden');
-            }
-        });
-
-        // Set initial view
-        switchView('month');
     });
+
+
+    // Set initial view to 'month'
+    switchView('month');
 </script>
 </body></html>
