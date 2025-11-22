@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Add New Booking - KiteOps</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet"/>
+<script>
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          colors: {
+            "primary": "#0A2540",
+            "accent": "#4A90E2",
+            "background-light": "#F5F5F5",
+            "background-dark": "#101010",
+            "surface": "#FFFFFF",
+            "surface-dark": "#181818",
+            "text-heading": "#111111",
+            "text-heading-dark": "#F0F0F0",
+            "text-body": "#555555",
+            "text-body-dark": "#A0A0A0",
+          },
+          fontFamily: {
+            "display": ["Manrope", "sans-serif"]
+          },
+          borderRadius: {
+            "DEFAULT": "0.5rem",
+            "lg": "0.75rem",
+            "xl": "1rem",
+            "full": "9999px",
+          },
+        },
+      },
+    }
+  </script>
+</head>
+<body class="font-display bg-background-light dark:bg-background-dark">
+<div class="relative flex min-h-screen w-full flex-col items-center justify-center p-4 sm:p-6 group/design-root" style="background-color: rgba(17, 17, 17, 0.5);">
+<div class="layout-container w-full max-w-2xl">
+<div class="layout-content-container flex flex-col rounded-xl bg-surface dark:bg-surface-dark shadow-2xl">
+<!-- PageHeading -->
+<div class="flex flex-wrap items-center justify-between gap-3 p-6 border-b border-gray-200 dark:border-gray-700">
+<p class="text-text-heading dark:text-text-heading-dark text-2xl font-bold leading-tight tracking-tight">Add New Booking</p>
+<button class="flex h-10 w-10 cursor-pointer items-center justify-center overflow-hidden rounded-full bg-transparent text-text-body dark:text-text-body-dark hover:bg-gray-100 dark:hover:bg-gray-800">
+<span class="material-symbols-outlined">close</span>
+</button>
+</div>
+<div class="p-6 space-y-8">
+<!-- SectionHeader: Lesson Details -->
+<div class="space-y-4">
+<h3 class="text-text-heading dark:text-text-heading-dark text-lg font-bold leading-tight tracking-tight">Lesson Details</h3>
+<div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+<label class="flex flex-col flex-1">
+<p class="text-text-body dark:text-text-body-dark text-sm font-medium leading-normal pb-2">Lesson Type</p>
+<select class="form-select flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-lg text-text-heading dark:text-text-heading-dark focus:outline-0 focus:ring-2 focus:ring-accent/50 border border-gray-300 dark:border-gray-600 bg-surface dark:bg-surface-dark focus:border-accent h-12 placeholder:text-text-body/70 dark:placeholder:text-text-body-dark/70 px-4 text-base font-normal leading-normal appearance-none bg-no-repeat bg-right" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuDQUfwoVuaeCWgA1l39Wd_Nuy2xVktdBSTxJISJtHQn9UJVzHRpAy0X6U_u0bfz7Aj-8MhMMPnsYEhQrlKscsgxISbVvmgUg7c2ePbx7gI5Re7M5bYv9wDqiTATkKmpzuUFrrmHvHdMX0ANb1t0d6NcnUvcVvbRUV57KhpFmPcN30loyzbyNZF0GSdZBlVhC1zSyn-12eHNUQoRIKstC8twdtD8qIqicjthZRr1ISKvyCooz6DdA0Mx-DqZ2beDrOu6x4rN9TlTGhM"); background-position: right 0.5rem center; background-size: 1.5em 1.5em;'>
+<option>Select lesson type</option>
+<option value="private">Private Lesson</option>
+<option value="group">Group Lesson</option>
+<option value="clinic">Special Clinic</option>
+</select>
+</label>
+<label class="flex flex-col flex-1">
+<p class="text-text-body dark:text-text-body-dark text-sm font-medium leading-normal pb-2">Skill Level</p>
+<select class="form-select flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-lg text-text-heading dark:text-text-heading-dark focus:outline-0 focus:ring-2 focus:ring-accent/50 border border-gray-300 dark:border-gray-600 bg-surface dark:bg-surface-dark focus:border-accent h-12 placeholder:text-text-body/70 dark:placeholder:text-text-body-dark/70 px-4 text-base font-normal leading-normal appearance-none bg-no-repeat bg-right" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuDQUfwoVuaeCWgA1l39Wd_Nuy2xVktdBSTxJISJtHQn9UJVzHRpAy0X6U_u0bfz7Aj-8MhMMPnsYEhQrlKscsgxISbVvmgUg7c2ePbx7gI5Re7M5bYv9wDqiTATkKmpzuUFrrmHvHdMX0ANb1t0d6NcnUvcVvbRUV57KhpFmPcN30loyzbyNZF0GSdZBlVhC1zSyn-12eHNUQoRIKstC8twdtD8qIqicjthZRr1ISKvyCooz6DdA0Mx-DqZ2beDrOu6x4rN9TlTGhM"); background-position: right 0.5rem center; background-size: 1.5em 1.5em;'>
+<option>Select skill level</option>
+<option value="beginner">Beginner</option>
+<option value="intermediate">Intermediate</option>
+<option value="advanced">Advanced</option>
+</select>
+</label>
+</div>
+<label class="flex flex-col">
+<p class="text-text-body dark:text-text-body-dark text-sm font-medium leading-normal pb-2">Instructor</p>
+<select class="form-select flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-lg text-text-heading dark:text-text-heading-dark focus:outline-0 focus:ring-2 focus:ring-accent/50 border border-gray-300 dark:border-gray-600 bg-surface dark:bg-surface-dark focus:border-accent h-12 placeholder:text-text-body/70 dark:placeholder:text-text-body-dark/70 px-4 text-base font-normal leading-normal appearance-none bg-no-repeat bg-right" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuDQUfwoVuaeCWgA1l39Wd_Nuy2xVktdBSTxJISJtHQn9UJVzHRpAy0X6U_u0bfz7Aj-8MhMMPnsYEhQrlKscsgxISbVvmgUg7c2ePbx7gI5Re7M5bYv9wDqiTATkKmpzuUFrrmHvHdMX0ANb1t0d6NcnUvcVvbRUV57KhpFmPcN30loyzbyNZF0GSdZBlVhC1zSyn-12eHNUQoRIKstC8twdtD8qIqicjthZRr1ISKvyCooz6DdA0Mx-DqZ2beDrOu6x4rN9TlTGhM"); background-position: right 0.5rem center; background-size: 1.5em 1.5em;'>
+<option>Select an instructor</option>
+<option value="john">John Doe</option>
+<option value="jane">Jane Smith</option>
+<option value="alex">Alex Ray</option>
+</select>
+</label>
+</div>
+<!-- SectionHeader: Schedule -->
+<div class="space-y-4">
+<h3 class="text-text-heading dark:text-text-heading-dark text-lg font-bold leading-tight tracking-tight">Schedule</h3>
+<div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+<label class="flex flex-col sm:col-span-1">
+<p class="text-text-body dark:text-text-body-dark text-sm font-medium leading-normal pb-2">Date</p>
+<div class="relative">
+<input class="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-lg text-text-heading dark:text-text-heading-dark focus:outline-0 focus:ring-2 focus:ring-accent/50 border border-gray-300 dark:border-gray-600 bg-surface dark:bg-surface-dark focus:border-accent h-12 placeholder:text-text-body/70 dark:placeholder:text-text-body-dark/70 px-4 pl-10 text-base font-normal leading-normal" placeholder="Select date" type="text" value="October 26, 2023"/>
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-text-body dark:text-text-body-dark">calendar_today</span>
+</div>
+</label>
+<label class="flex flex-col">
+<p class="text-text-body dark:text-text-body-dark text-sm font-medium leading-normal pb-2">Start Time</p>
+<input class="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-lg text-text-heading dark:text-text-heading-dark focus:outline-0 focus:ring-2 focus:ring-accent/50 border border-gray-300 dark:border-gray-600 bg-surface dark:bg-surface-dark focus:border-accent h-12 placeholder:text-text-body/70 dark:placeholder:text-text-body-dark/70 px-4 text-base font-normal leading-normal" type="time" value="09:00"/>
+</label>
+<label class="flex flex-col">
+<p class="text-text-body dark:text-text-body-dark text-sm font-medium leading-normal pb-2">End Time</p>
+<input class="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-lg text-text-heading dark:text-text-heading-dark focus:outline-0 focus:ring-2 focus:ring-accent/50 border border-gray-300 dark:border-gray-600 bg-surface dark:bg-surface-dark focus:border-accent h-12 placeholder:text-text-body/70 dark:placeholder:text-text-body-dark/70 px-4 text-base font-normal leading-normal" type="time" value="11:00"/>
+</label>
+</div>
+</div>
+<!-- SectionHeader: Customer Information -->
+<div class="space-y-4">
+<h3 class="text-text-heading dark:text-text-heading-dark text-lg font-bold leading-tight tracking-tight">Customer Information</h3>
+<label class="flex flex-col">
+<p class="text-text-body dark:text-text-body-dark text-sm font-medium leading-normal pb-2">Search Existing Customer</p>
+<div class="relative">
+<input class="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-lg text-text-heading dark:text-text-heading-dark focus:outline-0 focus:ring-2 focus:ring-accent/50 border border-gray-300 dark:border-gray-600 bg-surface dark:bg-surface-dark focus:border-accent h-12 placeholder:text-text-body/70 dark:placeholder:text-text-body-dark/70 px-4 pl-10 text-base font-normal leading-normal" placeholder="Search by name or email..." value=""/>
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-text-body dark:text-text-body-dark">search</span>
+</div>
+</label>
+<div class="relative flex items-center">
+<div class="flex-grow border-t border-gray-200 dark:border-gray-700"></div>
+<span class="flex-shrink mx-4 text-sm text-text-body dark:text-text-body-dark">OR</span>
+<div class="flex-grow border-t border-gray-200 dark:border-gray-700"></div>
+</div>
+<div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+<label class="flex flex-col flex-1">
+<p class="text-text-body dark:text-text-body-dark text-sm font-medium leading-normal pb-2">New Customer Name</p>
+<input class="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-lg text-text-heading dark:text-text-heading-dark focus:outline-0 focus:ring-2 focus:ring-accent/50 border border-gray-300 dark:border-gray-600 bg-surface dark:bg-surface-dark focus:border-accent h-12 placeholder:text-text-body/70 dark:placeholder:text-text-body-dark/70 px-4 text-base font-normal leading-normal" placeholder="e.g. Sarah Lane" value=""/>
+</label>
+<label class="flex flex-col flex-1">
+<p class="text-text-body dark:text-text-body-dark text-sm font-medium leading-normal pb-2">New Customer Email</p>
+<input class="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-lg text-text-heading dark:text-text-heading-dark focus:outline-0 focus:ring-2 focus:ring-accent/50 border border-gray-300 dark:border-gray-600 bg-surface dark:bg-surface-dark focus:border-accent h-12 placeholder:text-text-body/70 dark:placeholder:text-text-body-dark/70 px-4 text-base font-normal leading-normal" placeholder="e.g. sarah@email.com" value=""/>
+</label>
+</div>
+</div>
+<!-- Section: Additional Information -->
+<div class="space-y-4">
+<h3 class="text-text-heading dark:text-text-heading-dark text-lg font-bold leading-tight tracking-tight">Additional Information</h3>
+<label class="flex flex-col">
+<p class="text-text-body dark:text-text-body-dark text-sm font-medium leading-normal pb-2">Internal Notes (Optional)</p>
+<textarea class="form-textarea flex w-full min-w-0 flex-1 resize-y overflow-hidden rounded-lg text-text-heading dark:text-text-heading-dark focus:outline-0 focus:ring-2 focus:ring-accent/50 border border-gray-300 dark:border-gray-600 bg-surface dark:bg-surface-dark focus:border-accent min-h-[100px] placeholder:text-text-body/70 dark:placeholder:text-text-body-dark/70 p-4 text-base font-normal leading-normal" placeholder="Add any relevant details for the team..."></textarea>
+</label>
+</div>
+</div>
+<!-- Footer -->
+<div class="flex flex-col-reverse sm:flex-row items-center justify-between gap-4 p-6 border-t border-gray-200 dark:border-gray-700">
+<div class="w-full sm:w-auto">
+<p class="text-text-body dark:text-text-body-dark text-sm">Total Price: <span class="font-bold text-text-heading dark:text-text-heading-dark">$250.00</span></p>
+</div>
+<div class="flex gap-3 w-full sm:w-auto">
+<button class="flex min-w-[84px] max-w-[480px] flex-1 cursor-pointer items-center justify-center overflow-hidden rounded-lg h-12 px-6 bg-transparent text-text-body dark:text-text-body-dark hover:bg-gray-100 dark:hover:bg-gray-800 text-base font-bold leading-normal">
+<span class="truncate">Cancel</span>
+</button>
+<button class="flex min-w-[84px] max-w-[480px] flex-1 cursor-pointer items-center justify-center overflow-hidden rounded-lg h-12 px-6 bg-primary text-white text-base font-bold leading-normal hover:bg-primary/90">
+<span class="truncate">Create Booking</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+</div>
+</body></html>

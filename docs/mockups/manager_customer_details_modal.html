@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Customer Details Modal</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;700;800;900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet"/>
+<script>
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "primary": "#0A2540",
+              "background-light": "#F5F5F5",
+              "background-dark": "#101010",
+              "surface-light": "#FFFFFF",
+              "surface-dark": "#1A1A1A",
+              "accent": "#4A90E2",
+              "text-heading-light": "#111111",
+              "text-heading-dark": "#F0F0F0",
+              "text-body-light": "#555555",
+              "text-body-dark": "#A0A0A0",
+              "border-light": "#E0E0E0",
+              "border-dark": "#303030",
+            },
+            fontFamily: {
+              "display": ["Manrope", "sans-serif"]
+            },
+            borderRadius: {"DEFAULT": "0.5rem", "lg": "0.75rem", "xl": "1rem", "full": "9999px"},
+          },
+        },
+      }
+    </script>
+</head>
+<body class="font-display">
+<div class="relative flex min-h-screen w-full flex-col items-center justify-center bg-background-light dark:bg-background-dark p-4 sm:p-6" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuDjvOG3uEdsVETG8ke6TPRDWAiH6ydx-kWJgp0m9LS8XfoC6_JFk_hfX2lD7ju-CPjuxRK8o1lYZFvlkIB59O382xMKGsxPZtks4oAVlQzwlxBFKSFHqe1qSmcMf3sP3MiLaLhjas9lqIESKm96BWKsX9JAky1Iajo8bgFUPDnWk6iBUGIL5xxuMufwhD7tZB4aYQ4rSbk3eIyRbjwqQpXyLP_3YkefMZVaa_jee7fIksMPH_LquRl0TUgwJ_hTosw8QjS-rpvXLl0'); background-size: cover; background-position: center;">
+<!-- Modal Backdrop -->
+<div class="absolute inset-0 bg-black/50 backdrop-blur-sm"></div>
+<!-- Modal Container -->
+<div class="relative flex w-full max-w-4xl flex-col rounded-lg bg-surface-light dark:bg-surface-dark shadow-2xl max-h-[90vh]">
+<!-- Modal Header -->
+<div class="flex items-center justify-between gap-4 p-6 border-b border-border-light dark:border-border-dark">
+<!-- PageHeading Component -->
+<p class="text-text-heading-light dark:text-text-heading-dark text-2xl font-black leading-tight tracking-tight">Customer Details: Jen Adler</p>
+<!-- ToolBar Component (modified) -->
+<button class="p-2 text-text-body-light dark:text-text-body-dark rounded-full hover:bg-background-light dark:hover:bg-background-dark">
+<span class="material-symbols-outlined text-2xl">close</span>
+</button>
+</div>
+<!-- Modal Content (scrollable) -->
+<div class="flex-1 overflow-y-auto p-6 space-y-8">
+<!-- Customer Profile Section -->
+<div class="flex flex-col gap-6">
+<!-- ProfileHeader Component -->
+<div class="flex flex-col gap-4 sm:flex-row sm:items-center">
+<div class="bg-center bg-no-repeat aspect-square bg-cover rounded-full h-24 w-24 flex-shrink-0" data-alt="Profile picture of Jen Adler" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuCW1_TbfGGo2tbQcmqQPqqqPNjiLLXP62bUm7Vp4ziOV1EzdSqgBn8sQlxCg7CdchnDlFDwOtrcIhK1G9Y4LltZLeHMMZOTQaCFXUVXlW43OSiaCWXfI7Iaoa-_9qBnQz52iSyQuQNhBbSYIAaeS7doj7doQGYGhvzcVFxshRosn8Ld36w0uSN6j7e7iiI6FW-XGUNlaz9Us4D8pNrt91dqUa9Ey7KCyMmajQREsVzKTWf9MecoWq0iZjp1B4G3UOj8fibiscE7iAE');"></div>
+<div class="flex flex-col justify-center">
+<p class="text-text-heading-light dark:text-text-heading-dark text-xl font-bold leading-tight">Jen Adler</p>
+<p class="text-text-body-light dark:text-text-body-dark text-base font-normal">jen.adler@email.com</p>
+<p class="text-text-body-light dark:text-text-body-dark text-base font-normal">+1 555-010-4321</p>
+</div>
+</div>
+<!-- DescriptionList Component -->
+<div class="grid grid-cols-2 md:grid-cols-4 gap-x-4 gap-y-1">
+<div class="flex flex-col gap-1 py-3 col-span-1">
+<p class="text-text-body-light dark:text-text-body-dark text-sm font-medium">Age</p>
+<p class="text-text-heading-light dark:text-text-heading-dark text-base font-semibold">28</p>
+</div>
+<div class="flex flex-col gap-1 py-3 col-span-1">
+<p class="text-text-body-light dark:text-text-body-dark text-sm font-medium">Gender</p>
+<p class="text-text-heading-light dark:text-text-heading-dark text-base font-semibold">Female</p>
+</div>
+<div class="flex flex-col gap-1 py-3 col-span-2">
+<p class="text-text-body-light dark:text-text-body-dark text-sm font-medium">Skill Level</p>
+<p class="text-text-heading-light dark:text-text-heading-dark text-base font-semibold">Intermediate</p>
+</div>
+</div>
+</div>
+<!-- Divider -->
+<div class="border-t border-border-light dark:border-border-dark"></div>
+<!-- Booking History Section -->
+<div>
+<!-- SectionHeader Component -->
+<h2 class="text-text-heading-light dark:text-text-heading-dark text-xl font-bold leading-tight tracking-tight pb-4">Booking History</h2>
+<!-- Table Component -->
+<div class="w-full overflow-x-auto">
+<table class="w-full text-left">
+<thead class="border-b border-border-light dark:border-border-dark">
+<tr>
+<th class="p-3 text-sm font-semibold text-text-body-light dark:text-text-body-dark">Lesson Type</th>
+<th class="p-3 text-sm font-semibold text-text-body-light dark:text-text-body-dark">Instructor</th>
+<th class="p-3 text-sm font-semibold text-text-body-light dark:text-text-body-dark">Date &amp; Time</th>
+<th class="p-3 text-sm font-semibold text-text-body-light dark:text-text-body-dark">Status</th>
+<th class="p-3 text-sm font-semibold text-text-body-light dark:text-text-body-dark text-right">Action</th>
+</tr>
+</thead>
+<tbody>
+<tr class="border-b border-border-light dark:border-border-dark">
+<td class="p-3 text-text-heading-light dark:text-text-heading-dark font-medium">Private Lesson</td>
+<td class="p-3 text-text-body-light dark:text-text-body-dark">Mike L.</td>
+<td class="p-3 text-text-body-light dark:text-text-body-dark">Aug 15, 2024 @ 10:00 AM</td>
+<td class="p-3">
+<span class="inline-flex items-center rounded-full bg-green-100 dark:bg-green-900/50 px-3 py-1 text-xs font-medium text-green-700 dark:text-green-300">Confirmed</span>
+</td>
+<td class="p-3 text-right">
+<a class="font-semibold text-accent hover:underline" href="#">View Lesson</a>
+</td>
+</tr>
+<tr class="border-b border-border-light dark:border-border-dark">
+<td class="p-3 text-text-heading-light dark:text-text-heading-dark font-medium">Group Session</td>
+<td class="p-3 text-text-body-light dark:text-text-body-dark">Sarah B.</td>
+<td class="p-3 text-text-body-light dark:text-text-body-dark">Jul 22, 2024 @ 2:00 PM</td>
+<td class="p-3">
+<span class="inline-flex items-center rounded-full bg-gray-100 dark:bg-gray-700 px-3 py-1 text-xs font-medium text-gray-600 dark:text-gray-300">Completed</span>
+</td>
+<td class="p-3 text-right">
+<a class="font-semibold text-accent hover:underline" href="#">View Lesson</a>
+</td>
+</tr>
+<tr class="border-b border-border-light dark:border-border-dark">
+<td class="p-3 text-text-heading-light dark:text-text-heading-dark font-medium">Advanced Clinic</td>
+<td class="p-3 text-text-body-light dark:text-text-body-dark">Mike L.</td>
+<td class="p-3 text-text-body-light dark:text-text-body-dark">Jun 5, 2024 @ 9:00 AM</td>
+<td class="p-3">
+<span class="inline-flex items-center rounded-full bg-red-100 dark:bg-red-900/50 px-3 py-1 text-xs font-medium text-red-700 dark:text-red-300">Cancelled</span>
+</td>
+<td class="p-3 text-right">
+<a class="font-semibold text-accent hover:underline" href="#">View Lesson</a>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<!-- Divider -->
+<div class="border-t border-border-light dark:border-border-dark"></div>
+<!-- Notes / Activity Log Section -->
+<div>
+<h2 class="text-text-heading-light dark:text-text-heading-dark text-xl font-bold leading-tight tracking-tight pb-4">Notes &amp; Activity Log</h2>
+<div class="space-y-4">
+<div class="rounded-lg border border-border-light dark:border-border-dark p-4 bg-background-light dark:bg-background-dark/50">
+<p class="text-sm text-text-heading-light dark:text-text-heading-dark">Customer inquired about advanced wave riding lessons. Followed up with clinic dates.</p>
+<p class="text-xs text-text-body-light dark:text-text-body-dark mt-1">Note added by Alex R. on Aug 1, 2024</p>
+</div>
+<div class="rounded-lg border border-border-light dark:border-border-dark p-4 bg-background-light dark:bg-background-dark/50">
+<p class="text-sm text-text-heading-light dark:text-text-heading-dark">Message sent: "Lesson Confirmation for Aug 15"</p>
+<p class="text-xs text-text-body-light dark:text-text-body-dark mt-1">System activity on Jul 30, 2024</p>
+</div>
+<textarea class="w-full rounded-lg border-border-light dark:border-border-dark bg-surface-light dark:bg-surface-dark p-3 text-sm text-text-body-light dark:text-text-body-dark placeholder:text-text-body-light/70 dark:placeholder:text-text-body-dark/70 focus:ring-2 focus:ring-accent focus:border-accent" placeholder="Add a new note..." rows="3"></textarea>
+</div>
+</div>
+</div>
+<!-- Modal Footer -->
+<div class="flex flex-col-reverse sm:flex-row sm:justify-end gap-3 p-6 border-t border-border-light dark:border-border-dark bg-background-light dark:bg-background-dark/50">
+<button class="flex items-center justify-center gap-2 rounded-lg border border-border-light dark:border-border-dark px-5 py-2.5 text-sm font-semibold text-text-heading-light dark:text-text-heading-dark bg-surface-light dark:bg-surface-dark hover:bg-background-light dark:hover:bg-background-dark">Edit Customer Info</button>
+<button class="flex items-center justify-center gap-2 rounded-lg bg-primary px-5 py-2.5 text-sm font-semibold text-white hover:bg-primary/90">Send Message</button>
+</div>
+</div>
+</div>
+</body></html>

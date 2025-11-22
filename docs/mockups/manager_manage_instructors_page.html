@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>KiteOps - Manage Instructors</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@200..800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet"/>
+<script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          colors: {
+            "primary": "#0a2642",
+            "background-light": "#f6f7f8",
+            "background-dark": "#111921",
+            "surface-light": "#ffffff",
+            "surface-dark": "#1a242f",
+            "text-heading-light": "#111111",
+            "text-heading-dark": "#f0f0f0",
+            "text-body-light": "#555555",
+            "text-body-dark": "#a0a0a0",
+            "border-light": "#e8edf2",
+            "border-dark": "#334155"
+          },
+          fontFamily: {
+            "display": ["Manrope"]
+          },
+          borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+        },
+      },
+    }
+  </script>
+</head>
+<body class="font-display bg-background-light dark:bg-background-dark">
+<div class="relative flex min-h-screen w-full flex-col">
+<!-- TopNavBar -->
+<header class="sticky top-0 z-10 w-full border-b border-border-light dark:border-border-dark bg-surface-light dark:bg-surface-dark/80 backdrop-blur-sm">
+<div class="container mx-auto flex h-16 items-center justify-between px-4 sm:px-6 lg:px-8">
+<div class="flex items-center gap-4 text-text-heading-light dark:text-text-heading-dark">
+<div class="size-6 text-primary">
+<svg fill="none" viewbox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
+<g clip-path="url(#clip0_6_535)">
+<path clip-rule="evenodd" d="M47.2426 24L24 47.2426L0.757355 24L24 0.757355L47.2426 24ZM12.2426 21H35.7574L24 9.24264L12.2426 21Z" fill="currentColor" fill-rule="evenodd"></path>
+</g>
+<defs>
+<clippath id="clip0_6_535"><rect fill="white" height="48" width="48"></rect></clippath>
+</defs>
+</svg>
+</div>
+<h2 class="text-lg font-bold">KiteOps</h2>
+</div>
+<div class="flex items-center gap-6">
+<a class="text-sm font-medium text-text-body-light dark:text-text-body-dark hover:text-primary dark:hover:text-white" href="#">Kite School Settings</a>
+<div class="bg-center bg-no-repeat aspect-square bg-cover rounded-full size-10" data-alt="User profile avatar" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuCVbc1s7p0ApJVpaFSsnY3AOFo22DqEyBiuHBk00JsmQdNTDPR1-e9dJIPAl3km7srgsxU3_J-L_vWbzn1Vc9oZeNVhpbi--vWDzJzF8XxVnp33e1P4EFDTDEucNDR2SNP5iKwf16Zy2WaYmjBa7lfPsQ79kPeEe60xiTlVlmM_l5wLaNLkxfXwjRbdYFSoAiF3uUi2CyA1bL7RXEh6pXBFrQtPKOhRDsZpTbruQ9PACxQSP1B1pUplcniHXLb3t05nSxh-clNqGaY");'></div>
+</div>
+</div>
+</header>
+<!-- Main Content -->
+<main class="container mx-auto flex-1 p-4 sm:p-6 lg:p-8">
+<div class="flex flex-col space-y-6">
+<!-- PageHeading -->
+<div class="flex flex-wrap items-center justify-between gap-4">
+<h1 class="text-4xl font-black tracking-tight text-text-heading-light dark:text-text-heading-dark">Manage Instructors</h1>
+</div>
+<!-- ToolBar and Add Button -->
+<div class="flex flex-col items-start justify-between gap-4 sm:flex-row sm:items-center">
+<div class="relative w-full sm:max-w-xs">
+<div class="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
+<span class="material-symbols-outlined text-text-body-light dark:text-text-body-dark h-5 w-5">search</span>
+</div>
+<input class="w-full rounded-lg border border-border-light dark:border-border-dark bg-surface-light dark:bg-surface-dark py-2 pl-10 pr-4 text-sm text-text-body-light dark:text-text-body-dark focus:border-primary focus:ring-primary dark:focus:border-primary" placeholder="Search by name..." type="text"/>
+</div>
+<button class="flex w-full items-center justify-center gap-2 rounded-lg bg-primary px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-primary/90 sm:w-auto">
+<span class="material-symbols-outlined">add</span>
+                Add New Instructor
+            </button>
+</div>
+<!-- Table -->
+<div class="@container">
+<div class="overflow-hidden rounded-xl border border-border-light dark:border-border-dark bg-surface-light dark:bg-surface-dark shadow-sm">
+<div class="overflow-x-auto">
+<table class="min-w-full divide-y divide-border-light dark:divide-border-dark">
+<thead class="bg-background-light dark:bg-background-dark/50">
+<tr>
+<th class="table-col-1 px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-text-body-light dark:text-text-body-dark" scope="col">Instructor Name</th>
+<th class="table-col-2 px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-text-body-light dark:text-text-body-dark" scope="col">Email</th>
+<th class="table-col-3 px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-text-body-light dark:text-text-body-dark" scope="col">Contact Number</th>
+<th class="table-col-4 px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-text-body-light dark:text-text-body-dark" scope="col">Skill Level</th>
+<th class="table-col-5 px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-text-body-light dark:text-text-body-dark" scope="col">Status</th>
+<th class="table-col-6 px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-text-body-light dark:text-text-body-dark" scope="col">Actions</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-border-light dark:divide-border-dark">
+<tr>
+<td class="table-col-1 whitespace-nowrap px-6 py-4">
+<div class="flex items-center gap-3">
+<div class="bg-center bg-no-repeat aspect-square bg-cover rounded-full size-10" data-alt="Profile picture of Alex Johnson" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuCBZd9am7wj2ztDIj7ZDNE78QPaT4FDawFvdIUTYn2e33a7lzGkdrTJtzW1fwxarclWEqsCKnrsnAFcbMhe15AOJbj43LmjQt0oyN3pEkuXkJpj94BpZOrybckIVss72RbbrbBREO7J_RcacEHukvn9CiJYzUgSLQfGMNngYQ2d4lZRsu4HJKSitFylRd8Abh_Truq4ukDfbh3a2EBoSoYAHcgbV2RcmC4DqINU8C9QeZdtKIia3mKE2Re-M-JcBJIxZQ0YsGjB_xI");'></div>
+<span class="font-medium text-text-heading-light dark:text-text-heading-dark">Alex Johnson</span>
+</div>
+</td>
+<td class="table-col-2 whitespace-nowrap px-6 py-4 text-sm text-text-body-light dark:text-text-body-dark">alex@kiteops.com</td>
+<td class="table-col-3 whitespace-nowrap px-6 py-4 text-sm text-text-body-light dark:text-text-body-dark">+1-202-555-0174</td>
+<td class="table-col-4 whitespace-nowrap px-6 py-4 text-sm text-text-body-light dark:text-text-body-dark">Advanced</td>
+<td class="table-col-5 whitespace-nowrap px-6 py-4">
+<span class="inline-flex items-center rounded-full bg-green-100 dark:bg-green-900/50 px-2.5 py-0.5 text-xs font-medium text-green-800 dark:text-green-300">Active</span>
+</td>
+<td class="table-col-6 whitespace-nowrap px-6 py-4">
+<div class="flex items-center gap-2">
+<button class="p-2 rounded-md hover:bg-background-light dark:hover:bg-background-dark text-text-body-light dark:text-text-body-dark">
+<span class="material-symbols-outlined text-base">edit</span>
+</button>
+<button class="p-2 rounded-md hover:bg-background-light dark:hover:bg-background-dark text-text-body-light dark:text-text-body-dark">
+<span class="material-symbols-outlined text-base">delete</span>
+</button>
+</div>
+</td>
+</tr>
+<tr>
+<td class="whitespace-nowrap px-6 py-4">
+<div class="flex items-center gap-3">
+<div class="bg-center bg-no-repeat aspect-square bg-cover rounded-full size-10" data-alt="Profile picture of Maria Garcia" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuBaVMRrg_bcK9e0mbJAUDH3qs5vjHKtSugt5q_1j9Jiusc-SFcw9YFPRD1KB2FETZptZxuGoodzlNKLmwSiugoLEoD-yZ63BW0RyoQ-z7YH6eqLP8LSOCuX_-qJzIen8EDpKWz_S0n6gLN3LmeZ5uda1E2NAAYuNBIH4uC4m8xPdVJ9ifYHhU_GnM9FDQqX_h569TsKtCGzHogILJk7nOAkP8eVXE2cNvH2epJ7gsllojeiwXtzJ6Y7ZA206LZ_wHHHamcQq8Jr83U");'></div>
+<span class="font-medium text-text-heading-light dark:text-text-heading-dark">Maria Garcia</span>
+</div>
+</td>
+<td class="whitespace-nowrap px-6 py-4 text-sm text-text-body-light dark:text-text-body-dark">maria@kiteops.com</td>
+<td class="whitespace-nowrap px-6 py-4 text-sm text-text-body-light dark:text-text-body-dark">+1-202-555-0182</td>
+<td class="whitespace-nowrap px-6 py-4 text-sm text-text-body-light dark:text-text-body-dark">Beginner</td>
+<td class="whitespace-nowrap px-6 py-4">
+<span class="inline-flex items-center rounded-full bg-green-100 dark:bg-green-900/50 px-2.5 py-0.5 text-xs font-medium text-green-800 dark:text-green-300">Active</span>
+</td>
+<td class="whitespace-nowrap px-6 py-4">
+<div class="flex items-center gap-2">
+<button class="p-2 rounded-md hover:bg-background-light dark:hover:bg-background-dark text-text-body-light dark:text-text-body-dark">
+<span class="material-symbols-outlined text-base">edit</span>
+</button>
+<button class="p-2 rounded-md hover:bg-background-light dark:hover:bg-background-dark text-text-body-light dark:text-text-body-dark">
+<span class="material-symbols-outlined text-base">delete</span>
+</button>
+</div>
+</td>
+</tr>
+<tr>
+<td class="whitespace-nowrap px-6 py-4">
+<div class="flex items-center gap-3">
+<div class="bg-center bg-no-repeat aspect-square bg-cover rounded-full size-10" data-alt="Profile picture of John Doe" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuAiEQ8h7z3nOd1aTiPLp57iTzGEa64J5zbzhYCviFZ77jnHPVC0IImPkFMLN79bYp5jqsppf9wFg6DsqbscZpOmNrG3zLK3HPRCLkpvxeIqqcyZMetYTBUbc47YdUZkZBNbAfFJi8hyh3Y-GF7JNriNx3BFXRDp45Rn8l7mqZuzOMqFDUWpQS5Cooch-2cIFon-JceZXBBcMim5RaBucZDi1zQs-Eazl7dqHNLRoVqHvsJ-FLmSOtyd_HV8UrbNnI5tL7U4Ty-Wf34");'></div>
+<span class="font-medium text-text-heading-light dark:text-text-heading-dark">John Doe</span>
+</div>
+</td>
+<td class="whitespace-nowrap px-6 py-4 text-sm text-text-body-light dark:text-text-body-dark">john@kiteops.com</td>
+<td class="whitespace-nowrap px-6 py-4 text-sm text-text-body-light dark:text-text-body-dark">+1-202-555-0199</td>
+<td class="whitespace-nowrap px-6 py-4 text-sm text-text-body-light dark:text-text-body-dark">Intermediate</td>
+<td class="whitespace-nowrap px-6 py-4">
+<span class="inline-flex items-center rounded-full bg-gray-100 dark:bg-gray-700/50 px-2.5 py-0.5 text-xs font-medium text-gray-800 dark:text-gray-300">Inactive</span>
+</td>
+<td class="whitespace-nowrap px-6 py-4">
+<div class="flex items-center gap-2">
+<button class="p-2 rounded-md hover:bg-background-light dark:hover:bg-background-dark text-text-body-light dark:text-text-body-dark">
+<span class="material-symbols-outlined text-base">edit</span>
+</button>
+<button class="p-2 rounded-md hover:bg-background-light dark:hover:bg-background-dark text-text-body-light dark:text-text-body-dark">
+<span class="material-symbols-outlined text-base">delete</span>
+</button>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<style>
+              @container (max-width: 1024px) {
+                  .table-col-3, .table-col-4 { display: none; }
+              }
+              @container (max-width: 768px) {
+                  .table-col-2 { display: none; }
+              }
+              @container (max-width: 480px) {
+                  .table-col-5 { display: none; }
+              }
+          </style>
+</div>
+</div>
+</main>
+</div>
+</body></html>
