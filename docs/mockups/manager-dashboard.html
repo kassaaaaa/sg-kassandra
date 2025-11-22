@@ -76,10 +76,14 @@
                         <p class="text-text-body text-sm font-normal leading-tight">Manager</p>
                     </div>
                 </div>
-                <nav class="flex flex-col gap-2">
+                <nav id="main-nav" class="flex flex-col gap-2">
                     <a href="#" class="flex items-center gap-3 px-3 py-2 rounded-lg text-text-body bg-primary/10 text-primary" data-view="dashboard">
                         <span class="material-symbols-outlined">dashboard</span>
                         <p class="text-sm font-medium">Dashboard</p>
+                    </a>
+                     <a href="#" class="flex items-center gap-3 px-3 py-2 rounded-lg text-text-body hover:bg-primary/10" data-view="calendar">
+                        <span class="material-symbols-outlined">calendar_month</span>
+                        <p class="text-sm font-medium">Calendar</p>
                     </a>
                     <a href="#" class="flex items-center gap-3 px-3 py-2 rounded-lg text-text-body hover:bg-primary/10" data-view="customers">
                         <span class="material-symbols-outlined">group</span>
@@ -125,7 +129,7 @@
                 </div>
             </header>
 
-            <div id="dashboard-view" class="p-6 md:p-10">
+            <div id="dashboard-view" class="p-6 md:p-10 main-view">
                 <div class="grid grid-cols-1 gap-6 lg:grid-cols-3">
                     <!-- Main Content Column -->
                     <div class="flex flex-col gap-6 lg:col-span-2">
@@ -238,7 +242,7 @@
                             <h3 class="mb-4 font-display text-lg font-bold leading-tight tracking-tight text-text-heading">Quick Actions</h3>
                             <div class="grid grid-cols-1 gap-3">
                                 <button id="add-booking-btn" class="flex h-9 w-full cursor-pointer items-center justify-center overflow-hidden rounded-md bg-background-light text-sm font-medium text-text-heading transition-colors hover:bg-border-color"><span class="truncate">Add Booking</span></button>
-                                <button id="view-calendar-btn" class="flex h-9 w-full cursor-pointer items-center justify-center overflow-hidden rounded-md bg-background-light text-sm font-medium text-text-heading transition-colors hover:bg-border-color"><span class="truncate">View Full Calendar</span></button>
+                                <button data-view-btn="calendar" class="flex h-9 w-full cursor-pointer items-center justify-center overflow-hidden rounded-md bg-background-light text-sm font-medium text-text-heading transition-colors hover:bg-border-color"><span class="truncate">View Full Calendar</span></button>
                                 <button class="flex h-9 w-full cursor-pointer items-center justify-center overflow-hidden rounded-md bg-background-light text-sm font-medium text-text-heading transition-colors hover:bg-border-color" data-view-btn="instructors"><span class="truncate">Manage Instructors</span></button>
                                 <button class="flex h-9 w-full cursor-pointer items-center justify-center overflow-hidden rounded-md bg-background-light text-sm font-medium text-text-heading transition-colors hover:bg-border-color" data-view-btn="customers"><span class="truncate">View Customers</span></button>
                                 <button id="send-message-btn" class="flex h-9 w-full cursor-pointer items-center justify-center overflow-hidden rounded-md bg-background-light text-sm font-medium text-text-heading transition-colors hover:bg-border-color"><span class="truncate">Send Message</span></button>
@@ -248,7 +252,7 @@
                 </div>
             </div>
 
-            <div id="customers-view" class="p-8 hidden">
+            <div id="customers-view" class="p-8 hidden main-view">
                 <div class="max-w-7xl mx-auto">
                     <!-- PageHeading -->
                     <div class="mb-8">
@@ -306,7 +310,7 @@
                 </div>
             </div>
 
-            <div id="instructors-view" class="p-8 hidden">
+            <div id="instructors-view" class="p-8 hidden main-view">
                 <div class="flex flex-col space-y-6">
                     <!-- PageHeading -->
                     <div class="flex flex-wrap items-center justify-between gap-4">
@@ -369,6 +373,429 @@
                                     </tbody>
                                 </table>
                             </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div id="calendar-view" class="p-6 md:p-10 hidden main-view flex flex-col">
+                 <div class="flex h-full w-full flex-col rounded-xl bg-surface shadow-lg">
+                    <div class="flex flex-1 flex-col overflow-hidden p-4 md:p-6">
+                        <div class="mb-4 flex flex-col items-center justify-between gap-4 md:flex-row">
+                            <div class="flex items-center gap-4">
+                                <button class="flex h-9 cursor-pointer items-center justify-center overflow-hidden rounded-md border border-border-color bg-surface px-3 text-sm font-medium text-text-heading transition-colors hover:bg-background-light">Today</button>
+                                <div class="flex items-center">
+                                    <button class="flex size-9 items-center justify-center rounded-l-md border border-r-0 border-border-color text-text-body transition-colors hover:bg-background-light">
+                                        <span class="material-symbols-outlined text-xl">chevron_left</span>
+                                    </button>
+                                    <button class="flex size-9 items-center justify-center rounded-r-md border border-border-color text-text-body transition-colors hover:bg-background-light">
+                                        <span class="material-symbols-outlined text-xl">chevron_right</span>
+                                    </button>
+                                </div>
+                                <h3 class="font-display text-lg font-bold text-text-heading">November 2025</h3>
+                            </div>
+                            <div class="flex items-center rounded-md border border-border-color p-0.5" id="calendar-view-tabs">
+                                <button class="rounded-sm px-3 py-1 text-sm font-medium text-text-body transition-colors hover:bg-background-light hover:text-text-heading" data-calendar-view="day">Day</button>
+                                <button class="rounded-sm px-3 py-1 text-sm font-medium text-text-body transition-colors hover:bg-background-light hover:text-text-heading" data-calendar-view="week">Week</button>
+                                <button class="rounded-sm bg-background-light px-3 py-1 text-sm font-medium text-text-heading" data-calendar-view="month">Month</button>
+                                <button class="rounded-sm px-3 py-1 text-sm font-medium text-text-body transition-colors hover:bg-background-light hover:text-text-heading" data-calendar-view="agenda">Agenda</button>
+                            </div>
+                        </div>
+                        <div id="calendar-panels" class="flex-1 overflow-y-auto">
+                            <div id="calendar-month-view" class="calendar-panel">
+                                <div class="grid flex-1 grid-cols-7 grid-rows-[auto,1fr] overflow-y-auto">
+                    <div class="col-span-1 border-b border-border-color py-2 text-center text-xs font-medium text-text-body">SUN</div>
+                    <div class="col-span-1 border-b border-border-color py-2 text-center text-xs font-medium text-text-body">MON</div>
+                    <div class="col-span-1 border-b border-border-color py-2 text-center text-xs font-medium text-text-body">TUE</div>
+                    <div class="col-span-1 border-b border-border-color py-2 text-center text-xs font-medium text-text-body">WED</div>
+                    <div class="col-span-1 border-b border-border-color py-2 text-center text-xs font-medium text-text-body">THU</div>
+                    <div class="col-span-1 border-b border-border-color py-2 text-center text-xs font-medium text-text-body">FRI</div>
+                    <div class="col-span-1 border-b border-border-color py-2 text-center text-xs font-medium text-text-body">SAT</div>
+                    <div class="relative col-span-1 border-r border-border-color text-gray-400 h-24">
+                        <div class="p-1.5 text-right text-sm">26</div>
+                    </div>
+                    <div class="relative col-span-1 border-r border-border-color text-gray-400 h-24">
+                        <div class="p-1.5 text-right text-sm">27</div>
+                    </div>
+                    <div class="relative col-span-1 border-r border-border-color text-gray-400 h-24">
+                        <div class="p-1.5 text-right text-sm">28</div>
+                    </div>
+                    <div class="relative col-span-1 border-r border-border-color text-gray-400 h-24">
+                        <div class="p-1.5 text-right text-sm">29</div>
+                    </div>
+                    <div class="relative col-span-1 border-r border-border-color text-gray-400 h-24">
+                        <div class="p-1.5 text-right text-sm">30</div>
+                    </div>
+                    <div class="relative col-span-1 border-r border-border-color text-gray-400 h-24">
+                        <div class="p-1.5 text-right text-sm">31</div>
+                    </div>
+                    <div class="relative col-span-1 border-border-color h-24">
+                        <div class="p-1.5 text-right text-sm">1</div>
+                    </div>
+                    <div class="relative col-span-1 border-r border-t border-border-color h-24">
+                        <div class="p-1.5 text-right text-sm">2</div>
+                    </div>
+                    <div class="relative col-span-1 border-r border-t border-border-color h-24">
+                        <div class="p-1.5 text-right text-sm">3</div>
+                    </div>
+                    <div class="relative col-span-1 border-r border-t border-border-color h-24">
+                        <div class="p-1.5 text-right text-sm">4</div>
+                    </div>
+                    <div class="relative col-span-1 border-r border-t border-border-color h-24">
+                        <div class="p-1.5 text-right text-sm">5</div>
+                    </div>
+                    <div class="relative col-span-1 border-r border-t border-border-color h-24">
+                        <div class="p-1.5 text-right text-sm">6</div>
+                    </div>
+                    <div class="relative col-span-1 border-r border-t border-border-color h-24">
+                        <div class="p-1.5 text-right text-sm">7</div>
+                    </div>
+                    <div class="relative col-span-1 border-t border-border-color h-24">
+                        <div class="p-1.5 text-right text-sm">8</div>
+                    </div>
+                    <div class="relative col-span-1 border-r border-t border-border-color h-24">
+                        <div class="p-1.5 text-right text-sm">9</div>
+                    </div>
+                    <div class="relative col-span-1 border-r border-t border-border-color h-24">
+                        <div class="p-1.5 text-right text-sm">10</div>
+                    </div>
+                    <div class="relative col-span-1 border-r border-t border-border-color h-24">
+                        <div class="p-1.5 text-right text-sm">11</div>
+                        <div class="mx-1 space-y-1">
+                            <div class="cursor-pointer rounded-sm bg-accent/20 px-1.5 py-0.5 text-xs text-accent-darker hover:bg-accent/30"><span class="font-semibold">09:00</span> Jane D.</div>
+                            <div class="cursor-pointer rounded-sm bg-warning/20 px-1.5 py-0.5 text-xs text-amber-800 hover:bg-warning/30"><span class="font-semibold">11:00</span> John S.</div>
+                        </div>
+                    </div>
+                    <div class="relative col-span-1 border-r border-t border-border-color h-24">
+                        <div class="p-1.5 text-right text-sm">12</div>
+                    </div>
+                    <div class="relative col-span-1 border-r border-t border-border-color h-24">
+                        <div class="p-1.5 text-right text-sm">13</div>
+                    </div>
+                    <div class="relative col-span-1 border-r border-t border-border-color h-24">
+                        <div class="p-1.5 text-right text-sm">14</div>
+                    </div>
+                    <div class="relative col-span-1 border-t border-border-color h-24">
+                        <div class="p-1.5 text-right text-sm">15</div>
+                    </div>
+                    <div class="relative col-span-1 border-r border-t border-border-color h-24">
+                        <div class="p-1.5 text-right text-sm">16</div>
+                    </div>
+                    <div class="relative col-span-1 border-r border-t border-border-color bg-accent/5 h-24">
+                        <div class="mx-auto flex size-6 items-center justify-center rounded-full bg-accent text-white p-1.5 text-center text-sm font-bold">17</div>
+                    </div>
+                    <div class="relative col-span-1 border-r border-t border-border-color h-24">
+                        <div class="p-1.5 text-right text-sm">18</div>
+                        <div class="mx-1 space-y-1">
+                            <div class="cursor-pointer rounded-sm bg-gray-200 px-1.5 py-0.5 text-xs text-gray-600 hover:bg-gray-300">Mike L. Blocked</div>
+                        </div>
+                    </div>
+                    <div class="relative col-span-1 border-r border-t border-border-color h-24">
+                        <div class="p-1.5 text-right text-sm">19</div>
+                    </div>
+                    <div class="relative col-span-1 border-r border-t border-border-color h-24">
+                        <div class="p-1.5 text-right text-sm">20</div>
+                    </div>
+                    <div class="relative col-span-1 border-r border-t border-border-color h-24">
+                        <div class="p-1.5 text-right text-sm">21</div>
+                    </div>
+                    <div class="relative col-span-1 border-t border-border-color h-24">
+                        <div class="p-1.5 text-right text-sm">22</div>
+                    </div>
+                    <div class="relative col-span-1 border-r border-t border-border-color h-24">
+                        <div class="p-1.5 text-right text-sm">23</div>
+                    </div>
+                    <div class="relative col-span-1 border-r border-t border-border-color h-24">
+                        <div class="p-1.5 text-right text-sm">24</div>
+                    </div>
+                    <div class="relative col-span-1 border-r border-t border-border-color h-24">
+                        <div class="p-1.5 text-right text-sm">25</div>
+                    </div>
+                    <div class="relative col-span-1 border-r border-t border-border-color h-24">
+                        <div class="p-1.5 text-right text-sm">26</div>
+                    </div>
+                    <div class="relative col-span-1 border-r border-t border-border-color h-24">
+                        <div class="p-1.5 text-right text-sm">27</div>
+                    </div>
+                    <div class="relative col-span-1 border-r border-t border-border-color h-24">
+                        <div class="p-1.5 text-right text-sm">28</div>
+                    </div>
+                    <div class="relative col-span-1 border-t border-border-color h-24">
+                        <div class="p-1.5 text-right text-sm">29</div>
+                    </div>
+                    <div class="relative col-span-1 border-r border-t border-border-color h-24">
+                        <div class="p-1.5 text-right text-sm">30</div>
+                    </div>
+                    <div class="relative col-span-1 border-r border-t border-border-color text-gray-400 h-24">
+                        <div class="p-1.5 text-right text-sm">1</div>
+                    </div>
+                    <div class="relative col-span-1 border-r border-t border-border-color text-gray-400 h-24">
+                        <div class="p-1.5 text-right text-sm">2</div>
+                    </div>
+                    <div class="relative col-span-1 border-r border-t border-border-color text-gray-400 h-24">
+                        <div class="p-1.5 text-right text-sm">3</div>
+                    </div>
+                    <div class="relative col-span-1 border-r border-t border-border-color text-gray-400 h-24">
+                        <div class="p-1.5 text-right text-sm">4</div>
+                    </div>
+                    <div class="relative col-span-1 border-r border-t border-border-color text-gray-400 h-24">
+                        <div class="p-1.5 text-right text-sm">5</div>
+                    </div>
+                    <div class="relative col-span-1 border-t border-border-color text-gray-400 h-24">
+                        <div class="p-1.5 text-right text-sm">6</div>
+                    </div>
+                </div>
+                            </div>
+                            <div id="calendar-week-view" class="calendar-panel hidden">
+                                <div class="grid flex-1 grid-cols-7 grid-rows-[auto,1fr] overflow-y-auto">
+                    <div class="col-span-1 border-b border-border-color py-2 text-center text-xs font-medium text-text-body">
+                        <p>MON</p>
+                        <p class="font-display text-2xl font-bold text-text-heading">17</p>
+                    </div>
+                    <div class="col-span-1 border-b border-border-color py-2 text-center text-xs font-medium text-text-body">
+                        <p>TUE</p>
+                        <p class="font-display text-2xl font-bold text-text-heading">18</p>
+                    </div>
+                    <div class="col-span-1 border-b border-border-color py-2 text-center text-xs font-medium text-text-body">
+                        <p>WED</p>
+                        <p class="font-display text-2xl font-bold text-text-heading">19</p>
+                    </div>
+                    <div class="col-span-1 border-b border-border-color py-2 text-center text-xs font-medium text-text-body">
+                        <p>THU</p>
+                        <p class="font-display text-2xl font-bold text-text-heading">20</p>
+                    </div>
+                    <div class="col-span-1 border-b border-border-color py-2 text-center text-xs font-medium text-text-body">
+                        <p>FRI</p>
+                        <p class="font-display text-2xl font-bold text-text-heading">21</p>
+                    </div>
+                    <div class="col-span-1 border-b border-border-color py-2 text-center text-xs font-medium text-text-body">
+                        <p>SAT</p>
+                        <p class="font-display text-2xl font-bold text-text-heading">22</p>
+                    </div>
+                    <div class="col-span-1 border-b border-border-color py-2 text-center text-xs font-medium text-text-body">
+                        <p>SUN</p>
+                        <p class="font-display text-2xl font-bold text-text-heading">23</p>
+                    </div>
+                    <div class="relative col-span-1 border-r border-border-color">
+                        <div class="p-2 space-y-1.5">
+                            <div class="cursor-pointer rounded-sm border-l-4 border-accent bg-accent/20 px-2 py-1 text-xs text-accent-darker hover:bg-accent/30"><p class="font-semibold">09:00 Jane Doe</p><p class="text-text-body">w/ Mike L.</p></div>
+                            <div class="cursor-pointer rounded-sm border-l-4 border-warning bg-warning/20 px-2 py-1 text-xs text-amber-800 hover:bg-warning/30"><p class="font-semibold">11:00 John Smith</p><p class="text-text-body">w/ Sarah K.</p></div>
+                            <div class="cursor-pointer rounded-sm border-l-4 border-accent bg-accent/20 px-2 py-1 text-xs text-accent-darker hover:bg-accent/30"><p class="font-semibold">13:00 Emily White</p><p class="text-text-body">w/ Mike L.</p></div>
+                        </div>
+                    </div>
+                    <div class="relative col-span-1 border-r border-border-color">
+                        <div class="p-2 space-y-1.5">
+                            <div class="cursor-pointer rounded-sm border-l-4 border-gray-400 bg-gray-200 px-2 py-1 text-xs text-gray-600 hover:bg-gray-300"><p class="font-semibold">All Day</p><p>Mike L. Blocked</p></div>
+                            <div class="cursor-pointer rounded-sm border-l-4 border-accent bg-accent/20 px-2 py-1 text-xs text-accent-darker hover:bg-accent/30"><p class="font-semibold">10:00 Alex Ray</p><p class="text-text-body">w/ Chloe T.</p></div>
+                        </div>
+                    </div>
+                    <div class="relative col-span-1 border-r border-border-color"></div>
+                    <div class="relative col-span-1 border-r border-border-color bg-accent/5">
+                        <div class="calendar-day-scroll h-full space-y-1.5 overflow-y-auto p-2">
+                            <div class="cursor-pointer rounded-sm border-l-4 border-accent bg-accent/20 px-2 py-1 text-xs text-accent-darker hover:bg-accent/30"><p class="font-semibold">09:00 L. Harris</p><p class="text-text-body">w/ Sarah K.</p></div>
+                            <div class="cursor-pointer rounded-sm border-l-4 border-warning bg-warning/20 px-2 py-1 text-xs text-amber-800 hover:bg-warning/30"><p class="font-semibold">09:30 M. Chen</p><p class="text-text-body">w/ Mike L.</p></div>
+                            <div class="cursor-pointer rounded-sm border-l-4 border-accent bg-accent/20 px-2 py-1 text-xs text-accent-darker hover:bg-accent/30"><p class="font-semibold">10:00 S. Patel</p><p class="text-text-body">w/ Chloe T.</p></div>
+                            <div class="cursor-pointer rounded-sm border-l-4 border-accent bg-accent/20 px-2 py-1 text-xs text-accent-darker hover:bg-accent/30"><p class="font-semibold">11:00 B. Carter</p><p class="text-text-body">w/ Sarah K.</p></div>
+                            <div class="cursor-pointer rounded-sm border-l-4 border-accent bg-accent/20 px-2 py-1 text-xs text-accent-darker hover:bg-accent/30"><p class="font-semibold">11:00 K. Nguyen</p><p class="text-text-body">w/ John D.</p></div>
+                            <div class="cursor-pointer rounded-sm border-l-4 border-accent bg-accent/20 px-2 py-1 text-xs text-accent-darker hover:bg-accent/30"><p class="font-semibold">13:00 T. Williams</p><p class="text-text-body">w/ Mike L.</p></div>
+                            <div class="cursor-pointer rounded-sm border-l-4 border-warning bg-warning/20 px-2 py-1 text-xs text-amber-800 hover:bg-warning/30"><p class="font-semibold">14:00 O. Davis</p><p class="text-text-body">w/ Chloe T.</p></div>
+                            <div class="cursor-pointer rounded-sm border-l-4 border-accent bg-accent/20 px-2 py-1 text-xs text-accent-darker hover:bg-accent/30"><p class="font-semibold">15:00 P. Garcia</p><p class="text-text-body">w/ John D.</p></div>
+                            <div class="cursor-pointer rounded-sm border-l-4 border-accent bg-accent/20 px-2 py-1 text-xs text-accent-darker hover:bg-accent/30"><p class="font-semibold">15:30 J. Rodriguez</p><p class="text-text-body">w/ Sarah K.</p></div>
+                            <div class="cursor-pointer rounded-sm border-l-4 border-warning bg-warning/20 px-2 py-1 text-xs text-amber-800 hover:bg-warning/30"><p class="font-semibold">16:00 A. Martinez</p><p class="text-text-body">w/ Mike L.</p></div>
+                        </div>
+                    </div>
+                    <div class="relative col-span-1 border-r border-border-color">
+                        <div class="p-2 space-y-1.5">
+                            <div class="cursor-pointer rounded-sm border-l-4 border-accent bg-accent/20 px-2 py-1 text-xs text-accent-darker hover:bg-accent/30"><p class="font-semibold">10:00 F. Miller</p><p class="text-text-body">w/ Chloe T.</p></div>
+                            <div class="cursor-pointer rounded-sm border-l-4 border-accent bg-accent/20 px-2 py-1 text-xs text-accent-darker hover:bg-accent/30"><p class="font-semibold">12:00 G. Wilson</p><p class="text-text-body">w/ John D.</p></div>
+                        </div>
+                    </div>
+                    <div class="relative col-span-1 border-r border-border-color"></div>
+                    <div class="relative col-span-1"></div>
+                </div>
+                </div>
+                            </div>
+                            <div id="calendar-day-view" class="calendar-panel hidden">
+                                <div class="grid flex-1 grid-cols-[auto,1fr] overflow-y-auto">
+                    <div class="pr-4 text-right text-xs text-text-body">
+                        <div class="h-10"></div>
+                        <div class="h-16 text-right">8 AM</div>
+                        <div class="h-16 text-right">9 AM</div>
+                        <div class="h-16 text-right">10 AM</div>
+                        <div class="h-16 text-right">11 AM</div>
+                        <div class="h-16 text-right">12 PM</div>
+                        <div class="h-16 text-right">1 PM</div>
+                        <div class="h-16 text-right">2 PM</div>
+                        <div class="h-16 text-right">3 PM</div>
+                        <div class="h-16 text-right">4 PM</div>
+                        <div class="h-16 text-right">5 PM</div>
+                    </div>
+                    <div class="relative grid grid-cols-1 overflow-y-auto calendar-scrollbar">
+                        <div class="col-start-1 col-end-2 row-start-1 row-end-11 h-full">
+                            <div class="h-16 border-t border-border-color"></div>
+                            <div class="h-16 border-t border-border-color"></div>
+                            <div class="h-16 border-t border-border-color"></div>
+                            <div class="h-16 border-t border-border-color"></div>
+                            <div class="h-16 border-t border-border-color"></div>
+                            <div class="h-16 border-t border-border-color"></div>
+                            <div class="h-16 border-t border-border-color"></div>
+                            <div class="h-16 border-t border-border-color"></div>
+                            <div class="h-16 border-t border-border-color"></div>
+                            <div class="h-16 border-t border-border-color"></div>
+                        </div>
+                        <div class="absolute inset-0 px-2 space-y-1">
+                            <div class="absolute top-[108px] left-2 right-2 rounded border-l-4 border-accent bg-accent/10 p-2 text-xs shadow-sm" style="height: 56px;"><p class="font-bold text-accent">09:00 - Jane Doe</p><p class="text-text-body">w/ Mike L.</p></div>
+                            <div class="absolute top-[172px] left-2 right-2 rounded border-l-4 border-accent bg-accent/10 p-2 text-xs shadow-sm" style="height: 56px;"><p class="font-bold text-accent">10:00 - Peter Pan</p><p class="text-text-body">w/ Sarah K.</p></div>
+                            <div class="absolute top-[236px] left-2 right-2 rounded border-l-4 border-warning bg-warning/10 p-2 text-xs shadow-sm" style="height: 56px;"><p class="font-bold text-amber-800">11:00 - John Smith</p><p class="text-text-body">w/ Sarah K.</p></div>
+                            <div class="absolute top-[300px] left-2 right-2 rounded border-l-4 border-accent bg-accent/10 p-2 text-xs shadow-sm" style="height: 56px;"><p class="font-bold text-accent">12:00 - Mary Jane</p><p class="text-text-body">w/ David C.</p></div>
+                            <div class="absolute top-[364px] left-2 right-2 rounded border-l-4 border-accent bg-accent/10 p-2 text-xs shadow-sm" style="height: 56px;"><p class="font-bold text-accent">13:00 - Emily White</p><p class="text-text-body">w/ Mike L.</p></div>
+                            <div class="absolute top-[428px] left-2 right-2 rounded border-l-4 border-gray-400 bg-gray-100 p-2 text-xs shadow-sm" style="height: 56px;"><p class="font-bold text-gray-600">14:00 - Sarah K.</p><p class="text-text-body">Blocked</p></div>
+                            <div class="absolute top-[492px] left-2 right-2 rounded border-l-4 border-accent bg-accent/10 p-2 text-xs shadow-sm" style="height: 56px;"><p class="font-bold text-accent">15:00 - Chris Green</p><p class="text-text-body">w/ Anna B.</p></div>
+                            <div class="absolute top-[556px] left-2 right-2 rounded border-l-4 border-accent bg-accent/10 p-2 text-xs shadow-sm" style="height: 56px;"><p class="font-bold text-accent">16:00 - Lisa Ray</p><p class="text-text-body">w/ Tom H.</p></div>
+                            <div class="absolute top-[556px] left-1/3 right-2 rounded border-l-4 border-accent bg-accent/10 p-2 text-xs shadow-sm ml-2" style="height: 56px;"><p class="font-bold text-accent">16:00 - Sam Wilson</p><p class="text-text-body">w/ Mike L.</p></div>
+                            <div class="absolute top-[620px] left-2 right-2 rounded border-l-4 border-warning bg-warning/10 p-2 text-xs shadow-sm" style="height: 56px;"><p class="font-bold text-amber-800">17:00 - Ben Carter</p><p class="text-text-body">w/ David C.</p></div>
+                            <div class="absolute top-[620px] left-1/3 right-2 rounded border-l-4 border-accent bg-accent/10 p-2 text-xs shadow-sm ml-2" style="height: 56px;"><p class="font-bold text-accent">17:00 - Olivia Brown</p><p class="text-text-body">w/ Anna B.</p></div>
+                        </div>
+                    </div>
+                </div>
+                            </div>
+                            <div id="calendar-agenda-view" class="calendar-panel hidden">
+                                <div class="flex-1 overflow-y-auto">
+                    <div class="grid grid-cols-[auto,1fr] gap-x-4">
+                        <div class="col-start-2 border-b border-border-color pb-2 font-medium text-text-body text-sm">Tuesday, November 18</div>
+                        <div class="w-16 py-3 text-center text-text-body">
+                            <div class="text-3xl font-bold font-display text-text-heading">18</div>
+                            <div class="text-xs uppercase">TUE</div>
+                        </div>
+                        <div class="py-3">
+                            <div class="space-y-2">
+                                <div class="flex items-center gap-3 rounded-md border-l-4 border-accent p-3 bg-accent/5">
+                                    <div class="w-24 text-sm font-medium text-text-heading">09:00 - 11:00</div>
+                                    <div class="flex-1">
+                                        <p class="text-sm font-semibold text-text-heading">Private Lesson</p>
+                                        <p class="text-xs text-text-body">Student: Jane Doe / Instructor: Mike L.</p>
+                                    </div>
+                                </div>
+                                <div class="flex items-center gap-3 rounded-md border-l-4 border-gray-400 p-3 bg-gray-400/5">
+                                    <div class="w-24 text-sm font-medium text-text-heading">12:00 - 13:00</div>
+                                    <div class="flex-1">
+                                        <p class="text-sm font-semibold text-text-heading">Blocked Time</p>
+                                        <p class="text-xs text-text-body">Instructor: Sarah K.</p>
+                                    </div>
+                                </div>
+                                <div class="flex items-center gap-3 rounded-md border-l-4 border-accent p-3 bg-accent/5">
+                                    <div class="w-24 text-sm font-medium text-text-heading">14:00 - 16:00</div>
+                                    <div class="flex-1">
+                                        <p class="text-sm font-semibold text-text-heading">Group Lesson</p>
+                                        <p class="text-xs text-text-body">3 Students / Instructor: Mike L.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-start-2 border-b border-border-color pb-2 pt-6 font-medium text-text-body text-sm">Wednesday, November 19</div>
+                        <div class="w-16 py-3 text-center text-text-body">
+                            <div class="text-3xl font-bold font-display text-text-heading">19</div>
+                            <div class="text-xs uppercase">WED</div>
+                        </div>
+                        <div class="py-3 max-h-96 overflow-y-auto pr-2">
+                            <div class="space-y-2">
+                                <div class="flex items-center gap-3 rounded-md border-l-4 border-accent p-3 bg-accent/5">
+                                    <div class="w-24 text-sm font-medium text-text-heading">08:00 - 10:00</div>
+                                    <div class="flex-1">
+                                        <p class="text-sm font-semibold text-text-heading">Private Lesson</p>
+                                        <p class="text-xs text-text-body">Student: Alex Ray / Instructor: Sarah K.</p>
+                                    </div>
+                                </div>
+                                <div class="flex items-center gap-3 rounded-md border-l-4 border-warning p-3 bg-warning/5">
+                                    <div class="w-24 text-sm font-medium text-text-heading">09:00 - 11:00</div>
+                                    <div class="flex-1">
+                                        <p class="text-sm font-semibold text-text-heading">Pending: Group Lesson</p>
+                                        <p class="text-xs text-text-body">2 Students / Instructor: Mike L.</p>
+                                    </div>
+                                </div>
+                                <div class="flex items-center gap-3 rounded-md border-l-4 border-accent p-3 bg-accent/5">
+                                    <div class="w-24 text-sm font-medium text-text-heading">10:00 - 12:00</div>
+                                    <div class="flex-1">
+                                        <p class="text-sm font-semibold text-text-heading">Beginner Course Day 1</p>
+                                        <p class="text-xs text-text-body">Student: Sam Jones / Instructor: Chris P.</p>
+                                    </div>
+                                </div>
+                                <div class="flex items-center gap-3 rounded-md border-l-4 border-accent p-3 bg-accent/5">
+                                    <div class="w-24 text-sm font-medium text-text-heading">11:00 - 13:00</div>
+                                    <div class="flex-1">
+                                        <p class="text-sm font-semibold text-text-heading">Private Lesson</p>
+                                        <p class="text-xs text-text-body">Student: Emily White / Instructor: Sarah K.</p>
+                                    </div>
+                                </div>
+                                <div class="flex items-center gap-3 rounded-md border-l-4 border-accent p-3 bg-accent/5">
+                                    <div class="w-24 text-sm font-medium text-text-heading">12:00 - 14:00</div>
+                                    <div class="flex-1">
+                                        <p class="text-sm font-semibold text-text-heading">Group Lesson</p>
+                                        <p class="text-xs text-text-body">4 Students / Instructor: Mike L.</p>
+                                    </div>
+                                </div>
+                                <div class="flex items-center gap-3 rounded-md border-l-4 border-accent p-3 bg-accent/5">
+                                    <div class="w-24 text-sm font-medium text-text-heading">13:00 - 15:00</div>
+                                    <div class="flex-1">
+                                        <p class="text-sm font-semibold text-text-heading">Private Lesson</p>
+                                        <p class="text-xs text-text-body">Student: Olivia Chen / Instructor: Chris P.</p>
+                                    </div>
+                                </div>
+                                <div class="flex items-center gap-3 rounded-md border-l-4 border-warning p-3 bg-warning/5">
+                                    <div class="w-24 text-sm font-medium text-text-heading">14:00 - 16:00</div>
+                                    <div class="flex-1">
+                                        <p class="text-sm font-semibold text-text-heading">Pending: Private Lesson</p>
+                                        <p class="text-xs text-text-body">Student: Ben Carter / Instructor: Sarah K.</p>
+                                    </div>
+                                </div>
+                                <div class="flex items-center gap-3 rounded-md border-l-4 border-accent p-3 bg-accent/5">
+                                    <div class="w-24 text-sm font-medium text-text-heading">15:00 - 17:00</div>
+                                    <div class="flex-1">
+                                        <p class="text-sm font-semibold text-text-heading">Advanced Freestyle Clinic</p>
+                                        <p class="text-xs text-text-body">5 Students / Instructor: Mike L.</p>
+                                    </div>
+                                </div>
+                                <div class="flex items-center gap-3 rounded-md border-l-4 border-accent p-3 bg-accent/5">
+                                    <div class="w-24 text-sm font-medium text-text-heading">16:00 - 18:00</div>
+                                    <div class="flex-1">
+                                        <p class="text-sm font-semibold text-text-heading">Private Lesson</p>
+                                        <p class="text-xs text-text-body">Student: Liam Taylor / Instructor: Chris P.</p>
+                                    </div>
+                                </div>
+                                <div class="flex items-center gap-3 rounded-md border-l-4 border-accent p-3 bg-accent/5">
+                                    <div class="w-24 text-sm font-medium text-text-heading">17:00 - 18:00</div>
+                                    <div class="flex-1">
+                                        <p class="text-sm font-semibold text-text-heading">Sunset Session</p>
+                                        <p class="text-xs text-text-body">Student: Chloe Garcia / Instructor: Sarah K.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-start-2 border-b border-border-color pb-2 pt-6 font-medium text-text-body text-sm">Thursday, November 20</div>
+                        <div class="w-16 py-3 text-center text-text-body">
+                            <div class="text-3xl font-bold font-display text-text-heading">20</div>
+                            <div class="text-xs uppercase">THU</div>
+                        </div>
+                        <div class="py-3">
+                            <div class="text-sm text-text-body italic">No lessons scheduled.</div>
+                        </div>
+                    </div>
+                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="flex items-center justify-center gap-6 border-t border-border-color p-4">
+                        <div class="flex items-center gap-2">
+                            <div class="size-3 rounded-sm bg-accent/80"></div>
+                            <span class="text-xs text-text-body">Confirmed Lesson</span>
+                        </div>
+                        <div class="flex items-center gap-2">
+                            <div class="size-3 rounded-sm bg-warning/80"></div>
+                            <span class="text-xs text-text-body">Pending Booking</span>
+                        </div>
+                        <div class="flex items-center gap-2">
+                            <div class="size-3 rounded-sm bg-gray-300"></div>
+                            <span class="text-xs text-text-body">Blocked Time</span>
                         </div>
                     </div>
                 </div>
@@ -495,424 +922,6 @@
             </div>
         </div>
     </div>
-    <div id="view-calendar-modal" class="modal-overlay hidden">
-        <div class="flex h-full w-full max-w-7xl flex-col rounded-xl bg-surface shadow-lg">
-            <div class="flex items-center justify-between border-b border-border-color p-4 md:p-6">
-                <h2 class="font-display text-xl font-bold text-text-heading">Full Calendar View</h2>
-                <button class="rounded-md p-1 text-text-body transition-colors hover:bg-background-light hover:text-text-heading close-modal-btn">
-                    <span class="material-symbols-outlined">close</span>
-                </button>
-            </div>
-            <div class="flex flex-1 flex-col overflow-hidden p-4 md:p-6">
-                <div class="mb-4 flex flex-col items-center justify-between gap-4 md:flex-row">
-                    <div class="flex items-center gap-4">
-                        <button class="flex h-9 cursor-pointer items-center justify-center overflow-hidden rounded-md border border-border-color bg-surface px-3 text-sm font-medium text-text-heading transition-colors hover:bg-background-light">Today</button>
-                        <div class="flex items-center">
-                            <button class="flex size-9 items-center justify-center rounded-l-md border border-r-0 border-border-color text-text-body transition-colors hover:bg-background-light">
-                                <span class="material-symbols-outlined text-xl">chevron_left</span>
-                            </button>
-                            <button class="flex size-9 items-center justify-center rounded-r-md border border-border-color text-text-body transition-colors hover:bg-background-light">
-                                <span class="material-symbols-outlined text-xl">chevron_right</span>
-                            </button>
-                        </div>
-                        <h3 class="font-display text-lg font-bold text-text-heading">November 2025</h3>
-                    </div>
-                    <div class="flex items-center rounded-md border border-border-color p-0.5" id="calendar-view-tabs">
-                        <button class="rounded-sm px-3 py-1 text-sm font-medium text-text-body transition-colors hover:bg-background-light hover:text-text-heading" data-view="day">Day</button>
-                        <button class="rounded-sm px-3 py-1 text-sm font-medium text-text-body transition-colors hover:bg-background-light hover:text-text-heading" data-view="week">Week</button>
-                        <button class="rounded-sm bg-background-light px-3 py-1 text-sm font-medium text-text-heading" data-view="month">Month</button>
-                        <button class="rounded-sm px-3 py-1 text-sm font-medium text-text-body transition-colors hover:bg-background-light hover:text-text-heading" data-view="agenda">Agenda</button>
-                    </div>
-                </div>
-                <div id="calendar-month-view" class="calendar-view grid flex-1 grid-cols-7 grid-rows-[auto,1fr] overflow-y-auto">
-                    <div class="col-span-1 border-b border-border-color py-2 text-center text-xs font-medium text-text-body">SUN</div>
-                    <div class="col-span-1 border-b border-border-color py-2 text-center text-xs font-medium text-text-body">MON</div>
-                    <div class="col-span-1 border-b border-border-color py-2 text-center text-xs font-medium text-text-body">TUE</div>
-                    <div class="col-span-1 border-b border-border-color py-2 text-center text-xs font-medium text-text-body">WED</div>
-                    <div class="col-span-1 border-b border-border-color py-2 text-center text-xs font-medium text-text-body">THU</div>
-                    <div class="col-span-1 border-b border-border-color py-2 text-center text-xs font-medium text-text-body">FRI</div>
-                    <div class="col-span-1 border-b border-border-color py-2 text-center text-xs font-medium text-text-body">SAT</div>
-                    <div class="relative col-span-1 border-r border-border-color text-gray-400">
-                        <div class="p-1.5 text-right text-sm">26</div>
-                    </div>
-                    <div class="relative col-span-1 border-r border-border-color text-gray-400">
-                        <div class="p-1.5 text-right text-sm">27</div>
-                    </div>
-                    <div class="relative col-span-1 border-r border-border-color text-gray-400">
-                        <div class="p-1.5 text-right text-sm">28</div>
-                    </div>
-                    <div class="relative col-span-1 border-r border-border-color text-gray-400">
-                        <div class="p-1.5 text-right text-sm">29</div>
-                    </div>
-                    <div class="relative col-span-1 border-r border-border-color text-gray-400">
-                        <div class="p-1.5 text-right text-sm">30</div>
-                    </div>
-                    <div class="relative col-span-1 border-r border-border-color text-gray-400">
-                        <div class="p-1.5 text-right text-sm">31</div>
-                    </div>
-                    <div class="relative col-span-1 border-border-color">
-                        <div class="p-1.5 text-right text-sm">1</div>
-                    </div>
-                    <div class="relative col-span-1 border-r border-t border-border-color">
-                        <div class="p-1.5 text-right text-sm">2</div>
-                    </div>
-                    <div class="relative col-span-1 border-r border-t border-border-color">
-                        <div class="p-1.5 text-right text-sm">3</div>
-                    </div>
-                    <div class="relative col-span-1 border-r border-t border-border-color">
-                        <div class="p-1.5 text-right text-sm">4</div>
-                    </div>
-                    <div class="relative col-span-1 border-r border-t border-border-color">
-                        <div class="p-1.5 text-right text-sm">5</div>
-                    </div>
-                    <div class="relative col-span-1 border-r border-t border-border-color">
-                        <div class="p-1.5 text-right text-sm">6</div>
-                    </div>
-                    <div class="relative col-span-1 border-r border-t border-border-color">
-                        <div class="p-1.5 text-right text-sm">7</div>
-                    </div>
-                    <div class="relative col-span-1 border-t border-border-color">
-                        <div class="p-1.5 text-right text-sm">8</div>
-                    </div>
-                    <div class="relative col-span-1 border-r border-t border-border-color">
-                        <div class="p-1.5 text-right text-sm">9</div>
-                    </div>
-                    <div class="relative col-span-1 border-r border-t border-border-color">
-                        <div class="p-1.5 text-right text-sm">10</div>
-                    </div>
-                    <div class="relative col-span-1 border-r border-t border-border-color">
-                        <div class="p-1.5 text-right text-sm">11</div>
-                        <div class="mx-1 space-y-1">
-                            <div class="cursor-pointer rounded-sm bg-accent/20 px-1.5 py-0.5 text-xs text-accent-darker hover:bg-accent/30"><span class="font-semibold">09:00</span> Jane D.</div>
-                            <div class="cursor-pointer rounded-sm bg-warning/20 px-1.5 py-0.5 text-xs text-amber-800 hover:bg-warning/30"><span class="font-semibold">11:00</span> John S.</div>
-                        </div>
-                    </div>
-                    <div class="relative col-span-1 border-r border-t border-border-color">
-                        <div class="p-1.5 text-right text-sm">12</div>
-                    </div>
-                    <div class="relative col-span-1 border-r border-t border-border-color">
-                        <div class="p-1.5 text-right text-sm">13</div>
-                    </div>
-                    <div class="relative col-span-1 border-r border-t border-border-color">
-                        <div class="p-1.5 text-right text-sm">14</div>
-                    </div>
-                    <div class="relative col-span-1 border-t border-border-color">
-                        <div class="p-1.5 text-right text-sm">15</div>
-                    </div>
-                    <div class="relative col-span-1 border-r border-t border-border-color">
-                        <div class="p-1.5 text-right text-sm">16</div>
-                    </div>
-                    <div class="relative col-span-1 border-r border-t border-border-color bg-accent/5">
-                        <div class="mx-auto flex size-6 items-center justify-center rounded-full bg-accent text-white p-1.5 text-center text-sm font-bold">17</div>
-                    </div>
-                    <div class="relative col-span-1 border-r border-t border-border-color">
-                        <div class="p-1.5 text-right text-sm">18</div>
-                        <div class="mx-1 space-y-1">
-                            <div class="cursor-pointer rounded-sm bg-gray-200 px-1.5 py-0.5 text-xs text-gray-600 hover:bg-gray-300">Mike L. Blocked</div>
-                        </div>
-                    </div>
-                    <div class="relative col-span-1 border-r border-t border-border-color">
-                        <div class="p-1.5 text-right text-sm">19</div>
-                    </div>
-                    <div class="relative col-span-1 border-r border-t border-border-color">
-                        <div class="p-1.5 text-right text-sm">20</div>
-                    </div>
-                    <div class="relative col-span-1 border-r border-t border-border-color">
-                        <div class="p-1.5 text-right text-sm">21</div>
-                    </div>
-                    <div class="relative col-span-1 border-t border-border-color">
-                        <div class="p-1.5 text-right text-sm">22</div>
-                    </div>
-                    <div class="relative col-span-1 border-r border-t border-border-color">
-                        <div class="p-1.5 text-right text-sm">23</div>
-                    </div>
-                    <div class="relative col-span-1 border-r border-t border-border-color">
-                        <div class="p-1.5 text-right text-sm">24</div>
-                    </div>
-                    <div class="relative col-span-1 border-r border-t border-border-color">
-                        <div class="p-1.5 text-right text-sm">25</div>
-                    </div>
-                    <div class="relative col-span-1 border-r border-t border-border-color">
-                        <div class="p-1.5 text-right text-sm">26</div>
-                    </div>
-                    <div class="relative col-span-1 border-r border-t border-border-color">
-                        <div class="p-1.5 text-right text-sm">27</div>
-                    </div>
-                    <div class="relative col-span-1 border-r border-t border-border-color">
-                        <div class="p-1.5 text-right text-sm">28</div>
-                    </div>
-                    <div class="relative col-span-1 border-t border-border-color">
-                        <div class="p-1.5 text-right text-sm">29</div>
-                    </div>
-                    <div class="relative col-span-1 border-r border-t border-border-color">
-                        <div class="p-1.5 text-right text-sm">30</div>
-                    </div>
-                    <div class="relative col-span-1 border-r border-t border-border-color text-gray-400">
-                        <div class="p-1.5 text-right text-sm">1</div>
-                    </div>
-                    <div class="relative col-span-1 border-r border-t border-border-color text-gray-400">
-                        <div class="p-1.5 text-right text-sm">2</div>
-                    </div>
-                    <div class="relative col-span-1 border-r border-t border-border-color text-gray-400">
-                        <div class="p-1.5 text-right text-sm">3</div>
-                    </div>
-                    <div class="relative col-span-1 border-r border-t border-border-color text-gray-400">
-                        <div class="p-1.5 text-right text-sm">4</div>
-                    </div>
-                    <div class="relative col-span-1 border-r border-t border-border-color text-gray-400">
-                        <div class="p-1.5 text-right text-sm">5</div>
-                    </div>
-                    <div class="relative col-span-1 border-t border-border-color text-gray-400">
-                        <div class="p-1.5 text-right text-sm">6</div>
-                    </div>
-                </div>
-                <div id="calendar-week-view" class="calendar-view hidden grid flex-1 grid-cols-7 grid-rows-[auto,1fr] overflow-y-auto">
-                    <div class="col-span-1 border-b border-border-color py-2 text-center text-xs font-medium text-text-body">
-                        <p>MON</p>
-                        <p class="font-display text-2xl font-bold text-text-heading">17</p>
-                    </div>
-                    <div class="col-span-1 border-b border-border-color py-2 text-center text-xs font-medium text-text-body">
-                        <p>TUE</p>
-                        <p class="font-display text-2xl font-bold text-text-heading">18</p>
-                    </div>
-                    <div class="col-span-1 border-b border-border-color py-2 text-center text-xs font-medium text-text-body">
-                        <p>WED</p>
-                        <p class="font-display text-2xl font-bold text-text-heading">19</p>
-                    </div>
-                    <div class="col-span-1 border-b border-border-color py-2 text-center text-xs font-medium text-text-body">
-                        <p>THU</p>
-                        <p class="font-display text-2xl font-bold text-text-heading">20</p>
-                    </div>
-                    <div class="col-span-1 border-b border-border-color py-2 text-center text-xs font-medium text-text-body">
-                        <p>FRI</p>
-                        <p class="font-display text-2xl font-bold text-text-heading">21</p>
-                    </div>
-                    <div class="col-span-1 border-b border-border-color py-2 text-center text-xs font-medium text-text-body">
-                        <p>SAT</p>
-                        <p class="font-display text-2xl font-bold text-text-heading">22</p>
-                    </div>
-                    <div class="col-span-1 border-b border-border-color py-2 text-center text-xs font-medium text-text-body">
-                        <p>SUN</p>
-                        <p class="font-display text-2xl font-bold text-text-heading">23</p>
-                    </div>
-                    <div class="relative col-span-1 border-r border-border-color">
-                        <div class="p-2 space-y-1.5">
-                            <div class="cursor-pointer rounded-sm border-l-4 border-accent bg-accent/20 px-2 py-1 text-xs text-accent-darker hover:bg-accent/30"><p class="font-semibold">09:00 Jane Doe</p><p class="text-text-body">w/ Mike L.</p></div>
-                            <div class="cursor-pointer rounded-sm border-l-4 border-warning bg-warning/20 px-2 py-1 text-xs text-amber-800 hover:bg-warning/30"><p class="font-semibold">11:00 John Smith</p><p class="text-text-body">w/ Sarah K.</p></div>
-                            <div class="cursor-pointer rounded-sm border-l-4 border-accent bg-accent/20 px-2 py-1 text-xs text-accent-darker hover:bg-accent/30"><p class="font-semibold">13:00 Emily White</p><p class="text-text-body">w/ Mike L.</p></div>
-                        </div>
-                    </div>
-                    <div class="relative col-span-1 border-r border-border-color">
-                        <div class="p-2 space-y-1.5">
-                            <div class="cursor-pointer rounded-sm border-l-4 border-gray-400 bg-gray-200 px-2 py-1 text-xs text-gray-600 hover:bg-gray-300"><p class="font-semibold">All Day</p><p>Mike L. Blocked</p></div>
-                            <div class="cursor-pointer rounded-sm border-l-4 border-accent bg-accent/20 px-2 py-1 text-xs text-accent-darker hover:bg-accent/30"><p class="font-semibold">10:00 Alex Ray</p><p class="text-text-body">w/ Chloe T.</p></div>
-                        </div>
-                    </div>
-                    <div class="relative col-span-1 border-r border-border-color"></div>
-                    <div class="relative col-span-1 border-r border-border-color bg-accent/5">
-                        <div class="calendar-day-scroll h-full space-y-1.5 overflow-y-auto p-2">
-                            <div class="cursor-pointer rounded-sm border-l-4 border-accent bg-accent/20 px-2 py-1 text-xs text-accent-darker hover:bg-accent/30"><p class="font-semibold">09:00 L. Harris</p><p class="text-text-body">w/ Sarah K.</p></div>
-                            <div class="cursor-pointer rounded-sm border-l-4 border-warning bg-warning/20 px-2 py-1 text-xs text-amber-800 hover:bg-warning/30"><p class="font-semibold">09:30 M. Chen</p><p class="text-text-body">w/ Mike L.</p></div>
-                            <div class="cursor-pointer rounded-sm border-l-4 border-accent bg-accent/20 px-2 py-1 text-xs text-accent-darker hover:bg-accent/30"><p class="font-semibold">10:00 S. Patel</p><p class="text-text-body">w/ Chloe T.</p></div>
-                            <div class="cursor-pointer rounded-sm border-l-4 border-accent bg-accent/20 px-2 py-1 text-xs text-accent-darker hover:bg-accent/30"><p class="font-semibold">11:00 B. Carter</p><p class="text-text-body">w/ Sarah K.</p></div>
-                            <div class="cursor-pointer rounded-sm border-l-4 border-accent bg-accent/20 px-2 py-1 text-xs text-accent-darker hover:bg-accent/30"><p class="font-semibold">11:00 K. Nguyen</p><p class="text-text-body">w/ John D.</p></div>
-                            <div class="cursor-pointer rounded-sm border-l-4 border-accent bg-accent/20 px-2 py-1 text-xs text-accent-darker hover:bg-accent/30"><p class="font-semibold">13:00 T. Williams</p><p class="text-text-body">w/ Mike L.</p></div>
-                            <div class="cursor-pointer rounded-sm border-l-4 border-warning bg-warning/20 px-2 py-1 text-xs text-amber-800 hover:bg-warning/30"><p class="font-semibold">14:00 O. Davis</p><p class="text-text-body">w/ Chloe T.</p></div>
-                            <div class="cursor-pointer rounded-sm border-l-4 border-accent bg-accent/20 px-2 py-1 text-xs text-accent-darker hover:bg-accent/30"><p class="font-semibold">15:00 P. Garcia</p><p class="text-text-body">w/ John D.</p></div>
-                            <div class="cursor-pointer rounded-sm border-l-4 border-accent bg-accent/20 px-2 py-1 text-xs text-accent-darker hover:bg-accent/30"><p class="font-semibold">15:30 J. Rodriguez</p><p class="text-text-body">w/ Sarah K.</p></div>
-                            <div class="cursor-pointer rounded-sm border-l-4 border-warning bg-warning/20 px-2 py-1 text-xs text-amber-800 hover:bg-warning/30"><p class="font-semibold">16:00 A. Martinez</p><p class="text-text-body">w/ Mike L.</p></div>
-                        </div>
-                    </div>
-                    <div class="relative col-span-1 border-r border-border-color">
-                        <div class="p-2 space-y-1.5">
-                            <div class="cursor-pointer rounded-sm border-l-4 border-accent bg-accent/20 px-2 py-1 text-xs text-accent-darker hover:bg-accent/30"><p class="font-semibold">10:00 F. Miller</p><p class="text-text-body">w/ Chloe T.</p></div>
-                            <div class="cursor-pointer rounded-sm border-l-4 border-accent bg-accent/20 px-2 py-1 text-xs text-accent-darker hover:bg-accent/30"><p class="font-semibold">12:00 G. Wilson</p><p class="text-text-body">w/ John D.</p></div>
-                        </div>
-                    </div>
-                    <div class="relative col-span-1 border-r border-border-color"></div>
-                    <div class="relative col-span-1"></div>
-                </div>
-            </div>
-                <div id="calendar-day-view" class="calendar-view hidden flex flex-col flex-1 overflow-y-auto">
-                    <div class="pr-4 text-right text-xs text-text-body">
-                        <div class="h-10"></div>
-                        <div class="h-16 text-right">8 AM</div>
-                        <div class="h-16 text-right">9 AM</div>
-                        <div class="h-16 text-right">10 AM</div>
-                        <div class="h-16 text-right">11 AM</div>
-                        <div class="h-16 text-right">12 PM</div>
-                        <div class="h-16 text-right">1 PM</div>
-                        <div class="h-16 text-right">2 PM</div>
-                        <div class="h-16 text-right">3 PM</div>
-                        <div class="h-16 text-right">4 PM</div>
-                        <div class="h-16 text-right">5 PM</div>
-                    </div>
-                    <div class="relative grid grid-cols-1 overflow-y-auto calendar-scrollbar">
-                        <div class="col-start-1 col-end-2 row-start-1 row-end-11 h-full">
-                            <div class="h-16 border-t border-border-color"></div>
-                            <div class="h-16 border-t border-border-color"></div>
-                            <div class="h-16 border-t border-border-color"></div>
-                            <div class="h-16 border-t border-border-color"></div>
-                            <div class="h-16 border-t border-border-color"></div>
-                            <div class="h-16 border-t border-border-color"></div>
-                            <div class="h-16 border-t border-border-color"></div>
-                            <div class="h-16 border-t border-border-color"></div>
-                            <div class="h-16 border-t border-border-color"></div>
-                            <div class="h-16 border-t border-border-color"></div>
-                        </div>
-                        <div class="absolute inset-0 px-2 space-y-1">
-                            <div class="absolute top-[108px] left-2 right-2 rounded border-l-4 border-accent bg-accent/10 p-2 text-xs shadow-sm" style="height: 56px;"><p class="font-bold text-accent">09:00 - Jane Doe</p><p class="text-text-body">w/ Mike L.</p></div>
-                            <div class="absolute top-[172px] left-2 right-2 rounded border-l-4 border-accent bg-accent/10 p-2 text-xs shadow-sm" style="height: 56px;"><p class="font-bold text-accent">10:00 - Peter Pan</p><p class="text-text-body">w/ Sarah K.</p></div>
-                            <div class="absolute top-[236px] left-2 right-2 rounded border-l-4 border-warning bg-warning/10 p-2 text-xs shadow-sm" style="height: 56px;"><p class="font-bold text-amber-800">11:00 - John Smith</p><p class="text-text-body">w/ Sarah K.</p></div>
-                            <div class="absolute top-[300px] left-2 right-2 rounded border-l-4 border-accent bg-accent/10 p-2 text-xs shadow-sm" style="height: 56px;"><p class="font-bold text-accent">12:00 - Mary Jane</p><p class="text-text-body">w/ David C.</p></div>
-                            <div class="absolute top-[364px] left-2 right-2 rounded border-l-4 border-accent bg-accent/10 p-2 text-xs shadow-sm" style="height: 56px;"><p class="font-bold text-accent">13:00 - Emily White</p><p class="text-text-body">w/ Mike L.</p></div>
-                            <div class="absolute top-[428px] left-2 right-2 rounded border-l-4 border-gray-400 bg-gray-100 p-2 text-xs shadow-sm" style="height: 56px;"><p class="font-bold text-gray-600">14:00 - Sarah K.</p><p class="text-text-body">Blocked</p></div>
-                            <div class="absolute top-[492px] left-2 right-2 rounded border-l-4 border-accent bg-accent/10 p-2 text-xs shadow-sm" style="height: 56px;"><p class="font-bold text-accent">15:00 - Chris Green</p><p class="text-text-body">w/ Anna B.</p></div>
-                            <div class="absolute top-[556px] left-2 right-2 rounded border-l-4 border-accent bg-accent/10 p-2 text-xs shadow-sm" style="height: 56px;"><p class="font-bold text-accent">16:00 - Lisa Ray</p><p class="text-text-body">w/ Tom H.</p></div>
-                            <div class="absolute top-[556px] left-1/3 right-2 rounded border-l-4 border-accent bg-accent/10 p-2 text-xs shadow-sm ml-2" style="height: 56px;"><p class="font-bold text-accent">16:00 - Sam Wilson</p><p class="text-text-body">w/ Mike L.</p></div>
-                            <div class="absolute top-[620px] left-2 right-2 rounded border-l-4 border-warning bg-warning/10 p-2 text-xs shadow-sm" style="height: 56px;"><p class="font-bold text-amber-800">17:00 - Ben Carter</p><p class="text-text-body">w/ David C.</p></div>
-                            <div class="absolute top-[620px] left-1/3 right-2 rounded border-l-4 border-accent bg-accent/10 p-2 text-xs shadow-sm ml-2" style="height: 56px;"><p class="font-bold text-accent">17:00 - Olivia Brown</p><p class="text-text-body">w/ Anna B.</p></div>
-                        </div>
-                    </div>
-                </div>
-                <div id="calendar-agenda-view" class="calendar-view hidden flex flex-col flex-1 overflow-y-auto">
-                    <div class="grid grid-cols-[auto,1fr] gap-x-4">
-                        <div class="col-start-2 border-b border-border-color pb-2 font-medium text-text-body text-sm">Tuesday, November 18</div>
-                        <div class="w-16 py-3 text-center text-text-body">
-                            <div class="text-3xl font-bold font-display text-text-heading">18</div>
-                            <div class="text-xs uppercase">TUE</div>
-                        </div>
-                        <div class="py-3">
-                            <div class="space-y-2">
-                                <div class="flex items-center gap-3 rounded-md border-l-4 border-accent p-3 bg-accent/5">
-                                    <div class="w-24 text-sm font-medium text-text-heading">09:00 - 11:00</div>
-                                    <div class="flex-1">
-                                        <p class="text-sm font-semibold text-text-heading">Private Lesson</p>
-                                        <p class="text-xs text-text-body">Student: Jane Doe / Instructor: Mike L.</p>
-                                    </div>
-                                </div>
-                                <div class="flex items-center gap-3 rounded-md border-l-4 border-gray-400 p-3 bg-gray-400/5">
-                                    <div class="w-24 text-sm font-medium text-text-heading">12:00 - 13:00</div>
-                                    <div class="flex-1">
-                                        <p class="text-sm font-semibold text-text-heading">Blocked Time</p>
-                                        <p class="text-xs text-text-body">Instructor: Sarah K.</p>
-                                    </div>
-                                </div>
-                                <div class="flex items-center gap-3 rounded-md border-l-4 border-accent p-3 bg-accent/5">
-                                    <div class="w-24 text-sm font-medium text-text-heading">14:00 - 16:00</div>
-                                    <div class="flex-1">
-                                        <p class="text-sm font-semibold text-text-heading">Group Lesson</p>
-                                        <p class="text-xs text-text-body">3 Students / Instructor: Mike L.</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-start-2 border-b border-border-color pb-2 pt-6 font-medium text-text-body text-sm">Wednesday, November 19</div>
-                        <div class="w-16 py-3 text-center text-text-body">
-                            <div class="text-3xl font-bold font-display text-text-heading">19</div>
-                            <div class="text-xs uppercase">WED</div>
-                        </div>
-                        <div class="py-3 max-h-96 overflow-y-auto pr-2">
-                            <div class="space-y-2">
-                                <div class="flex items-center gap-3 rounded-md border-l-4 border-accent p-3 bg-accent/5">
-                                    <div class="w-24 text-sm font-medium text-text-heading">08:00 - 10:00</div>
-                                    <div class="flex-1">
-                                        <p class="text-sm font-semibold text-text-heading">Private Lesson</p>
-                                        <p class="text-xs text-text-body">Student: Alex Ray / Instructor: Sarah K.</p>
-                                    </div>
-                                </div>
-                                <div class="flex items-center gap-3 rounded-md border-l-4 border-warning p-3 bg-warning/5">
-                                    <div class="w-24 text-sm font-medium text-text-heading">09:00 - 11:00</div>
-                                    <div class="flex-1">
-                                        <p class="text-sm font-semibold text-text-heading">Pending: Group Lesson</p>
-                                        <p class="text-xs text-text-body">2 Students / Instructor: Mike L.</p>
-                                    </div>
-                                </div>
-                                <div class="flex items-center gap-3 rounded-md border-l-4 border-accent p-3 bg-accent/5">
-                                    <div class="w-24 text-sm font-medium text-text-heading">10:00 - 12:00</div>
-                                    <div class="flex-1">
-                                        <p class="text-sm font-semibold text-text-heading">Beginner Course Day 1</p>
-                                        <p class="text-xs text-text-body">Student: Sam Jones / Instructor: Chris P.</p>
-                                    </div>
-                                </div>
-                                <div class="flex items-center gap-3 rounded-md border-l-4 border-accent p-3 bg-accent/5">
-                                    <div class="w-24 text-sm font-medium text-text-heading">11:00 - 13:00</div>
-                                    <div class="flex-1">
-                                        <p class="text-sm font-semibold text-text-heading">Private Lesson</p>
-                                        <p class="text-xs text-text-body">Student: Emily White / Instructor: Sarah K.</p>
-                                    </div>
-                                </div>
-                                <div class="flex items-center gap-3 rounded-md border-l-4 border-accent p-3 bg-accent/5">
-                                    <div class="w-24 text-sm font-medium text-text-heading">12:00 - 14:00</div>
-                                    <div class="flex-1">
-                                        <p class="text-sm font-semibold text-text-heading">Group Lesson</p>
-                                        <p class="text-xs text-text-body">4 Students / Instructor: Mike L.</p>
-                                    </div>
-                                </div>
-                                <div class="flex items-center gap-3 rounded-md border-l-4 border-accent p-3 bg-accent/5">
-                                    <div class="w-24 text-sm font-medium text-text-heading">13:00 - 15:00</div>
-                                    <div class="flex-1">
-                                        <p class="text-sm font-semibold text-text-heading">Private Lesson</p>
-                                        <p class="text-xs text-text-body">Student: Olivia Chen / Instructor: Chris P.</p>
-                                    </div>
-                                </div>
-                                <div class="flex items-center gap-3 rounded-md border-l-4 border-warning p-3 bg-warning/5">
-                                    <div class="w-24 text-sm font-medium text-text-heading">14:00 - 16:00</div>
-                                    <div class="flex-1">
-                                        <p class="text-sm font-semibold text-text-heading">Pending: Private Lesson</p>
-                                        <p class="text-xs text-text-body">Student: Ben Carter / Instructor: Sarah K.</p>
-                                    </div>
-                                </div>
-                                <div class="flex items-center gap-3 rounded-md border-l-4 border-accent p-3 bg-accent/5">
-                                    <div class="w-24 text-sm font-medium text-text-heading">15:00 - 17:00</div>
-                                    <div class="flex-1">
-                                        <p class="text-sm font-semibold text-text-heading">Advanced Freestyle Clinic</p>
-                                        <p class="text-xs text-text-body">5 Students / Instructor: Mike L.</p>
-                                    </div>
-                                </div>
-                                <div class="flex items-center gap-3 rounded-md border-l-4 border-accent p-3 bg-accent/5">
-                                    <div class="w-24 text-sm font-medium text-text-heading">16:00 - 18:00</div>
-                                    <div class="flex-1">
-                                        <p class="text-sm font-semibold text-text-heading">Private Lesson</p>
-                                        <p class="text-xs text-text-body">Student: Liam Taylor / Instructor: Chris P.</p>
-                                    </div>
-                                </div>
-                                <div class="flex items-center gap-3 rounded-md border-l-4 border-accent p-3 bg-accent/5">
-                                    <div class="w-24 text-sm font-medium text-text-heading">17:00 - 18:00</div>
-                                    <div class="flex-1">
-                                        <p class="text-sm font-semibold text-text-heading">Sunset Session</p>
-                                        <p class="text-xs text-text-body">Student: Chloe Garcia / Instructor: Sarah K.</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-start-2 border-b border-border-color pb-2 pt-6 font-medium text-text-body text-sm">Thursday, November 20</div>
-                        <div class="w-16 py-3 text-center text-text-body">
-                            <div class="text-3xl font-bold font-display text-text-heading">20</div>
-                            <div class="text-xs uppercase">THU</div>
-                        </div>
-                        <div class="py-3">
-                            <div class="text-sm text-text-body italic">No lessons scheduled.</div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="flex items-center justify-center gap-6 border-t border-border-color p-4">
-                <div class="flex items-center gap-2">
-                    <div class="size-3 rounded-sm bg-accent/80"></div>
-                    <span class="text-xs text-text-body">Confirmed Lesson</span>
-                </div>
-                <div class="flex items-center gap-2">
-                    <div class="size-3 rounded-sm bg-warning/80"></div>
-                    <span class="text-xs text-text-body">Pending Booking</span>
-                </div>
-                <div class="flex items-center gap-2">
-                    <div class="size-3 rounded-sm bg-gray-300"></div>
-                    <span class="text-xs text-text-body">Blocked Time</span>
-                </div>
-            </div>
-        </div>
-    </div>
     <div id="send-message-modal" class="modal-overlay hidden">
         <div class="flex w-full max-w-2xl flex-col rounded-xl bg-white dark:bg-background-dark">
             <div class="flex items-center justify-between gap-3 p-6 border-b border-[#d1dbe6] dark:border-primary/20">
@@ -988,7 +997,7 @@
                     </div>
                     <!-- Skill Level -->
                     <div class="sm:col-span-2">
-                        <p class="text-sm font-medium text-[#111111] dark:text-gray-300 pb-2">Skill Level Taught</p>
+                        <p class="pb-2 text-sm font-medium text-[#111111] dark:text-gray-300">Skill Level Taught</p>
                         <div class="flex flex-wrap gap-3">
                             <label class="flex cursor-pointer items-center gap-2 rounded-full border border-gray-300 dark:border-white/20 px-3 py-1.5 text-sm has-[:checked]:border-primary has-[:checked]:bg-primary/10 has-[:checked]:text-primary dark:has-[:checked]:border-primary/70 dark:has-[:checked]:bg-primary/20 dark:has-[:checked]:text-primary/90">
                                 <input class="form-checkbox h-4 w-4 rounded border-gray-300 text-primary focus:ring-primary/50" type="checkbox">
@@ -1241,35 +1250,26 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', function () {
-            const views = {
+            const mainViews = {
                 dashboard: document.getElementById('dashboard-view'),
                 customers: document.getElementById('customers-view'),
                 instructors: document.getElementById('instructors-view'),
+                calendar: document.getElementById('calendar-view'),
             };
-
-            const modals = {
-                addBooking: document.getElementById('add-booking-modal'),
-                viewCalendar: document.getElementById('view-calendar-modal'),
-                sendMessage: document.getElementById('send-message-modal'),
-                addInstructor: document.getElementById('add-instructor-modal'),
-                deleteInstructor: document.getElementById('delete-instructor-modal'),
-                customerDetails: document.getElementById('customer-details-modal'),
-                editCustomer: document.getElementById('edit-customer-modal'),
-            };
-
-            const navLinks = document.querySelectorAll('nav a[data-view]');
+            const navLinks = document.querySelectorAll('#main-nav a');
             const mainHeading = document.getElementById('main-heading');
 
-            function showView(viewName) {
-                for (const key in views) {
-                    if (views[key]) {
-                        views[key].classList.add('hidden');
-                    }
-                }
-                if (views[viewName]) {
-                    views[viewName].classList.remove('hidden');
+            const calendarView = document.getElementById('calendar-view');
+            const calendarTabs = calendarView.querySelectorAll('#calendar-view-tabs button');
+            const calendarPanels = calendarView.querySelectorAll('.calendar-panel');
+
+            function showMainView(viewName) {
+                Object.values(mainViews).forEach(view => view.classList.add('hidden'));
+                if(mainViews[viewName]) {
+                    mainViews[viewName].classList.remove('hidden');
                     mainHeading.textContent = viewName.charAt(0).toUpperCase() + viewName.slice(1);
                 }
+
                 navLinks.forEach(link => {
                     if (link.dataset.view === viewName) {
                         link.classList.add('bg-primary/10', 'text-primary');
@@ -1277,92 +1277,48 @@
                         link.classList.remove('bg-primary/10', 'text-primary');
                     }
                 });
+                
+                if (viewName === 'calendar') {
+                    showCalendarTab('month');
+                }
+            }
+
+            function showCalendarTab(tabName) {
+                calendarPanels.forEach(panel => panel.classList.add('hidden'));
+                const panelToShow = document.getElementById(`calendar-${tabName}-view`);
+                if (panelToShow) {
+                    panelToShow.classList.remove('hidden');
+                }
+
+                calendarTabs.forEach(tab => {
+                    if (tab.dataset.calendarView === tabName) {
+                        tab.classList.add('bg-background-light', 'text-text-heading');
+                    } else {
+                        tab.classList.remove('bg-background-light', 'text-text-heading');
+                    }
+                });
             }
 
             navLinks.forEach(link => {
-                link.addEventListener('click', function (e) {
+                link.addEventListener('click', (e) => {
                     e.preventDefault();
-                    const viewName = this.dataset.view;
-                    showView(viewName);
+                    showMainView(link.dataset.view);
+                });
+            });
+
+            calendarTabs.forEach(tab => {
+                tab.addEventListener('click', () => {
+                    showCalendarTab(tab.dataset.calendarView);
                 });
             });
             
             document.querySelectorAll('[data-view-btn]').forEach(button => {
                 button.addEventListener('click', function() {
-                    const viewName = this.dataset.viewBtn;
-                    showView(viewName);
+                    showMainView(this.dataset.viewBtn);
                 });
             });
 
-            function showModal(modal) {
-                if (modal) {
-                    modal.classList.remove('hidden');
-                }
-            }
-
-            function hideModal(modal) {
-                if (modal) {
-                    modal.classList.add('hidden');
-                }
-            }
-
-            document.getElementById('add-booking-btn').addEventListener('click', () => showModal(modals.addBooking));
-            document.getElementById('view-calendar-btn').addEventListener('click', () => showModal(modals.viewCalendar));
-            
-            document.querySelectorAll('#send-message-btn').forEach(btn => {
-                btn.addEventListener('click', () => showModal(modals.sendMessage));
-            });
-            
-            if(document.getElementById('add-instructor-btn')) {
-                document.getElementById('add-instructor-btn').addEventListener('click', () => showModal(modals.addInstructor));
-            }
-             if(document.getElementById('delete-instructor-btn')) {
-                document.getElementById('delete-instructor-btn').addEventListener('click', () => showModal(modals.deleteInstructor));
-            }
-
-            document.querySelectorAll('[data-alt="View details"]').forEach(btn => {
-                btn.addEventListener('click', () => showModal(modals.customerDetails));
-            });
-
-            if(document.getElementById('edit-customer-btn')) {
-                document.getElementById('edit-customer-btn').addEventListener('click', () => {
-                    hideModal(modals.customerDetails);
-                    showModal(modals.editCustomer);
-                });
-            }
-
-            for (const key in modals) {
-                const modal = modals[key];
-                if (modal) {
-                    modal.addEventListener('click', function(e) {
-                        if (e.target === this || e.target.closest('.close-modal-btn')) {
-                            hideModal(this);
-                        }
-                    });
-                }
-            }
-
-            // Calendar Tabs
-            const calendarTabs = document.querySelectorAll('#calendar-view-tabs button');
-            const calendarViews = document.querySelectorAll('.calendar-view');
-
-            calendarTabs.forEach(tab => {
-                tab.addEventListener('click', function() {
-                    const view = this.dataset.view;
-
-                    calendarTabs.forEach(t => {
-                        t.classList.remove('bg-background-light', 'text-text-heading');
-                    });
-                    this.classList.add('bg-background-light', 'text-text-heading');
-
-                    calendarViews.forEach(v => {
-                        v.classList.add('hidden');
-                    });
-                    document.getElementById(`calendar-${view}-view`).classList.remove('hidden');
-                });
-            });
-
-            showView('dashboard');
+            showMainView('dashboard');
         });
     </script>
 </body>
