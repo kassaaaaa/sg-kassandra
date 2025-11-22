@@ -1,17 +1,26 @@
 <!DOCTYPE html>
-<html class="light" lang="en"><head>
-<meta charset="utf-8"/>
-<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>KiteOps - Book Your Kitesurfing Lesson</title>
-<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;700;800&amp;display=swap" rel="stylesheet"/>
-<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet"/>
-<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-<style type="text/tailwindcss">
+<html class="light" lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>KiteOps - Book Your Kitesurfing Lesson</title>
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;700;800&amp;display=swap"
+        rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <style type="text/tailwindcss">
         .material-symbols-outlined {
             font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
         }
+        .form-switch {
+            @apply relative inline-flex h-6 w-11 flex-shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2;
+        }
+        .form-switch-toggle {
+            @apply pointer-events-none inline-block h-5 w-5 transform rounded-full bg-white shadow ring-0 transition duration-200 ease-in-out;
+        }
     </style>
-<script id="tailwind-config">
+    <script id="tailwind-config">
         tailwind.config = {
             darkMode: "class",
             theme: {
@@ -26,7 +35,11 @@
                         "card-light": "#FFFFFF",
                         "card-dark": "#1A2632",
                         "border-light": "#E0E0E0",
-                        "border-dark": "#334155"
+                        "border-dark": "#334155",
+                        "action-blue": "#007BFF",
+                        "success-green": "#28A745",
+                        "neutral-dark": "#343A40",
+                        "neutral-light": "#6C757D",
                     },
                     fontFamily: {
                         "display": ["Manrope", "sans-serif"]
@@ -42,166 +55,488 @@
         }
     </script>
 </head>
-<body class="bg-background-light dark:bg-background-dark font-display text-text-light dark:text-text-dark">
-<div class="relative flex min-h-screen w-full flex-col overflow-x-hidden">
-<main class="container mx-auto flex-grow px-4 sm:px-6 lg:px-8 py-8 md:py-12">
-<div class="mb-10 pt-8 md:pt-12">
-<h1 class="text-4xl lg:text-5xl font-extrabold tracking-tighter text-center">Book Your Kitesurfing Lesson</h1>
-<p class="mt-3 text-lg text-slate-600 dark:text-slate-400 text-center max-w-2xl mx-auto">Find and book your next kitesurfing adventure with ease. Select your preferences below to get started.</p>
-</div>
-<div class="grid grid-cols-1 lg:grid-cols-3 gap-8 lg:gap-12">
-<aside class="lg:col-span-1">
-<div class="sticky top-8">
-<div class="rounded-xl border border-border-light dark:border-border-dark bg-card-light dark:bg-card-dark p-6 shadow-lg">
-<h2 class="text-2xl font-bold tracking-tight mb-6">Find Your Lesson</h2>
-<form class="flex flex-col gap-6">
 
-<div>
-<label class="block text-sm font-medium pb-2" for="lesson-type">Lesson Type</label>
-<div class="relative">
-<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-slate-400">kitesurfing</span>
-<select class="form-select w-full rounded-lg border border-border-light dark:border-border-dark bg-background-light dark:bg-background-dark focus:border-primary focus:ring-primary h-12 pl-10 pr-4 text-base appearance-none" id="lesson-type">
-<option>Private</option>
-<option>Group</option>
-<option>Freestyle</option>
-</select>
-<span class="material-symbols-outlined absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 pointer-events-none">expand_more</span>
-</div>
-</div>
-<div>
-<label class="block text-sm font-medium pb-2" for="skill-level">Skill Level</label>
-<div class="relative">
-<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-slate-400">signal_cellular_alt</span>
-<select class="form-select w-full rounded-lg border border-border-light dark:border-border-dark bg-background-light dark:bg-background-dark focus:border-primary focus:ring-primary h-12 pl-10 pr-4 text-base appearance-none" id="skill-level">
-<option>Beginner</option>
-<option>Intermediate</option>
-<option>Advanced</option>
-</select>
-<span class="material-symbols-outlined absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 pointer-events-none">expand_more</span>
-</div>
-</div>
-<div>
-<label class="block text-sm font-medium pb-2" for="date">Date</label>
-<input class="form-input w-full rounded-lg border border-border-light dark:border-border-dark bg-background-light dark:bg-background-dark focus:border-primary focus:ring-primary h-12 px-4 text-base" id="date" type="date" value="2024-08-15"/>
-</div>
-<button class="w-full flex items-center justify-center gap-2 rounded-lg bg-primary text-white font-bold h-12 text-base hover:bg-primary/90 transition-colors" type="submit">
-<span class="material-symbols-outlined">search</span>
+<body class="bg-background-light dark:bg-background-dark font-display text-text-light dark:text-text-dark">
+    <div class="relative flex min-h-screen w-full flex-col overflow-x-hidden">
+        <main class="container mx-auto flex-grow px-4 sm:px-6 lg:px-8 py-8 md:py-12">
+            <div class="mb-10 pt-8 md:pt-12">
+                <h1 class="text-4xl lg:text-5xl font-extrabold tracking-tighter text-center">Book Your Kitesurfing
+                    Lesson</h1>
+                <p class="mt-3 text-lg text-slate-600 dark:text-slate-400 text-center max-w-2xl mx-auto">Find and book
+                    your next kitesurfing adventure with ease. Select your preferences below to get started.</p>
+            </div>
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 lg:gap-12">
+                <aside class="lg:col-span-1">
+                    <div class="sticky top-8">
+                        <div
+                            class="rounded-xl border border-border-light dark:border-border-dark bg-card-light dark:bg-card-dark p-6 shadow-lg">
+                            <h2 class="text-2xl font-bold tracking-tight mb-6">Find Your Lesson</h2>
+                            <form class="flex flex-col gap-6">
+
+                                <div>
+                                    <label class="block text-sm font-medium pb-2" for="lesson-type">Lesson Type</label>
+                                    <div class="relative">
+                                        <span
+                                            class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-slate-400">kitesurfing</span>
+                                        <select
+                                            class="form-select w-full rounded-lg border border-border-light dark:border-border-dark bg-background-light dark:bg-background-dark focus:border-primary focus:ring-primary h-12 pl-10 pr-4 text-base appearance-none"
+                                            id="lesson-type">
+                                            <option>Private</option>
+                                            <option>Group</option>
+                                            <option>Freestyle</option>
+                                        </select>
+                                        <span
+                                            class="material-symbols-outlined absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 pointer-events-none">expand_more</span>
+                                    </div>
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-medium pb-2" for="skill-level">Skill Level</label>
+                                    <div class="relative">
+                                        <span
+                                            class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-slate-400">signal_cellular_alt</span>
+                                        <select
+                                            class="form-select w-full rounded-lg border border-border-light dark:border-border-dark bg-background-light dark:bg-background-dark focus:border-primary focus:ring-primary h-12 pl-10 pr-4 text-base appearance-none"
+                                            id="skill-level">
+                                            <option>Beginner</option>
+                                            <option>Intermediate</option>
+                                            <option>Advanced</option>
+                                        </select>
+                                        <span
+                                            class="material-symbols-outlined absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 pointer-events-none">expand_more</span>
+                                    </div>
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-medium pb-2" for="date">Date</label>
+                                    <input
+                                        class="form-input w-full rounded-lg border border-border-light dark:border-border-dark bg-background-light dark:bg-background-dark focus:border-primary focus:ring-primary h-12 px-4 text-base"
+                                        id="date" type="date" value="2024-08-15" />
+                                </div>
+                                <button
+                                    class="w-full flex items-center justify-center gap-2 rounded-lg bg-primary text-white font-bold h-12 text-base hover:bg-primary/90 transition-colors"
+                                    type="submit">
+                                    <span class="material-symbols-outlined">search</span>
                                     Search Lessons
                                 </button>
-</form>
-</div>
-</div>
-</aside>
-<div class="lg:col-span-2">
-<div class="flex flex-col gap-8">
-<div class="flex flex-wrap items-center justify-between gap-4">
-<h3 class="text-lg font-semibold">Showing 3 results for Tarifa on August 15, 2024</h3>
-<div class="flex items-center gap-2">
-<label class="text-sm text-slate-600 dark:text-slate-400" for="sort-by">Sort by:</label>
-<select class="form-select rounded-lg border-border-light dark:border-border-dark bg-card-light dark:bg-card-dark text-sm p-2 pr-8 focus:border-primary focus:ring-primary" id="sort-by">
-<option>Price</option>
-<option>Time</option>
-<option>Duration</option>
-</select>
-</div>
-</div>
-<div class="rounded-xl border border-border-light dark:border-border-dark bg-card-light dark:bg-card-dark p-6 shadow-md hover:shadow-xl hover:border-primary/50 transition-all duration-300">
-<div class="flex flex-col md:flex-row gap-6">
-<div class="flex-grow">
-<div class="flex items-start gap-4 mb-3">
-<div class="flex-shrink-0 h-12 w-12 rounded-lg bg-secondary/10 dark:bg-secondary/20 flex items-center justify-center">
-<span class="material-symbols-outlined text-3xl text-secondary">kitesurfing</span>
-</div>
-<div>
-<h4 class="text-xl font-bold">Private Beginner's Course</h4>
-<p class="text-slate-600 dark:text-slate-400 text-sm mt-1">Master the basics with one-on-one instruction.</p>
-</div>
-</div>
-<div class="flex flex-wrap items-center gap-x-4 gap-y-2 text-sm text-slate-700 dark:text-slate-300 border-t border-border-light dark:border-border-dark pt-4 mt-4">
-<div class="flex items-center gap-1.5"><span class="material-symbols-outlined text-base">sell</span><span>€150</span></div>
-<div class="flex items-center gap-1.5"><span class="material-symbols-outlined text-base">schedule</span><span>2 hours</span></div>
-<div class="flex items-center gap-1.5"><span class="material-symbols-outlined text-base">person</span><span>Instructor: Alex Ray</span></div>
-</div>
-</div>
-<div class="flex-shrink-0 w-full md:w-56">
-<p class="font-semibold text-sm mb-2">Available Times:</p>
-<ul class="flex flex-col gap-2">
-<li><button class="w-full text-center p-3 rounded-lg border border-primary/50 text-primary bg-primary/10 hover:bg-primary hover:text-white transition-colors duration-200">09:00 - 11:00</button></li>
-<li><button class="w-full text-center p-3 rounded-lg border border-primary/50 text-primary bg-primary/10 hover:bg-primary hover:text-white transition-colors duration-200">12:00 - 14:00</button></li>
-<li><button class="w-full text-center p-3 rounded-lg border border-primary/50 text-primary bg-primary/10 hover:bg-primary hover:text-white transition-colors duration-200">15:00 - 17:00</button></li>
-</ul>
-</div>
-</div>
-</div>
-<div class="rounded-xl border border-border-light dark:border-border-dark bg-card-light dark:bg-card-dark p-6 shadow-md hover:shadow-xl hover:border-primary/50 transition-all duration-300">
-<div class="flex flex-col md:flex-row gap-6">
-<div class="flex-grow">
-<div class="flex items-start gap-4 mb-3">
-<div class="flex-shrink-0 h-12 w-12 rounded-lg bg-secondary/10 dark:bg-secondary/20 flex items-center justify-center">
-<span class="material-symbols-outlined text-3xl text-secondary">surfing</span>
-</div>
-<div>
-<h4 class="text-xl font-bold">Intermediate Wave Riding</h4>
-<p class="text-slate-600 dark:text-slate-400 text-sm mt-1">Learn to ride waves and improve your carving.</p>
-</div>
-</div>
-<div class="flex flex-wrap items-center gap-x-4 gap-y-2 text-sm text-slate-700 dark:text-slate-300 border-t border-border-light dark:border-border-dark pt-4 mt-4">
-<div class="flex items-center gap-1.5"><span class="material-symbols-outlined text-base">sell</span><span>€180</span></div>
-<div class="flex items-center gap-1.5"><span class="material-symbols-outlined text-base">schedule</span><span>2.5 hours</span></div>
-<div class="flex items-center gap-1.5"><span class="material-symbols-outlined text-base">person</span><span>Instructor: Maria Sol</span></div>
-</div>
-</div>
-<div class="flex-shrink-0 w-full md:w-56">
-<p class="font-semibold text-sm mb-2">Available Times:</p>
-<ul class="flex flex-col gap-2">
-<li><button class="w-full text-center p-3 rounded-lg border border-primary/50 text-primary bg-primary/10 hover:bg-primary hover:text-white transition-colors duration-200">10:00 - 12:30</button></li>
-<li><button class="w-full text-center p-3 rounded-lg border border-slate-300 dark:border-slate-600 text-slate-400 bg-slate-100 dark:bg-slate-800 cursor-not-allowed">14:00 - 16:30 (Booked)</button></li>
-</ul>
-</div>
-</div>
-</div>
-<div class="rounded-xl border border-border-light dark:border-border-dark bg-card-light dark:bg-card-dark p-6 shadow-md hover:shadow-xl hover:border-primary/50 transition-all duration-300">
-<div class="flex flex-col md:flex-row gap-6">
-<div class="flex-grow">
-<div class="flex items-start gap-4 mb-3">
-<div class="flex-shrink-0 h-12 w-12 rounded-lg bg-secondary/10 dark:bg-secondary/20 flex items-center justify-center">
-<span class="material-symbols-outlined text-3xl text-secondary">flight_takeoff</span>
-</div>
-<div>
-<h4 class="text-xl font-bold">Advanced Freestyle &amp; Jumps</h4>
-<p class="text-slate-600 dark:text-slate-400 text-sm mt-1">Take your skills to the next level with air tricks.</p>
-</div>
-</div>
-<div class="flex flex-wrap items-center gap-x-4 gap-y-2 text-sm text-slate-700 dark:text-slate-300 border-t border-border-light dark:border-border-dark pt-4 mt-4">
-<div class="flex items-center gap-1.5"><span class="material-symbols-outlined text-base">sell</span><span>€220</span></div>
-<div class="flex items-center gap-1.5"><span class="material-symbols-outlined text-base">schedule</span><span>3 hours</span></div>
-<div class="flex items-center gap-1.5"><span class="material-symbols-outlined text-base">person</span><span>Instructor: Kai Lenny</span></div>
-</div>
-</div>
-<div class="flex-shrink-0 w-full md:w-56">
-<p class="font-semibold text-sm mb-2">Available Times:</p>
-<ul class="flex flex-col gap-2">
-<li><button class="w-full text-center p-3 rounded-lg border border-primary/50 text-primary bg-primary/10 hover:bg-primary hover:text-white transition-colors duration-200">13:00 - 16:00</button></li>
-</ul>
-</div>
-</div>
-</div>
-</div>
-</div>
-</div>
-</main>
-<footer class="bg-card-light dark:bg-card-dark border-t border-border-light dark:border-border-dark mt-16">
-<div class="container mx-auto px-4 sm:px-6 lg:px-8 py-8">
-<div class="flex flex-col md:flex-row justify-between items-center gap-6">
-<p class="text-sm text-slate-600 dark:text-slate-400">© 2024 KiteOps. All rights reserved.</p>
-<div class="flex gap-6 text-slate-600 dark:text-slate-400">
-<a class="hover:text-primary" href="#">Terms of Service</a>
-<a class="hover:text-primary" href="#">Privacy Policy</a>
-<a class="hover:text-primary" href="#">Contact Us</a>
-</div>
-</div>
-</div>
-</footer>
-</div>
+                            </form>
+                        </div>
+                    </div>
+                </aside>
+                <div class="lg:col-span-2">
+                    <div class="flex flex-col gap-8">
+                        <div class="flex flex-wrap items-center justify-between gap-4">
+                            <h3 class="text-lg font-semibold">Showing 3 results for Tarifa on August 15, 2024</h3>
+                            <div class="flex items-center gap-2">
+                                <label class="text-sm text-slate-600 dark:text-slate-400" for="sort-by">Sort by:</label>
+                                <select
+                                    class="form-select rounded-lg border-border-light dark:border-border-dark bg-card-light dark:bg-card-dark text-sm p-2 pr-8 focus:border-primary focus:ring-primary"
+                                    id="sort-by">
+                                    <option>Price</option>
+                                    <option>Time</option>
+                                    <option>Duration</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div
+                            class="rounded-xl border border-border-light dark:border-border-dark bg-card-light dark:bg-card-dark p-6 shadow-md hover:shadow-xl hover:border-primary/50 transition-all duration-300">
+                            <div class="flex flex-col md:flex-row gap-6">
+                                <div class="flex-grow">
+                                    <div class="flex items-start gap-4 mb-3">
+                                        <div
+                                            class="flex-shrink-0 h-12 w-12 rounded-lg bg-secondary/10 dark:bg-secondary/20 flex items-center justify-center">
+                                            <span
+                                                class="material-symbols-outlined text-3xl text-secondary">kitesurfing</span>
+                                        </div>
+                                        <div>
+                                            <h4 class="text-xl font-bold">Private Beginner's Course</h4>
+                                            <p class="text-slate-600 dark:text-slate-400 text-sm mt-1">Master the basics
+                                                with one-on-one instruction.</p>
+                                        </div>
+                                    </div>
+                                    <div
+                                        class="flex flex-wrap items-center gap-x-4 gap-y-2 text-sm text-slate-700 dark:text-slate-300 border-t border-border-light dark:border-border-dark pt-4 mt-4">
+                                        <div class="flex items-center gap-1.5"><span
+                                                class="material-symbols-outlined text-base">sell</span><span>€150</span>
+                                        </div>
+                                        <div class="flex items-center gap-1.5"><span
+                                                class="material-symbols-outlined text-base">schedule</span><span>2
+                                                hours</span></div>
+                                        <div class="flex items-center gap-1.5"><span
+                                                class="material-symbols-outlined text-base">person</span><span>Instructor:
+                                                Alex Ray</span></div>
+                                    </div>
+                                </div>
+                                <div class="flex-shrink-0 w-full md:w-56">
+                                    <p class="font-semibold text-sm mb-2">Available Times:</p>
+                                    <ul class="flex flex-col gap-2">
+                                        <li><button
+                                                class="book-btn w-full text-center p-3 rounded-lg border border-primary/50 text-primary bg-primary/10 hover:bg-primary hover:text-white transition-colors duration-200">09:00
+                                                - 11:00</button></li>
+                                        <li><button
+                                                class="book-btn w-full text-center p-3 rounded-lg border border-primary/50 text-primary bg-primary/10 hover:bg-primary hover:text-white transition-colors duration-200">12:00
+                                                - 14:00</button></li>
+                                        <li><button
+                                                class="book-btn w-full text-center p-3 rounded-lg border border-primary/50 text-primary bg-primary/10 hover:bg-primary hover:text-white transition-colors duration-200">15:00
+                                                - 17:00</button></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <div
+                            class="rounded-xl border border-border-light dark:border-border-dark bg-card-light dark:bg-card-dark p-6 shadow-md hover:shadow-xl hover:border-primary/50 transition-all duration-300">
+                            <div class="flex flex-col md:flex-row gap-6">
+                                <div class="flex-grow">
+                                    <div class="flex items-start gap-4 mb-3">
+                                        <div
+                                            class="flex-shrink-0 h-12 w-12 rounded-lg bg-secondary/10 dark:bg-secondary/20 flex items-center justify-center">
+                                            <span class="material-symbols-outlined text-3xl text-secondary">surfing</span>
+                                        </div>
+                                        <div>
+                                            <h4 class="text-xl font-bold">Intermediate Wave Riding</h4>
+                                            <p class="text-slate-600 dark:text-slate-400 text-sm mt-1">Learn to ride
+                                                waves and improve your carving.</p>
+                                        </div>
+                                    </div>
+                                    <div
+                                        class="flex flex-wrap items-center gap-x-4 gap-y-2 text-sm text-slate-700 dark:text-slate-300 border-t border-border-light dark:border-border-dark pt-4 mt-4">
+                                        <div class="flex items-center gap-1.5"><span
+                                                class="material-symbols-outlined text-base">sell</span><span>€180</span>
+                                        </div>
+                                        <div class="flex items-center gap-1.5"><span
+                                                class="material-symbols-outlined text-base">schedule</span><span>2.5
+                                                hours</span></div>
+                                        <div class="flex items-center gap-1.5"><span
+                                                class="material-symbols-outlined text-base">person</span><span>Instructor:
+                                                Maria Sol</span></div>
+                                    </div>
+                                </div>
+                                <div class="flex-shrink-0 w-full md:w-56">
+                                    <p class="font-semibold text-sm mb-2">Available Times:</p>
+                                    <ul class="flex flex-col gap-2">
+                                        <li><button
+                                                class="book-btn w-full text-center p-3 rounded-lg border border-primary/50 text-primary bg-primary/10 hover:bg-primary hover:text-white transition-colors duration-200">10:00
+                                                - 12:30</button></li>
+                                        <li><button
+                                                class="w-full text-center p-3 rounded-lg border border-slate-300 dark:border-slate-600 text-slate-400 bg-slate-100 dark:bg-slate-800 cursor-not-allowed">14:00
+                                                - 16:30 (Booked)</button></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <div
+                            class="rounded-xl border border-border-light dark:border-border-dark bg-card-light dark:bg-card-dark p-6 shadow-md hover:shadow-xl hover:border-primary/50 transition-all duration-300">
+                            <div class="flex flex-col md:flex-row gap-6">
+                                <div class="flex-grow">
+                                    <div class="flex items-start gap-4 mb-3">
+                                        <div
+                                            class="flex-shrink-0 h-12 w-12 rounded-lg bg-secondary/10 dark:bg-secondary/20 flex items-center justify-center">
+                                            <span
+                                                class="material-symbols-outlined text-3xl text-secondary">flight_takeoff</span>
+                                        </div>
+                                        <div>
+                                            <h4 class="text-xl font-bold">Advanced Freestyle &amp; Jumps</h4>
+                                            <p class="text-slate-600 dark:text-slate-400 text-sm mt-1">Take your skills
+                                                to the next level with air tricks.</p>
+                                        </div>
+                                    </div>
+                                    <div
+                                        class="flex flex-wrap items-center gap-x-4 gap-y-2 text-sm text-slate-700 dark:text-slate-300 border-t border-border-light dark:border-border-dark pt-4 mt-4">
+                                        <div class="flex items-center gap-1.5"><span
+                                                class="material-symbols-outlined text-base">sell</span><span>€220</span>
+                                        </div>
+                                        <div class="flex items-center gap-1.5"><span
+                                                class="material-symbols-outlined text-base">schedule</span><span>3
+                                                hours</span></div>
+                                        <div class="flex items-center gap-1.5"><span
+                                                class="material-symbols-outlined text-base">person</span><span>Instructor:
+                                                Kai Lenny</span></div>
+                                    </div>
+                                </div>
+                                <div class="flex-shrink-0 w-full md:w-56">
+                                    <p class="font-semibold text-sm mb-2">Available Times:</p>
+                                    <ul class="flex flex-col gap-2">
+                                        <li><button
+                                                class="book-btn w-full text-center p-3 rounded-lg border border-primary/50 text-primary bg-primary/10 hover:bg-primary hover:text-white transition-colors duration-200">13:00
+                                                - 16:00</button></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+        <footer class="bg-card-light dark:bg-card-dark border-t border-border-light dark:border-border-dark mt-16">
+            <div class="container mx-auto px-4 sm:px-6 lg:px-8 py-8">
+                <div class="flex flex-col md:flex-row justify-between items-center gap-6">
+                    <p class="text-sm text-slate-600 dark:text-slate-400">© 2024 KiteOps. All rights reserved.</p>
+                    <div class="flex gap-6 text-slate-600 dark:text-slate-400">
+                        <a class="hover:text-primary" href="#">Terms of Service</a>
+                        <a class="hover:text-primary" href="#">Privacy Policy</a>
+                        <a class="hover:text-primary" href="#">Contact Us</a>
+                    </div>
+                </div>
+            </div>
+        </footer>
+    </div>
 
-</body></html>
+    <!-- Complete Order Modal -->
+    <div id="complete-order-modal" class="fixed inset-0 bg-black/60 dark:bg-black/80 flex items-center justify-center p-4 hidden">
+        <div class="bg-card-light dark:bg-card-dark rounded-xl shadow-2xl w-full max-w-4xl max-h-[90vh] flex flex-col">
+            <header class="flex items-center justify-between p-6 border-b border-border-light dark:border-border-dark flex-shrink-0">
+                <h2 class="text-2xl font-bold tracking-tight">Complete Your Booking</h2>
+                <button id="close-complete-order-modal" class="p-2 rounded-full text-slate-500 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-700 transition-colors">
+                    <span class="material-symbols-outlined">close</span>
+                </button>
+            </header>
+            <main class="flex-grow overflow-y-auto p-6 md:p-8">
+                <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                    <div class="lg:col-span-2">
+                        <h3 class="text-xl font-semibold mb-6">Your Information</h3>
+                        <form>
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                <div>
+                                    <label class="block text-sm font-medium pb-2" for="first-name">First Name</label>
+                                    <input
+                                        class="form-input w-full rounded-lg border-border-light dark:border-border-dark bg-background-light dark:bg-background-dark focus:border-primary focus:ring-primary h-12 px-4 text-base"
+                                        id="first-name" placeholder="Alex" type="text" />
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-medium pb-2" for="last-name">Last Name</label>
+                                    <input
+                                        class="form-input w-full rounded-lg border-border-light dark:border-border-dark bg-background-light dark:bg-background-dark focus:border-primary focus:ring-primary h-12 px-4 text-base"
+                                        id="last-name" placeholder="Ray" type="text" />
+                                </div>
+                                <div class="md:col-span-2">
+                                    <label class="block text-sm font-medium pb-2" for="email">Email Address</label>
+                                    <input
+                                        class="form-input w-full rounded-lg border-border-light dark:border-border-dark bg-background-light dark:bg-background-dark focus:border-primary focus:ring-primary h-12 px-4 text-base"
+                                        id="email" placeholder="alex.ray@example.com" type="email" />
+                                </div>
+                                <div class="md:col-span-2">
+                                    <label class="block text-sm font-medium pb-2" for="phone">Phone Number</label>
+                                    <input
+                                        class="form-input w-full rounded-lg border-border-light dark:border-border-dark bg-background-light dark:bg-background-dark focus:border-primary focus:ring-primary h-12 px-4 text-base"
+                                        id="phone" placeholder="+1 (555) 123-4567" type="tel" />
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-medium pb-2" for="age">Age</label>
+                                    <input
+                                        class="form-input w-full rounded-lg border-border-light dark:border-border-dark bg-background-light dark:bg-background-dark focus:border-primary focus:ring-primary h-12 px-4 text-base"
+                                        id="age" placeholder="25" type="number" />
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-medium pb-2" for="gender">Gender</label>
+                                    <select
+                                        class="form-select w-full rounded-lg border-border-light dark:border-border-dark bg-background-light dark:bg-background-dark focus:border-primary focus:ring-primary h-12 px-4 text-base"
+                                        id="gender">
+                                        <option>Male</option>
+                                        <option>Female</option>
+                                        <option>Non-binary</option>
+                                        <option>Prefer not to say</option>
+                                    </select>
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-medium pb-2" for="skill-level-form">Skill Level</label>
+                                    <select
+                                        class="form-select w-full rounded-lg border-border-light dark:border-border-dark bg-background-light dark:bg-background-dark focus:border-primary focus:ring-primary h-12 px-4 text-base"
+                                        id="skill-level-form">
+                                        <option>Beginner</option>
+                                        <option selected="">Intermediate</option>
+                                        <option>Advanced</option>
+                                    </select>
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-medium pb-2" for="experience">Experience Hours
+                                        (optional)</label>
+                                    <input
+                                        class="form-input w-full rounded-lg border-border-light dark:border-border-dark bg-background-light dark:bg-background-dark focus:border-primary focus:ring-primary h-12 px-4 text-base"
+                                        id="experience" placeholder="e.g., 10 hours" type="text" />
+                                </div>
+                                <div class="md:col-span-2">
+                                    <label class="block text-sm font-medium pb-2" for="notes">Additional Notes
+                                        (optional)</label>
+                                    <textarea
+                                        class="form-textarea w-full rounded-lg border-border-light dark:border-border-dark bg-background-light dark:bg-background-dark focus:border-primary focus:ring-primary p-4 text-base"
+                                        id="notes" placeholder="Anything we should know?" rows="4"></textarea>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="lg:col-span-1">
+                        <div
+                            class="bg-background-light dark:bg-background-dark p-6 rounded-lg border border-border-light dark:border-border-dark">
+                            <h3 class="text-xl font-semibold mb-4">Lesson Summary</h3>
+                            <div class="space-y-4 text-sm">
+                                <div class="flex items-center gap-3">
+                                    <div
+                                        class="flex-shrink-0 h-10 w-10 rounded-lg bg-secondary/10 dark:bg-secondary/20 flex items-center justify-center">
+                                        <span class="material-symbols-outlined text-xl text-secondary">kitesurfing</span>
+                                    </div>
+                                    <div>
+                                        <p class="font-bold text-base">Private Beginner's Course</p>
+                                        <p class="text-slate-600 dark:text-slate-400">Tarifa, Spain</p>
+                                    </div>
+                                </div>
+                                <div class="border-t border-border-light dark:border-border-dark my-4"></div>
+                                <div class="flex justify-between items-center">
+                                    <span class="text-slate-600 dark:text-slate-400">Date:</span>
+                                    <span>August 15, 2024</span>
+                                </div>
+                                <div class="flex justify-between items-center">
+                                    <span class="text-slate-600 dark:text-slate-400">Time:</span>
+                                    <span>09:00 - 11:00</span>
+                                </div>
+                                <div class="flex justify-between items-center">
+                                    <span class="text-slate-600 dark:text-slate-400">Duration:</span>
+                                    <span>2 hours</span>
+                                </div>
+                                <div class="flex justify-between items-center">
+                                    <span class="text-slate-600 dark:text-slate-400">Instructor:</span>
+                                    <span>Alex Ray</span>
+                                </div>
+                                <div class="border-t border-border-light dark:border-border-dark my-4"></div>
+                                <div class="flex justify-between items-center font-bold text-lg">
+                                    <span>Total Price:</span>
+                                    <span>€150</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </main>
+            <footer
+                class="flex-shrink-0 flex flex-col md:flex-row items-center justify-between gap-6 p-6 border-t border-border-light dark:border-border-dark bg-background-light dark:bg-background-dark rounded-b-xl">
+                <div class="flex items-center gap-3">
+                    <button aria-checked="false" class="form-switch bg-slate-200 dark:bg-slate-700" role="switch"
+                        type="button">
+                        <span class="form-switch-toggle translate-x-0"></span>
+                    </button>
+                    <label class="text-sm text-slate-600 dark:text-slate-400">I agree to the <a
+                            class="font-medium text-primary hover:underline" href="#">Terms of Service</a> and <a
+                            class="font-medium text-primary hover:underline" href="#">Privacy Policy</a>.</label>
+                </div>
+                <button id="confirm-and-pay"
+                    class="w-full md:w-auto flex items-center justify-center gap-2 rounded-lg bg-primary text-white font-bold h-12 px-8 text-base hover:bg-primary/90 transition-colors">
+                    <span class="material-symbols-outlined">lock</span>
+                    Confirm &amp; Pay
+                </button>
+            </footer>
+        </div>
+    </div>
+
+    <!-- Booking Confirmed Modal -->
+    <div id="booking-confirmed-modal" class="fixed inset-0 bg-black/60 dark:bg-black/80 flex items-center justify-center p-4 hidden">
+        <div class="layout-content-container flex w-full max-w-lg flex-col items-center rounded-xl bg-white dark:bg-neutral-900 shadow-2xl">
+            <div class="relative w-full p-6 text-right sm:p-8">
+                <button id="close-confirmed-modal" class="text-neutral-light hover:text-neutral-dark dark:hover:text-white">
+                    <span class="material-symbols-outlined">close</span>
+                </button>
+            </div>
+            <div class="flex flex-col items-center gap-4 px-6 pb-6 text-center sm:px-12 sm:pb-8">
+                <div class="flex h-16 w-16 items-center justify-center rounded-full bg-success-green/10">
+                    <span class="material-symbols-outlined text-4xl text-success-green">task_alt</span>
+                </div>
+                <h1 class="text-neutral-dark dark:text-white text-2xl font-bold leading-tight tracking-tight sm:text-3xl">
+                    Booking Confirmed!</h1>
+                <p class="text-neutral-light dark:text-gray-300 text-base font-normal leading-normal">Get ready to hit
+                    the water. Your lesson is locked in.</p>
+            </div>
+            <div class="w-full border-t border-gray-200 dark:border-gray-700 px-6 py-6 sm:px-8 sm:py-6">
+                <div class="flex flex-col gap-4">
+                    <div
+                        class="flex items-center justify-between gap-4 rounded-lg bg-background-light dark:bg-background-dark p-4">
+                        <div class="flex flex-col gap-1">
+                            <p class="text-neutral-light dark:text-gray-400 text-sm font-normal leading-normal">Your
+                                Booking ID</p>
+                            <p class="text-neutral-dark dark:text-white text-base font-medium leading-normal">
+                                KTO-8675309</p>
+                        </div>
+                        <button
+                            class="flex items-center gap-2 rounded-md px-3 py-2 text-sm font-medium text-action-blue hover:bg-action-blue/10 dark:hover:bg-action-blue/20">
+                            <span class="material-symbols-outlined text-base">content_copy</span>
+                            Copy
+                        </button>
+                    </div>
+                    <div class="grid grid-cols-1 gap-x-4 gap-y-5 pt-2 sm:grid-cols-2">
+                        <div class="flex flex-col gap-1">
+                            <p class="text-neutral-light dark:text-gray-400 text-sm font-normal leading-normal">Lesson
+                            </p>
+                            <p class="text-neutral-dark dark:text-white text-base font-normal leading-normal">
+                                Introduction to Kitesurfing</p>
+                        </div>
+                        <div class="flex flex-col gap-1">
+                            <p class="text-neutral-light dark:text-gray-400 text-sm font-normal leading-normal">Where</p>
+                            <p class="text-neutral-dark dark:text-white text-base font-normal leading-normal">Sandy
+                                Point Beach</p>
+                        </div>
+                        <div class="flex flex-col gap-1">
+                            <p class="text-neutral-light dark:text-gray-400 text-sm font-normal leading-normal">When</p>
+                            <p class="text-neutral-dark dark:text-white text-base font-normal leading-normal">Saturday,
+                                Aug 24, 2024 @ 10:00 AM</p>
+.
+                        </div>
+                        <div class="flex flex-col gap-1">
+                            <p class="text-neutral-light dark:text-gray-400 text-sm font-normal leading-normal">
+                                Instructor</p>
+                            <p class="text-neutral-dark dark:text-white text-base font-normal leading-normal">Alex Chen
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="w-full border-t border-gray-200 dark:border-gray-700 p-6 sm:p-8">
+                <div class="flex flex-col items-center gap-4">
+                    <p class="text-neutral-light dark:text-gray-400 text-center text-sm">A confirmation email has been
+                        sent to your address.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const completeOrderModal = document.getElementById('complete-order-modal');
+            const bookingConfirmedModal = document.getElementById('booking-confirmed-modal');
+
+            const closeCompleteOrderModalBtn = document.getElementById('close-complete-order-modal');
+            const closeConfirmedModalBtn = document.getElementById('close-confirmed-modal');
+            const confirmAndPayBtn = document.getElementById('confirm-and-pay');
+
+            const bookBtns = document.querySelectorAll('.book-btn');
+
+            bookBtns.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    completeOrderModal.classList.remove('hidden');
+                });
+            });
+
+            closeCompleteOrderModalBtn.addEventListener('click', () => {
+                completeOrderModal.classList.add('hidden');
+            });
+            
+            confirmAndPayBtn.addEventListener('click', () => {
+                completeOrderModal.classList.add('hidden');
+                bookingConfirmedModal.classList.remove('hidden');
+            });
+
+            closeConfirmedModalBtn.addEventListener('click', () => {
+                bookingConfirmedModal.classList.add('hidden');
+            });
+            
+
+
+            // Close modals if clicking outside of them
+            window.addEventListener('click', (event) => {
+                if (event.target == completeOrderModal) {
+                    completeOrderModal.classList.add('hidden');
+                }
+                if (event.target == bookingConfirmedModal) {
+                    bookingConfirmedModal.classList.add('hidden');
+                }
+            });
+        });
+    </script>
+
+</body>
+
+</html>
