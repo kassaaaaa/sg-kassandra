@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Full Calendar View - Day</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;900&amp;family=Manrope:wght@700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet"/>
+<style>
+    .font-manrope { font-family: 'Manrope', sans-serif; }
+    .pattern-diagonal-lines {
+      background-image: repeating-linear-gradient(
+        45deg,
+        rgba(0, 0, 0, 0.05),
+        rgba(0, 0, 0, 0.05) 10px,
+        transparent 10px,
+        transparent 20px
+      );
+    }
+  </style>
+<script>
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          colors: {
+            "primary": "#0A2540",
+            "background-light": "#F5F5F5",
+            "background-dark": "#121920",
+            "surface": "#FFFFFF",
+            "border-light": "#E0E0E0",
+            "accent": "#4A90E2",
+            "pending": "#FBBF24",
+            "blocked": "#F3F4F6",
+            "text-heading": "#111111",
+            "text-body": "#555555"
+          },
+          fontFamily: {
+            "display": ["Inter", "sans-serif"],
+            "heading": ["Manrope", "sans-serif"]
+          },
+          borderRadius: {"DEFAULT": "0.375rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+        },
+      },
+    }
+  </script>
+</head>
+<body class="bg-background-light dark:bg-background-dark font-display text-text-body">
+<div class="fixed inset-0 z-50 flex items-center justify-center bg-black/50">
+<div class="flex h-full w-full flex-col bg-surface p-6 dark:bg-background-dark">
+<header class="flex flex-wrap items-center justify-between gap-4 border-b border-border-light pb-4 dark:border-gray-700">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-primary text-3xl">kitesurfing</span>
+<h1 class="text-primary text-xl font-bold font-heading">KiteOps</h1>
+</div>
+<div class="flex flex-col items-center gap-2 sm:flex-row">
+<h2 class="text-lg font-bold text-text-heading dark:text-white">Full Calendar View</h2>
+<div class="flex items-center gap-2">
+<button class="flex items-center justify-center rounded-md h-9 px-3 border border-border-light bg-surface text-sm font-medium text-text-heading hover:bg-gray-50 dark:bg-gray-800 dark:border-gray-600 dark:text-white dark:hover:bg-gray-700">Today</button>
+<div class="flex gap-1">
+<button class="p-2 rounded-md hover:bg-gray-100 dark:hover:bg-gray-700">
+<span class="material-symbols-outlined text-text-heading dark:text-white">chevron_left</span>
+</button>
+<button class="p-2 rounded-md hover:bg-gray-100 dark:hover:bg-gray-700">
+<span class="material-symbols-outlined text-text-heading dark:text-white">chevron_right</span>
+</button>
+</div>
+<h1 class="text-text-heading text-xl font-bold leading-tight tracking-[-0.015em] font-heading dark:text-white">November 12, 2025</h1>
+</div>
+</div>
+<div class="flex items-center gap-4">
+<div class="flex bg-gray-100 p-1 rounded-lg dark:bg-gray-800">
+<button class="px-3 py-1 text-sm font-medium text-text-body rounded-md dark:text-gray-400">Month</button>
+<button class="px-3 py-1 text-sm font-medium text-text-body rounded-md dark:text-gray-400">Week</button>
+<button class="px-3 py-1 text-sm font-medium text-primary bg-surface rounded-md shadow-sm dark:bg-gray-700 dark:text-white">Day</button>
+</div>
+<button class="p-2 rounded-md hover:bg-gray-100 dark:hover:bg-gray-700">
+<span class="material-symbols-outlined text-text-heading dark:text-white">close</span>
+</button>
+</div>
+</header>
+<div class="flex-1 flex flex-col pt-4 overflow-y-auto">
+<div class="flex flex-wrap items-center gap-4 py-2 mb-4">
+<div class="flex items-center gap-2"><div class="size-3 rounded-sm bg-accent"></div><span class="text-xs text-text-body dark:text-gray-400">Confirmed Lessons</span></div>
+<div class="flex items-center gap-2"><div class="size-3 rounded-sm bg-pending"></div><span class="text-xs text-text-body dark:text-gray-400">Pending Bookings</span></div>
+<div class="flex items-center gap-2"><div class="size-3 rounded-sm bg-blocked pattern-diagonal-lines"></div><span class="text-xs text-text-body dark:text-gray-400">Blocked Time</span></div>
+</div>
+<div class="flex-1 grid grid-cols-[auto,1fr] bg-surface dark:bg-background-dark">
+<div class="grid grid-rows-[repeat(13,minmax(0,1fr))] pr-4 text-right">
+<div class="h-10"></div>
+<div class="-mt-3"><span class="text-xs text-gray-400">8 AM</span></div>
+<div class="-mt-3"><span class="text-xs text-gray-400">9 AM</span></div>
+<div class="-mt-3"><span class="text-xs text-gray-400">10 AM</span></div>
+<div class="-mt-3"><span class="text-xs text-gray-400">11 AM</span></div>
+<div class="-mt-3"><span class="text-xs text-gray-400">12 PM</span></div>
+<div class="-mt-3"><span class="text-xs text-gray-400">1 PM</span></div>
+<div class="-mt-3"><span class="text-xs text-gray-400">2 PM</span></div>
+<div class="-mt-3"><span class="text-xs text-gray-400">3 PM</span></div>
+<div class="-mt-3"><span class="text-xs text-gray-400">4 PM</span></div>
+<div class="-mt-3"><span class="text-xs text-gray-400">5 PM</span></div>
+<div class="-mt-3"><span class="text-xs text-gray-400">6 PM</span></div>
+<div class="-mt-3"><span class="text-xs text-gray-400">7 PM</span></div>
+</div>
+<div class="relative grid grid-cols-1 grid-rows-13">
+<div class="row-start-1 row-span-1 border-t border-border-light dark:border-gray-700"></div>
+<div class="row-start-2 row-span-1 border-t border-border-light dark:border-gray-700"></div>
+<div class="row-start-3 row-span-1 border-t border-border-light dark:border-gray-700"></div>
+<div class="row-start-4 row-span-1 border-t border-border-light dark:border-gray-700"></div>
+<div class="row-start-5 row-span-1 border-t border-border-light dark:border-gray-700"></div>
+<div class="row-start-6 row-span-1 border-t border-border-light dark:border-gray-700"></div>
+<div class="row-start-7 row-span-1 border-t border-border-light dark:border-gray-700"></div>
+<div class="row-start-8 row-span-1 border-t border-border-light dark:border-gray-700"></div>
+<div class="row-start-9 row-span-1 border-t border-border-light dark:border-gray-700"></div>
+<div class="row-start-10 row-span-1 border-t border-border-light dark:border-gray-700"></div>
+<div class="row-start-11 row-span-1 border-t border-border-light dark:border-gray-700"></div>
+<div class="row-start-12 row-span-1 border-t border-border-light dark:border-gray-700"></div>
+<div class="row-start-13 row-span-1 border-t border-border-light dark:border-gray-700"></div>
+<div class="absolute top-[calc(1/13*100%)] h-[calc(2/13*100%)] w-full pr-1">
+<div class="bg-blocked pattern-diagonal-lines rounded-md p-2 h-full flex flex-col text-text-body overflow-hidden border border-gray-200 dark:border-gray-600">
+<p class="text-xs font-bold truncate">Blocked for Wind Conditions</p>
+<p class="text-xs truncate">Too strong</p>
+</div>
+</div>
+<div class="absolute top-[calc(4/13*100%)] h-[calc(2/13*100%)] w-full pr-1">
+<div class="bg-accent rounded-md p-2 h-full flex flex-col text-white overflow-hidden">
+<p class="text-xs font-bold truncate">Beginner Lesson</p>
+<p class="text-xs truncate">John Appleseed - 2 students</p>
+</div>
+</div>
+<div class="absolute top-[calc(6.5/13*100%)] h-[calc(2/13*100%)] w-full pr-1">
+<div class="bg-pending rounded-md p-2 h-full flex flex-col text-yellow-900 overflow-hidden">
+<p class="text-xs font-bold truncate">Advanced Hydrofoil</p>
+<p class="text-xs truncate">Jane Doe - 1 student</p>
+<p class="text-xs font-semibold mt-1">Pending Confirmation</p>
+</div>
+</div>
+<div class="absolute top-[calc(9/13*100%)] h-[calc(3/13*100%)] w-full pr-1">
+<div class="bg-accent rounded-md p-2 h-full flex flex-col text-white overflow-hidden">
+<p class="text-xs font-bold truncate">Group Lesson</p>
+<p class="text-xs truncate">Sara Connor - 4 students</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+</body></html>
