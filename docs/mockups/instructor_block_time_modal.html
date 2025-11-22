@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Block Time Modal</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;700;800&amp;family=Inter:wght@400;500&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "primary": "#0a2642",
+              "background-light": "#f6f7f8",
+              "background-dark": "#111921",
+            },
+            fontFamily: {
+              "display": ["Manrope", "sans-serif"],
+              "body": ["Inter", "sans-serif"]
+            },
+            borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+          },
+        },
+      }
+    </script>
+<style>
+      .material-symbols-outlined {
+        font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+      }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark font-body">
+<div class="relative flex min-h-screen w-full flex-col items-center justify-center p-4 bg-gray-200 dark:bg-gray-800" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuBZstNjzcnb8WyzE5ocMLtgKZI2zLkdN3vdj_q30veRvWF_bXucvpfPkvgRrZSsfXlbffg9T1O9hF71Gxz-5P_jMkdBcCCMIgmtRzDNEQWq00rr-9WO2kdVFSG0oaSI56WVNSDISSxrdmlPee5AOXgHEGeX-532EQdytSwsNuuwDYPBlzx0oLh4WRVabOYhtP68zNsCZorS3MAmTf1ZnECpcsvgUt1qH3RsCWf08FbQpPmepKgeHKQkMBO0zCEFo2C7CLpSs8pbwX0'); background-size: cover; background-position: center;">
+<!-- Modal Backdrop -->
+<div class="absolute inset-0 bg-black/40"></div>
+<!-- Modal Container -->
+<div class="relative w-full max-w-lg rounded-xl bg-white dark:bg-background-dark shadow-2xl p-8 m-4">
+<!-- Modal Header -->
+<div class="flex items-start justify-between mb-6">
+<h2 class="text-[#111111] dark:text-gray-100 font-display text-2xl font-bold">Block Time</h2>
+<button class="text-gray-400 hover:text-gray-600 dark:hover:text-gray-200">
+<span class="material-symbols-outlined">close</span>
+</button>
+</div>
+<!-- Form -->
+<div class="flex flex-col gap-6">
+<!-- Date and Time Section -->
+<div class="flex flex-col sm:flex-row gap-4">
+<label class="flex flex-col flex-1">
+<p class="text-[#555555] dark:text-gray-300 text-sm font-medium leading-normal pb-2">Date(s)</p>
+<div class="flex w-full items-stretch rounded-lg">
+<input class="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-l-lg text-[#111111] dark:text-gray-200 dark:bg-gray-800 focus:outline-0 focus:ring-2 focus:ring-primary/50 border border-[#E0E0E0] dark:border-gray-600 bg-white focus:border-primary/50 h-12 placeholder:text-gray-400 p-3 text-base font-normal leading-normal" placeholder="Select date"/>
+<div class="text-[#555555] dark:text-gray-400 flex border border-l-0 border-[#E0E0E0] dark:border-gray-600 bg-gray-50 dark:bg-gray-800/50 items-center justify-center px-3 rounded-r-lg">
+<span class="material-symbols-outlined text-xl">calendar_today</span>
+</div>
+</div>
+</label>
+</div>
+<div class="flex flex-col sm:flex-row gap-4">
+<label class="flex flex-col min-w-40 flex-1">
+<p class="text-[#555555] dark:text-gray-300 text-sm font-medium leading-normal pb-2">From</p>
+<input class="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-lg text-[#111111] dark:text-gray-200 dark:bg-gray-800 focus:outline-0 focus:ring-2 focus:ring-primary/50 border border-[#E0E0E0] dark:border-gray-600 bg-white focus:border-primary/50 h-12 placeholder:text-gray-400 p-3 text-base font-normal leading-normal" type="time" value="09:00"/>
+</label>
+<label class="flex flex-col min-w-40 flex-1">
+<p class="text-[#555555] dark:text-gray-300 text-sm font-medium leading-normal pb-2">To</p>
+<input class="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-lg text-[#111111] dark:text-gray-200 dark:bg-gray-800 focus:outline-0 focus:ring-2 focus:ring-primary/50 border border-[#E0E0E0] dark:border-gray-600 bg-white focus:border-primary/50 h-12 placeholder:text-gray-400 p-3 text-base font-normal leading-normal" type="time" value="17:00"/>
+</label>
+</div>
+<!-- Recurrence Section -->
+<label class="flex flex-col w-full">
+<p class="text-[#555555] dark:text-gray-300 text-sm font-medium leading-normal pb-2">Repeat</p>
+<select class="form-select flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-lg text-[#111111] dark:text-gray-200 dark:bg-gray-800 focus:outline-0 focus:ring-2 focus:ring-primary/50 border border-[#E0E0E0] dark:border-gray-600 bg-white focus:border-primary/50 h-12 p-3 text-base font-normal leading-normal">
+<option>Does not repeat</option>
+<option>Repeats daily</option>
+<option>Repeats weekly</option>
+<option>Repeats monthly</option>
+</select>
+</label>
+<!-- Reason Section -->
+<label class="flex flex-col w-full">
+<p class="text-[#555555] dark:text-gray-300 text-sm font-medium leading-normal pb-2">Reason (Optional)</p>
+<textarea class="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-lg text-[#111111] dark:text-gray-200 dark:bg-gray-800 focus:outline-0 focus:ring-2 focus:ring-primary/50 border border-[#E0E0E0] dark:border-gray-600 bg-white focus:border-primary/50 min-h-28 placeholder:text-gray-400 p-3 text-base font-normal leading-normal" placeholder="e.g., Personal appointment, Equipment maintenance"></textarea>
+</label>
+</div>
+<!-- Conflict Check Notice -->
+<div class="flex items-center gap-2 mt-6 p-3 rounded-lg bg-primary/5 dark:bg-primary/10 border border-primary/10 dark:border-primary/20">
+<span class="material-symbols-outlined text-lg text-primary/80 dark:text-blue-300">info</span>
+<p class="text-sm text-[#0A2540]/80 dark:text-blue-200">We'll check for any conflicting lessons or appointments.</p>
+</div>
+<!-- Divider -->
+<hr class="my-8 border-t border-[#E0E0E0] dark:border-gray-700"/>
+<!-- Footer Actions -->
+<div class="flex flex-col-reverse sm:flex-row items-center justify-end gap-3">
+<button class="font-medium text-[#555555] dark:text-gray-300 hover:text-black dark:hover:text-white px-4 py-2 rounded-lg">Cancel</button>
+<button class="w-full sm:w-auto bg-[#0A2540] hover:bg-opacity-90 text-white font-medium px-6 py-3 rounded-lg flex items-center justify-center">Save</button>
+</div>
+</div>
+</div>
+</body></html>
