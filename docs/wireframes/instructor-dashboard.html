@@ -1,0 +1,1182 @@
+<!DOCTYPE html>
+<html class="light" lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>Instructor Mockup</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com" rel="preconnect" />
+    <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;900&amp;family=Manrope:wght@700;800&amp;display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
+    <style>
+        .font-manrope {
+            font-family: 'Manrope', sans-serif;
+        }
+
+        .pattern-diagonal-lines {
+            background-image: repeating-linear-gradient(45deg,
+                rgba(0, 0, 0, 0.05),
+                rgba(0, 0, 0, 0.05) 10px,
+                transparent 10px,
+                transparent 20px);
+        }
+    </style>
+    <script>
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#0A2540",
+                        "background-light": "#F5F5F5",
+                        "background-dark": "#121920",
+                        "surface": "#FFFFFF",
+                        "border-light": "#E0E0E0",
+                        "accent": "#4A90E2",
+                        "pending": "#FBBF24",
+                        "available": "#ECFDF5",
+                        "available-border": "#10B981",
+                        "blocked": "#F3F4F6",
+                        "text-heading": "#111111",
+                        "text-body": "#555555"
+                    },
+                    fontFamily: {
+                        "display": ["Inter", "sans-serif"],
+                        "heading": ["Manrope", "sans-serif"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.375rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+</head>
+<body class="bg-background-light dark:bg-background-dark font-display text-text-body">
+    <div class="relative flex h-auto min-h-screen w-full flex-row">
+        <aside class="flex h-screen min-h-[700px] w-64 flex-col justify-between border-r border-border-light bg-surface p-4 dark:bg-background-dark dark:border-gray-700">
+            <div class="flex flex-col gap-6">
+                <div class="flex items-center gap-3 px-3">
+                    <div class="size-8 text-primary -ml-1">
+                        <svg fill="none" viewbox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
+                            <g clip-path="url(#clip0_6_535)">
+                                <path clip-rule="evenodd" d="M47.2426 24L24 47.2426L0.757355 24L24 0.757355L47.2426 24ZM12.2426 21H35.7574L24 9.24264L12.2426 21Z" fill="currentColor" fill-rule="evenodd"></path>
+                            </g>
+                            <defs>
+                                <clippath id="clip0_6_535">
+                                    <rect fill="white" height="48" width="48"></rect>
+                                </clippath>
+                            </defs>
+                        </svg>
+                    </div>
+                    <h1 class="text-primary text-xl font-bold font-heading">KiteOps</h1>
+                </div>
+                <div class="flex flex-col gap-4">
+                    <div class="flex gap-3 items-center">
+                        <div class="bg-center bg-no-repeat aspect-square bg-cover rounded-full size-10" data-alt="Profile picture of John Appleseed" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuCO3KYqinJeWZI0gsuFo_Dy20oLfTKZkfrkMgvJoSGjTpfJGnI-TdWafzDbxikZusNmXsMYJ4DyzZcJvQk4khz2OHHyKHFburBmLejaXwCYP9VK87D4nxqmVhsaiNmPRbga0yJ7pxr9i43_XRSrkFoW14VKdd8TWJcIpZxdHhxeMDtAha1kOX1nxbXl3ZsmwWos9SvdXfLEUMbBU2YtdZmby1tB_Ki9yqIyj9xrXoIv10lnzybwEPi2ynTt5N9qzL81rZEg6IcnuO4");'></div>
+                        <div class="flex flex-col">
+                            <h1 class="text-text-heading text-base font-medium leading-normal dark:text-white">John Appleseed</h1>
+                            <p class="text-text-body text-sm font-normal leading-normal dark:text-gray-400">Instructor</p>
+                        </div>
+                    </div>
+                    <nav id="sidebar-nav" class="flex flex-col gap-2 mt-4">
+                        <a id="nav-dashboard" class="flex items-center gap-3 px-3 py-2 rounded-lg" href="#">
+                            <span class="material-symbols-outlined">dashboard</span>
+                            <p class="text-sm font-medium leading-normal">Dashboard</p>
+                        </a>
+                        <a id="nav-calendar" class="flex items-center gap-3 px-3 py-2 rounded-lg" href="#">
+                            <span class="material-symbols-outlined">calendar_month</span>
+                            <p class="text-sm font-medium leading-normal">Calendar</p>
+                        </a>
+                        <a id="nav-students" class="flex items-center gap-3 px-3 py-2 rounded-lg" href="#">
+                            <span class="material-symbols-outlined">groups</span>
+                            <p class="text-sm font-medium leading-normal">My Students</p>
+                        </a>
+                        <a id="nav-messaging" class="flex items-center gap-3 px-3 py-2 rounded-lg" href="#">
+                            <span class="material-symbols-outlined">chat_bubble</span>
+                            <p class="text-sm font-medium leading-normal">Messaging</p>
+                        </a>
+                        <a id="nav-settings" class="flex items-center gap-3 px-3 py-2 rounded-lg" href="#">
+                            <span class="material-symbols-outlined">settings</span>
+                            <p class="text-sm font-medium leading-normal">Settings</p>
+                        </a>
+                    </nav>
+                </div>
+            </div>
+            <div class="flex flex-col gap-2">
+                <a class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800" href="#">
+                    <span class="material-symbols-outlined text-text-heading dark:text-gray-300">logout</span>
+                    <p class="text-text-heading text-sm font-medium leading-normal dark:text-gray-300">Log Out</p>
+                </a>
+            </div>
+        </aside>
+
+        <main class="flex-1 flex flex-col p-8">
+            
+            <!-- Dashboard View -->
+            <div id="dashboard-view" style="display: none;">
+                 <header class="flex flex-wrap justify-between items-center gap-4 pb-6 border-b border-border-light dark:border-gray-700">
+                    <p class="text-text-heading text-4xl font-black leading-tight tracking-[-0.033em] font-heading dark:text-white">Dashboard</p>
+                </header>
+                <div class="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-4 mt-6">
+                    <div class="col-span-1 rounded-xl border border-border-light bg-surface p-6 shadow-sm lg:col-span-2">
+                        <h2 class="font-heading text-lg font-bold text-text-heading">Today's Snapshot: November 10, 2023</h2>
+                        <div class="mt-6 grid grid-cols-1 gap-6 sm:grid-cols-3">
+                            <div class="flex flex-col items-center justify-center text-center sm:items-start sm:text-left">
+                                <p class="font-heading text-4xl font-extrabold text-primary">5</p>
+                                <p class="mt-1 text-sm font-medium text-text-body">Scheduled Lessons</p>
+                            </div>
+                            <div class="flex flex-col items-center justify-center text-center sm:items-start sm:text-left">
+                                <p class="font-heading text-4xl font-extrabold text-primary">2</p>
+                                <p class="mt-1 text-sm font-medium text-text-body">Pending Bookings</p>
+                            </div>
+                            <div class="flex flex-col items-center justify-center text-center sm:items-start sm:text-left">
+                                <p class="font-heading text-4xl font-extrabold text-primary">8</p>
+                                <p class="mt-1 text-sm font-medium text-text-body">Hours Available</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-span-1 rounded-xl border border-border-light bg-surface p-6 shadow-sm">
+                        <h2 class="font-heading text-lg font-bold text-text-heading">Local Conditions</h2>
+                        <div class="mt-6 flex items-center justify-center gap-4 sm:justify-start">
+                            <span class="text-4xl">☀️</span>
+                            <p class="font-heading text-3xl font-bold text-text-heading">15°C</p>
+                            <span class="text-4xl">💨</span>
+                            <p class="text-base font-medium text-text-body">15-20 knots NE</p>
+                        </div>
+                    </div>
+                    <div class="col-span-1 rounded-xl border border-border-light bg-surface p-6 shadow-sm">
+                        <h2 class="font-heading text-lg font-bold text-text-heading">Quick Actions</h2>
+                        <div class="mt-4 grid grid-cols-1 gap-2 sm:grid-cols-2 lg:grid-cols-1">
+                            <button id="quick-action-calendar" class="h-10 rounded-lg bg-gray-100 px-4 text-sm font-medium text-text-heading hover:bg-gray-200">View My Calendar</button>
+                            <button id="quick-action-add-availability" class="h-10 rounded-lg bg-gray-100 px-4 text-sm font-medium text-text-heading hover:bg-gray-200">Manage My Availability</button>
+                            <button id="quick-action-students" class="h-10 rounded-lg bg-gray-100 px-4 text-sm font-medium text-text-heading hover:bg-gray-200">View My Students</button>
+                            <button id="quick-action-settings" class="h-10 rounded-lg bg-gray-100 px-4 text-sm font-medium text-text-heading hover:bg-gray-200">Update My Profile</button>
+                        </div>
+                    </div>
+                    <div class="col-span-1 rounded-xl border border-border-light bg-surface p-6 shadow-sm md:col-span-2 lg:col-span-4">
+                        <h2 class="font-heading text-lg font-bold text-text-heading">My Upcoming Lessons</h2>
+                        <div class="mt-4 flow-root">
+                            <div class="-mx-6 -my-2 overflow-x-auto">
+                                <div class="inline-block min-w-full py-2 align-middle sm:px-6">
+                                    <table class="min-w-full divide-y divide-border-light">
+                                        <thead>
+                                            <tr>
+                                                <th class="py-3.5 pl-6 pr-3 text-left text-sm font-semibold text-text-heading" scope="col">Time</th>
+                                                <th class="px-3 py-3.5 text-left text-sm font-semibold text-text-heading" scope="col">Student</th>
+                                                <th class="px-3 py-3.5 text-left text-sm font-semibold text-text-heading" scope="col">Lesson Type</th>
+                                                <th class="px-3 py-3.5 text-left text-sm font-semibold text-text-heading" scope="col">Status</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody class="divide-y divide-border-light">
+                                            <tr>
+                                                <td class="whitespace-nowrap py-4 pl-6 pr-3 text-sm font-medium text-text-body">10:00 AM</td>
+                                                <td class="whitespace-nowrap px-3 py-4 text-sm text-text-body">Alex Johnson</td>
+                                                <td class="whitespace-nowrap px-3 py-4 text-sm text-text-body">Private - Beginner</td>
+                                                <td class="whitespace-nowrap px-3 py-4 text-sm text-text-body">
+                                                    <span class="inline-flex items-center rounded-full bg-blue-100 px-2.5 py-0.5 text-xs font-medium text-blue-600">Confirmed</span>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td class="whitespace-nowrap py-4 pl-6 pr-3 text-sm font-medium text-text-body">02:00 PM</td>
+                                                <td class="whitespace-nowrap px-3 py-4 text-sm text-text-body">Ben Carter</td>
+                                                <td class="whitespace-nowrap px-3 py-4 text-sm text-text-body">Group - Intermediate</td>
+                                                <td class="whitespace-nowrap px-3 py-4 text-sm text-text-body">
+                                                    <span class="inline-flex items-center rounded-full bg-yellow-100 px-2.5 py-0.5 text-xs font-medium text-yellow-600">Pending</span>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Calendar View -->
+            <div id="calendar-view" style="display: none;">
+                <header class="flex flex-wrap justify-between items-center gap-4 pb-6 border-b border-border-light dark:border-gray-700">
+                    <p class="text-text-heading text-4xl font-black leading-tight tracking-[-0.033em] font-heading dark:text-white">My Calendar</p>
+                    <div class="flex flex-1 gap-3 flex-wrap justify-start sm:justify-end">
+                        <button id="add-availability-btn" class="flex min-w-[84px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 px-4 bg-primary text-white text-sm font-bold leading-normal tracking-[0.015em] hover:bg-primary/90">
+                            <span class="truncate">+ Add availability</span>
+                        </button>
+                        <button id="block-time-btn" class="flex min-w-[84px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 px-4 bg-surface text-text-heading border border-border-light text-sm font-bold leading-normal tracking-[0.015em] hover:bg-gray-50 dark:bg-gray-800 dark:border-gray-600 dark:text-white dark:hover:bg-gray-700">
+                            <span class="truncate">Block time</span>
+                        </button>
+                    </div>
+                </header>
+                <div class="flex flex-wrap items-center justify-between gap-4 py-4">
+                    <div class="flex items-center gap-2">
+                        <button class="flex items-center justify-center rounded-md h-9 px-3 border border-border-light bg-surface text-sm font-medium text-text-heading hover:bg-gray-50 dark:bg-gray-800 dark:border-gray-600 dark:text-white dark:hover:bg-gray-700">Today</button>
+                        <div class="flex gap-1">
+                            <button class="p-2 rounded-md hover:bg-gray-100 dark:hover:bg-gray-700">
+                                <span class="material-symbols-outlined text-text-heading dark:text-white">chevron_left</span>
+                            </button>
+                            <button class="p-2 rounded-md hover:bg-gray-100 dark:hover:bg-gray-700">
+                                <span class="material-symbols-outlined text-text-heading dark:text-white">chevron_right</span>
+                            </button>
+                        </div>
+                        <h1 id="calendar-title" class="text-text-heading text-xl font-bold leading-tight tracking-[-0.015em] font-heading dark:text-white">November 2025</h1>
+                    </div>
+                    <div id="view-selector" class="flex bg-gray-100 p-1 rounded-lg dark:bg-gray-800">
+                        <button id="month-view-btn" class="px-3 py-1 text-sm font-medium text-text-body rounded-md dark:text-gray-400">Month</button>
+                        <button id="week-view-btn" class="px-3 py-1 text-sm font-medium text-text-body rounded-md dark:text-gray-400">Week</button>
+                        <button id="day-view-btn" class="px-3 py-1 text-sm font-medium text-text-body rounded-md dark:text-gray-400">Day</button>
+                        <button id="agenda-view-btn" class="px-3 py-1 text-sm font-medium text-text-body rounded-md dark:text-gray-400">Agenda</button>
+                    </div>
+                </div>
+                <div class="flex flex-wrap items-center gap-4 py-2 mb-4">
+                    <div class="flex items-center gap-2"><div class="size-3 rounded-sm bg-accent"></div><span class="text-xs text-text-body dark:text-gray-400">Confirmed</span></div>
+                    <div class="flex items-center gap-2"><div class="size-3 rounded-sm bg-pending"></div><span class="text-xs text-text-body dark:text-gray-400">Pending</span></div>
+                    <div class="flex items-center gap-2"><div class="size-3 rounded-sm bg-available border border-available-border"></div><span class="text-xs text-text-body dark:text-gray-400">Available</span></div>
+                    <div class="flex items-center gap-2"><div class="size-3 rounded-sm bg-blocked pattern-diagonal-lines"></div><span class="text-xs text-text-body dark:text-gray-400">Blocked</span></div>
+                </div>
+                <div class="flex-1">
+                    <!-- Week View -->
+                    <div id="week-view" class="hidden grid-cols-[auto,1fr] bg-surface rounded-xl border border-border-light overflow-hidden dark:bg-background-dark dark:border-gray-700">
+                        <div class="grid grid-rows-[auto,repeat(12,1fr)] border-r border-border-light dark:border-gray-700">
+                            <div class="h-12"></div>
+                            <div class="flex justify-end pr-2 -mt-3"><span class="text-xs text-gray-400">8 AM</span></div>
+                            <div class="flex justify-end pr-2 -mt-3"><span class="text-xs text-gray-400">9 AM</span></div>
+                            <div class="flex justify-end pr-2 -mt-3"><span class="text-xs text-gray-400">10 AM</span></div>
+                            <div class="flex justify-end pr-2 -mt-3"><span class="text-xs text-gray-400">11 AM</span></div>
+                            <div class="flex justify-end pr-2 -mt-3"><span class="text-xs text-gray-400">12 PM</span></div>
+                            <div class="flex justify-end pr-2 -mt-3"><span class="text-xs text-gray-400">1 PM</span></div>
+                            <div class="flex justify-end pr-2 -mt-3"><span class="text-xs text-gray-400">2 PM</span></div>
+                            <div class="flex justify-end pr-2 -mt-3"><span class="text-xs text-gray-400">3 PM</span></div>
+                            <div class="flex justify-end pr-2 -mt-3"><span class="text-xs text-gray-400">4 PM</span></div>
+                            <div class="flex justify-end pr-2 -mt-3"><span class="text-xs text-gray-400">5 PM</span></div>
+                            <div class="flex justify-end pr-2 -mt-3"><span class="text-xs text-gray-400">6 PM</span></div>
+                            <div class="flex justify-end pr-2 -mt-3"><span class="text-xs text-gray-400">7 PM</span></div>
+                        </div>
+                        <div class="grid grid-cols-7">
+                            <div class="flex flex-col border-r border-border-light dark:border-gray-700">
+                                <div class="h-12 flex flex-col items-center justify-center border-b border-border-light dark:border-gray-700"><span class="text-sm font-medium text-text-body dark:text-gray-400">Mon</span><span class="text-lg font-bold text-text-heading dark:text-white">10</span></div>
+                                <div class="relative grid grid-rows-12 h-[720px]">
+                                    <div class="row-span-12 border-t border-dashed border-border-light dark:border-gray-700/50 -mt-px"></div><div class="row-start-2 row-span-1 border-t border-dashed border-border-light dark:border-gray-700/50"></div><div class="row-start-3 row-span-1 border-t border-dashed border-border-light dark:border-gray-700/50"></div><div class="row-start-4 row-span-1 border-t border-dashed border-border-light dark:border-gray-700/50"></div><div class="row-start-5 row-span-1 border-t border-dashed border-border-light dark:border-gray-700/50"></div><div class="row-start-6 row-span-1 border-t border-dashed border-border-light dark:border-gray-700/50"></div><div class="row-start-7 row-span-1 border-t border-dashed border-border-light dark:border-gray-700/50"></div><div class="row-start-8 row-span-1 border-t border-dashed border-border-light dark:border-gray-700/50"></div><div class="row-start-9 row-span-1 border-t border-dashed border-border-light dark:border-gray-700/50"></div><div class="row-start-10 row-span-1 border-t border-dashed border-border-light dark:border-gray-700/50"></div><div class="row-start-11 row-span-1 border-t border-dashed border-border-light dark:border-gray-700/50"></div><div class="row-start-12 row-span-1 border-t border-dashed border-border-light dark:border-gray-700/50"></div>
+                                    <div class="absolute top-[calc(2/12*100%)] h-[calc(2/12*100%)] w-full p-1 event-item cursor-pointer">
+                                        <div class="bg-accent rounded-md p-2 h-full flex flex-col justify-center text-white overflow-hidden hover:bg-accent/90">
+                                            <p class="text-xs font-bold truncate">Advanced Hydrofoil</p>
+                                            <p class="text-xs truncate">Jane Doe</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="flex flex-col border-r border-border-light dark:border-gray-700">
+                                <div class="h-12 flex flex-col items-center justify-center border-b border-border-light dark:border-gray-700"><span class="text-sm font-medium text-text-body dark:text-gray-400">Tue</span><span class="text-lg font-bold text-text-heading dark:text-white">11</span></div>
+                                <div class="relative grid grid-rows-12 h-[720px]">
+                                    <div class="row-span-12 border-t border-dashed border-border-light dark:border-gray-700/50 -mt-px"></div><div class="row-start-2 row-span-1 border-t border-dashed border-border-light dark:border-gray-700/50"></div><div class="row-start-3 row-span-1 border-t border-dashed border-border-light dark:border-gray-700/50"></div><div class="row-start-4 row-span-1 border-t border-dashed border-border-light dark:border-gray-700/50"></div><div class="row-start-5 row-span-1 border-t border-dashed border-border-light dark:border-gray-700/50"></div><div class="row-start-6 row-span-1 border-t border-dashed border-border-light dark:border-gray-700/50"></div><div class="row-start-7 row-span-1 border-t border-dashed border-border-light dark:border-gray-700/50"></div><div class="row-start-8 row-span-1 border-t border-dashed border-border-light dark:border-gray-700/50"></div><div class="row-start-9 row-span-1 border-t border-dashed border-border-light dark:border-gray-700/50"></div><div class="row-start-10 row-span-1 border-t border-dashed border-border-light dark:border-gray-700/50"></div><div class="row-start-11 row-span-1 border-t border-dashed border-border-light dark:border-gray-700/50"></div><div class="row-start-12 row-span-1 border-t border-dashed border-border-light dark:border-gray-700/50"></div>
+                                    <div class="absolute top-[calc(0/12*100%)] h-[calc(3/12*100%)] w-full p-1">
+                                        <div class="bg-blocked pattern-diagonal-lines rounded-md p-2 h-full flex flex-col justify-center text-text-body overflow-hidden">
+                                            <p class="text-xs font-bold truncate">Personal Time</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="flex flex-col border-r border-border-light dark:border-gray-700">
+                                <div class="h-12 flex flex-col items-center justify-center border-b border-border-light dark:border-gray-700"><span class="text-sm font-medium text-text-body dark:text-gray-400">Wed</span><span class="text-lg font-bold text-text-heading dark:text-white">12</span></div>
+                                <div class="relative grid grid-rows-12 h-[720px]">
+                                    <div class="row-span-12 border-t border-dashed border-border-light dark:border-gray-700/50 -mt-px"></div><div class="row-start-2 row-span-1 border-t border-dashed border-border-light dark:border-gray-700/50"></div><div class="row-start-3 row-span-1 border-t border-dashed border-border-light dark:border-gray-700/50"></div><div class="row-start-4 row-span-1 border-t border-dashed border-border-light dark:border-gray-700/50"></div><div class="row-start-5 row-span-1 border-t border-dashed border-border-light dark:border-gray-700/50"></div><div class="row-start-6 row-span-1 border-t border-dashed border-border-light dark:border-gray-700/50"></div><div class="row-start-7 row-span-1 border-t border-dashed border-border-light dark:border-gray-700/50"></div><div class="row-start-8 row-span-1 border-t border-dashed border-border-light dark:border-gray-700/50"></div><div class="row-start-9 row-span-1 border-t border-dashed border-border-light dark:border-gray-700/50"></div><div class="row-start-10 row-span-1 border-t border-dashed border-border-light dark:border-gray-700/50"></div><div class="row-start-11 row-span-1 border-t border-dashed border-border-light dark:border-gray-700/50"></div><div class="row-start-12 row-span-1 border-t border-dashed border-border-light dark:border-gray-700/50"></div>
+                                    <div class="absolute top-[calc(4/12*100%)] h-[calc(2/12*100%)] w-full p-1 event-item cursor-pointer">
+                                        <div class="bg-pending rounded-md p-2 h-full flex flex-col justify-center text-yellow-900 overflow-hidden hover:bg-yellow-300">
+                                            <p class="text-xs font-bold truncate">Beginner Lesson</p>
+                                            <p class="text-xs truncate">Mike Smith</p>
+                                            <p class="text-xs font-semibold mt-1">Pending</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="flex flex-col border-r border-border-light dark:border-gray-700">
+                                <div class="h-12 flex flex-col items-center justify-center border-b border-border-light dark:border-gray-700"><span class="text-sm font-medium text-text-body dark:text-gray-400">Thu</span><span class="text-lg font-bold text-text-heading dark:text-white">13</span></div>
+                                <div class="relative grid grid-rows-12 h-[720px]">
+                                    <div class="row-span-12 border-t border-dashed border-border-light dark:border-gray-700/50 -mt-px"></div><div class="row-start-2 row-span-1 border-t border-dashed border-border-light dark:border-gray-700/50"></div><div class="row-start-3 row-span-1 border-t border-dashed border-border-light dark:border-gray-700/50"></div><div class="row-start-4 row-span-1 border-t border-dashed border-border-light dark:border-gray-700/50"></div><div class="row-start-5 row-span-1 border-t border-dashed border-border-light dark:border-gray-700/50"></div><div class="row-start-6 row-span-1 border-t border-dashed border-border-light dark:border-gray-700/50"></div><div class="row-start-7 row-span-1 border-t border-dashed border-border-light dark:border-gray-700/50"></div><div class="row-start-8 row-span-1 border-t border-dashed border-border-light dark:border-gray-700/50"></div><div class="row-start-9 row-span-1 border-t border-dashed border-border-light dark:border-gray-700/50"></div><div class="row-start-10 row-span-1 border-t border-dashed border-border-light dark:border-gray-700/50"></div><div class="row-start-11 row-span-1 border-t border-dashed border-border-light dark:border-gray-700/50"></div><div class="row-start-12 row-span-1 border-t border-dashed border-border-light dark:border-gray-700/50"></div>
+                                </div>
+                            </div>
+                            <div class="flex flex-col border-r border-border-light dark:border-gray-700">
+                                <div class="h-12 flex flex-col items-center justify-center border-b border-border-light dark:border-gray-700"><span class="text-sm font-medium text-text-body dark:text-gray-400">Fri</span><span class="text-lg font-bold text-text-heading dark:text-white">14</span></div>
+                                <div class="relative grid grid-rows-12 h-[720px]">
+                                    <div class="row-span-12 border-t border-dashed border-border-light dark:border-gray-700/50 -mt-px"></div><div class="row-start-2 row-span-1 border-t border-dashed border-border-light dark:border-gray-700/50"></div><div class="row-start-3 row-span-1 border-t border-dashed border-border-light dark:border-gray-700/50"></div><div class="row-start-4 row-span-1 border-t border-dashed border-border-light dark:border-gray-700/50"></div><div class="row-start-5 row-span-1 border-t border-dashed border-border-light dark:border-gray-700/50"></div><div class="row-start-6 row-span-1 border-t border-dashed border-border-light dark:border-gray-700/50"></div><div class="row-start-7 row-span-1 border-t border-dashed border-border-light dark:border-gray-700/50"></div><div class="row-start-8 row-span-1 border-t border-dashed border-border-light dark:border-gray-700/50"></div><div class="row-start-9 row-span-1 border-t border-dashed border-border-light dark:border-gray-700/50"></div><div class="row-start-10 row-span-1 border-t border-dashed border-border-light dark:border-gray-700/50"></div><div class="row-start-11 row-span-1 border-t border-dashed border-border-light dark:border-gray-700/50"></div><div class="row-start-12 row-span-1 border-t border-dashed border-border-light dark:border-gray-700/50"></div>
+                                    <div class="absolute top-[calc(1/12*100%)] h-[calc(3/12*100%)] w-full p-1 event-item cursor-pointer">
+                                        <div class="bg-accent rounded-md p-2 h-full flex flex-col justify-center text-white overflow-hidden hover:bg-accent/90">
+                                            <p class="text-xs font-bold truncate">Group Lesson</p>
+                                            <p class="text-xs truncate">3 students</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="flex flex-col border-r border-border-light dark:border-gray-700">
+                                <div class="h-12 flex flex-col items-center justify-center border-b border-border-light dark:border-gray-700"><span class="text-sm font-medium text-text-body dark:text-gray-400">Sat</span><span class="text-lg font-bold text-accent">15</span></div>
+                                <div class="relative grid grid-rows-12 h-[720px]">
+                                    <div class="row-span-12 border-t border-dashed border-border-light dark:border-gray-700/50 -mt-px"></div><div class="row-start-2 row-span-1 border-t border-dashed border-border-light dark:border-gray-700/50"></div><div class="row-start-3 row-span-1 border-t border-dashed border-border-light dark:border-gray-700/50"></div><div class="row-start-4 row-span-1 border-t border-dashed border-border-light dark:border-gray-700/50"></div><div class="row-start-5 row-span-1 border-t border-dashed border-border-light dark:border-gray-700/50"></div><div class="row-start-6 row-span-1 border-t border-dashed border-border-light dark:border-gray-700/50"></div><div class="row-start-7 row-span-1 border-t border-dashed border-border-light dark:border-gray-700/50"></div><div class="row-start-8 row-span-1 border-t border-dashed border-border-light dark:border-gray-700/50"></div><div class="row-start-9 row-span-1 border-t border-dashed border-border-light dark:border-gray-700/50"></div><div class="row-start-10 row-span-1 border-t border-dashed border-border-light dark:border-gray-700/50"></div><div class="row-start-11 row-span-1 border-t border-dashed border-border-light dark:border-gray-700/50"></div><div class="row-start-12 row-span-1 border-t border-dashed border-border-light dark:border-gray-700/50"></div>
+                                    <div class="absolute top-0 h-full w-full p-1">
+                                        <div class="bg-available border-2 border-dashed border-available-border rounded-md p-2 h-full flex flex-col items-center justify-center text-green-800 overflow-hidden">
+                                            <p class="text-xs font-bold truncate">Available</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="flex flex-col">
+                                <div class="h-12 flex flex-col items-center justify-center border-b border-border-light dark:border-gray-700"><span class="text-sm font-medium text-text-body dark:text-gray-400">Sun</span><span class="text-lg font-bold text-accent">16</span></div>
+                                <div class="relative grid grid-rows-12 h-[720px]">
+                                    <div class="row-span-12 border-t border-dashed border-border-light dark:border-gray-700/50 -mt-px"></div><div class="row-start-2 row-span-1 border-t border-dashed border-border-light dark:border-gray-700/50"></div><div class="row-start-3 row-span-1 border-t border-dashed border-border-light dark:border-gray-700/50"></div><div class="row-start-4 row-span-1 border-t border-dashed border-border-light dark:border-gray-700/50"></div><div class="row-start-5 row-span-1 border-t border-dashed border-border-light dark:border-gray-700/50"></div><div class="row-start-6 row-span-1 border-t border-dashed border-border-light dark:border-gray-700/50"></div><div class="row-start-7 row-span-1 border-t border-dashed border-border-light dark:border-gray-700/50"></div><div class="row-start-8 row-span-1 border-t border-dashed border-border-light dark:border-gray-700/50"></div><div class="row-start-9 row-span-1 border-t border-dashed border-border-light dark:border-gray-700/50"></div><div class="row-start-10 row-span-1 border-t border-dashed border-border-light dark:border-gray-700/50"></div><div class="row-start-11 row-span-1 border-t border-dashed border-border-light dark:border-gray-700/50"></div><div class="row-start-12 row-span-1 border-t border-dashed border-border-light dark:border-gray-700/50"></div>
+                                    <div class="absolute top-0 h-full w-full p-1">
+                                        <div class="bg-available border-2 border-dashed border-available-border rounded-md p-2 h-full flex flex-col items-center justify-center text-green-800 overflow-hidden">
+                                            <p class="text-xs font-bold truncate">Available</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Month View -->
+                    <div id="month-view" class="hidden grid grid-cols-7 grid-rows-[auto,1fr] overflow-auto bg-surface rounded-xl border border-border-light dark:bg-background-dark dark:border-gray-700">
+                        <div class="pb-2 text-center text-sm font-medium text-text-body dark:text-gray-400 border-b border-border-light dark:border-gray-700">Sun</div>
+                        <div class="pb-2 text-center text-sm font-medium text-text-body dark:text-gray-400 border-b border-border-light dark:border-gray-700">Mon</div>
+                        <div class="pb-2 text-center text-sm font-medium text-text-body dark:text-gray-400 border-b border-border-light dark:border-gray-700">Tue</div>
+                        <div class="pb-2 text-center text-sm font-medium text-text-body dark:text-gray-400 border-b border-border-light dark:border-gray-700">Wed</div>
+                        <div class="pb-2 text-center text-sm font-medium text-text-body dark:text-gray-400 border-b border-border-light dark:border-gray-700">Thu</div>
+                        <div class="pb-2 text-center text-sm font-medium text-text-body dark:text-gray-400 border-b border-border-light dark:border-gray-700">Fri</div>
+                        <div class="pb-2 text-center text-sm font-medium text-text-body dark:text-gray-400 border-b border-border-light dark:border-gray-700">Sat</div>
+                        <div class="grid grid-rows-6 col-span-7 row-start-2 border-t border-l border-border-light dark:border-gray-700 h-[720px]">
+                            <div class="grid grid-cols-7 row-span-1">
+                                <div class="border-b border-r border-border-light p-2 text-gray-400 dark:border-gray-700 dark:text-gray-500">26</div>
+                                <div class="border-b border-r border-border-light p-2 text-gray-400 dark:border-gray-700 dark:text-gray-500">27</div>
+                                <div class="border-b border-r border-border-light p-2 text-gray-400 dark:border-gray-700 dark:text-gray-500">28</div>
+                                <div class="border-b border-r border-border-light p-2 text-gray-400 dark:border-gray-700 dark:text-gray-500">29</div>
+                                <div class="border-b border-r border-border-light p-2 text-gray-400 dark:border-gray-700 dark:text-gray-500">30</div>
+                                <div class="border-b border-r border-border-light p-2 text-gray-400 dark:border-gray-700 dark:text-gray-500">31</div>
+                                <div class="border-b border-r border-border-light p-2 dark:border-gray-700">1</div>
+                            </div>
+                            <div class="grid grid-cols-7 row-span-1">
+                                <div class="border-b border-r border-border-light p-2 dark:border-gray-700">2</div>
+                                <div class="border-b border-r border-border-light p-2 dark:border-gray-700">3</div>
+                                <div class="border-b border-r border-border-light p-2 dark:border-gray-700">4</div>
+                                <div class="border-b border-r border-border-light p-2 dark:border-gray-700">5</div>
+                                <div class="border-b border-r border-border-light p-2 dark:border-gray-700">6</div>
+                                <div class="border-b border-r border-border-light p-2 dark:border-gray-700">7</div>
+                                <div class="relative border-b border-r border-border-light p-2 dark:border-gray-700">8
+                                    <div class="mt-1 flex flex-col gap-1">
+                                        <div class="rounded bg-pending p-1 text-xs text-yellow-900 event-item cursor-pointer">J. Appleseed - Pending</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="grid grid-cols-7 row-span-1">
+                                <div class="border-b border-r border-border-light p-2 dark:border-gray-700">9</div>
+                                <div class="relative border-b border-r border-border-light p-2 dark:border-gray-700">10
+                                    <div class="mt-1 flex flex-col gap-1">
+                                        <div class="rounded bg-accent p-1 text-xs text-white event-item cursor-pointer">J. Appleseed - Confirmed</div>
+                                        <div class="rounded bg-accent p-1 text-xs text-white event-item cursor-pointer">S. Connor - Confirmed</div>
+                                    </div>
+                                </div>
+                                <div class="border-b border-r border-border-light p-2 dark:border-gray-700">11</div>
+                                <div class="relative border-b border-r border-border-light p-2 dark:border-gray-700">12
+                                     <div class="mt-1 flex flex-col gap-1">
+                                        <div class="rounded bg-pending p-1 text-xs text-yellow-900 event-item cursor-pointer">J. Appleseed - Pending</div>
+                                    </div>
+                                </div>
+                                <div class="border-b border-r border-border-light p-2 dark:border-gray-700">13</div>
+                                <div class="relative border-b border-r border-border-light p-2 dark:border-gray-700">14
+                                    <div class="mt-1 flex flex-col gap-1">
+                                        <div class="rounded bg-accent p-1 text-xs text-white event-item cursor-pointer">J. Appleseed - Confirmed</div>
+                                    </div>
+                                </div>
+                                <div class="relative border-b border-r border-border-light bg-blue-50 p-2 dark:bg-blue-900/20 dark:border-gray-700"><span class="font-bold text-accent">15</span></div>
+                            </div>
+                            <div class="grid grid-cols-7 row-span-1">
+                                <div class="border-b border-r border-border-light p-2 dark:border-gray-700">16</div>
+                                <div class="relative border-b border-r border-border-light p-2 dark:border-gray-700">17
+                                    <div class="mt-1 flex flex-col gap-1">
+                                        <div class="rounded bg-blocked p-1 text-xs text-white">J. Appleseed - Blocked</div>
+                                    </div>
+                                </div>
+                                <div class="border-b border-r border-border-light p-2 dark:border-gray-700">18</div>
+                                <div class="border-b border-r border-border-light p-2 dark:border-gray-700">19</div>
+                                <div class="border-b border-r border-border-light p-2 dark:border-gray-700">20</div>
+                                <div class="border-b border-r border-border-light p-2 dark:border-gray-700">21</div>
+                                <div class="border-b border-r border-border-light p-2 dark:border-gray-700">22</div>
+                            </div>
+                            <div class="grid grid-cols-7 row-span-1">
+                                <div class="border-b border-r border-border-light p-2 dark:border-gray-700">23</div>
+                                <div class="border-b border-r border-border-light p-2 dark:border-gray-700">24</div>
+                                <div class="border-b border-r border-border-light p-2 dark:border-gray-700">25</div>
+                                <div class="border-b border-r border-border-light p-2 dark:border-gray-700">26</div>
+                                <div class="border-b border-r border-border-light p-2 dark:border-gray-700">27</div>
+                                <div class="border-b border-r border-border-light p-2 dark:border-gray-700">28</div>
+                                <div class="border-b border-r border-border-light p-2 dark:border-gray-700">29</div>
+                            </div>
+                            <div class="grid grid-cols-7 row-span-1">
+                                <div class="border-b border-r border-border-light p-2 dark:border-gray-700">30</div>
+                                <div class="border-b border-r border-border-light p-2 text-gray-400 dark:border-gray-700 dark:text-gray-500">1</div>
+                                <div class="border-b border-r border-border-light p-2 text-gray-400 dark:border-gray-700 dark:text-gray-500">2</div>
+                                <div class="border-b border-r border-border-light p-2 text-gray-400 dark:border-gray-700 dark:text-gray-500">3</div>
+                                <div class="border-b border-r border-border-light p-2 text-gray-400 dark:border-gray-700 dark:text-gray-500">4</div>
+                                <div class="border-b border-r border-border-light p-2 text-gray-400 dark:border-gray-700 dark:text-gray-500">5</div>
+                                <div class="border-b border-r border-border-light p-2 text-gray-400 dark:border-gray-700 dark:text-gray-500">6</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Day View -->
+                    <div id="day-view" class="hidden grid grid-cols-[auto,1fr] bg-surface rounded-xl border border-border-light overflow-hidden dark:bg-background-dark dark:border-gray-700 h-[720px]">
+                        <div class="grid grid-rows-[repeat(13,minmax(0,1fr))] pr-4 text-right">
+                            <div class="h-10"></div>
+                            <div class="-mt-3"><span class="text-xs text-gray-400">8 AM</span></div>
+                            <div class="-mt-3"><span class="text-xs text-gray-400">9 AM</span></div>
+                            <div class="-mt-3"><span class="text-xs text-gray-400">10 AM</span></div>
+                            <div class="-mt-3"><span class="text-xs text-gray-400">11 AM</span></div>
+                            <div class="-mt-3"><span class="text-xs text-gray-400">12 PM</span></div>
+                            <div class="-mt-3"><span class="text-xs text-gray-400">1 PM</span></div>
+                            <div class="-mt-3"><span class="text-xs text-gray-400">2 PM</span></div>
+                            <div class="-mt-3"><span class="text-xs text-gray-400">3 PM</span></div>
+                            <div class="-mt-3"><span class="text-xs text-gray-400">4 PM</span></div>
+                            <div class="-mt-3"><span class="text-xs text-gray-400">5 PM</span></div>
+                            <div class="-mt-3"><span class="text-xs text-gray-400">6 PM</span></div>
+                            <div class="-mt-3"><span class="text-xs text-gray-400">7 PM</span></div>
+                        </div>
+                        <div class="relative grid grid-cols-1 grid-rows-13">
+                            <div class="row-start-1 row-span-1 border-t border-border-light dark:border-gray-700"></div>
+                            <div class="row-start-2 row-span-1 border-t border-border-light dark:border-gray-700"></div>
+                            <div class="row-start-3 row-span-1 border-t border-border-light dark:border-gray-700"></div>
+                            <div class="row-start-4 row-span-1 border-t border-border-light dark:border-gray-700"></div>
+                            <div class="row-start-5 row-span-1 border-t border-border-light dark:border-gray-700"></div>
+                            <div class="row-start-6 row-span-1 border-t border-border-light dark:border-gray-700"></div>
+                            <div class="row-start-7 row-span-1 border-t border-border-light dark:border-gray-700"></div>
+                            <div class="row-start-8 row-span-1 border-t border-border-light dark:border-gray-700"></div>
+                            <div class="row-start-9 row-span-1 border-t border-border-light dark:border-gray-700"></div>
+                            <div class="row-start-10 row-span-1 border-t border-border-light dark:border-gray-700"></div>
+                            <div class="row-start-11 row-span-1 border-t border-border-light dark:border-gray-700"></div>
+                            <div class="row-start-12 row-span-1 border-t border-border-light dark:border-gray-700"></div>
+                            <div class="row-start-13 row-span-1 border-t border-border-light dark:border-gray-700"></div>
+                            <div class="absolute top-[calc(1/13*100%)] h-[calc(2/13*100%)] w-full pr-1">
+                                <div class="bg-blocked pattern-diagonal-lines rounded-md p-2 h-full flex flex-col text-text-body overflow-hidden border border-gray-200 dark:border-gray-600">
+                                    <p class="text-xs font-bold truncate">Blocked for Wind Conditions</p>
+                                    <p class="text-xs truncate">Too strong</p>
+                                </div>
+                            </div>
+                            <div class="absolute top-[calc(4/13*100%)] h-[calc(2/13*100%)] w-full pr-1 event-item cursor-pointer">
+                                <div class="bg-accent rounded-md p-2 h-full flex flex-col text-white overflow-hidden hover:bg-accent/90">
+                                    <p class="text-xs font-bold truncate">Beginner Lesson</p>
+                                    <p class="text-xs truncate">John Appleseed - 2 students</p>
+                                </div>
+                            </div>
+                            <div class="absolute top-[calc(6.5/13*100%)] h-[calc(2/13*100%)] w-full pr-1 event-item cursor-pointer">
+                                <div class="bg-pending rounded-md p-2 h-full flex flex-col text-yellow-900 overflow-hidden hover:bg-yellow-300">
+                                    <p class="text-xs font-bold truncate">Advanced Hydrofoil</p>
+                                    <p class="text-xs truncate">Jane Doe - 1 student</p>
+                                    <p class="text-xs font-semibold mt-1">Pending Confirmation</p>
+                                </div>
+                            </div>
+                            <div class="absolute top-[calc(9/13*100%)] h-[calc(3/13*100%)] w-full pr-1 event-item cursor-pointer">
+                                <div class="bg-accent rounded-md p-2 h-full flex flex-col text-white overflow-hidden hover:bg-accent/90">
+                                    <p class="text-xs font-bold truncate">Group Lesson</p>
+                                    <p class="text-xs truncate">Sara Connor - 4 students</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Agenda View -->
+                    <div id="agenda-view" class="hidden flex-col flex-1 overflow-y-auto bg-surface rounded-xl border-border-light dark:bg-background-dark dark:border-gray-700 p-4 sm:p-6 lg:p-8 h-[720px]">
+                        <div class="flex flex-col space-y-8">
+                            <div>
+                                <h2 class="text-lg font-semibold text-text-heading dark:text-white pb-3 border-b border-border-light dark:border-gray-700 mb-4">Monday, Nov 10</h2>
+                                <div class="space-y-3">
+                                    <div class="flex items-center gap-4 p-3 rounded-lg border-l-4 border-accent bg-accent/10 dark:bg-accent/20 event-item cursor-pointer hover:bg-accent/20">
+                                        <div class="w-24 text-sm font-medium text-text-heading dark:text-gray-300">10:00 AM - 12:00 PM</div>
+                                        <div class="flex-1">
+                                            <p class="font-semibold text-text-heading dark:text-white">Advanced Hydrofoil</p>
+                                            <p class="text-sm text-text-body dark:text-gray-400">Jane Doe (Instructor: John Appleseed)</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div>
+                                <h2 class="text-lg font-semibold text-text-heading dark:text-white pb-3 border-b border-border-light dark:border-gray-700 mb-4">Tuesday, Nov 11</h2>
+                                <div class="space-y-3">
+                                    <div class="flex items-center gap-4 p-3 rounded-lg border-l-4 border-gray-400 bg-blocked">
+                                        <div class="w-24 text-sm font-medium text-text-heading dark:text-gray-300">All day</div>
+                                        <div class="flex-1">
+                                            <p class="font-semibold text-text-heading dark:text-gray-900">Personal Time</p>
+                                            <p class="text-sm text-text-body dark:text-gray-700">John Appleseed</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div>
+                                <h2 class="text-lg font-semibold text-text-heading dark:text-white pb-3 border-b border-border-light dark:border-gray-700 mb-4">Wednesday, Nov 12</h2>
+                                <div class="space-y-3">
+                                    <div class="flex items-center gap-4 p-3 rounded-lg border-l-4 border-pending bg-pending/10 dark:bg-pending/20 event-item cursor-pointer hover:bg-pending/20">
+                                        <div class="w-24 text-sm font-medium text-text-heading dark:text-gray-300">12:00 PM - 2:00 PM</div>
+                                        <div class="flex-1">
+                                            <p class="font-semibold text-text-heading dark:text-white">Beginner Lesson</p>
+                                            <p class="text-sm text-text-body dark:text-gray-400">Mike Smith (Instructor: John Appleseed)</p>
+                                        </div>
+                                        <div class="text-sm font-medium text-yellow-600 dark:text-pending">Pending</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div>
+                                <h2 class="text-lg font-semibold text-text-heading dark:text-white pb-3 border-b border-border-light dark:border-gray-700 mb-4">Thursday, Nov 13</h2>
+                                <div class="text-sm text-text-body dark:text-gray-400">No events scheduled.</div>
+                            </div>
+                            <div>
+                                <h2 class="text-lg font-semibold text-text-heading dark:text-white pb-3 border-b border-border-light dark:border-gray-700 mb-4">Friday, Nov 14</h2>
+                                <div class="space-y-3">
+                                    <div class="flex items-center gap-4 p-3 rounded-lg border-l-4 border-accent bg-accent/10 dark:bg-accent/20 event-item cursor-pointer hover:bg-accent/20">
+                                        <div class="w-24 text-sm font-medium text-text-heading dark:text-gray-300">9:00 AM - 12:00 PM</div>
+                                        <div class="flex-1">
+                                            <p class="font-semibold text-text-heading dark:text-white">Group Lesson</p>
+                                            <p class="text-sm text-text-body dark:text-gray-400">3 Students (Instructor: John Appleseed)</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div>
+                                <h2 class="text-lg font-semibold text-text-heading dark:text-white pb-3 border-b border-border-light dark:border-gray-700 mb-4">Saturday, Nov 15</h2>
+                                <div class="text-sm text-text-body dark:text-gray-400">No events scheduled.</div>
+                            </div>
+                            <div>
+                                <h2 class="text-lg font-semibold text-text-heading dark:text-white pb-3 border-b border-border-light dark:border-gray-700 mb-4">Sunday, Nov 16</h2>
+                                <div class="text-sm text-text-body dark:text-gray-400">No events scheduled.</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Students View -->
+            <div id="students-view" style="display: none;">
+                <header class="flex flex-wrap justify-between items-center gap-4 pb-6 border-b border-border-light dark:border-gray-700">
+                    <p class="text-text-heading text-4xl font-black leading-tight tracking-[-0.033em] font-heading dark:text-white">My Students</p>
+                </header>
+                 <div class="py-6">
+                    <div class="flex items-center py-4">
+                        <div class="relative w-full">
+                            <span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-text-body">search</span>
+                            <input class="flex h-10 w-full rounded-md border border-border-light bg-transparent py-2 pl-10 pr-3 text-sm placeholder:text-text-body focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 dark:border-gray-600 dark:focus:ring-accent" placeholder="Filter by name or email..." type="search"/>
+                        </div>
+                    </div>
+                    <div class="relative w-full overflow-auto rounded-lg border border-border-light dark:border-gray-700">
+                        <table class="w-full caption-bottom text-sm">
+                            <thead class="[&amp;_tr]:border-b [&amp;_tr]:border-border-light dark:[&amp;_tr]:border-gray-700">
+                                <tr class="hover:bg-gray-50/50 dark:hover:bg-white/5">
+                                    <th class="h-12 px-4 text-left align-middle font-medium text-text-body dark:text-gray-400">Student Name</th>
+                                    <th class="h-12 px-4 text-left align-middle font-medium text-text-body dark:text-gray-400">Email</th>
+                                    <th class="h-12 px-4 text-left align-middle font-medium text-text-body dark:text-gray-400">Skill Level</th>
+                                    <th class="h-12 px-4 text-left align-middle font-medium text-text-body dark:text-gray-400">Total Lessons</th>
+                                    <th class="h-12 px-4 text-left align-middle font-medium text-text-body dark:text-gray-400">Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody class="[&amp;_tr:last-child]:border-0">
+                                <tr class="border-b border-border-light transition-colors hover:bg-gray-50/50 dark:border-gray-700 dark:hover:bg-white/5">
+                                    <td class="p-4 align-middle font-medium text-text-heading dark:text-white">Olivia Martin</td>
+                                    <td class="p-4 align-middle text-text-body dark:text-gray-300">olivia.martin@email.com</td>
+                                    <td class="p-4 align-middle text-text-body dark:text-gray-300">Intermediate</td>
+                                    <td class="p-4 align-middle text-text-body dark:text-gray-300">12</td>
+                                    <td class="p-4 align-middle">
+                                        <div class="flex items-center space-x-2">
+                                            <button class="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 h-10 w-10 border border-border-light bg-surface text-text-heading hover:bg-gray-100 dark:border-gray-600 dark:bg-gray-800 dark:text-white dark:hover:bg-gray-700">
+                                                <span class="material-symbols-outlined text-xl">visibility</span>
+                                            </button>
+                                            <button class="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 h-10 w-10 border border-border-light bg-surface text-text-heading hover:bg-gray-100 dark:border-gray-600 dark:bg-gray-800 dark:text-white dark:hover:bg-gray-700">
+                                                <span class="material-symbols-outlined text-xl">mail</span>
+                                            </button>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr class="border-b border-border-light transition-colors hover:bg-gray-50/50 dark:border-gray-700 dark:hover:bg-white/5">
+                                    <td class="p-4 align-middle font-medium text-text-heading dark:text-white">Liam Johnson</td>
+                                    <td class="p-4 align-middle text-text-body dark:text-gray-300">liam.johnson@email.com</td>
+                                    <td class="p-4 align-middle text-text-body dark:text-gray-300">Beginner</td>
+                                    <td class="p-4 align-middle text-text-body dark:text-gray-300">5</td>
+                                    <td class="p-4 align-middle">
+                                        <div class="flex items-center space-x-2">
+                                            <button class="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 h-10 w-10 border border-border-light bg-surface text-text-heading hover:bg-gray-100 dark:border-gray-600 dark:bg-gray-800 dark:text-white dark:hover:bg-gray-700">
+                                                <span class="material-symbols-outlined text-xl">visibility</span>
+                                            </button>
+                                            <button class="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 h-10 w-10 border border-border-light bg-surface text-text-heading hover:bg-gray-100 dark:border-gray-600 dark:bg-gray-800 dark:text-white dark:hover:bg-gray-700">
+                                                <span class="material-symbols-outlined text-xl">mail</span>
+                                            </button>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Settings View -->
+            <div id="settings-view" style="display: none;">
+                <header class="flex flex-wrap justify-between items-center gap-4 pb-6 border-b border-border-light dark:border-gray-700">
+                    <p class="text-text-heading text-4xl font-black leading-tight tracking-[-0.033em] font-heading dark:text-white">Settings</p>
+                </header>
+                 <div class="py-6">
+                    <div class="max-w-4xl mx-auto">
+                        <div class="flex flex-col gap-8">
+                            <section class="flex flex-col gap-6">
+                                <h3 class="text-base font-semibold text-text-heading">Personal Information</h3>
+                                <div class="grid grid-cols-1 gap-6 md:grid-cols-2">
+                                    <div class="flex flex-col gap-2">
+                                        <label class="text-sm font-medium text-text-body" for="name">Name</label>
+                                        <input class="w-full h-10 px-3 py-2 text-sm bg-white border rounded-md border-border-light text-text-heading placeholder:text-text-body/50 focus:outline-none focus:ring-2 focus:ring-accent" id="name" type="text" value="John Appleseed" />
+                                    </div>
+                                    <div class="flex flex-col gap-2">
+                                        <label class="text-sm font-medium text-text-body" for="email">Email Address</label>
+                                        <input class="w-full h-10 px-3 py-2 text-sm bg-white border rounded-md border-border-light text-text-heading placeholder:text-text-body/50 focus:outline-none focus:ring-2 focus:ring-accent" id="email" type="email" value="john.appleseed@example.com" />
+                                    </div>
+                                </div>
+                                <div class="grid grid-cols-1 gap-6">
+                                    <div class="flex flex-col gap-2">
+                                        <label class="text-sm font-medium text-text-body" for="phone">Phone Number</label>
+                                        <input class="w-full h-10 px-3 py-2 text-sm bg-white border rounded-md border-border-light text-text-heading placeholder:text-text-body/50 focus:outline-none focus:ring-2 focus:ring-accent" id="phone" type="tel" value="+1 (555) 123-4567" />
+                                    </div>
+                                </div>
+                                <div class="flex flex-col gap-2">
+                                    <label class="text-sm font-medium text-text-body" for="profile-picture">Profile Picture</label>
+                                    <div class="flex items-center gap-4">
+                                        <div class="bg-center bg-no-repeat aspect-square bg-cover rounded-full size-16" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuCO3KYqinJeWZI0gsuFo_Dy20oLfTKZkfrkMgvJoSGjTpfJGnI-TdWafzDbxikZusNmXsMYJ4DyzZcJvQk4khz2OHHyKHFburBmLejaXwCYP9VK87D4nxqmVhsaiNmPRbga0yJ7pxr9i43_XRSrkFoW14VKdd8TWJcIpZxdHhxeMDtAha1kOX1nxbXl3ZsmwWos9SvdXfLEUMbBU2YtdZmby1tB_Ki9yqIyj9xrXoIv10lnzybwEPi2ynTt5N9qzL81rZEg6IcnuO4");'></div>
+                                        <label class="flex h-10 cursor-pointer items-center justify-center rounded-md border border-border-light bg-surface px-4 text-sm font-medium text-text-heading hover:bg-gray-50" for="profile-picture">
+                                            <span class="material-symbols-outlined mr-2 text-base">upload</span>
+                                            <span>Upload new picture</span>
+                                            <input class="sr-only" id="profile-picture" type="file" />
+                                        </label>
+                                    </div>
+                                </div>
+                            </section>
+                            <hr class="border-border-light" />
+                            <section class="flex flex-col gap-6">
+                                <h3 class="text-base font-semibold text-text-heading">Availability Preferences</h3>
+                                <div class="grid grid-cols-1 gap-6 md:grid-cols-2">
+                                    <div class="flex flex-col gap-2">
+                                        <label class="text-sm font-medium text-text-body" for="start-time">Default Start Time</label>
+                                        <input class="w-full h-10 px-3 py-2 text-sm bg-white border rounded-md border-border-light text-text-heading placeholder:text-text-body/50 focus:outline-none focus:ring-2 focus:ring-accent" id="start-time" type="time" value="09:00" />
+                                    </div>
+                                    <div class="flex flex-col gap-2">
+                                        <label class="text-sm font-medium text-text-body" for="end-time">Default End Time</label>
+                                        <input class="w-full h-10 px-3 py-2 text-sm bg-white border rounded-md border-border-light text-text-heading placeholder:text-text-body/50 focus:outline-none focus:ring-2 focus:ring-accent" id="end-time" type="time" value="17:00" />
+                                    </div>
+                                </div>
+                            </section>
+                             <hr class="border-border-light" />
+                            <section class="flex flex-col gap-6">
+                                <h3 class="text-base font-semibold text-text-heading">Teaching Preferences</h3>
+                                <div class="flex flex-col gap-4">
+                                    <label class="text-sm font-medium text-text-body">Lesson Types Taught</label>
+                                    <div class="flex flex-wrap gap-4">
+                                        <div class="flex items-center gap-2">
+                                            <input checked="" class="h-4 w-4 rounded border-border-light text-accent focus:ring-accent" id="lesson-private" type="checkbox"/>
+                                            <label class="text-sm text-text-body" for="lesson-private">Private</label>
+                                        </div>
+                                        <div class="flex items-center gap-2">
+                                            <input checked="" class="h-4 w-4 rounded border-border-light text-accent focus:ring-accent" id="lesson-group" type="checkbox"/>
+                                            <label class="text-sm text-text-body" for="lesson-group">Group</label>
+                                        </div>
+                                        <div class="flex items-center gap-2">
+                                            <input class="h-4 w-4 rounded border-border-light text-accent focus:ring-accent" id="lesson-freestyle" type="checkbox"/>
+                                            <label class="text-sm text-text-body" for="lesson-freestyle">Freestyle</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="flex flex-col gap-4">
+                                    <label class="text-sm font-medium text-text-body">Skill Levels Taught</label>
+                                    <div class="flex flex-wrap gap-4">
+                                        <div class="flex items-center gap-2">
+                                            <input checked="" class="h-4 w-4 rounded border-border-light text-accent focus:ring-accent" id="level-beginner" type="checkbox"/>
+                                            <label class="text-sm text-text-body" for="level-beginner">Beginner</label>
+                                        </div>
+                                        <div class="flex items-center gap-2">
+                                            <input checked="" class="h-4 w-4 rounded border-border-light text-accent focus:ring-accent" id="level-intermediate" type="checkbox"/>
+                                            <label class="text-sm text-text-body" for="level-intermediate">Intermediate</label>
+                                        </div>
+                                        <div class="flex items-center gap-2">
+                                            <input class="h-4 w-4 rounded border-border-light text-accent focus:ring-accent" id="level-advanced" type="checkbox"/>
+                                            <label class="text-sm text-text-body" for="level-advanced">Advanced</label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </section>
+                            <hr class="border-border-light" />
+                            <section class="flex flex-col gap-6">
+                                <h3 class="text-base font-semibold text-text-heading">Notification Settings</h3>
+                                <div class="flex flex-col gap-4">
+                                    <div class="flex items-center gap-3"><input checked="" class="h-4 w-4 rounded border-border-light text-accent focus:ring-accent" id="notif-email" type="checkbox"/><label class="text-sm text-text-body" for="notif-email">Email for New Bookings</label></div>
+                                    <div class="flex items-center gap-3"><input class="h-4 w-4 rounded border-border-light text-accent focus:ring-accent" id="notif-sms" type="checkbox"/><label class="text-sm text-text-body" for="notif-sms">SMS for Cancellations</label></div>
+                                    <div class="flex items-center gap-3"><input checked="" class="h-4 w-4 rounded border-border-light text-accent focus:ring-accent" id="notif-app" type="checkbox"/><label class="text-sm text-text-body" for="notif-app">In-App Alerts for lesson reminders</label></div>
+                                </div>
+                            </section>
+                             <hr class="border-border-light" />
+                            <section class="flex items-center justify-end gap-4">
+                                <button class="text-sm font-medium text-text-body hover:text-text-heading">Cancel</button>
+                                <button class="flex min-w-[84px] cursor-pointer items-center justify-center overflow-hidden rounded-md h-10 px-4 bg-primary text-white text-sm font-medium hover:bg-primary/90">Save Changes</button>
+                            </section>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Messaging View -->
+            <div id="messaging-view" class="h-full flex flex-col" style="display: none;">
+                <header class="flex flex-wrap justify-between items-center gap-4 pb-6 border-b border-border-light dark:border-gray-700">
+                    <p class="text-text-heading text-4xl font-black leading-tight tracking-[-0.033em] font-heading dark:text-white">Messaging</p>
+                </header>
+                <div class="flex-1 grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-6 mt-6 h-[calc(100vh-250px)]">
+                    <!-- Conversation List -->
+                    <div class="md:col-span-1 lg:col-span-1 bg-surface dark:bg-background-dark rounded-xl border border-border-light dark:border-gray-700 flex flex-col">
+                        <div class="p-4 border-b border-border-light dark:border-gray-700">
+                            <div class="relative">
+                                <span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-text-body">search</span>
+                                <input class="w-full pl-10 pr-4 py-2 text-sm bg-background-light dark:bg-surface rounded-lg border-none focus:ring-2 focus:ring-primary" placeholder="Search messages..." type="search"/>
+                            </div>
+                        </div>
+                        <div class="flex-1 overflow-y-auto">
+                            <a href="#" class="flex items-center gap-4 p-4 border-b border-border-light dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-800">
+                                <div class="relative">
+                                    <img class="h-12 w-12 rounded-full object-cover" src="https://lh3.googleusercontent.com/a/ACg8ocJ-9-333-333-333-333" alt="Alex Weber"/>
+                                    <span class="absolute bottom-0 right-0 block h-3 w-3 rounded-full bg-green-500 border-2 border-surface dark:border-background-dark"></span>
+                                </div>
+                                <div class="flex-1">
+                                    <div class="flex justify-between items-center">
+                                        <h3 class="font-bold text-text-heading dark:text-white">Alex Weber</h3>
+                                        <span class="text-xs text-text-body dark:text-gray-400">2m ago</span>
+                                    </div>
+                                    <p class="text-sm text-text-body dark:text-gray-400 truncate">Hey, can you take a look at the new schedule for next week?</p>
+                                </div>
+                            </a>
+                            <a href="#" class="flex items-center gap-4 p-4 border-b border-border-light dark:border-gray-700 bg-primary/5 dark:bg-primary/10">
+                                <div class="relative">
+                                    <img class="h-12 w-12 rounded-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCW1_TbfGGo2tbQcmqQPqqqPNjiLLXP62bUm7Vp4ziOV1EzdSqgBn8sQlxCg7CdchnDlFDwOtrcIhK1G9Y4LltZLeHMMZOTQaCFXUVXlW43OSiaCWXfI7Iaoa-_9qBnQz52iSyQuQNhBbSYIAaeS7doj7doQGYGhvzcVFxshRosn8Ld36w0uSN6j7e7iiI6FW-XGUNlaz9Us4D8pNrt91dqUa9Ey7KCyMmajQREsVzKTWf9MecoWq0iZjp1B4G3UOj8fibiscE7iAE" alt="Jen Adler"/>
+                                </div>
+                                <div class="flex-1">
+                                    <div class="flex justify-between items-center">
+                                        <h3 class="font-bold text-text-heading dark:text-white">Jen Adler</h3>
+                                        <span class="text-xs text-text-body dark:text-gray-400">1h ago</span>
+                                    </div>
+                                    <p class="text-sm text-text-body dark:text-gray-400 truncate">I had a question about the hydrofoil lesson.</p>
+                                </div>
+                            </a>
+                             <a href="#" class="flex items-center gap-4 p-4 border-b border-border-light dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-800">
+                                <div class="relative">
+                                    <img class="h-12 w-12 rounded-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDR1ToprpsiwZPVxSHLS7QuoUurQ7DL9GB5ZdY7eMBKA34_pz_JIEqtv2-54xDEuDWuKgujgnMe0i02XxGlrymaF-cGsKXdTbslS1phOhguIZ6nnYX3QCbpSsFK3o_G3bIgbvp0wWECzag0YxD7262MNZuDuH-T_tjwwAQAHAJm0rkU33LI1eZfw3oakqSFkeHtaLeK8JD970URJOrcmrGHa30IBSc2-ugsV3expXJ9MCvQc0srfLP-NXhEaP8QH4TnaCMUgBKTphI" alt="Alex Johnson"/>
+                                </div>
+                                <div class="flex-1">
+                                    <div class="flex justify-between items-center">
+                                        <h3 class="font-bold text-text-heading dark:text-white">Alex Johnson</h3>
+                                        <span class="text-xs text-text-body dark:text-gray-400">yesterday</span>
+                                    </div>
+                                    <p class="text-sm text-text-body dark:text-gray-400 truncate">Thanks for the great lesson!</p>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                    <!-- Chat Window -->
+                    <div class="md:col-span-2 lg:col-span-3 bg-surface dark:bg-background-dark rounded-xl border border-border-light dark:border-gray-700 flex flex-col h-full">
+                        <div class="p-4 border-b border-border-light dark:border-gray-700 flex items-center gap-4">
+                             <img class="h-12 w-12 rounded-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCW1_TbfGGo2tbQcmqQPqqqPNjiLLXP62bUm7Vp4ziOV1EzdSqgBn8sQlxCg7CdchnDlFDwOtrcIhK1G9Y4LltZLeHMMZOTQaCFXUVXlW43OSiaCWXfI7Iaoa-_9qBnQz52iSyQuQNhBbSYIAaeS7doj7doQGYGhvzcVFxshRosn8Ld36w0uSN6j7e7iiI6FW-XGUNlaz9Us4D8pNrt91dqUa9Ey7KCyMmajQREsVzKTWf9MecoWq0iZjp1B4G3UOj8fibiscE7iAE" alt="Jen Adler"/>
+                             <div>
+                                <h2 class="text-lg font-bold text-text-heading dark:text-white">Jen Adler</h2>
+                                <p class="text-sm text-green-600 dark:text-green-400">Online</p>
+                             </div>
+                        </div>
+                        <div class="flex-1 p-6 overflow-y-auto space-y-4">
+                            <!-- Messages -->
+                            <div class="flex items-end gap-3">
+                                <img class="h-8 w-8 rounded-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCW1_TbfGGo2tbQcmqQPqqqPNjiLLXP62bUm7Vp4ziOV1EzdSqgBn8sQlxCg7CdchnDlFDwOtrcIhK1G9Y4LltZLeHMMZOTQaCFXUVXlW43OSiaCWXfI7Iaoa-_9qBnQz52iSyQuQNhBbSYIAaeS7doj7doQGYGhvzcVFxshRosn8Ld36w0uSN6j7e7iiI6FW-XGUNlaz9Us4D8pNrt91dqUa9Ey7KCyMmajQREsVzKTWf9MecoWq0iZjp1B4G3UOj8fibiscE7iAE" alt="Jen Adler"/>
+                                <div class="bg-gray-200 dark:bg-gray-700 p-3 rounded-lg rounded-bl-none max-w-xl">
+                                    <p class="text-sm text-text-heading dark:text-white">I had a question about the hydrofoil lesson. Is it suitable for someone who has only done twin-tip riding?</p>
+                                </div>
+                            </div>
+                            <div class="flex items-end gap-3 justify-end">
+                                <div class="bg-primary text-white p-3 rounded-lg rounded-br-none max-w-xl">
+                                    <p class="text-sm">Hi Jen! Absolutely. As long as you're comfortable riding upwind on a twin-tip, you should be ready for a hydrofoil introduction. We'll start with the basics on a very low-mast setup.</p>
+                                </div>
+                                 <img class="h-8 w-8 rounded-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCO3KYqinJeWZI0gsuFo_Dy20oLfTKZkfrkMgvJoSGjTpfJGnI-TdWafzDbxikZusNmXsMYJ4DyzZcJvQk4khz2OHHyKHFburBmLejaXwCYP9VK87D4nxqmVhsaiNmPRbga0yJ7pxr9i43_XRSrkFoW14VKdd8TWJcIpZxdHhxeMDtAha1kOX1nxbXl3ZsmwWos9SvdXfLEUMbBU2YtdZmby1tB_Ki9yqIyj9xrXoIv10lnzybwEPi2ynTt5N9qzL81rZEg6IcnuO4" alt="John Appleseed"/>
+                            </div>
+                             <div class="flex items-end gap-3">
+                                <img class="h-8 w-8 rounded-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCW1_TbfGGo2tbQcmqQPqqqPNjiLLXP62bUm7Vp4ziOV1EzdSqgBn8sQlxCg7CdchnDlFDwOtrcIhK1G9Y4LltZLeHMMZOTQaCFXUVXlW43OSiaCWXfI7Iaoa-_9qBnQz52iSyQuQNhBbSYIAaeS7doj7doQGYGhvzcVFxshRosn8Ld36w0uSN6j7e7iiI6FW-XGUNlaz9Us4D8pNrt91dqUa9Ey7KCyMmajQREsVzKTWf9MecoWq0iZjp1B4G3UOj8fibiscE7iAE" alt="Jen Adler"/>
+                                <div class="bg-gray-200 dark:bg-gray-700 p-3 rounded-lg rounded-bl-none max-w-xl">
+                                    <p class="text-sm text-text-heading dark:text-white">That sounds great! I'm excited to try it. I'll book a session for next week.</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="p-4 border-t border-border-light dark:border-gray-700">
+                            <div class="relative">
+                                <input class="w-full bg-background-light dark:bg-surface rounded-lg border-none pl-4 pr-12 py-3 focus:ring-2 focus:ring-primary" placeholder="Type a message..." type="text"/>
+                                <button class="absolute right-3 top-1/2 -translate-y-1/2 text-primary hover:bg-primary/10 p-2 rounded-full">
+                                    <span class="material-symbols-outlined">send</span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Modals -->
+    <div id="course-detail-modal" class="hidden fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4">
+       <div class="bg-surface rounded-xl w-full max-w-lg shadow-xl dark:bg-gray-800">
+        <div class="flex items-start justify-between p-6 border-b border-border-light dark:border-gray-700">
+            <h2 class="text-xl font-bold font-heading text-text-heading dark:text-white">Private Lesson - Intermediate</h2>
+            <button id="close-course-detail-modal-btn" class="text-gray-400 hover:text-gray-600 dark:hover:text-gray-200">
+                <span class="material-symbols-outlined">close</span>
+            </button>
+        </div>
+        <div class="p-6 space-y-8">
+            <div class="space-y-4">
+                <h3 class="font-heading text-lg font-bold text-text-heading dark:text-white">Lesson Details</h3>
+                <div class="grid grid-cols-2 gap-x-4 gap-y-3">
+                    <div>
+                        <p class="text-sm font-medium text-text-body dark:text-gray-400">Date and Time</p>
+                        <p class="text-base text-text-heading dark:text-white">Mon, Nov 10, 2025 - 10:00 AM</p>
+                    </div>
+                    <div>
+                        <p class="text-sm font-medium text-text-body dark:text-gray-400">Duration</p>
+                        <p class="text-base text-text-heading dark:text-white">2 hours</p>
+                    </div>
+                    <div>
+                        <p class="text-sm font-medium text-text-body dark:text-gray-400">Location</p>
+                        <p class="text-base text-text-heading dark:text-white">Main Beach</p>
+                    </div>
+                </div>
+            </div>
+            <div class="border-t border-border-light dark:border-gray-700"></div>
+            <div class="space-y-4">
+                <h3 class="font-heading text-lg font-bold text-text-heading dark:text-white">Student Details</h3>
+                <div class="grid grid-cols-2 gap-x-4 gap-y-3">
+                    <div>
+                        <p class="text-sm font-medium text-text-body dark:text-gray-400">Student Name</p>
+                        <p class="text-base text-text-heading dark:text-white">Jane Doe</p>
+                    </div>
+                    <div>
+                        <p class="text-sm font-medium text-text-body dark:text-gray-400">Skill Level</p>
+                        <p class="text-base text-text-heading dark:text-white">Intermediate</p>
+                    </div>
+                    <div>
+                        <p class="text-sm font-medium text-text-body dark:text-gray-400">Age &amp; Gender</p>
+                        <p class="text-base text-text-heading dark:text-white">28, Female</p>
+                    </div>
+                    <div>
+                        <p class="text-sm font-medium text-text-body dark:text-gray-400">Experience</p>
+                        <p class="text-base text-text-heading dark:text-white">5 hours prior</p>
+                    </div>
+                    <div>
+                        <p class="text-sm font-medium text-text-body dark:text-gray-400">Language</p>
+                        <p class="text-base text-text-heading dark:text-white">English</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="flex items-center justify-end p-6 gap-3 border-t border-border-light dark:border-gray-700">
+            <button class="flex min-w-[84px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 px-4 bg-surface text-text-heading border border-border-light text-sm font-bold leading-normal tracking-[0.015em] hover:bg-gray-50 dark:bg-gray-700 dark:border-gray-600 dark:text-white dark:hover:bg-gray-600">
+                <span class="truncate">Rebook Lesson</span>
+            </button>
+            <button class="flex min-w-[84px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 px-4 bg-red-600 text-white text-sm font-bold leading-normal tracking-[0.015em] hover:bg-red-700">
+                <span class="truncate">Cancel Lesson</span>
+            </button>
+        </div>
+    </div>
+    </div>
+    <div id="add-availability-modal" class="hidden fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4">
+        <div class="relative flex w-full max-w-lg flex-col overflow-hidden rounded-xl bg-surface dark:bg-background-dark shadow-2xl">
+        <!-- Modal Header -->
+        <div class="flex items-center justify-between gap-4 p-6 border-b border-border-light">
+            <p class="font-display text-2xl font-bold text-text-heading dark:text-white">Add Availability</p>
+            <button id="close-add-availability-modal-btn" class="flex h-8 w-8 items-center justify-center rounded-full text-text-body hover:bg-gray-100 dark:hover:bg-gray-700">
+                <span class="material-symbols-outlined">close</span>
+            </button>
+        </div>
+        <!-- Modal Body -->
+        <div class="flex flex-col gap-6 p-6">
+            <!-- Date & Time Section -->
+            <div class="flex flex-col gap-4">
+                <label class="flex flex-col">
+                    <p class="text-text-body text-sm font-medium leading-normal pb-2">Date(s)</p>
+                    <div class="relative flex items-center">
+                        <input class="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-lg border border-border-light bg-surface text-text-body placeholder:text-text-body/60 focus:border-primary focus:ring-2 focus:ring-primary/20 h-12 p-3 text-base font-normal leading-normal dark:bg-background-dark dark:text-white" placeholder="Select date or date range" value="November 15, 2025"/>
+                        <div class="pointer-events-none absolute right-3 flex items-center justify-center text-text-body">
+                            <span class="material-symbols-outlined">calendar_today</span>
+                        </div>
+                    </div>
+                </label>
+                <div class="flex flex-wrap items-end gap-4">
+                    <label class="flex flex-col min-w-40 flex-1">
+                        <p class="text-text-body text-sm font-medium leading-normal pb-2">From</p>
+                        <input class="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-lg border border-border-light bg-surface text-text-body placeholder:text-text-body/60 focus:border-primary focus:ring-2 focus:ring-primary/20 h-12 p-3 text-base font-normal leading-normal dark:bg-background-dark dark:text-white" type="time" value="09:00"/>
+                    </label>
+                    <label class="flex flex-col min-w-40 flex-1">
+                        <p class="text-text-body text-sm font-medium leading-normal pb-2">To</p>
+                        <input class="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-lg border border-border-light bg-surface text-text-body placeholder:text-text-body/60 focus:border-primary focus:ring-2 focus:ring-primary/20 h-12 p-3 text-base font-normal leading-normal dark:bg-background-dark dark:text-white" type="time" value="17:00"/>
+                    </label>
+                </div>
+            </div>
+            <!-- Recurrence Section -->
+            <div class="flex flex-col gap-4">
+                <label class="flex flex-col">
+                    <p class="text-text-body text-sm font-medium leading-normal pb-2">Repeats</p>
+                    <select class="form-input flex w-full min-w-0 flex-1 appearance-none resize-none overflow-hidden rounded-lg border border-border-light bg-surface text-text-body placeholder:text-text-body/60 focus:border-primary focus:ring-2 focus:ring-primary/20 h-12 bg-right-2 bg-no-repeat p-3 text-base font-normal leading-normal dark:bg-background-dark dark:text-white">
+                        <option value="none">Does not repeat</option>
+                        <option value="daily">Repeats daily</option>
+                        <option selected="" value="weekly">Repeats weekly</option>
+                        <option value="monthly">Repeats monthly</option>
+                    </select>
+                </label>
+            </div>
+            <!-- Informational Text -->
+            <div class="flex items-center gap-3 rounded-lg bg-primary/5 p-4">
+                <div class="text-primary/80 flex items-center justify-center shrink-0">
+                    <span class="material-symbols-outlined">info</span>
+                </div>
+                <p class="text-text-body text-sm font-normal leading-normal flex-1 dark:text-gray-300">We will check for any overlapping events before saving.</p>
+            </div>
+        </div>
+        <!-- Modal Footer -->
+        <div class="flex flex-1 gap-3 flex-wrap px-6 py-4 justify-end items-center bg-gray-50 dark:bg-gray-900/50 border-t border-border-light">
+            <button class="flex min-w-[84px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-11 px-5 text-text-body text-base font-semibold leading-normal tracking-[0.015em] hover:bg-gray-200 dark:text-white dark:hover:bg-gray-700">
+                <span class="truncate">Cancel</span>
+            </button>
+            <button class="flex min-w-[84px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-11 px-5 bg-primary text-white text-base font-semibold leading-normal tracking-[0.015em] hover:bg-primary/90">
+                <span class="truncate">Save</span>
+            </button>
+        </div>
+    </div>
+    </div>
+    <div id="block-time-modal" class="hidden fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4">
+        <div class="relative w-full max-w-lg rounded-xl bg-surface dark:bg-background-dark shadow-2xl p-8 m-4">
+        <!-- Modal Header -->
+        <div class="flex items-start justify-between mb-6">
+            <h2 class="text-text-heading dark:text-gray-100 font-display text-2xl font-bold">Block Time</h2>
+            <button id="close-block-time-modal-btn" class="text-gray-400 hover:text-gray-600 dark:hover:text-gray-200">
+                <span class="material-symbols-outlined">close</span>
+            </button>
+        </div>
+        <!-- Form -->
+        <div class="flex flex-col gap-6">
+            <!-- Date and Time Section -->
+            <div class="flex flex-col sm:flex-row gap-4">
+                <label class="flex flex-col flex-1 relative">
+                    <p class="text-text-body dark:text-gray-300 text-sm font-medium leading-normal pb-2">Date(s)</p>
+                    <div class="flex w-full items-stretch rounded-lg">
+                        <input id="block-time-date-input" class="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-l-lg text-text-heading dark:text-gray-200 dark:bg-background-dark focus:outline-0 focus:ring-2 focus:ring-primary/50 border border-border-light dark:border-gray-600 bg-surface focus:border-primary/50 h-12 placeholder:text-gray-400 p-3 text-base font-normal leading-normal" placeholder="Select date"/>
+                        <div id="block-time-calendar-icon" class="cursor-pointer text-text-body dark:text-gray-400 flex border border-l-0 border-border-light dark:border-gray-600 bg-gray-50 dark:bg-gray-800/50 items-center justify-center px-3 rounded-r-lg">
+                            <span class="material-symbols-outlined text-xl">calendar_today</span>
+                        </div>
+                    </div>
+                    <div id="block-time-datepicker" class="hidden absolute top-full mt-2 w-full bg-surface dark:bg-gray-700 rounded-lg shadow-lg p-4 border border-border-light dark:border-gray-600 z-30">
+                        <!-- Datepicker content -->
+                    </div>
+                </label>
+            </div>
+            <div class="flex flex-col sm:flex-row gap-4">
+                <label class="flex flex-col min-w-40 flex-1">
+                    <p class="text-text-body dark:text-gray-300 text-sm font-medium leading-normal pb-2">From</p>
+                    <input class="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-lg text-text-heading dark:text-gray-200 dark:bg-background-dark focus:outline-0 focus:ring-2 focus:ring-primary/50 border border-border-light dark:border-gray-600 bg-surface focus:border-primary/50 h-12 placeholder:text-gray-400 p-3 text-base font-normal leading-normal" type="time" value="09:00"/>
+                </label>
+                <label class="flex flex-col min-w-40 flex-1">
+                    <p class="text-text-body dark:text-gray-300 text-sm font-medium leading-normal pb-2">To</p>
+                    <input class="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-lg text-text-heading dark:text-gray-200 dark:bg-background-dark focus:outline-0 focus:ring-2 focus:ring-primary/50 border border-border-light dark:border-gray-600 bg-surface focus:border-primary/50 h-12 placeholder:text-gray-400 p-3 text-base font-normal leading-normal" type="time" value="17:00"/>
+                </label>
+            </div>
+            <!-- Recurrence Section -->
+            <label class="flex flex-col w-full">
+                <p class="text-text-body dark:text-gray-300 text-sm font-medium leading-normal pb-2">Repeat</p>
+                <select class="form-select flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-lg text-text-heading dark:text-gray-200 dark:bg-background-dark focus:outline-0 focus:ring-2 focus:ring-primary/50 border border-border-light dark:border-gray-600 bg-surface focus:border-primary/50 h-12 p-3 text-base font-normal leading-normal">
+                    <option>Does not repeat</option>
+                    <option>Repeats daily</option>
+                    <option>Repeats weekly</option>
+                    <option>Repeats monthly</option>
+                </select>
+            </label>
+            <!-- Reason Section -->
+            <label class="flex flex-col w-full">
+                <p class="text-text-body dark:text-gray-300 text-sm font-medium leading-normal pb-2">Reason (Optional)</p>
+                <textarea class="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-lg text-text-heading dark:text-gray-200 dark:bg-background-dark focus:outline-0 focus:ring-2 focus:ring-primary/50 border border-border-light dark:border-gray-600 bg-surface min-h-28 placeholder:text-gray-400 p-3 text-base font-normal leading-normal" placeholder="e.g., Personal appointment, Equipment maintenance"></textarea>
+            </label>
+        </div>
+        <!-- Conflict Check Notice -->
+        <div class="flex items-center gap-2 mt-6 p-3 rounded-lg bg-primary/5 dark:bg-primary/10 border border-primary/10 dark:border-primary/20">
+            <span class="material-symbols-outlined text-lg text-primary/80 dark:text-blue-300">info</span>
+            <p class="text-sm text-primary/80 dark:text-blue-200">We'll check for any conflicting lessons or appointments.</p>
+        </div>
+        <!-- Divider -->
+        <hr class="my-8 border-t border-border-light dark:border-gray-700"/>
+        <!-- Footer Actions -->
+        <div class="flex flex-col-reverse sm:flex-row items-center justify-end gap-3">
+            <button class="font-medium text-text-body dark:text-gray-300 hover:text-black dark:hover:text-white px-4 py-2 rounded-lg">Cancel</button>
+            <button class="w-full sm:w-auto bg-primary hover:bg-opacity-90 text-white font-medium px-6 py-3 rounded-lg flex items-center justify-center">Save</button>
+        </div>
+    </div>
+    </div>
+
+
+    <script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const calendarViewSelector = document.getElementById('view-selector');
+        const calendarTitle = document.getElementById('calendar-title');
+        const calViews = {
+            month: document.getElementById('month-view'),
+            week: document.getElementById('week-view'),
+            day: document.getElementById('day-view'),
+            agenda: document.getElementById('agenda-view'),
+        };
+        const viewButtons = {
+            month: document.getElementById('month-view-btn'),
+            week: document.getElementById('week-view-btn'),
+            day: document.getElementById('day-view-btn'),
+            agenda: document.getElementById('agenda-view-btn'),
+        };
+
+        const activeClassesCal = ['text-primary', 'bg-surface', 'shadow-sm', 'dark:bg-gray-700', 'dark:text-white'];
+        const inactiveClassesCal = ['text-text-body', 'dark:text-gray-400'];
+
+        function switchCalendarView(viewName) {
+            if (!calendarTitle) return;
+            
+            if (viewName === 'month') calendarTitle.textContent = 'November 2025';
+            else if (viewName === 'week') calendarTitle.textContent = 'November 10 – 16, 2025';
+            else if (viewName === 'day') calendarTitle.textContent = 'November 12, 2025';
+            else if (viewName === 'agenda') calendarTitle.textContent = 'Nov 10 – 16, 2025';
+
+            Object.values(calViews).forEach(v => v && v.classList.add('hidden') && v.classList.remove('grid', 'flex'));
+            if (calViews[viewName]) {
+                calViews[viewName].classList.remove('hidden');
+                if (['week', 'day', 'month'].includes(viewName)) calViews[viewName].classList.add('grid');
+                if (viewName === 'agenda') calViews[viewName].classList.add('flex');
+            }
+
+            Object.entries(viewButtons).forEach(([name, button]) => {
+                if (button) {
+                    if (name === viewName) {
+                        button.classList.add(...activeClassesCal);
+                        button.classList.remove(...inactiveClassesCal);
+                    } else {
+                        button.classList.remove(...activeClassesCal);
+                        button.classList.add(...inactiveClassesCal);
+                    }
+                }
+            });
+        }
+
+        if (calendarViewSelector) {
+            calendarViewSelector.addEventListener('click', (event) => {
+                const button = event.target.closest('button');
+                if (!button) return;
+                const viewName = button.id.replace('-view-btn', '');
+                if (calViews[viewName]) {
+                    switchCalendarView(viewName);
+                }
+            });
+        }
+
+        function setupModal(modalId, openBtnId, closeBtnId) {
+            const modal = document.getElementById(modalId);
+            const openBtn = document.getElementById(openBtnId);
+            const closeBtn = document.getElementById(closeBtnId);
+            const open = () => modal && modal.classList.remove('hidden');
+            const close = () => modal && modal.classList.add('hidden');
+            if (openBtn) openBtn.addEventListener('click', open);
+            if (closeBtn) closeBtn.addEventListener('click', close);
+            if (modal) modal.addEventListener('click', e => (e.target === modal) && close());
+        }
+
+        setupModal('course-detail-modal', null, 'close-course-detail-modal-btn');
+        setupModal('add-availability-modal', 'add-availability-btn', 'close-add-availability-modal-btn');
+        setupModal('block-time-modal', 'block-time-btn', 'close-block-time-modal-btn');
+        
+        document.querySelectorAll('.event-item').forEach(item => {
+            item.addEventListener('click', () => {
+                const modal = document.getElementById('course-detail-modal');
+                if(modal) modal.classList.remove('hidden');
+            });
+        });
+
+        switchCalendarView('month');
+
+
+        // Main navigation script
+        const navLinks = {
+            dashboard: document.getElementById('nav-dashboard'),
+            calendar: document.getElementById('nav-calendar'),
+            students: document.getElementById('nav-students'),
+            messaging: document.getElementById('nav-messaging'),
+            settings: document.getElementById('nav-settings'),
+        };
+
+        const mainViews = {
+            dashboard: document.getElementById('dashboard-view'),
+            calendar: document.getElementById('calendar-view'),
+            students: document.getElementById('students-view'),
+            messaging: document.getElementById('messaging-view'),
+            settings: document.getElementById('settings-view'),
+        };
+
+        const activeClassesNav = ['bg-primary/10', 'dark:bg-primary/20'];
+        const inactiveClassesNav = ['hover:bg-gray-100', 'dark:hover:bg-gray-800'];
+        const activeText = ['text-primary', 'dark:text-accent'];
+        const inactiveText = ['text-text-heading', 'dark:text-gray-300'];
+
+        function switchMainView(viewName) {
+            Object.values(mainViews).forEach(view => view.style.display = 'none');
+            if (mainViews[viewName]) {
+                mainViews[viewName].style.display = 'block';
+            }
+
+            Object.entries(navLinks).forEach(([name, link]) => {
+                if(link) {
+                    const icon = link.querySelector('.material-symbols-outlined');
+                    const text = link.querySelector('p');
+                    if (name === viewName) {
+                        link.classList.add(...activeClassesNav);
+                        link.classList.remove(...inactiveClassesNav);
+                        icon.classList.add(...activeText);
+                        icon.classList.remove(...inactiveText);
+                        text.classList.add(...activeText);
+                        text.classList.remove(...inactiveText);
+                    } else {
+                        link.classList.remove(...activeClassesNav);
+                        link.classList.add(...inactiveClassesNav);
+                        icon.classList.add(...inactiveText);
+                        icon.classList.remove(...activeText);
+                        text.classList.add(...inactiveText);
+                        text.classList.remove(...activeText);
+                    }
+                }
+            });
+        }
+
+        document.getElementById('sidebar-nav').addEventListener('click', (event) => {
+            const link = event.target.closest('a');
+            if (!link || !link.id) return;
+            event.preventDefault();
+            const viewName = link.id.replace('nav-', '');
+            if (mainViews[viewName]) {
+                switchMainView(viewName);
+            }
+        });
+
+        // Set initial main view
+        switchMainView('dashboard');
+
+        // Quick Actions event listeners
+        document.getElementById('quick-action-calendar').addEventListener('click', () => switchMainView('calendar'));
+        document.getElementById('quick-action-add-availability').addEventListener('click', () => showModal('add-availability-modal'));
+        document.getElementById('quick-action-students').addEventListener('click', () => switchMainView('students'));
+        document.getElementById('quick-action-settings').addEventListener('click', () => switchMainView('settings'));
+    });
+
+    function showModal(modalId) {
+        const modal = document.getElementById(modalId);
+        if (modal) {
+            modal.classList.remove('hidden');
+        }
+    }
+    </script>
+</body>
+</html>
