@@ -666,6 +666,53 @@
                                 </div>
                             </section>
                              <hr class="border-border-light" />
+                            <section class="flex flex-col gap-6">
+                                <h3 class="text-base font-semibold text-text-heading">Teaching Preferences</h3>
+                                <div class="flex flex-col gap-4">
+                                    <label class="text-sm font-medium text-text-body">Lesson Types Taught</label>
+                                    <div class="flex flex-wrap gap-4">
+                                        <div class="flex items-center gap-2">
+                                            <input checked="" class="h-4 w-4 rounded border-border-light text-accent focus:ring-accent" id="lesson-private" type="checkbox"/>
+                                            <label class="text-sm text-text-body" for="lesson-private">Private</label>
+                                        </div>
+                                        <div class="flex items-center gap-2">
+                                            <input checked="" class="h-4 w-4 rounded border-border-light text-accent focus:ring-accent" id="lesson-group" type="checkbox"/>
+                                            <label class="text-sm text-text-body" for="lesson-group">Group</label>
+                                        </div>
+                                        <div class="flex items-center gap-2">
+                                            <input class="h-4 w-4 rounded border-border-light text-accent focus:ring-accent" id="lesson-freestyle" type="checkbox"/>
+                                            <label class="text-sm text-text-body" for="lesson-freestyle">Freestyle</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="flex flex-col gap-4">
+                                    <label class="text-sm font-medium text-text-body">Skill Levels Taught</label>
+                                    <div class="flex flex-wrap gap-4">
+                                        <div class="flex items-center gap-2">
+                                            <input checked="" class="h-4 w-4 rounded border-border-light text-accent focus:ring-accent" id="level-beginner" type="checkbox"/>
+                                            <label class="text-sm text-text-body" for="level-beginner">Beginner</label>
+                                        </div>
+                                        <div class="flex items-center gap-2">
+                                            <input checked="" class="h-4 w-4 rounded border-border-light text-accent focus:ring-accent" id="level-intermediate" type="checkbox"/>
+                                            <label class="text-sm text-text-body" for="level-intermediate">Intermediate</label>
+                                        </div>
+                                        <div class="flex items-center gap-2">
+                                            <input class="h-4 w-4 rounded border-border-light text-accent focus:ring-accent" id="level-advanced" type="checkbox"/>
+                                            <label class="text-sm text-text-body" for="level-advanced">Advanced</label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </section>
+                            <hr class="border-border-light" />
+                            <section class="flex flex-col gap-6">
+                                <h3 class="text-base font-semibold text-text-heading">Notification Settings</h3>
+                                <div class="flex flex-col gap-4">
+                                    <div class="flex items-center gap-3"><input checked="" class="h-4 w-4 rounded border-border-light text-accent focus:ring-accent" id="notif-email" type="checkbox"/><label class="text-sm text-text-body" for="notif-email">Email for New Bookings</label></div>
+                                    <div class="flex items-center gap-3"><input class="h-4 w-4 rounded border-border-light text-accent focus:ring-accent" id="notif-sms" type="checkbox"/><label class="text-sm text-text-body" for="notif-sms">SMS for Cancellations</label></div>
+                                    <div class="flex items-center gap-3"><input checked="" class="h-4 w-4 rounded border-border-light text-accent focus:ring-accent" id="notif-app" type="checkbox"/><label class="text-sm text-text-body" for="notif-app">In-App Alerts for lesson reminders</label></div>
+                                </div>
+                            </section>
+                             <hr class="border-border-light" />
                             <section class="flex items-center justify-end gap-4">
                                 <button class="text-sm font-medium text-text-body hover:text-text-heading">Cancel</button>
                                 <button class="flex min-w-[84px] cursor-pointer items-center justify-center overflow-hidden rounded-md h-10 px-4 bg-primary text-white text-sm font-medium hover:bg-primary/90">Save Changes</button>
