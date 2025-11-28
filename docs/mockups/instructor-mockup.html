@@ -722,13 +722,99 @@
                 </div>
             </div>
 
-             <!-- Messaging View -->
-            <div id="messaging-view" style="display: none;">
+            <!-- Messaging View -->
+            <div id="messaging-view" class="h-full flex flex-col" style="display: none;">
                 <header class="flex flex-wrap justify-between items-center gap-4 pb-6 border-b border-border-light dark:border-gray-700">
                     <p class="text-text-heading text-4xl font-black leading-tight tracking-[-0.033em] font-heading dark:text-white">Messaging</p>
                 </header>
-                 <div class="py-6 text-center text-text-body">
-                    <p>Messaging functionality will be implemented here.</p>
+                <div class="flex-1 grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-6 mt-6 h-[calc(100vh-250px)]">
+                    <!-- Conversation List -->
+                    <div class="md:col-span-1 lg:col-span-1 bg-surface dark:bg-background-dark rounded-xl border border-border-light dark:border-gray-700 flex flex-col">
+                        <div class="p-4 border-b border-border-light dark:border-gray-700">
+                            <div class="relative">
+                                <span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-text-body">search</span>
+                                <input class="w-full pl-10 pr-4 py-2 text-sm bg-background-light dark:bg-surface rounded-lg border-none focus:ring-2 focus:ring-primary" placeholder="Search messages..." type="search"/>
+                            </div>
+                        </div>
+                        <div class="flex-1 overflow-y-auto">
+                            <a href="#" class="flex items-center gap-4 p-4 border-b border-border-light dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-800">
+                                <div class="relative">
+                                    <img class="h-12 w-12 rounded-full object-cover" src="https://lh3.googleusercontent.com/a/ACg8ocJ-9-333-333-333-333" alt="Alex Weber"/>
+                                    <span class="absolute bottom-0 right-0 block h-3 w-3 rounded-full bg-green-500 border-2 border-surface dark:border-background-dark"></span>
+                                </div>
+                                <div class="flex-1">
+                                    <div class="flex justify-between items-center">
+                                        <h3 class="font-bold text-text-heading dark:text-white">Alex Weber</h3>
+                                        <span class="text-xs text-text-body dark:text-gray-400">2m ago</span>
+                                    </div>
+                                    <p class="text-sm text-text-body dark:text-gray-400 truncate">Hey, can you take a look at the new schedule for next week?</p>
+                                </div>
+                            </a>
+                            <a href="#" class="flex items-center gap-4 p-4 border-b border-border-light dark:border-gray-700 bg-primary/5 dark:bg-primary/10">
+                                <div class="relative">
+                                    <img class="h-12 w-12 rounded-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCW1_TbfGGo2tbQcmqQPqqqPNjiLLXP62bUm7Vp4ziOV1EzdSqgBn8sQlxCg7CdchnDlFDwOtrcIhK1G9Y4LltZLeHMMZOTQaCFXUVXlW43OSiaCWXfI7Iaoa-_9qBnQz52iSyQuQNhBbSYIAaeS7doj7doQGYGhvzcVFxshRosn8Ld36w0uSN6j7e7iiI6FW-XGUNlaz9Us4D8pNrt91dqUa9Ey7KCyMmajQREsVzKTWf9MecoWq0iZjp1B4G3UOj8fibiscE7iAE" alt="Jen Adler"/>
+                                </div>
+                                <div class="flex-1">
+                                    <div class="flex justify-between items-center">
+                                        <h3 class="font-bold text-text-heading dark:text-white">Jen Adler</h3>
+                                        <span class="text-xs text-text-body dark:text-gray-400">1h ago</span>
+                                    </div>
+                                    <p class="text-sm text-text-body dark:text-gray-400 truncate">I had a question about the hydrofoil lesson.</p>
+                                </div>
+                            </a>
+                             <a href="#" class="flex items-center gap-4 p-4 border-b border-border-light dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-800">
+                                <div class="relative">
+                                    <img class="h-12 w-12 rounded-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDR1ToprpsiwZPVxSHLS7QuoUurQ7DL9GB5ZdY7eMBKA34_pz_JIEqtv2-54xDEuDWuKgujgnMe0i02XxGlrymaF-cGsKXdTbslS1phOhguIZ6nnYX3QCbpSsFK3o_G3bIgbvp0wWECzag0YxD7262MNZuDuH-T_tjwwAQAHAJm0rkU33LI1eZfw3oakqSFkeHtaLeK8JD970URJOrcmrGHa30IBSc2-ugsV3expXJ9MCvQc0srfLP-NXhEaP8QH4TnaCMUgBKTphI" alt="Alex Johnson"/>
+                                </div>
+                                <div class="flex-1">
+                                    <div class="flex justify-between items-center">
+                                        <h3 class="font-bold text-text-heading dark:text-white">Alex Johnson</h3>
+                                        <span class="text-xs text-text-body dark:text-gray-400">yesterday</span>
+                                    </div>
+                                    <p class="text-sm text-text-body dark:text-gray-400 truncate">Thanks for the great lesson!</p>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                    <!-- Chat Window -->
+                    <div class="md:col-span-2 lg:col-span-3 bg-surface dark:bg-background-dark rounded-xl border border-border-light dark:border-gray-700 flex flex-col h-full">
+                        <div class="p-4 border-b border-border-light dark:border-gray-700 flex items-center gap-4">
+                             <img class="h-12 w-12 rounded-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCW1_TbfGGo2tbQcmqQPqqqPNjiLLXP62bUm7Vp4ziOV1EzdSqgBn8sQlxCg7CdchnDlFDwOtrcIhK1G9Y4LltZLeHMMZOTQaCFXUVXlW43OSiaCWXfI7Iaoa-_9qBnQz52iSyQuQNhBbSYIAaeS7doj7doQGYGhvzcVFxshRosn8Ld36w0uSN6j7e7iiI6FW-XGUNlaz9Us4D8pNrt91dqUa9Ey7KCyMmajQREsVzKTWf9MecoWq0iZjp1B4G3UOj8fibiscE7iAE" alt="Jen Adler"/>
+                             <div>
+                                <h2 class="text-lg font-bold text-text-heading dark:text-white">Jen Adler</h2>
+                                <p class="text-sm text-green-600 dark:text-green-400">Online</p>
+                             </div>
+                        </div>
+                        <div class="flex-1 p-6 overflow-y-auto space-y-4">
+                            <!-- Messages -->
+                            <div class="flex items-end gap-3">
+                                <img class="h-8 w-8 rounded-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCW1_TbfGGo2tbQcmqQPqqqPNjiLLXP62bUm7Vp4ziOV1EzdSqgBn8sQlxCg7CdchnDlFDwOtrcIhK1G9Y4LltZLeHMMZOTQaCFXUVXlW43OSiaCWXfI7Iaoa-_9qBnQz52iSyQuQNhBbSYIAaeS7doj7doQGYGhvzcVFxshRosn8Ld36w0uSN6j7e7iiI6FW-XGUNlaz9Us4D8pNrt91dqUa9Ey7KCyMmajQREsVzKTWf9MecoWq0iZjp1B4G3UOj8fibiscE7iAE" alt="Jen Adler"/>
+                                <div class="bg-gray-200 dark:bg-gray-700 p-3 rounded-lg rounded-bl-none max-w-xl">
+                                    <p class="text-sm text-text-heading dark:text-white">I had a question about the hydrofoil lesson. Is it suitable for someone who has only done twin-tip riding?</p>
+                                </div>
+                            </div>
+                            <div class="flex items-end gap-3 justify-end">
+                                <div class="bg-primary text-white p-3 rounded-lg rounded-br-none max-w-xl">
+                                    <p class="text-sm">Hi Jen! Absolutely. As long as you're comfortable riding upwind on a twin-tip, you should be ready for a hydrofoil introduction. We'll start with the basics on a very low-mast setup.</p>
+                                </div>
+                                 <img class="h-8 w-8 rounded-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCO3KYqinJeWZI0gsuFo_Dy20oLfTKZkfrkMgvJoSGjTpfJGnI-TdWafzDbxikZusNmXsMYJ4DyzZcJvQk4khz2OHHyKHFburBmLejaXwCYP9VK87D4nxqmVhsaiNmPRbga0yJ7pxr9i43_XRSrkFoW14VKdd8TWJcIpZxdHhxeMDtAha1kOX1nxbXl3ZsmwWos9SvdXfLEUMbBU2YtdZmby1tB_Ki9yqIyj9xrXoIv10lnzybwEPi2ynTt5N9qzL81rZEg6IcnuO4" alt="John Appleseed"/>
+                            </div>
+                             <div class="flex items-end gap-3">
+                                <img class="h-8 w-8 rounded-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCW1_TbfGGo2tbQcmqQPqqqPNjiLLXP62bUm7Vp4ziOV1EzdSqgBn8sQlxCg7CdchnDlFDwOtrcIhK1G9Y4LltZLeHMMZOTQaCFXUVXlW43OSiaCWXfI7Iaoa-_9qBnQz52iSyQuQNhBbSYIAaeS7doj7doQGYGhvzcVFxshRosn8Ld36w0uSN6j7e7iiI6FW-XGUNlaz9Us4D8pNrt91dqUa9Ey7KCyMmajQREsVzKTWf9MecoWq0iZjp1B4G3UOj8fibiscE7iAE" alt="Jen Adler"/>
+                                <div class="bg-gray-200 dark:bg-gray-700 p-3 rounded-lg rounded-bl-none max-w-xl">
+                                    <p class="text-sm text-text-heading dark:text-white">That sounds great! I'm excited to try it. I'll book a session for next week.</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="p-4 border-t border-border-light dark:border-gray-700">
+                            <div class="relative">
+                                <input class="w-full bg-background-light dark:bg-surface rounded-lg border-none pl-4 pr-12 py-3 focus:ring-2 focus:ring-primary" placeholder="Type a message..." type="text"/>
+                                <button class="absolute right-3 top-1/2 -translate-y-1/2 text-primary hover:bg-primary/10 p-2 rounded-full">
+                                    <span class="material-symbols-outlined">send</span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </main>
