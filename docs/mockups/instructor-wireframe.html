@@ -1,0 +1,569 @@
+<!DOCTYPE html>
+<html class="light" lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>KiteOps Instructor Wireframe</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&amp;family=Inter:wght@400;500;600&amp;display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
+    <style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .hidden {
+            display: none;
+        }
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: rgba(0, 0, 0, 0.5);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 50;
+        }
+        .calendar-scrollbar::-webkit-scrollbar {
+            width: 6px;
+        }
+        .calendar-scrollbar::-webkit-scrollbar-track {
+            background: #f1f1f1;
+            border-radius: 10px;
+        }
+        .calendar-scrollbar::-webkit-scrollbar-thumb {
+            background: #ccc;
+            border-radius: 10px;
+        }
+        .calendar-scrollbar::-webkit-scrollbar-thumb:hover {
+            background: #aaa;
+        }
+        .calendar-day-scroll::-webkit-scrollbar {
+            width: 4px;
+        }
+        .calendar-day-scroll::-webkit-scrollbar-thumb {
+            background-color: #EAEAEA;
+            border-radius: 4px;
+        }
+        .calendar-day-scroll::-webkit-scrollbar-track {
+            background-color: transparent;
+        }
+         .pattern-diagonal-lines {
+            background-image: repeating-linear-gradient(
+              45deg,
+              rgba(0, 0, 0, 0.05),
+              rgba(0, 0, 0, 0.05) 10px,
+              transparent 10px,
+              transparent 20px
+            );
+        }
+    </style>
+    <script>
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#0A2540",
+                        "accent": "#4A90E2",
+                        "warning": "#FBBF24",
+                        "success": "#28a745",
+                        "text-heading": "#111111",
+                        "text-body": "#555555",
+                        "background-light": "#F5F5F5",
+                        "surface": "#FFFFFF",
+                        "border-light": "#E0E0E0",
+                        "available": "#ECFDF5",
+                        "available-border": "#10B981",
+                        "blocked": "#F3F4F6",
+                        "pending": "#FBBF24",
+                    },
+                    fontFamily: {
+                        "display": ["Manrope", "sans-serif"],
+                        "body": ["Inter", "sans-serif"],
+                         "heading": ["Manrope", "sans-serif"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.5rem",
+                        "lg": "0.75rem",
+                        "xl": "1rem",
+                        "full": "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+</head>
+<body class="bg-background-light font-body text-text-body">
+    <div class="relative flex min-h-screen w-full group/design-root">
+        <!-- SideNavBar -->
+        <aside class="w-64 flex-shrink-0 bg-surface border-r border-border-light p-6 flex flex-col justify-between">
+            <div>
+                 <div class="flex items-center gap-3 mb-8">
+                    <div class="size-8 text-primary -ml-1">
+                        <svg fill="none" viewbox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
+                            <g clip-path="url(#clip0_6_535)">
+                                <path clip-rule="evenodd" d="M47.2426 24L24 47.2426L0.757355 24L24 0.757355L47.2426 24ZM12.2426 21H35.7574L24 9.24264L12.2426 21Z" fill="currentColor" fill-rule="evenodd"></path>
+                            </g>
+                            <defs>
+                                <clippath id="clip0_6_535">
+                                    <rect fill="white" height="48" width="48"></rect>
+                                </clippath>
+                            </defs>
+                        </svg>
+                    </div>
+                    <h1 class="text-primary text-xl font-bold font-heading">KiteOps</h1>
+                </div>
+                <div class="flex items-center gap-4 mb-8">
+                    <div class="bg-center bg-no-repeat aspect-square bg-cover rounded-full size-12" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuCO3KYqinJeWZI0gsuFo_Dy20oLfTKZkfrkMgvJoSGjTpfJGnI-TdWafzDbxikZusNmXsMYJ4DyzZcJvQk4khz2OHHyKHFburBmLejaXwCYP9VK87D4nxqmVhsaiNmPRbga0yJ7pxr9i43_XRSrkFoW14VKdd8TWJcIpZxdHhxeMDtAha1kOX1nxbXl3ZsmwWos9SvdXfLEUMbBU2YtdZmby1tB_Ki9yqIyj9xrXoIv10lnzybwEPi2ynTt5N9qzL81rZEg6IcnuO4");'></div>
+                    <div class="flex flex-col">
+                        <h2 class="text-text-heading text-base font-semibold leading-tight">John Appleseed</h2>
+                        <p class="text-text-body text-sm font-normal leading-tight">Instructor</p>
+                    </div>
+                </div>
+                <nav id="sidebar-nav" class="flex flex-col gap-2">
+                    <a id="nav-calendar" class="flex items-center gap-3 px-3 py-2 rounded-lg" href="#">
+                        <span class="material-symbols-outlined">calendar_month</span>
+                        <p class="text-sm font-medium leading-normal">Calendar</p>
+                    </a>
+                    <a id="nav-students" class="flex items-center gap-3 px-3 py-2 rounded-lg" href="#">
+                        <span class="material-symbols-outlined">groups</span>
+                        <p class="text-sm font-medium leading-normal">My Students</p>
+                    </a>
+                    <a id="nav-messaging" class="flex items-center gap-3 px-3 py-2 rounded-lg" href="#">
+                        <span class="material-symbols-outlined">chat_bubble</span>
+                        <p class="text-sm font-medium leading-normal">Messaging</p>
+                    </a>
+                    <a id="nav-settings" class="flex items-center gap-3 px-3 py-2 rounded-lg" href="#">
+                        <span class="material-symbols-outlined">settings</span>
+                        <p class="text-sm font-medium leading-normal">Settings</p>
+                    </a>
+                </nav>
+            </div>
+            <div class="flex flex-col gap-1">
+                <a href="#" class="flex items-center gap-3 px-3 py-2 rounded-lg text-text-body hover:bg-primary/10">
+                    <span class="material-symbols-outlined">logout</span>
+                    <p class="text-sm font-medium">Logout</p>
+                </a>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="flex-1 flex flex-col p-8">
+            <!-- Calendar View -->
+            <div id="calendar-view" class="main-view">
+                 <header class="flex flex-wrap justify-between items-center gap-4 pb-6 border-b border-border-light dark:border-gray-700">
+                    <p class="text-text-heading text-4xl font-black leading-tight tracking-[-0.033em] font-heading dark:text-white">My Calendar</p>
+                    <div class="flex flex-1 gap-3 flex-wrap justify-start sm:justify-end">
+                        <button id="add-availability-btn" class="flex min-w-[84px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 px-4 bg-primary text-white text-sm font-bold leading-normal tracking-[0.015em] hover:bg-primary/90">
+                            <span class="truncate">+ Add availability</span>
+                        </button>
+                        <button id="block-time-btn" class="flex min-w-[84px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 px-4 bg-surface text-text-heading border border-border-light text-sm font-bold leading-normal tracking-[0.015em] hover:bg-gray-50 dark:bg-gray-800 dark:border-gray-600 dark:text-white dark:hover:bg-gray-700">
+                            <span class="truncate">Block time</span>
+                        </button>
+                    </div>
+                </header>
+                 <div class="flex flex-wrap items-center justify-between gap-4 py-4">
+                    <div class="flex items-center gap-2">
+                        <button class="flex items-center justify-center rounded-md h-9 px-3 border border-border-light bg-surface text-sm font-medium text-text-heading hover:bg-gray-50 dark:bg-gray-800 dark:border-gray-600 dark:text-white dark:hover:bg-gray-700">Today</button>
+                        <div class="flex gap-1">
+                            <button class="p-2 rounded-md hover:bg-gray-100 dark:hover:bg-gray-700">
+                                <span class="material-symbols-outlined text-text-heading dark:text-white">chevron_left</span>
+                            </button>
+                            <button class="p-2 rounded-md hover:bg-gray-100 dark:hover:bg-gray-700">
+                                <span class="material-symbols-outlined text-text-heading dark:text-white">chevron_right</span>
+                            </button>
+                        </div>
+                        <h1 id="calendar-title" class="text-text-heading text-xl font-bold leading-tight tracking-[-0.015em] font-heading dark:text-white">November 2025</h1>
+                    </div>
+                    <div id="view-selector" class="flex bg-gray-100 p-1 rounded-lg dark:bg-gray-800">
+                        <button id="month-view-btn" class="px-3 py-1 text-sm font-medium text-text-body rounded-md dark:text-gray-400">Month</button>
+                        <button id="week-view-btn" class="px-3 py-1 text-sm font-medium text-text-body rounded-md dark:text-gray-400">Week</button>
+                        <button id="day-view-btn" class="px-3 py-1 text-sm font-medium text-text-body rounded-md dark:text-gray-400">Day</button>
+                        <button id="agenda-view-btn" class="px-3 py-1 text-sm font-medium text-text-body rounded-md dark:text-gray-400">Agenda</button>
+                    </div>
+                </div>
+                 <div class="flex flex-wrap items-center gap-4 py-2 mb-4">
+                    <div class="flex items-center gap-2"><div class="size-3 rounded-sm bg-accent"></div><span class="text-xs text-text-body dark:text-gray-400">Confirmed</span></div>
+                    <div class="flex items-center gap-2"><div class="size-3 rounded-sm bg-pending"></div><span class="text-xs text-text-body dark:text-gray-400">Pending</span></div>
+                    <div class="flex items-center gap-2"><div class="size-3 rounded-sm bg-available border border-available-border"></div><span class="text-xs text-text-body dark:text-gray-400">Available</span></div>
+                    <div class="flex items-center gap-2"><div class="size-3 rounded-sm bg-blocked pattern-diagonal-lines"></div><span class="text-xs text-text-body dark:text-gray-400">Blocked</span></div>
+                </div>
+                <div class="flex-1">
+                    <!-- Calendar views will be injected here -->
+                </div>
+            </div>
+
+            <!-- Students View -->
+            <div id="students-view" class="main-view hidden">
+                 <header class="flex flex-wrap justify-between items-center gap-4 pb-6 border-b border-border-light dark:border-gray-700">
+                    <p class="text-text-heading text-4xl font-black leading-tight tracking-[-0.033em] font-heading dark:text-white">My Students</p>
+                </header>
+                 <div class="py-6">
+                    <div class="flex items-center py-4">
+                        <div class="relative w-full">
+                            <span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-text-body">search</span>
+                            <input class="flex h-10 w-full rounded-md border border-border-light bg-transparent py-2 pl-10 pr-3 text-sm placeholder:text-text-body focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 dark:border-gray-600 dark:focus:ring-accent" placeholder="Filter by name or email..." type="search"/>
+                        </div>
+                    </div>
+                    <div class="relative w-full overflow-auto rounded-lg border border-border-light dark:border-gray-700">
+                        <table class="w-full caption-bottom text-sm">
+                            <thead class="[&amp;_tr]:border-b [&amp;_tr]:border-border-light dark:[&amp;_tr]:border-gray-700">
+                                <tr class="hover:bg-gray-50/50 dark:hover:bg-white/5">
+                                    <th class="h-12 px-4 text-left align-middle font-medium text-text-body dark:text-gray-400">Student Name</th>
+                                    <th class="h-12 px-4 text-left align-middle font-medium text-text-body dark:text-gray-400">Email</th>
+                                    <th class="h-12 px-4 text-left align-middle font-medium text-text-body dark:text-gray-400">Skill Level</th>
+                                    <th class="h-12 px-4 text-left align-middle font-medium text-text-body dark:text-gray-400">Total Lessons</th>
+                                    <th class="h-12 px-4 text-left align-middle font-medium text-text-body dark:text-gray-400">Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody class="[&amp;_tr:last-child]:border-0">
+                                <tr class="border-b border-border-light transition-colors hover:bg-gray-50/50 dark:border-gray-700 dark:hover:bg-white/5">
+                                    <td class="p-4 align-middle font-medium text-text-heading dark:text-white">Olivia Martin</td>
+                                    <td class="p-4 align-middle text-text-body dark:text-gray-300">olivia.martin@email.com</td>
+                                    <td class="p-4 align-middle text-text-body dark:text-gray-300">Intermediate</td>
+                                    <td class="p-4 align-middle text-text-body dark:text-gray-300">12</td>
+                                    <td class="p-4 align-middle">
+                                        <div class="flex items-center space-x-2">
+                                            <button class="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 h-10 w-10 border border-border-light bg-surface text-text-heading hover:bg-gray-100 dark:border-gray-600 dark:bg-gray-800 dark:text-white dark:hover:bg-gray-700">
+                                                <span class="material-symbols-outlined text-xl">visibility</span>
+                                            </button>
+                                            <button class="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 h-10 w-10 border border-border-light bg-surface text-text-heading hover:bg-gray-100 dark:border-gray-600 dark:bg-gray-800 dark:text-white dark:hover:bg-gray-700">
+                                                <span class="material-symbols-outlined text-xl">mail</span>
+                                            </button>
+                                        </div>
+                                    </td>
+                                </tr>
+                                 <tr class="border-b border-border-light transition-colors hover:bg-gray-50/50 dark:border-gray-700 dark:hover:bg-white/5">
+                                    <td class="p-4 align-middle font-medium text-text-heading dark:text-white">Liam Johnson</td>
+                                    <td class="p-4 align-middle text-text-body dark:text-gray-300">liam.johnson@email.com</td>
+                                    <td class="p-4 align-middle text-text-body dark:text-gray-300">Beginner</td>
+                                    <td class="p-4 align-middle text-text-body dark:text-gray-300">5</td>
+                                    <td class="p-4 align-middle">
+                                        <div class="flex items-center space-x-2">
+                                            <button class="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 h-10 w-10 border border-border-light bg-surface text-text-heading hover:bg-gray-100 dark:border-gray-600 dark:bg-gray-800 dark:text-white dark:hover:bg-gray-700">
+                                                <span class="material-symbols-outlined text-xl">visibility</span>
+                                            </button>
+                                            <button class="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 h-10 w-10 border border-border-light bg-surface text-text-heading hover:bg-gray-100 dark:border-gray-600 dark:bg-gray-800 dark:text-white dark:hover:bg-gray-700">
+                                                <span class="material-symbols-outlined text-xl">mail</span>
+                                            </button>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Settings View -->
+            <div id="settings-view" class="main-view hidden">
+                 <header class="flex flex-wrap justify-between items-center gap-4 pb-6 border-b border-border-light dark:border-gray-700">
+                    <p class="text-text-heading text-4xl font-black leading-tight tracking-[-0.033em] font-heading dark:text-white">Settings</p>
+                </header>
+                 <div class="py-6">
+                    <div class="max-w-4xl mx-auto">
+                        <div class="flex flex-col gap-8">
+                            <section class="flex flex-col gap-6">
+                                <h3 class="text-base font-semibold text-text-heading">Personal Information</h3>
+                                <div class="grid grid-cols-1 gap-6 md:grid-cols-2">
+                                    <div class="flex flex-col gap-2">
+                                        <label class="text-sm font-medium text-text-body" for="name">Name</label>
+                                        <input class="w-full h-10 px-3 py-2 text-sm bg-white border rounded-md border-border-light text-text-heading placeholder:text-text-body/50 focus:outline-none focus:ring-2 focus:ring-accent" id="name" type="text" value="John Appleseed" />
+                                    </div>
+                                    <div class="flex flex-col gap-2">
+                                        <label class="text-sm font-medium text-text-body" for="email">Email Address</label>
+                                        <input class="w-full h-10 px-3 py-2 text-sm bg-white border rounded-md border-border-light text-text-heading placeholder:text-text-body/50 focus:outline-none focus:ring-2 focus:ring-accent" id="email" type="email" value="john.appleseed@example.com" />
+                                    </div>
+                                </div>
+                                <div class="grid grid-cols-1 gap-6">
+                                    <div class="flex flex-col gap-2">
+                                        <label class="text-sm font-medium text-text-body" for="phone">Phone Number</label>
+                                        <input class="w-full h-10 px-3 py-2 text-sm bg-white border rounded-md border-border-light text-text-heading placeholder:text-text-body/50 focus:outline-none focus:ring-2 focus:ring-accent" id="phone" type="tel" value="+1 (555) 123-4567" />
+                                    </div>
+                                </div>
+                                <div class="flex flex-col gap-2">
+                                    <label class="text-sm font-medium text-text-body" for="profile-picture">Profile Picture</label>
+                                    <div class="flex items-center gap-4">
+                                        <div class="bg-center bg-no-repeat aspect-square bg-cover rounded-full size-16" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuCO3KYqinJeWZI0gsuFo_Dy20oLfTKZkfrkMgvJoSGjTpfJGnI-TdWafzDbxikZusNmXsMYJ4DyzZcJvQk4khz2OHHyKHFburBmLejaXwCYP9VK87D4nxqmVhsaiNmPRbga0yJ7pxr9i43_XRSrkFoW14VKdd8TWJcIpZxdHhxeMDtAha1kOX1nxbXl3ZsmwWos9SvdXfLEUMbBU2YtdZmby1tB_Ki9yqIyj9xrXoIv10lnzybwEPi2ynTt5N9qzL81rZEg6IcnuO4");'></div>
+                                        <label class="flex h-10 cursor-pointer items-center justify-center rounded-md border border-border-light bg-surface px-4 text-sm font-medium text-text-heading hover:bg-gray-50" for="profile-picture">
+                                            <span class="material-symbols-outlined mr-2 text-base">upload</span>
+                                            <span>Upload new picture</span>
+                                            <input class="sr-only" id="profile-picture" type="file" />
+                                        </label>
+                                    </div>
+                                </div>
+                            </section>
+                            <hr class="border-border-light" />
+                            <section class="flex flex-col gap-6">
+                                <h3 class="text-base font-semibold text-text-heading">Availability Preferences</h3>
+                                <div class="grid grid-cols-1 gap-6 md:grid-cols-2">
+                                    <div class="flex flex-col gap-2">
+                                        <label class="text-sm font-medium text-text-body" for="start-time">Default Start Time</label>
+                                        <input class="w-full h-10 px-3 py-2 text-sm bg-white border rounded-md border-border-light text-text-heading placeholder:text-text-body/50 focus:outline-none focus:ring-2 focus:ring-accent" id="start-time" type="time" value="09:00" />
+                                    </div>
+                                    <div class="flex flex-col gap-2">
+                                        <label class="text-sm font-medium text-text-body" for="end-time">Default End Time</label>
+                                        <input class="w-full h-10 px-3 py-2 text-sm bg-white border rounded-md border-border-light text-text-heading placeholder:text-text-body/50 focus:outline-none focus:ring-2 focus:ring-accent" id="end-time" type="time" value="17:00" />
+                                    </div>
+                                </div>
+                            </section>
+                             <hr class="border-border-light" />
+                            <section class="flex items-center justify-end gap-4">
+                                <button class="text-sm font-medium text-text-body hover:text-text-heading">Cancel</button>
+                                <button class="flex min-w-[84px] cursor-pointer items-center justify-center overflow-hidden rounded-md h-10 px-4 bg-primary text-white text-sm font-medium hover:bg-primary/90">Save Changes</button>
+                            </section>
+                        </div>
+                    </div>
+                </div>
+            </div>
+             <!-- Messaging View -->
+            <div id="messaging-view" class="main-view hidden">
+                <header class="flex flex-wrap justify-between items-center gap-4 pb-6 border-b border-border-light dark:border-gray-700">
+                    <p class="text-text-heading text-4xl font-black leading-tight tracking-[-0.033em] font-heading dark:text-white">Messaging</p>
+                </header>
+                <div class="py-6 text-center text-text-body">
+                    <p>Messaging functionality will be implemented here.</p>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Modals -->
+    <div id="course-detail-modal" class="modal-overlay hidden">
+       <div class="bg-surface rounded-xl w-full max-w-lg shadow-xl dark:bg-gray-800">
+            <div class="flex items-start justify-between p-6 border-b border-border-light dark:border-gray-700">
+                <h2 class="text-xl font-bold font-heading text-text-heading dark:text-white">Private Lesson - Intermediate</h2>
+                <button class="text-gray-400 hover:text-gray-600 dark:hover:text-gray-200 close-modal-btn" data-modal-id="course-detail-modal">
+                    <span class="material-symbols-outlined">close</span>
+                </button>
+            </div>
+            <div class="p-6 space-y-8">
+                <div class="space-y-4">
+                    <h3 class="font-heading text-lg font-bold text-text-heading dark:text-white">Lesson Details</h3>
+                    <div class="grid grid-cols-2 gap-x-4 gap-y-3">
+                        <div>
+                            <p class="text-sm font-medium text-text-body dark:text-gray-400">Date and Time</p>
+                            <p class="text-base text-text-heading dark:text-white">Mon, Nov 10, 2025 - 10:00 AM</p>
+                        </div>
+                        <div>
+                            <p class="text-sm font-medium text-text-body dark:text-gray-400">Duration</p>
+                            <p class="text-base text-text-heading dark:text-white">2 hours</p>
+                        </div>
+                        <div>
+                            <p class="text-sm font-medium text-text-body dark:text-gray-400">Location</p>
+                            <p class="text-base text-text-heading dark:text-white">Main Beach</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="border-t border-border-light dark:border-gray-700"></div>
+                <div class="space-y-4">
+                    <h3 class="font-heading text-lg font-bold text-text-heading dark:text-white">Student Details</h3>
+                    <div class="grid grid-cols-2 gap-x-4 gap-y-3">
+                        <div>
+                            <p class="text-sm font-medium text-text-body dark:text-gray-400">Student Name</p>
+                            <p class="text-base text-text-heading dark:text-white">Jane Doe</p>
+                        </div>
+                        <div>
+                            <p class="text-sm font-medium text-text-body dark:text-gray-400">Skill Level</p>
+                            <p class="text-base text-text-heading dark:text-white">Intermediate</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="flex items-center justify-end p-6 gap-3 border-t border-border-light dark:border-gray-700">
+                <button class="flex min-w-[84px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 px-4 bg-red-600 text-white text-sm font-bold leading-normal tracking-[0.015em] hover:bg-red-700">
+                    <span class="truncate">Cancel Lesson</span>
+                </button>
+            </div>
+        </div>
+    </div>
+    <div id="add-availability-modal" class="modal-overlay hidden">
+         <div class="relative flex w-full max-w-lg flex-col overflow-hidden rounded-xl bg-surface dark:bg-background-dark shadow-2xl">
+            <div class="flex items-center justify-between gap-4 p-6 border-b border-border-light">
+                <p class="font-display text-2xl font-bold text-text-heading dark:text-white">Add Availability</p>
+                <button class="flex h-8 w-8 items-center justify-center rounded-full text-text-body hover:bg-gray-100 dark:hover:bg-gray-700 close-modal-btn" data-modal-id="add-availability-modal">
+                    <span class="material-symbols-outlined">close</span>
+                </button>
+            </div>
+            <div class="flex flex-col gap-6 p-6">
+                <div class="flex flex-col gap-4">
+                    <label class="flex flex-col">
+                        <p class="text-text-body text-sm font-medium leading-normal pb-2">Date(s)</p>
+                        <div class="relative flex items-center">
+                            <input class="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-lg border border-border-light bg-surface text-text-body placeholder:text-text-body/60 focus:border-primary focus:ring-2 focus:ring-primary/20 h-12 p-3 text-base font-normal leading-normal dark:bg-background-dark dark:text-white" placeholder="Select date or date range"/>
+                            <div class="pointer-events-none absolute right-3 flex items-center justify-center text-text-body">
+                                <span class="material-symbols-outlined">calendar_today</span>
+                            </div>
+                        </div>
+                    </label>
+                    <div class="flex flex-wrap items-end gap-4">
+                        <label class="flex flex-col min-w-40 flex-1">
+                            <p class="text-text-body text-sm font-medium leading-normal pb-2">From</p>
+                            <input class="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-lg border border-border-light bg-surface text-text-body placeholder:text-text-body/60 focus:border-primary focus:ring-2 focus:ring-primary/20 h-12 p-3 text-base font-normal leading-normal dark:bg-background-dark dark:text-white" type="time" value="09:00"/>
+                        </label>
+                        <label class="flex flex-col min-w-40 flex-1">
+                            <p class="text-text-body text-sm font-medium leading-normal pb-2">To</p>
+                            <input class="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-lg border border-border-light bg-surface text-text-body placeholder:text-text-body/60 focus:border-primary focus:ring-2 focus:ring-primary/20 h-12 p-3 text-base font-normal leading-normal dark:bg-background-dark dark:text-white" type="time" value="17:00"/>
+                        </label>
+                    </div>
+                </div>
+                 <div class="flex flex-col gap-4">
+                    <label class="flex flex-col">
+                        <p class="text-text-body text-sm font-medium leading-normal pb-2">Repeats</p>
+                        <select class="form-input flex w-full min-w-0 flex-1 appearance-none resize-none overflow-hidden rounded-lg border border-border-light bg-surface text-text-body placeholder:text-text-body/60 focus:border-primary focus:ring-2 focus:ring-primary/20 h-12 bg-right-2 bg-no-repeat p-3 text-base font-normal leading-normal dark:bg-background-dark dark:text-white">
+                            <option value="none">Does not repeat</option>
+                            <option value="daily">Repeats daily</option>
+                            <option value="weekly">Repeats weekly</option>
+                            <option value="monthly">Repeats monthly</option>
+                        </select>
+                    </label>
+                </div>
+            </div>
+             <div class="flex flex-1 gap-3 flex-wrap px-6 py-4 justify-end items-center bg-gray-50 dark:bg-gray-900/50 border-t border-border-light">
+                <button class="flex min-w-[84px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-11 px-5 text-text-body text-base font-semibold leading-normal tracking-[0.015em] hover:bg-gray-200 dark:text-white dark:hover:bg-gray-700 close-modal-btn" data-modal-id="add-availability-modal">
+                    <span class="truncate">Cancel</span>
+                </button>
+                <button class="flex min-w-[84px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-11 px-5 bg-primary text-white text-base font-semibold leading-normal tracking-[0.015em] hover:bg-primary/90">
+                    <span class="truncate">Save</span>
+                </button>
+            </div>
+        </div>
+    </div>
+    <div id="block-time-modal" class="modal-overlay hidden">
+        <div class="relative w-full max-w-lg rounded-xl bg-surface dark:bg-background-dark shadow-2xl p-8 m-4">
+            <div class="flex items-start justify-between mb-6">
+                <h2 class="text-text-heading dark:text-gray-100 font-display text-2xl font-bold">Block Time</h2>
+                <button class="text-gray-400 hover:text-gray-600 dark:hover:text-gray-200 close-modal-btn" data-modal-id="block-time-modal">
+                    <span class="material-symbols-outlined">close</span>
+                </button>
+            </div>
+            <div class="flex flex-col gap-6">
+                <div class="flex flex-col sm:flex-row gap-4">
+                     <label class="flex flex-col flex-1">
+                        <p class="text-text-body dark:text-gray-300 text-sm font-medium leading-normal pb-2">Date(s)</p>
+                        <div class="flex w-full items-stretch rounded-lg">
+                            <input class="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-l-lg text-text-heading dark:text-gray-200 dark:bg-background-dark focus:outline-0 focus:ring-2 focus:ring-primary/50 border border-border-light dark:border-gray-600 bg-surface focus:border-primary/50 h-12 placeholder:text-gray-400 p-3 text-base font-normal leading-normal" placeholder="Select date"/>
+                            <div class="text-text-body dark:text-gray-400 flex border border-l-0 border-border-light dark:border-gray-600 bg-gray-50 dark:bg-gray-800/50 items-center justify-center px-3 rounded-r-lg">
+                                <span class="material-symbols-outlined text-xl">calendar_today</span>
+                            </div>
+                        </div>
+                    </label>
+                </div>
+                 <div class="flex flex-col sm:flex-row gap-4">
+                    <label class="flex flex-col min-w-40 flex-1">
+                        <p class="text-text-body dark:text-gray-300 text-sm font-medium leading-normal pb-2">From</p>
+                        <input class="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-lg text-text-heading dark:text-gray-200 dark:bg-background-dark focus:outline-0 focus:ring-2 focus:ring-primary/50 border border-border-light dark:border-gray-600 bg-surface focus:border-primary/50 h-12 placeholder:text-gray-400 p-3 text-base font-normal leading-normal" type="time" value="09:00"/>
+                    </label>
+                    <label class="flex flex-col min-w-40 flex-1">
+                        <p class="text-text-body dark:text-gray-300 text-sm font-medium leading-normal pb-2">To</p>
+                        <input class="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-lg text-text-heading dark:text-gray-200 dark:bg-background-dark focus:outline-0 focus:ring-2 focus:ring-primary/50 border border-border-light dark:border-gray-600 bg-surface focus:border-primary/50 h-12 placeholder:text-gray-400 p-3 text-base font-normal leading-normal" type="time" value="17:00"/>
+                    </label>
+                </div>
+                <label class="flex flex-col w-full">
+                    <p class="text-text-body dark:text-gray-300 text-sm font-medium leading-normal pb-2">Reason (Optional)</p>
+                    <textarea class="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-lg text-text-heading dark:text-gray-200 dark:bg-background-dark focus:outline-0 focus:ring-2 focus:ring-primary/50 border border-border-light dark:border-gray-600 bg-surface min-h-28 placeholder:text-gray-400 p-3 text-base font-normal leading-normal" placeholder="e.g., Personal appointment, Equipment maintenance"></textarea>
+                </label>
+            </div>
+            <hr class="my-8 border-t border-border-light dark:border-gray-700"/>
+            <div class="flex flex-col-reverse sm:flex-row items-center justify-end gap-3">
+                <button class="font-medium text-text-body dark:text-gray-300 hover:text-black dark:hover:text-white px-4 py-2 rounded-lg close-modal-btn" data-modal-id="block-time-modal">Cancel</button>
+                <button class="w-full sm:w-auto bg-primary hover:bg-opacity-90 text-white font-medium px-6 py-3 rounded-lg flex items-center justify-center">Save</button>
+            </div>
+        </div>
+    </div>
+
+
+    <script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const navLinks = {
+            calendar: document.getElementById('nav-calendar'),
+            students: document.getElementById('nav-students'),
+            messaging: document.getElementById('nav-messaging'),
+            settings: document.getElementById('nav-settings'),
+        };
+
+        const mainViews = {
+            calendar: document.getElementById('calendar-view'),
+            students: document.getElementById('students-view'),
+            messaging: document.getElementById('messaging-view'),
+            settings: document.getElementById('settings-view'),
+        };
+
+        const modals = {
+            'course-detail': document.getElementById('course-detail-modal'),
+            'add-availability': document.getElementById('add-availability-modal'),
+            'block-time': document.getElementById('block-time-modal'),
+        };
+
+        const activeClassesNav = ['bg-primary/10', 'dark:bg-primary/20'];
+        const inactiveClassesNav = ['hover:bg-gray-100', 'dark:hover:bg-gray-800'];
+        const activeText = ['text-primary', 'dark:text-accent'];
+        const inactiveText = ['text-text-heading', 'dark:text-gray-300'];
+
+        function switchMainView(viewName) {
+            Object.values(mainViews).forEach(view => view.classList.add('hidden'));
+            if (mainViews[viewName]) {
+                mainViews[viewName].classList.remove('hidden');
+            }
+
+            Object.entries(navLinks).forEach(([name, link]) => {
+                if(link) {
+                    const icon = link.querySelector('.material-symbols-outlined');
+                    const text = link.querySelector('p');
+                    if (name === viewName) {
+                        link.classList.add(...activeClassesNav);
+                        link.classList.remove(...inactiveClassesNav);
+                        icon.classList.add(...activeText);
+                        text.classList.add(...activeText);
+                    } else {
+                        link.classList.remove(...activeClassesNav);
+                        link.classList.add(...inactiveClassesNav);
+                        icon.classList.remove(...activeText);
+                        text.classList.remove(...inactiveText);
+                    }
+                }
+            });
+        }
+
+        document.getElementById('sidebar-nav').addEventListener('click', (event) => {
+            const link = event.target.closest('a');
+            if (!link || !link.id) return;
+            event.preventDefault();
+            const viewName = link.id.replace('nav-', '');
+            if (mainViews[viewName]) {
+                switchMainView(viewName);
+            }
+        });
+        
+        // Modal logic
+        function showModal(modalId) {
+            if (modals[modalId]) {
+                modals[modalId].classList.remove('hidden');
+            }
+        }
+
+        document.getElementById('add-availability-btn').addEventListener('click', () => showModal('add-availability'));
+        document.getElementById('block-time-btn').addEventListener('click', () => showModal('block-time'));
+        
+        document.querySelectorAll('.event-item').forEach(item => {
+            item.addEventListener('click', () => showModal('course-detail'));
+        });
+
+        document.querySelectorAll('.close-modal-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                const modalId = btn.dataset.modalId;
+                if (modals[modalId]) {
+                    modals[modalId].classList.add('hidden');
+                }
+            });
+        });
+
+        // Set initial view
+        switchMainView('calendar');
+    });
+    </script>
+</body>
+</html>

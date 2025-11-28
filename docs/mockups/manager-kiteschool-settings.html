@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Kite School Settings - KiteOps</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;700;800&amp;family=Inter:wght@400;500;600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet"/>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+    </style>
+<script>
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#0A2540",
+                        "accent": "#4A90E2",
+                        "warning": "#ffc107",
+                        "success": "#28a745",
+                        "text-heading": "#111111",
+                        "text-body": "#555555",
+                        "background-light": "#F5F5F5",
+                        "surface": "#FFFFFF",
+                        "border-color": "#EAEAEA",
+                    },
+                    fontFamily: {
+                        "display": ["Manrope", "sans-serif"],
+                        "body": ["Inter", "sans-serif"],
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.5rem",
+                        "lg": "0.75rem",
+                        "xl": "1rem",
+                        "full": "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+</head>
+<body class="bg-background-light font-body text-text-body">
+<div class="relative flex min-h-screen w-full flex-col group/design-root">
+<header class="sticky top-0 z-10 flex h-16 w-full items-center justify-between whitespace-nowrap border-b border-solid border-border-color bg-surface px-6 md:px-10 font-display">
+<div class="flex items-center gap-4 text-text-heading">
+<div class="size-6 text-primary">
+<svg fill="none" viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
+<g clip-path="url(#clip0_6_535)">
+<path clip-rule="evenodd" d="M47.2426 24L24 47.2426L0.757355 24L24 0.757355L47.2426 24ZM12.2426 21H35.7574L24 9.24264L12.2426 21Z" fill="currentColor" fill-rule="evenodd"></path>
+</g>
+<defs>
+<clipPath id="clip0_6_535">
+<rect fill="white" height="48" width="48"></rect>
+</clipPath>
+</defs>
+</svg>
+</div>
+<h2 class="text-xl font-bold leading-tight tracking-tight">KiteOps</h2>
+</div>
+<div class="flex items-center justify-end gap-6">
+<a class="text-sm font-medium text-text-body transition-colors hover:text-text-heading" href="#">Go to Dashboard</a>
+<div class="group relative">
+<button class="bg-center bg-no-repeat aspect-square bg-cover rounded-full size-10" data-alt="User profile avatar showing a colorful abstract pattern" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuClWTXGVSWPnvkzsQN1fk6wdV410uiV-7pOqKfunWOg1FtXen8wznvE2aFap8X7ruQq7CiXPkVx6j2nSfZdYYg67n2c8CI9Sg1PrL5-Mj8Omg9RKmcyyFBwe2OxW4vUmRk247kCejK51rVZUAvvZUn8Qs5KwywH7x44xfhuOMzyNofoYfgPC0Y2f0m9e06QiwaKU09xDFsQd7JH3yz2Y8cNlqvmhR43IYMV0JWqWcPR4YmW-fEnT-EMrTpQBHWMpZdxtAt84F0vl00");'></button>
+<div class="absolute right-0 top-full mt-2 w-56 origin-top-right scale-95 transform-gpu opacity-0 transition-all duration-100 ease-out group-hover:scale-100 group-hover:opacity-100">
+<div class="rounded-lg border border-border-color bg-surface p-1 shadow-md">
+<div class="px-2 py-1.5">
+<p class="text-sm font-semibold text-text-heading">Alex Manager</p>
+<p class="text-xs text-text-body">Manager</p>
+</div>
+<div class="my-1 h-px bg-border-color"></div>
+<a class="block w-full rounded px-2 py-1.5 text-left text-sm text-text-body hover:bg-background-light" href="#">Logout</a>
+</div>
+</div>
+</div>
+</div>
+</header>
+<main class="flex-1 p-6 md:p-10">
+<div class="mx-auto max-w-5xl">
+<div class="mb-8">
+<h1 class="font-display text-3xl font-bold leading-tight text-text-heading">Kite School Settings</h1>
+</div>
+<div class="space-y-8">
+<section class="rounded-lg bg-surface p-6 shadow-sm">
+<h3 class="mb-1 font-display text-lg font-semibold text-text-heading">Organization Details</h3>
+<p class="mb-6 text-sm text-text-body">Update your kite school's basic information and permissions.</p>
+<div class="space-y-6">
+<div class="grid grid-cols-1 gap-4 sm:grid-cols-2">
+<div>
+<label class="mb-1.5 block text-sm font-medium text-text-body" for="school-name">School Name</label>
+<input class="block w-full rounded-md border-border-color text-sm shadow-sm focus:border-accent focus:ring-accent" id="school-name" type="text" value="Awesome Kitesurfing"/>
+</div>
+<div>
+<label class="mb-1.5 block text-sm font-medium text-text-body" for="contact-email">Contact Email</label>
+<input class="block w-full rounded-md border-border-color text-sm shadow-sm focus:border-accent focus:ring-accent" id="contact-email" type="email" value="contact@awesomekitesurfing.com"/>
+</div>
+<div>
+<label class="mb-1.5 block text-sm font-medium text-text-body" for="phone-number">Phone Number</label>
+<input class="block w-full rounded-md border-border-color text-sm shadow-sm focus:border-accent focus:ring-accent" id="phone-number" type="tel" value="+1 (555) 123-4567"/>
+</div>
+</div>
+<div class="grid grid-cols-1 gap-4 sm:grid-cols-2">
+<div>
+<label class="mb-1.5 block text-sm font-medium text-text-body" for="latitude">Primary Location (Latitude)</label>
+<input class="block w-full rounded-md border-border-color text-sm shadow-sm focus:border-accent focus:ring-accent" id="latitude" type="number" value="34.0522"/>
+</div>
+<div>
+<label class="mb-1.5 block text-sm font-medium text-text-body" for="longitude">Primary Location (Longitude)</label>
+<input class="block w-full rounded-md border-border-color text-sm shadow-sm focus:border-accent focus:ring-accent" id="longitude" type="number" value="-118.2437"/>
+</div>
+</div>
+<div>
+<h4 class="mb-2 text-sm font-medium text-text-body">Instructor Roles and Permissions</h4>
+<div class="overflow-x-auto rounded-md border border-border-color">
+<table class="min-w-full text-left text-sm">
+<thead class="bg-background-light">
+<tr>
+<th class="px-4 py-2 font-medium text-text-body" scope="col">Role</th>
+<th class="px-4 py-2 font-medium text-text-body" scope="col">Permissions</th>
+<th class="px-4 py-2 font-medium text-text-body" scope="col"></th>
+</tr>
+</thead>
+<tbody class="divide-y divide-border-color">
+<tr>
+<td class="whitespace-nowrap px-4 py-3 font-medium text-text-heading">Head Instructor</td>
+<td class="whitespace-nowrap px-4 py-3 text-text-body">Manage Schedule, View Bookings, Edit Lessons</td>
+<td class="whitespace-nowrap px-4 py-3 text-right"><button class="text-sm font-medium text-accent hover:underline">Edit</button></td>
+</tr>
+<tr>
+<td class="whitespace-nowrap px-4 py-3 font-medium text-text-heading">Instructor</td>
+<td class="whitespace-nowrap px-4 py-3 text-text-body">View Assigned Lessons, Mark Attendance</td>
+<td class="whitespace-nowrap px-4 py-3 text-right"><button class="text-sm font-medium text-accent hover:underline">Edit</button></td>
+</tr>
+<tr>
+<td class="whitespace-nowrap px-4 py-3 font-medium text-text-heading">Assistant</td>
+<td class="whitespace-nowrap px-4 py-3 text-text-body">View Schedule</td>
+<td class="whitespace-nowrap px-4 py-3 text-right"><button class="text-sm font-medium text-accent hover:underline">Edit</button></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+</section>
+<section class="rounded-lg bg-surface p-6 shadow-sm">
+<h3 class="mb-1 font-display text-lg font-semibold text-text-heading">Weather Parameters for Scheduling Logic</h3>
+<p class="mb-6 text-sm text-text-body">Define weather conditions for automatic lesson confirmation or flagging.</p>
+<div class="grid grid-cols-1 gap-6 sm:grid-cols-2">
+<div class="grid grid-cols-2 gap-4">
+<div>
+<label class="mb-1.5 block text-sm font-medium text-text-body" for="min-wind">Min Wind Speed (knots)</label>
+<input class="block w-full rounded-md border-border-color text-sm shadow-sm focus:border-accent focus:ring-accent" id="min-wind" type="number" value="12"/>
+</div>
+<div>
+<label class="mb-1.5 block text-sm font-medium text-text-body" for="max-wind">Max Wind Speed (knots)</label>
+<input class="block w-full rounded-md border-border-color text-sm shadow-sm focus:border-accent focus:ring-accent" id="max-wind" type="number" value="25"/>
+</div>
+</div>
+<div>
+<label class="mb-1.5 block text-sm font-medium text-text-body">Preferred Wind Directions</label>
+<div class="flex flex-wrap gap-x-4 gap-y-2">
+<label class="flex cursor-pointer items-center gap-2"><input checked="" class="h-4 w-4 rounded border-border-color text-primary focus:ring-primary/50" type="checkbox"/>N</label>
+<label class="flex cursor-pointer items-center gap-2"><input checked="" class="h-4 w-4 rounded border-border-color text-primary focus:ring-primary/50" type="checkbox"/>NE</label>
+<label class="flex cursor-pointer items-center gap-2"><input class="h-4 w-4 rounded border-border-color text-primary focus:ring-primary/50" type="checkbox"/>E</label>
+<label class="flex cursor-pointer items-center gap-2"><input class="h-4 w-4 rounded border-border-color text-primary focus:ring-primary/50" type="checkbox"/>SE</label>
+<label class="flex cursor-pointer items-center gap-2"><input checked="" class="h-4 w-4 rounded border-border-color text-primary focus:ring-primary/50" type="checkbox"/>S</label>
+<label class="flex cursor-pointer items-center gap-2"><input class="h-4 w-4 rounded border-border-color text-primary focus:ring-primary/50" type="checkbox"/>SW</label>
+<label class="flex cursor-pointer items-center gap-2"><input class="h-4 w-4 rounded border-border-color text-primary focus:ring-primary/50" type="checkbox"/>W</label>
+<label class="flex cursor-pointer items-center gap-2"><input class="h-4 w-4 rounded border-border-color text-primary focus:ring-primary/50" type="checkbox"/>NW</label>
+</div>
+</div>
+<div class="sm:col-span-2">
+<div class="flex items-center justify-between rounded-md border border-border-color p-3">
+<label class="text-sm font-medium text-text-body" for="allow-precipitation">Allow Precipitation</label>
+<label class="relative inline-flex cursor-pointer items-center">
+<input class="peer sr-only" id="allow-precipitation" type="checkbox"/>
+<div class="peer h-6 w-11 rounded-full bg-border-color after:absolute after:start-[2px] after:top-[2px] after:h-5 after:w-5 after:rounded-full after:border after:border-gray-300 after:bg-white after:transition-all after:content-[''] peer-checked:bg-primary peer-checked:after:translate-x-full peer-checked:after:border-white peer-focus:outline-none peer-focus:ring-2 peer-focus:ring-accent/50"></div>
+</label>
+</div>
+</div>
+</div>
+</section>
+<section class="rounded-lg bg-surface shadow-sm">
+<div class="flex flex-col items-start justify-between gap-4 border-b border-border-color p-6 sm:flex-row sm:items-center">
+<div>
+<h3 class="font-display text-lg font-semibold text-text-heading">Lesson Types Management</h3>
+<p class="text-sm text-text-body">Create and manage the types of lessons you offer.</p>
+</div>
+<button class="flex min-w-[84px] max-w-[480px] shrink-0 cursor-pointer items-center justify-center overflow-hidden rounded-md h-10 px-4 bg-primary text-white text-sm font-medium leading-normal transition-colors hover:bg-primary/90">
+<span class="material-symbols-outlined -ml-1 mr-2 text-base">add</span>
+<span class="truncate">Add New Lesson Type</span>
+</button>
+</div>
+<div class="overflow-x-auto">
+<table class="min-w-full text-left text-sm">
+<thead class="border-b border-border-color bg-background-light">
+<tr>
+<th class="px-6 py-3 font-medium text-text-body" scope="col">Lesson Name</th>
+<th class="px-6 py-3 font-medium text-text-body" scope="col">Description</th>
+<th class="px-6 py-3 font-medium text-text-body" scope="col">Duration</th>
+<th class="px-6 py-3 font-medium text-text-body" scope="col">Pricing</th>
+<th class="px-6 py-3 font-medium text-text-body" scope="col">Status</th>
+<th class="px-6 py-3 font-medium text-text-body" scope="col">Actions</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-border-color">
+<tr>
+<td class="whitespace-nowrap px-6 py-4 font-medium text-text-heading">Private Lesson</td>
+<td class="max-w-xs truncate px-6 py-4 text-text-body">One-on-one instruction for all skill levels.</td>
+<td class="whitespace-nowrap px-6 py-4 text-text-body">2 hours</td>
+<td class="whitespace-nowrap px-6 py-4 text-text-body">$150</td>
+<td class="whitespace-nowrap px-6 py-4"><span class="inline-flex items-center rounded-full bg-success/20 px-2.5 py-0.5 text-xs font-medium text-green-800">Active</span></td>
+<td class="whitespace-nowrap px-6 py-4 space-x-2"><button class="text-sm font-medium text-accent hover:underline">Edit</button><button class="text-sm font-medium text-red-600 hover:underline">Deactivate</button></td>
+</tr>
+<tr>
+<td class="whitespace-nowrap px-6 py-4 font-medium text-text-heading">Group Beginner</td>
+<td class="max-w-xs truncate px-6 py-4 text-text-body">Learn the basics in a small group setting.</td>
+<td class="whitespace-nowrap px-6 py-4 text-text-body">3 hours</td>
+<td class="whitespace-nowrap px-6 py-4 text-text-body">$90</td>
+<td class="whitespace-nowrap px-6 py-4"><span class="inline-flex items-center rounded-full bg-success/20 px-2.5 py-0.5 text-xs font-medium text-green-800">Active</span></td>
+<td class="whitespace-nowrap px-6 py-4 space-x-2"><button class="text-sm font-medium text-accent hover:underline">Edit</button><button class="text-sm font-medium text-red-600 hover:underline">Deactivate</button></td>
+</tr>
+<tr>
+<td class="whitespace-nowrap px-6 py-4 font-medium text-text-heading">Advanced Wave Riding</td>
+<td class="max-w-xs truncate px-6 py-4 text-text-body">Master wave techniques with an expert.</td>
+<td class="whitespace-nowrap px-6 py-4 text-text-body">2 hours</td>
+<td class="whitespace-nowrap px-6 py-4 text-text-body">$180</td>
+<td class="whitespace-nowrap px-6 py-4"><span class="inline-flex items-center rounded-full bg-gray-200 px-2.5 py-0.5 text-xs font-medium text-gray-700">Inactive</span></td>
+<td class="whitespace-nowrap px-6 py-4 space-x-2"><button class="text-sm font-medium text-accent hover:underline">Edit</button><button class="text-sm font-medium text-green-600 hover:underline">Activate</button></td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+<section class="rounded-lg bg-surface p-6 shadow-sm">
+<h3 class="mb-1 font-display text-lg font-semibold text-text-heading">Branding</h3>
+<p class="mb-6 text-sm text-text-body">Upload your school logo to be displayed on the login page and dashboards.</p>
+<div class="flex flex-col items-center gap-6 rounded-lg border-2 border-dashed border-border-color p-8 sm:flex-row">
+<div class="flex h-28 w-28 shrink-0 items-center justify-center rounded-lg bg-background-light">
+<div class="size-12 text-primary opacity-50">
+<svg fill="none" viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
+<g clip-path="url(#clip0_6_535)">
+<path clip-rule="evenodd" d="M47.2426 24L24 47.2426L0.757355 24L24 0.757355L47.2426 24ZM12.2426 21H35.7574L24 9.24264L12.2426 21Z" fill="currentColor" fill-rule="evenodd"></path>
+</g>
+<defs>
+<clipPath id="clip0_6_535">
+<rect fill="white" height="48" width="48"></rect>
+</clipPath>
+</defs>
+</svg>
+</div>
+</div>
+<div class="text-center sm:text-left">
+<label class="cursor-pointer text-sm font-medium text-primary hover:underline" for="logo-upload">Click to upload a new logo</label>
+<p class="mt-1 text-xs text-text-body">PNG, JPG, or SVG up to 5MB. Recommended size: 200x200px.</p>
+<input class="sr-only" id="logo-upload" type="file"/>
+</div>
+</div>
+</section>
+<div class="flex justify-end pt-2">
+<button class="flex min-w-[84px] max-w-[480px] shrink-0 cursor-pointer items-center justify-center overflow-hidden rounded-md h-12 px-6 bg-primary text-white text-base font-medium leading-normal transition-colors hover:bg-primary/90">Save Configuration</button>
+</div>
+</div>
+</div>
+</main>
+</div>
+
+</body></html>

@@ -132,7 +132,7 @@
 </div>
 <div class="flex-1 grid grid-cols-[auto,1fr] bg-surface rounded-xl border border-border-light overflow-hidden dark:bg-background-dark dark:border-gray-700">
 <div class="grid grid-rows-[auto,repeat(12,1fr)] border-r border-border-light dark:border-gray-700">
-<div class="h-12"></div> 
+<div class="h-12"></div>
 <div class="flex justify-end pr-2 -mt-3"><span class="text-xs text-gray-400">8 AM</span></div>
 <div class="flex justify-end pr-2 -mt-3"><span class="text-xs text-gray-400">9 AM</span></div>
 <div class="flex justify-end pr-2 -mt-3"><span class="text-xs text-gray-400">10 AM</span></div>
@@ -275,6 +275,44 @@
 <span>Upload new picture</span>
 <input class="sr-only" id="profile-picture" type="file"/>
 </label>
+</div>
+</div>
+</section>
+<hr class="border-border-light"/>
+<section class="flex flex-col gap-6">
+<h3 class="text-base font-semibold text-text-heading">Teaching Preferences</h3>
+<div class="flex flex-col gap-4">
+<label class="text-sm font-medium text-text-body">Lesson Types Taught</label>
+<div class="flex flex-wrap gap-4">
+<div class="flex items-center gap-2">
+<input checked="" class="h-4 w-4 rounded border-border-light text-accent focus:ring-accent" id="lesson-private" type="checkbox"/>
+<label class="text-sm text-text-body" for="lesson-private">Private</label>
+</div>
+<div class="flex items-center gap-2">
+<input checked="" class="h-4 w-4 rounded border-border-light text-accent focus:ring-accent" id="lesson-group" type="checkbox"/>
+<label class="text-sm text-text-body" for="lesson-group">Group</label>
+</div>
+<div class="flex items-center gap-2">
+<input class="h-4 w-4 rounded border-border-light text-accent focus:ring-accent" id="lesson-freestyle" type="checkbox"/>
+<label class="text-sm text-text-body" for="lesson-freestyle">Freestyle</label>
+</div>
+</div>
+</div>
+<div class="flex flex-col gap-4">
+<label class="text-sm font-medium text-text-body">Skill Levels Taught</label>
+<div class="flex flex-wrap gap-4">
+<div class="flex items-center gap-2">
+<input checked="" class="h-4 w-4 rounded border-border-light text-accent focus:ring-accent" id="level-beginner" type="checkbox"/>
+<label class="text-sm text-text-body" for="level-beginner">Beginner</label>
+</div>
+<div class="flex items-center gap-2">
+<input checked="" class="h-4 w-4 rounded border-border-light text-accent focus:ring-accent" id="level-intermediate" type="checkbox"/>
+<label class="text-sm text-text-body" for="level-intermediate">Intermediate</label>
+</div>
+<div class="flex items-center gap-2">
+<input class="h-4 w-4 rounded border-border-light text-accent focus:ring-accent" id="level-advanced" type="checkbox"/>
+<label class="text-sm text-text-body" for="level-advanced">Advanced</label>
+</div>
 </div>
 </div>
 </section>

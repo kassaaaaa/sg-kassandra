@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Edit Lesson Type Modal</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet"/>
+<script>
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          colors: {
+            "primary": "#0A2540",
+            "accent": "#4A90E2",
+            "background": "#F5F5F5",
+            "surface": "#FFFFFF",
+            "text-heading": "#111111",
+            "text-body": "#555555"
+          },
+          fontFamily: {
+            "display": ["Manrope", "sans-serif"]
+          },
+          borderRadius: {
+            "DEFAULT": "0.5rem",
+            "lg": "0.5rem",
+            "xl": "0.75rem",
+            "full": "9999px"
+          },
+        },
+      },
+    }
+  </script>
+<style>
+    .material-symbols-outlined {
+      font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+    }
+  </style>
+</head>
+<body class="font-display">
+<div class="relative flex min-h-screen w-full flex-col bg-background group/design-root" style='font-family: Manrope, "Noto Sans", sans-serif;'>
+<div aria-hidden="true" class="fixed inset-0 z-40 bg-black/50 backdrop-blur-sm"></div>
+<div class="flex flex-1 items-center justify-center p-4">
+<div class="relative z-50 flex w-full max-w-lg flex-col rounded-xl bg-surface shadow-lg">
+<div class="flex items-center justify-between gap-2 px-6 py-4">
+<h2 class="text-text-heading text-lg font-semibold leading-tight">Edit Lesson Type: Beginner Kitesurfing</h2>
+<button class="flex h-8 w-8 items-center justify-center rounded-full text-text-body/70 transition-colors hover:bg-gray-100 hover:text-text-body">
+<span class="material-symbols-outlined text-2xl">close</span>
+</button>
+</div>
+<div class="flex flex-col gap-5 p-6 border-t border-gray-200">
+<div class="flex flex-col gap-1.5">
+<label class="text-text-heading text-sm font-medium" for="lesson-name">Lesson Name</label>
+<input class="form-input flex w-full rounded-lg border border-gray-300 bg-surface px-3 py-2 text-sm text-text-body placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-accent/80 focus:ring-offset-1" id="lesson-name" value="Beginner Kitesurfing"/>
+</div>
+<div class="flex flex-col gap-1.5">
+<label class="text-text-heading text-sm font-medium" for="description">Description</label>
+<textarea class="form-textarea flex w-full rounded-lg border border-gray-300 bg-surface px-3 py-2 text-sm text-text-body placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-accent/80 focus:ring-offset-1 min-h-24" id="description">A comprehensive introduction to kitesurfing for absolute beginners.</textarea>
+</div>
+<div class="grid grid-cols-1 gap-5 sm:grid-cols-2">
+<div class="flex flex-col gap-1.5">
+<label class="text-text-heading text-sm font-medium" for="duration">Default Duration</label>
+<div class="flex items-center gap-2">
+<input class="form-input flex w-full rounded-lg border border-gray-300 bg-surface px-3 py-2 text-sm text-text-body placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-accent/80 focus:ring-offset-1" id="duration" type="number" value="2"/>
+<select class="form-select flex w-auto rounded-lg border border-gray-300 bg-surface py-2 pl-3 pr-8 text-sm text-text-body focus:outline-none focus:ring-2 focus:ring-accent/80 focus:ring-offset-1">
+<option value="minutes">minutes</option>
+<option selected="" value="hours">hours</option>
+</select>
+</div>
+</div>
+<div class="flex flex-col gap-1.5">
+<label class="text-text-heading text-sm font-medium" for="price">Default Pricing</label>
+<div class="relative flex w-full items-center">
+<div class="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
+<span class="text-text-body">$</span>
+</div>
+<input class="form-input flex w-full rounded-lg border border-gray-300 bg-surface py-2 pl-7 pr-3 text-sm text-text-body placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-accent/80 focus:ring-offset-1" id="price" type="number" value="250.00"/>
+</div>
+</div>
+</div>
+<div class="flex flex-col gap-1.5">
+<label class="text-text-heading text-sm font-medium" for="status">Status</label>
+<select class="form-select flex w-full rounded-lg border border-gray-300 bg-surface py-2 pl-3 pr-8 text-sm text-text-body focus:outline-none focus:ring-2 focus:ring-accent/80 focus:ring-offset-1" id="status">
+<option selected="">Active</option>
+<option>Inactive</option>
+</select>
+</div>
+</div>
+<div class="flex flex-col-reverse items-center justify-end gap-3 p-6 sm:flex-row border-t border-gray-200">
+<a class="flex h-10 w-full items-center justify-center rounded-lg px-4 text-sm font-semibold text-text-body ring-1 ring-inset ring-gray-300 transition-colors hover:bg-gray-100 sm:w-auto" href="#">Cancel</a>
+<button class="flex h-10 w-full items-center justify-center rounded-lg bg-primary px-4 text-sm font-semibold text-white transition-colors hover:bg-primary/90 sm:w-auto">Update Lesson Type</button>
+</div>
+</div>
+</div>
+</div>
+
+</body></html>

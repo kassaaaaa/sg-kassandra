@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>KiteOps - Add New Lesson Type</title>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script>
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          colors: {
+            "primary": "#0a2642",
+            "background-light": "#f6f7f8",
+            "background-dark": "#111921",
+            "accent": "#4A90E2",
+            "surface-light": "#FFFFFF",
+            "surface-dark": "#1a242e",
+            "text-heading-light": "#111111",
+            "text-heading-dark": "#f0f0f0",
+            "text-body-light": "#555555",
+            "text-body-dark": "#a0a0a0",
+            "border-light": "#d1dbe6",
+            "border-dark": "#344054",
+          },
+          fontFamily: {
+            "display": ["Manrope", "sans-serif"]
+          },
+          borderRadius: {
+            "DEFAULT": "0.25rem",
+            "lg": "0.5rem",
+            "xl": "0.75rem",
+            "full": "9999px"
+          },
+        },
+      },
+    }
+  </script>
+<style>
+    .material-symbols-outlined {
+      font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+    }
+  </style>
+</head>
+<body class="font-display">
+<div class="relative min-h-screen w-full bg-background-light dark:bg-background-dark group/design-root" style='font-family: Manrope, "Noto Sans", sans-serif;'>
+<!-- Background overlay -->
+<div class="absolute inset-0 bg-slate-900/60 backdrop-blur-sm z-10"></div>
+<!-- Modal -->
+<div class="relative z-20 flex min-h-screen items-center justify-center p-4">
+<div class="w-full max-w-2xl transform overflow-hidden rounded-xl bg-surface-light dark:bg-surface-dark text-left align-middle shadow-xl transition-all">
+<!-- Modal Header -->
+<div class="flex items-start justify-between p-6 border-b border-border-light dark:border-border-dark">
+<div class="flex flex-col gap-1">
+<h3 class="text-xl font-bold leading-tight tracking-tight text-text-heading-light dark:text-text-heading-dark">Add New Lesson Type</h3>
+<p class="text-sm text-text-body-light dark:text-text-body-dark">Define a new lesson to offer at your kite school.</p>
+</div>
+<button class="text-text-body-light dark:text-text-body-dark hover:text-text-heading-light dark:hover:text-text-heading-dark">
+<span class="material-symbols-outlined" data-icon="close">close</span>
+</button>
+</div>
+<!-- Modal Body / Form -->
+<div class="p-6">
+<div class="flex flex-col gap-y-6">
+<!-- Lesson Name -->
+<label class="flex flex-col w-full">
+<p class="text-sm font-medium leading-normal pb-2 text-text-heading-light dark:text-text-heading-dark">Lesson Name</p>
+<input class="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-lg text-text-body-light dark:text-text-body-dark bg-transparent focus:outline-0 focus:ring-2 focus:ring-accent/50 border border-border-light dark:border-border-dark h-12 placeholder:text-text-body-light/60 dark:placeholder:text-text-body-dark/60 p-[15px] text-base font-normal leading-normal" placeholder="e.g., Private Beginner Lesson" value=""/>
+</label>
+<!-- Description -->
+<label class="flex flex-col w-full">
+<p class="text-sm font-medium leading-normal pb-2 text-text-heading-light dark:text-text-heading-dark">Description</p>
+<textarea class="form-input flex w-full min-w-0 flex-1 resize-y overflow-hidden rounded-lg text-text-body-light dark:text-text-body-dark bg-transparent focus:outline-0 focus:ring-2 focus:ring-accent/50 border border-border-light dark:border-border-dark min-h-32 placeholder:text-text-body-light/60 dark:placeholder:text-text-body-dark/60 p-[15px] text-base font-normal leading-normal" placeholder="Describe the lesson's focus and what's included"></textarea>
+</label>
+<div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+<!-- Default Duration -->
+<div class="flex w-full flex-wrap items-end gap-4">
+<label class="flex flex-col min-w-40 flex-[2]">
+<p class="text-sm font-medium leading-normal pb-2 text-text-heading-light dark:text-text-heading-dark">Default Duration</p>
+<input class="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-lg text-text-body-light dark:text-text-body-dark bg-transparent focus:outline-0 focus:ring-2 focus:ring-accent/50 border border-border-light dark:border-border-dark h-12 placeholder:text-text-body-light/60 dark:placeholder:text-text-body-dark/60 p-[15px] text-base font-normal leading-normal" placeholder="e.g., 120" type="number" value=""/>
+</label>
+<div class="flex flex-col flex-1 min-w-[100px]">
+<label class="sr-only" for="duration-unit">Duration Unit</label>
+<div class="relative">
+<select class="form-select appearance-none w-full cursor-pointer rounded-lg text-text-body-light dark:text-text-body-dark bg-transparent focus:outline-0 focus:ring-2 focus:ring-accent/50 border border-border-light dark:border-border-dark h-12 p-[15px] pr-8 text-base font-normal leading-normal" id="duration-unit">
+<option>minutes</option>
+<option>hours</option>
+</select>
+<span class="material-symbols-outlined pointer-events-none absolute right-2.5 top-1/2 -translate-y-1/2 text-text-body-light dark:text-text-body-dark" data-icon="unfold_more">unfold_more</span>
+</div>
+</div>
+</div>
+<!-- Default Pricing -->
+<label class="flex flex-col w-full">
+<p class="text-sm font-medium leading-normal pb-2 text-text-heading-light dark:text-text-heading-dark">Default Pricing</p>
+<div class="relative">
+<span class="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-4 text-text-body-light dark:text-text-body-dark">$</span>
+<input class="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-lg text-text-body-light dark:text-text-body-dark bg-transparent focus:outline-0 focus:ring-2 focus:ring-accent/50 border border-border-light dark:border-border-dark h-12 placeholder:text-text-body-light/60 dark:placeholder:text-text-body-dark/60 p-[15px] pl-8 text-base font-normal leading-normal" placeholder="150.00" type="number" value=""/>
+</div>
+</label>
+</div>
+<!-- Status -->
+<label class="flex flex-col w-full sm:max-w-xs">
+<p class="text-sm font-medium leading-normal pb-2 text-text-heading-light dark:text-text-heading-dark">Status</p>
+<div class="relative">
+<select class="form-select appearance-none w-full cursor-pointer rounded-lg text-text-body-light dark:text-text-body-dark bg-transparent focus:outline-0 focus:ring-2 focus:ring-accent/50 border border-border-light dark:border-border-dark h-12 p-[15px] pr-8 text-base font-normal leading-normal">
+<option selected="">Active</option>
+<option>Inactive</option>
+</select>
+<span class="material-symbols-outlined pointer-events-none absolute right-2.5 top-1/2 -translate-y-1/2 text-text-body-light dark:text-text-body-dark" data-icon="unfold_more">unfold_more</span>
+</div>
+</label>
+</div>
+</div>
+<!-- Modal Footer -->
+<div class="flex items-center justify-end gap-4 p-6 border-t border-border-light dark:border-border-dark">
+<button class="inline-flex items-center justify-center rounded-lg px-4 py-2.5 text-sm font-semibold text-text-body-light dark:text-text-body-dark hover:bg-black/5 dark:hover:bg-white/5 transition-colors">Cancel</button>
+<button class="inline-flex items-center justify-center rounded-lg px-4 py-2.5 text-sm font-semibold text-white bg-primary hover:bg-primary/90 transition-colors">Create Lesson Type</button>
+</div>
+</div>
+</div>
+</div>
+</body></html>

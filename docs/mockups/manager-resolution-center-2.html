@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>KiteOps Manager Dashboard</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;700;800&amp;family=Inter:wght@400;500;600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet"/>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+    </style>
+<script>
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#0A2540",
+                        "accent": "#4A90E2",
+                        "warning": "#ffc107",
+                        "success": "#28a745",
+                        "destructive": "#dc3545",
+                        "text-heading": "#111111",
+                        "text-body": "#555555",
+                        "background-light": "#F5F5F5",
+                        "surface": "#FFFFFF",
+                        "border-color": "#EAEAEA",
+                    },
+                    fontFamily: {
+                        "display": ["Manrope", "sans-serif"],
+                        "body": ["Inter", "sans-serif"],
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.5rem",
+                        "lg": "0.75rem",
+                        "xl": "1rem",
+                        "full": "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+</head>
+<body class="bg-background-light font-body text-text-body">
+<div class="relative flex min-h-screen w-full flex-col group/design-root">
+<header class="sticky top-0 z-10 flex h-16 w-full items-center justify-between whitespace-nowrap border-b border-solid border-border-color bg-surface px-6 md:px-10 font-display">
+<div class="flex items-center gap-4 text-text-heading">
+<div class="size-6 text-primary">
+<svg fill="none" viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
+<g clip-path="url(#clip0_6_535)">
+<path clip-rule="evenodd" d="M47.2426 24L24 47.2426L0.757355 24L24 0.757355L47.2426 24ZM12.2426 21H35.7574L24 9.24264L12.2426 21Z" fill="currentColor" fill-rule="evenodd"></path>
+</g>
+<defs>
+<clipPath id="clip0_6_535">
+<rect fill="white" height="48" width="48"></rect>
+</clipPath>
+</defs>
+</svg>
+</div>
+<h2 class="text-xl font-bold leading-tight tracking-tight">KiteOps</h2>
+</div>
+<div class="flex items-center justify-end gap-6">
+<a class="text-sm font-medium text-text-body transition-colors hover:text-text-heading" href="#">Kite School Settings</a>
+<div class="group relative">
+<button class="bg-center bg-no-repeat aspect-square bg-cover rounded-full size-10" data-alt="User profile avatar showing a colorful abstract pattern" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuClWTXGVSWPnvkzsQN1fk6wdV410uiV-7pOqKfunWOg1FtXen8wznvE2aFap8X7ruQq7CiXPkVx6j2nSfZdYYg67n2c8CI9Sg1PrL5-Mj8Omg9RKmcyyFBwe2OxW4vUmRk247kCejK51rVZUAvvZUn8Qs5KwywH7x44xfhuOMzyNofoYfgPC0Y2f0m9e06QiwaKU09xDFsQd7JH3yz2Y8cNlqvmhR43IYMV0JWqWcPR4YmW-fEnT-EMrTpQBHWMpZdxtAt84F0vl00");'></button>
+<div class="absolute right-0 top-full mt-2 w-56 origin-top-right scale-95 transform-gpu opacity-0 transition-all duration-100 ease-out group-hover:scale-100 group-hover:opacity-100">
+<div class="rounded-lg border border-border-color bg-surface p-1 shadow-md">
+<div class="px-2 py-1.5">
+<p class="text-sm font-semibold text-text-heading">Alex Manager</p>
+<p class="text-xs text-text-body">Manager</p>
+</div>
+<div class="my-1 h-px bg-border-color"></div>
+<a class="block w-full rounded px-2 py-1.5 text-left text-sm text-text-body hover:bg-background-light" href="#">Logout</a>
+</div>
+</div>
+</div>
+</div>
+</header>
+<main class="flex-1 p-6 md:p-10">
+<div class="grid grid-cols-1 gap-6 lg:grid-cols-3">
+<div class="flex flex-col gap-6 lg:col-span-2">
+<div class="flex flex-col items-stretch justify-start rounded-lg border-l-4 border-warning bg-surface shadow-sm @container">
+<div class="flex w-full min-w-72 grow flex-col items-stretch justify-center gap-2 p-6">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-warning">warning</span>
+<p class="font-display text-lg font-bold leading-tight tracking-tight text-text-heading">Resolution Center</p>
+</div>
+<p class="font-display text-2xl font-bold leading-tight text-text-heading">3 Lessons Need Review</p>
+<div class="flex flex-col items-start gap-4 sm:flex-row sm:items-end sm:justify-between">
+<p class="max-w-prose text-base font-normal leading-relaxed text-text-body">Strong offshore winds are forecast for this afternoon. Review the affected lessons to notify customers and rebook.</p>
+<button class="flex min-w-[84px] max-w-[480px] shrink-0 cursor-pointer items-center justify-center overflow-hidden rounded-md h-10 px-4 bg-primary text-white text-sm font-medium leading-normal transition-colors hover:bg-primary/90">
+<span class="truncate">Review Lessons</span>
+</button>
+</div>
+</div>
+</div>
+<div class="flex flex-col rounded-lg bg-surface shadow-sm">
+<div class="border-b border-border-color p-6">
+<h3 class="font-display text-lg font-bold leading-tight tracking-tight text-text-heading">Today's Snapshot: November 17, 2025</h3>
+<p class="text-sm leading-normal text-text-body">Key metrics for today's operations at a glance.</p>
+</div>
+<div class="grid grid-cols-1 gap-px bg-border-color sm:grid-cols-3">
+<div class="flex flex-1 flex-col gap-2 bg-surface p-6">
+<div class="flex items-center gap-2 text-text-body">
+<span class="material-symbols-outlined text-sm">calendar_month</span>
+<p class="text-sm font-medium leading-normal">Scheduled Lessons</p>
+</div>
+<p class="font-display tracking-tight text-3xl font-bold leading-tight text-text-heading">5</p>
+</div>
+<div class="flex flex-1 flex-col gap-2 bg-surface p-6">
+<div class="flex items-center gap-2 text-text-body">
+<span class="material-symbols-outlined text-sm">pending_actions</span>
+<p class="text-sm font-medium leading-normal">Pending Bookings</p>
+</div>
+<p class="font-display tracking-tight text-3xl font-bold leading-tight text-text-heading">2</p>
+</div>
+<div class="flex flex-1 flex-col gap-2 bg-surface p-6">
+<div class="flex items-center gap-2 text-text-body">
+<span class="material-symbols-outlined text-sm">group</span>
+<p class="text-sm font-medium leading-normal">Instructors Available</p>
+</div>
+<p class="font-display tracking-tight text-3xl font-bold leading-tight text-text-heading">8</p>
+</div>
+</div>
+</div>
+<div class="flex flex-col rounded-lg bg-surface shadow-sm">
+<div class="p-6">
+<h3 class="font-display text-lg font-bold leading-tight tracking-tight text-text-heading">Upcoming Lessons</h3>
+</div>
+<div class="overflow-x-auto">
+<table class="min-w-full text-left text-sm">
+<thead class="border-b border-border-color bg-background-light">
+<tr>
+<th class="px-6 py-3 font-medium text-text-body" scope="col">Time</th>
+<th class="px-6 py-3 font-medium text-text-body" scope="col">Student</th>
+<th class="px-6 py-3 font-medium text-text-body" scope="col">Instructor</th>
+<th class="px-6 py-3 font-medium text-text-body" scope="col">Status</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-border-color">
+<tr>
+<td class="whitespace-nowrap px-6 py-4 text-text-heading">09:00 AM</td>
+<td class="whitespace-nowrap px-6 py-4 text-text-heading">Jane Doe</td>
+<td class="whitespace-nowrap px-6 py-4 text-text-heading">Mike L.</td>
+<td class="whitespace-nowrap px-6 py-4"><span class="inline-flex items-center rounded-full bg-accent/20 px-2.5 py-0.5 text-xs font-medium text-accent">Confirmed</span></td>
+</tr>
+<tr>
+<td class="whitespace-nowrap px-6 py-4 text-text-heading">11:00 AM</td>
+<td class="whitespace-nowrap px-6 py-4 text-text-heading">John Smith</td>
+<td class="whitespace-nowrap px-6 py-4 text-text-heading">Sarah K.</td>
+<td class="whitespace-nowrap px-6 py-4"><span class="inline-flex items-center rounded-full bg-warning/20 px-2.5 py-0.5 text-xs font-medium text-amber-800">Pending</span></td>
+</tr>
+<tr>
+<td class="whitespace-nowrap px-6 py-4 text-text-heading">01:00 PM</td>
+<td class="whitespace-nowrap px-6 py-4 text-text-heading">Emily White</td>
+<td class="whitespace-nowrap px-6 py-4 text-text-heading">Mike L.</td>
+<td class="whitespace-nowrap px-6 py-4"><span class="inline-flex items-center rounded-full bg-accent/20 px-2.5 py-0.5 text-xs font-medium text-accent">Confirmed</span></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+<div class="flex flex-col gap-6 lg:col-span-1">
+<div class="rounded-lg bg-surface p-6 shadow-sm">
+<h3 class="mb-4 font-display text-lg font-bold leading-tight tracking-tight text-text-heading">Local Conditions</h3>
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-3">
+<span class="text-4xl">☀️</span>
+<p class="font-display text-4xl font-bold text-text-heading">15°C</p>
+</div>
+<div class="flex flex-col items-end">
+<div class="flex items-center gap-2 text-text-body">
+<span class="material-symbols-outlined text-base">air</span>
+<p class="text-base font-medium">15-20 knots</p>
+</div>
+<p class="text-base text-text-body">NE</p>
+</div>
+</div>
+</div>
+<div class="rounded-lg bg-surface p-6 shadow-sm">
+<h3 class="mb-4 font-display text-lg font-bold leading-tight tracking-tight text-text-heading">Quick Actions</h3>
+<div class="grid grid-cols-1 gap-3">
+<button class="flex h-9 w-full cursor-pointer items-center justify-center overflow-hidden rounded-md bg-background-light text-sm font-medium text-text-heading transition-colors hover:bg-border-color"><span class="truncate">Add Booking</span></button>
+<button class="flex h-9 w-full cursor-pointer items-center justify-center overflow-hidden rounded-md bg-background-light text-sm font-medium text-text-heading transition-colors hover:bg-border-color"><span class="truncate">View Full Calendar</span></button>
+<button class="flex h-9 w-full cursor-pointer items-center justify-center overflow-hidden rounded-md bg-background-light text-sm font-medium text-text-heading transition-colors hover:bg-border-color"><span class="truncate">Manage Instructors</span></button>
+<button class="flex h-9 w-full cursor-pointer items-center justify-center overflow-hidden rounded-md bg-background-light text-sm font-medium text-text-heading transition-colors hover:bg-border-color"><span class="truncate">View Customers</span></button>
+<button class="flex h-9 w-full cursor-pointer items-center justify-center overflow-hidden rounded-md bg-background-light text-sm font-medium text-text-heading transition-colors hover:bg-border-color"><span class="truncate">Send Message</span></button>
+</div>
+</div>
+</div>
+</div>
+</main>
+<div class="fixed inset-0 z-50 flex items-center justify-center bg-black/60 p-4">
+<div class="w-full max-w-5xl rounded-lg bg-surface shadow-xl flex flex-col max-h-[90vh]">
+<div class="flex flex-shrink-0 items-center justify-between border-b border-border-color p-6">
+<div class="flex flex-col gap-1">
+<h2 class="font-display text-xl font-bold text-text-heading">Review Affected Lessons</h2>
+<p class="text-sm text-text-body">Strong offshore winds forecast for this afternoon.</p>
+</div>
+<button class="flex h-8 w-8 items-center justify-center rounded-full text-text-body transition-colors hover:bg-background-light hover:text-text-heading">
+<span class="material-symbols-outlined text-xl">close</span>
+</button>
+</div>
+<div class="flex-1 overflow-y-auto p-6">
+<div class="space-y-6">
+<div class="overflow-x-auto rounded border border-border-color">
+<table class="min-w-full text-left text-sm">
+<thead class="border-b border-border-color bg-background-light">
+<tr>
+<th class="px-4 py-3 font-medium text-text-body">Date &amp; Time</th>
+<th class="px-4 py-3 font-medium text-text-body">Lesson / Customer</th>
+<th class="px-4 py-3 font-medium text-text-body">Instructor</th>
+<th class="px-4 py-3 font-medium text-text-body">Status</th>
+<th class="px-4 py-3 font-medium text-text-body text-right">Actions</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-border-color">
+<tr>
+<td class="px-4 py-3 text-text-heading">Nov 17, 01:00 PM</td>
+<td class="px-4 py-3">
+<p class="font-medium text-text-heading">Beginner Lesson</p>
+<p class="text-text-body">Emily White</p>
+</td>
+<td class="px-4 py-3 text-text-heading">Mike L.</td>
+<td class="px-4 py-3"><span class="inline-flex items-center rounded-full bg-warning/20 px-2.5 py-0.5 text-xs font-medium text-amber-800">Affected by Weather</span></td>
+<td class="px-4 py-3">
+<div class="flex justify-end gap-2">
+<button class="h-9 cursor-pointer rounded-md border border-border-color bg-surface px-3 text-xs font-medium text-text-heading transition-colors hover:bg-background-light">Notify</button>
+<button class="h-9 cursor-pointer rounded-md bg-primary px-3 text-xs font-medium text-white transition-colors hover:bg-primary/90">Rebook</button>
+<button class="h-9 cursor-pointer rounded-md bg-destructive/10 px-3 text-xs font-medium text-destructive transition-colors hover:bg-destructive/20">Cancel</button>
+</div>
+</td>
+</tr>
+<tr>
+<td class="px-4 py-3 text-text-heading">Nov 17, 02:30 PM</td>
+<td class="px-4 py-3">
+<p class="font-medium text-text-heading">Intermediate Wave Riding</p>
+<p class="text-text-body">Carlos Gomez</p>
+</td>
+<td class="px-4 py-3 text-text-heading">Sarah K.</td>
+<td class="px-4 py-3"><span class="inline-flex items-center rounded-full bg-warning/20 px-2.5 py-0.5 text-xs font-medium text-amber-800">Affected by Weather</span></td>
+<td class="px-4 py-3">
+<div class="flex justify-end gap-2">
+<button class="h-9 cursor-pointer rounded-md border border-border-color bg-surface px-3 text-xs font-medium text-text-heading transition-colors hover:bg-background-light">Notify</button>
+<button class="h-9 cursor-pointer rounded-md bg-primary px-3 text-xs font-medium text-white transition-colors hover:bg-primary/90">Rebook</button>
+<button class="h-9 cursor-pointer rounded-md bg-destructive/10 px-3 text-xs font-medium text-destructive transition-colors hover:bg-destructive/20">Cancel</button>
+</div>
+</td>
+</tr>
+<tr>
+<td class="px-4 py-3 text-text-heading">Nov 17, 04:00 PM</td>
+<td class="px-4 py-3">
+<p class="font-medium text-text-heading">Private Coaching</p>
+<p class="text-text-body">Jessica Chen</p>
+</td>
+<td class="px-4 py-3 text-text-heading">Mike L.</td>
+<td class="px-4 py-3"><span class="inline-flex items-center rounded-full bg-warning/20 px-2.5 py-0.5 text-xs font-medium text-amber-800">Affected by Weather</span></td>
+<td class="px-4 py-3">
+<div class="flex justify-end gap-2">
+<button class="h-9 cursor-pointer rounded-md border border-border-color bg-surface px-3 text-xs font-medium text-text-heading transition-colors hover:bg-background-light">Notify</button>
+<button class="h-9 cursor-pointer rounded-md bg-primary px-3 text-xs font-medium text-white transition-colors hover:bg-primary/90">Rebook</button>
+<button class="h-9 cursor-pointer rounded-md bg-destructive/10 px-3 text-xs font-medium text-destructive transition-colors hover:bg-destructive/20">Cancel</button>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div>
+<label class="mb-2 block text-sm font-medium text-text-heading" for="customer-message">Message to All Affected Customers</label>
+<textarea class="w-full rounded-md border border-border-color p-3 text-sm text-text-body focus:border-accent focus:ring-accent" id="customer-message" rows="4">Hi there, due to a forecast of strong offshore winds this afternoon, we unfortunately need to reschedule your kitesurfing lesson for safety reasons. Please use the link in the next email to choose a new time that works for you. We apologize for any inconvenience and look forward to seeing you on the water soon!</textarea>
+</div>
+</div>
+</div>
+<div class="flex flex-shrink-0 flex-col-reverse items-center justify-between gap-4 border-t border-border-color p-6 sm:flex-row">
+<button class="h-10 w-full cursor-pointer rounded-md bg-background-light px-4 text-sm font-medium text-text-heading transition-colors hover:bg-border-color sm:w-auto">Dismiss Alert</button>
+<button class="flex h-10 w-full min-w-[84px] max-w-[480px] shrink-0 cursor-pointer items-center justify-center overflow-hidden rounded-md bg-primary px-4 text-sm font-medium text-white transition-colors hover:bg-primary/90 sm:w-auto">
+<span class="truncate">Send All Notifications</span>
+</button>
+</div>
+</div>
+<div class="fixed inset-0 z-[60] flex items-center justify-center bg-black/30 backdrop-blur-sm p-4">
+<div class="w-full max-w-2xl rounded-lg bg-surface shadow-xl flex flex-col">
+<div class="flex flex-shrink-0 items-center justify-between bg-accent p-4 rounded-t-lg">
+<h2 class="font-display text-lg font-bold text-white">Rebook Lesson: Emily White</h2>
+<button class="flex h-8 w-8 items-center justify-center rounded-full text-white transition-colors hover:bg-white/20">
+<span class="material-symbols-outlined text-xl">close</span>
+</button>
+</div>
+<div class="p-6 space-y-6">
+<div class="rounded-md border border-border-color bg-background-light p-4">
+<p class="text-sm text-text-body">
+<span class="font-medium text-text-heading">Original:</span> Beginner Lesson with Mike L. on Nov 17, 2025 at 01:00 PM
+</p>
+</div>
+<div class="space-y-4">
+<div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+<div>
+<label class="block text-sm font-medium text-text-heading mb-1.5" for="new-date">New Date</label>
+<input class="w-full h-10 rounded-md border border-border-color px-3 text-sm text-text-body focus:border-accent focus:ring-accent" id="new-date" type="date" value="2025-11-18"/>
+</div>
+<div>
+<label class="block text-sm font-medium text-text-heading mb-1.5" for="new-time">New Time</label>
+<select class="w-full h-10 rounded-md border border-border-color px-3 text-sm text-text-body focus:border-accent focus:ring-accent" id="new-time">
+<option>09:00 AM - 11:00 AM</option>
+<option>11:00 AM - 01:00 PM</option>
+<option selected="">01:00 PM - 03:00 PM</option>
+<option>03:00 PM - 05:00 PM</option>
+</select>
+</div>
+</div>
+<div>
+<label class="block text-sm font-medium text-text-heading mb-1.5" for="instructor">Instructor</label>
+<select class="w-full h-10 rounded-md border border-border-color px-3 text-sm text-text-body focus:border-accent focus:ring-accent" id="instructor">
+<option selected="">Mike L. (Available)</option>
+<option>Sarah K. (Available)</option>
+<option>John D. (Available)</option>
+</select>
+</div>
+<div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+<div>
+<label class="block text-sm font-medium text-text-heading mb-1.5" for="lesson-type">Lesson Type</label>
+<select class="w-full h-10 rounded-md border border-border-color px-3 text-sm text-text-body focus:border-accent focus:ring-accent" id="lesson-type">
+<option selected="">Beginner Lesson</option>
+<option>Intermediate Wave Riding</option>
+<option>Private Coaching</option>
+</select>
+</div>
+<div>
+<label class="block text-sm font-medium text-text-heading mb-1.5" for="skill-level">Skill Level</label>
+<select class="w-full h-10 rounded-md border border-border-color px-3 text-sm text-text-body focus:border-accent focus:ring-accent" id="skill-level">
+<option selected="">Beginner</option>
+<option>Intermediate</option>
+<option>Advanced</option>
+</select>
+</div>
+</div>
+</div>
+<div class="flex items-center">
+<input checked="" class="h-4 w-4 rounded border-border-color text-accent focus:ring-accent" id="send-confirmation" type="checkbox"/>
+<label class="ml-2 block text-sm text-text-body" for="send-confirmation">Send automatic rebooking confirmation to customer</label>
+</div>
+</div>
+<div class="flex flex-shrink-0 flex-row items-center justify-end gap-4 border-t border-border-color p-4">
+<button class="text-sm font-medium text-accent transition-colors hover:text-accent/80">Cancel</button>
+<button class="flex h-10 min-w-[84px] max-w-[480px] shrink-0 cursor-pointer items-center justify-center overflow-hidden rounded-md bg-primary px-4 text-sm font-medium text-white transition-colors hover:bg-primary/90">
+<span class="truncate">Confirm Rebook</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+</div></body></html>
