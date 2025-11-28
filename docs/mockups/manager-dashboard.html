@@ -260,7 +260,7 @@
                                 <span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-text-body-light dark:text-text-body-dark">search</span>
                                 <input class="w-full pl-10 pr-4 py-2 text-sm bg-background-light dark:bg-background-dark border border-border-light dark:border-border-dark rounded-lg focus:ring-2 focus:ring-accent focus:border-accent text-text-body-light dark:text-text-body-dark placeholder:text-text-body-light/70 dark:placeholder:text-text-body-dark/70 transition-colors" placeholder="Search by name or email..." type="text">
                             </div>
-                            <button class="flex items-center justify-center gap-2 px-4 py-2 bg-primary text-white rounded-lg text-sm font-semibold hover:bg-primary/90 transition-colors">
+                            <button id="add-customer-btn" class="flex items-center justify-center gap-2 px-4 py-2 bg-primary text-white rounded-lg text-sm font-semibold hover:bg-primary/90 transition-colors">
                                 <span class="material-symbols-outlined text-base">add</span>
                                 Add New Customer
                             </button>
@@ -287,11 +287,14 @@
                                         <td class="p-6 text-sm text-text-body-light dark:text-text-body-dark whitespace-nowrap">12</td>
                                         <td class="p-6 text-right whitespace-nowrap">
                                             <div class="flex justify-end gap-2">
-                                                <button class="p-2 rounded-md hover:bg-primary/10 dark:hover:bg-primary/20 text-text-body-light dark:text-text-body-dark transition-colors" data-alt="View details">
+                                                <button id="view-customer-btn" class="p-2 rounded-md hover:bg-primary/10 dark:hover:bg-primary/20 text-text-body-light dark:text-text-body-dark transition-colors" data-alt="View details">
                                                     <span class="material-symbols-outlined text-xl">visibility</span>
                                                 </button>
-                                                <button class="p-2 rounded-md hover:bg-primary/10 dark:hover:bg-primary/20 text-text-body-light dark:text-text-body-dark transition-colors" data-alt="Send message">
+                                                <button id="send-customer-message-btn" class="p-2 rounded-md hover:bg-primary/10 dark:hover:bg-primary/20 text-text-body-light dark:text-text-body-dark transition-colors" data-alt="Send message">
                                                     <span class="material-symbols-outlined text-xl">mail</span>
+                                                </button>
+                                                <button id="edit-customer-btn" class="p-2 rounded-md hover:bg-primary/10 dark:hover:bg-primary/20 text-text-body-light dark:text-text-body-dark transition-colors" data-alt="Edit customer">
+                                                    <span class="material-symbols-outlined text-xl">edit</span>
                                                 </button>
                                             </div>
                                         </td>
@@ -979,6 +982,280 @@
         </main>
     </div>
 
+    <div id="add-customer-modal" class="modal-overlay hidden">
+        <div class="bg-surface-light dark:bg-surface-dark rounded-xl shadow-lg w-full max-w-lg m-4">
+            <div class="flex items-center justify-between p-6 border-b border-border-light dark:border-border-dark">
+                <h2 class="text-xl font-bold text-text-heading-light dark:text-text-heading-dark">Add New Customer</h2>
+                <button class="p-1 rounded-full hover:bg-primary/10 dark:hover:bg-primary/20 text-text-body-light dark:text-text-body-dark transition-colors close-modal-btn" data-modal-id="add-customer-modal">
+                    <span class="material-symbols-outlined">close</span>
+                </button>
+            </div>
+            <div class="p-6 space-y-6 max-h-[70vh] overflow-y-auto">
+                <div class="space-y-4">
+                    <div class="space-y-2">
+                        <label class="text-sm font-medium text-text-heading-light dark:text-text-heading-dark" for="full-name">Full Name *</label>
+                        <input class="w-full px-3 py-2 text-sm bg-background-light dark:bg-background-dark border border-border-light dark:border-border-dark rounded-lg focus:ring-2 focus:ring-accent focus:border-accent text-text-body-light dark:text-text-body-dark placeholder:text-text-body-light/70 dark:placeholder:text-text-body-dark/70 transition-colors" id="full-name" required="" type="text">
+                    </div>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div class="space-y-2">
+                            <label class="text-sm font-medium text-text-heading-light dark:text-text-heading-dark" for="email">Email Address *</label>
+                            <input class="w-full px-3 py-2 text-sm bg-background-light dark:bg-background-dark border border-border-light dark:border-border-dark rounded-lg focus:ring-2 focus:ring-accent focus:border-accent text-text-body-light dark:text-text-body-dark placeholder:text-text-body-light/70 dark:placeholder:text-text-body-dark/70 transition-colors" id="email" required="" type="email">
+                        </div>
+                        <div class="space-y-2">
+                            <label class="text-sm font-medium text-text-heading-light dark:text-text-heading-dark" for="phone">Phone Number *</label>
+                            <input class="w-full px-3 py-2 text-sm bg-background-light dark:bg-background-dark border border-border-light dark:border-border-dark rounded-lg focus:ring-2 focus:ring-accent focus:border-accent text-text-body-light dark:text-text-body-dark placeholder:text-text-body-light/70 dark:placeholder:text-text-body-dark/70 transition-colors" id="phone" required="" type="tel">
+                        </div>
+                    </div>
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                        <div class="space-y-2">
+                            <label class="text-sm font-medium text-text-heading-light dark:text-text-heading-dark" for="age">Age *</label>
+                            <input class="w-full px-3 py-2 text-sm bg-background-light dark:bg-background-dark border border-border-light dark:border-border-dark rounded-lg focus:ring-2 focus:ring-accent focus:border-accent text-text-body-light dark:text-text-body-dark placeholder:text-text-body-light/70 dark:placeholder:text-text-body-dark/70 transition-colors" id="age" required="" type="number">
+                        </div>
+                        <div class="space-y-2">
+                            <label class="text-sm font-medium text-text-heading-light dark:text-text-heading-dark" for="gender">Gender *</label>
+                            <select class="w-full px-3 py-2 text-sm bg-background-light dark:bg-background-dark border border-border-light dark:border-border-dark rounded-lg focus:ring-2 focus:ring-accent focus:border-accent text-text-body-light dark:text-text-body-dark transition-colors" id="gender" required="">
+                                <option>Male</option>
+                                <option>Female</option>
+                                <option>Non-binary</option>
+                                <option>Prefer not to say</option>
+                            </select>
+                        </div>
+                        <div class="space-y-2">
+                            <label class="text-sm font-medium text-text-heading-light dark:text-text-heading-dark" for="skill-level">Skill Level *</label>
+                            <select class="w-full px-3 py-2 text-sm bg-background-light dark:bg-background-dark border border-border-light dark:border-border-dark rounded-lg focus:ring-2 focus:ring-accent focus:border-accent text-text-body-light dark:text-text-body-dark transition-colors" id="skill-level" required="">
+                                <option>Beginner</option>
+                                <option>Intermediate</option>
+                                <option>Advanced</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="space-y-4">
+                    <div class="space-y-2">
+                        <label class="text-sm font-medium text-text-heading-light dark:text-text-heading-dark" for="experience-hours">Experience Hours</label>
+                        <input class="w-full px-3 py-2 text-sm bg-background-light dark:bg-background-dark border border-border-light dark:border-border-dark rounded-lg focus:ring-2 focus:ring-accent focus:border-accent text-text-body-light dark:text-text-body-dark placeholder:text-text-body-light/70 dark:placeholder:text-text-body-dark/70 transition-colors" id="experience-hours" placeholder="e.g., 10 hours" type="text">
+                    </div>
+                    <div class="space-y-2">
+                        <label class="text-sm font-medium text-text-heading-light dark:text-text-heading-dark" for="additional-notes">Additional Notes</label>
+                        <textarea class="w-full px-3 py-2 text-sm min-h-24 bg-background-light dark:bg-background-dark border border-border-light dark:border-border-dark rounded-lg focus:ring-2 focus:ring-accent focus:border-accent text-text-body-light dark:text-text-body-dark placeholder:text-text-body-light/70 dark:placeholder:text-text-body-dark/70 transition-colors" id="additional-notes" placeholder="Any specific requirements or information?"></textarea>
+                    </div>
+                </div>
+            </div>
+            <div class="flex items-center justify-end gap-4 p-6 border-t border-border-light dark:border-border-dark">
+                <button class="text-sm font-semibold text-text-body-light dark:text-text-body-dark hover:text-text-heading-light dark:hover:text-text-heading-dark transition-colors close-modal-btn" data-modal-id="add-customer-modal">Cancel</button>
+                <button class="px-6 py-2 bg-primary text-white rounded-lg text-sm font-semibold hover:bg-primary/90 transition-colors">Create Customer</button>
+            </div>
+        </div>
+    </div>
+        <div id="customer-details-modal" class="modal-overlay hidden">
+        <div class="relative flex w-full max-w-4xl flex-col rounded-lg bg-surface-light dark:bg-surface-dark shadow-2xl max-h-[90vh]">
+            <!-- Modal Header -->
+            <div class="flex items-center justify-between gap-4 p-6 border-b border-border-light dark:border-border-dark">
+                <p class="text-text-heading-light dark:text-text-heading-dark text-2xl font-black leading-tight tracking-tight">Customer Details: Jen Adler</p>
+                <button class="p-2 text-text-body-light dark:text-text-body-dark rounded-full hover:bg-background-light dark:hover:bg-background-dark close-modal-btn" data-modal-id="customer-details-modal">
+                    <span class="material-symbols-outlined text-2xl">close</span>
+                </button>
+            </div>
+            <!-- Modal Content (scrollable) -->
+            <div class="flex-1 overflow-y-auto p-6 space-y-8">
+                <!-- Customer Profile Section -->
+                <div class="flex flex-col gap-6">
+                    <!-- ProfileHeader Component -->
+                    <div class="flex flex-col gap-4 sm:flex-row sm:items-center">
+                        <div class="bg-center bg-no-repeat aspect-square bg-cover rounded-full h-24 w-24 flex-shrink-0" data-alt="Profile picture of Jen Adler" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuCW1_TbfGGo2tbQcmqQPqqqPNjiLLXP62bUm7Vp4ziOV1EzdSqgBn8sQlxCg7CdchnDlFDwOtrcIhK1G9Y4LltZLeHMMZOTQaCFXUVXlW43OSiaCWXfI7Iaoa-_9qBnQz52iSyQuQNhBbSYIAaeS7doj7doQGYGhvzcVFxshRosn8Ld36w0uSN6j7e7iiI6FW-XGUNlaz9Us4D8pNrt91dqUa9Ey7KCyMmajQREsVzKTWf9MecoWq0iZjp1B4G3UOj8fibiscE7iAE');"></div>
+                        <div class="flex flex-col justify-center">
+                            <p class="text-text-heading-light dark:text-text-heading-dark text-xl font-bold leading-tight">Jen Adler</p>
+                            <p class="text-text-body-light dark:text-text-body-dark text-base font-normal">jen.adler@email.com</p>
+                            <p class="text-text-body-light dark:text-text-body-dark text-base font-normal">+1 555-010-4321</p>
+                        </div>
+                    </div>
+                    <!-- DescriptionList Component -->
+                    <div class="grid grid-cols-2 md:grid-cols-4 gap-x-4 gap-y-1">
+                        <div class="flex flex-col gap-1 py-3 col-span-1">
+                            <p class="text-text-body-light dark:text-text-body-dark text-sm font-medium">Age</p>
+                            <p class="text-text-heading-light dark:text-text-heading-dark text-base font-semibold">28</p>
+                        </div>
+                        <div class="flex flex-col gap-1 py-3 col-span-1">
+                            <p class="text-text-body-light dark:text-text-body-dark text-sm font-medium">Gender</p>
+                            <p class="text-text-heading-light dark:text-text-heading-dark text-base font-semibold">Female</p>
+                        </div>
+                        <div class="flex flex-col gap-1 py-3 col-span-2">
+                            <p class="text-text-body-light dark:text-text-body-dark text-sm font-medium">Skill Level</p>
+                            <p class="text-text-heading-light dark:text-text-heading-dark text-base font-semibold">Intermediate</p>
+                        </div>
+                    </div>
+                </div>
+                <!-- Divider -->
+                <div class="border-t border-border-light dark:border-border-dark"></div>
+                <!-- Booking History Section -->
+                <div>
+                    <h2 class="text-text-heading-light dark:text-text-heading-dark text-xl font-bold leading-tight tracking-tight pb-4">Booking History</h2>
+                    <div class="w-full overflow-x-auto">
+                        <table class="w-full text-left">
+                            <thead class="border-b border-border-light dark:border-border-dark">
+                                <tr>
+                                    <th class="p-3 text-sm font-semibold text-text-body-light dark:text-text-body-dark">Lesson Type</th>
+                                    <th class="p-3 text-sm font-semibold text-text-body-light dark:text-text-body-dark">Instructor</th>
+                                    <th class="p-3 text-sm font-semibold text-text-body-light dark:text-text-body-dark">Date &amp; Time</th>
+                                    <th class="p-3 text-sm font-semibold text-text-body-light dark:text-text-body-dark">Status</th>
+                                    <th class="p-3 text-sm font-semibold text-text-body-light dark:text-text-body-dark text-right">Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr class="border-b border-border-light dark:border-border-dark">
+                                    <td class="p-3 text-text-heading-light dark:text-text-heading-dark font-medium">Private Lesson</td>
+                                    <td class="p-3 text-text-body-light dark:text-text-body-dark">Mike L.</td>
+                                    <td class="p-3 text-text-body-light dark:text-text-body-dark">Aug 15, 2024 @ 10:00 AM</td>
+                                    <td class="p-3">
+                                        <span class="inline-flex items-center rounded-full bg-green-100 dark:bg-green-900/50 px-3 py-1 text-xs font-medium text-green-700 dark:text-green-300">Confirmed</span>
+                                    </td>
+                                    <td class="p-3 text-right">
+                                        <a class="font-semibold text-accent hover:underline" href="#">View Lesson</a>
+                                    </td>
+                                </tr>
+                                <!-- more rows... -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <!-- Divider -->
+                <div class="border-t border-border-light dark:border-border-dark"></div>
+                <!-- Notes / Activity Log Section -->
+                <div>
+                    <h2 class="text-text-heading-light dark:text-text-heading-dark text-xl font-bold leading-tight tracking-tight pb-4">Notes &amp; Activity Log</h2>
+                    <div class="space-y-4">
+                        <div class="rounded-lg border border-border-light dark:border-border-dark p-4 bg-background-light dark:bg-background-dark/50">
+                            <p class="text-sm text-text-heading-light dark:text-text-heading-dark">Customer inquired about advanced wave riding lessons. Followed up with clinic dates.</p>
+                            <p class="text-xs text-text-body-light dark:text-text-body-dark mt-1">Note added by Alex R. on Aug 1, 2024</p>
+                        </div>
+                        <div class="rounded-lg border border-border-light dark:border-border-dark p-4 bg-background-light dark:bg-background-dark/50">
+                            <p class="text-sm text-text-heading-light dark:text-text-heading-dark">Message sent: "Lesson Confirmation for Aug 15"</p>
+                            <p class="text-xs text-text-body-light dark:text-text-body-dark mt-1">System activity on Jul 30, 2024</p>
+                        </div>
+                        <textarea class="w-full rounded-lg border-border-light dark:border-border-dark bg-surface-light dark:bg-surface-dark p-3 text-sm text-text-body-light dark:text-text-body-dark placeholder:text-text-body-light/70 dark:placeholder:text-text-body-dark/70 focus:ring-2 focus:ring-accent focus:border-accent" placeholder="Add a new note..." rows="3"></textarea>
+                    </div>
+                </div>
+            </div>
+            <!-- Modal Footer -->
+            <div class="flex flex-col-reverse sm:flex-row sm:justify-end gap-3 p-6 border-t border-border-light dark:border-border-dark bg-background-light dark:bg-background-dark/50">
+                <button id="edit-customer-btn" class="flex items-center justify-center gap-2 rounded-lg border border-border-light dark:border-border-dark px-5 py-2.5 text-sm font-semibold text-text-heading-light dark:text-text-heading-dark bg-surface-light dark:bg-surface-dark hover:bg-background-light dark:hover:bg-background-dark">Edit Customer Info</button>
+                <button class="flex items-center justify-center gap-2 rounded-lg bg-primary px-5 py-2.5 text-sm font-semibold text-white hover:bg-primary/90">Send Message</button>
+            </div>
+        </div>
+    </div>
+    <div id="edit-customer-modal" class="modal-overlay hidden">
+        <div class="relative m-4 flex w-full max-w-2xl flex-col overflow-hidden rounded-xl bg-surface shadow-2xl dark:bg-background-dark">
+            <div class="border-b border-border-light p-6 dark:border-white/10">
+                <div class="flex items-center justify-between">
+                    <h2 class="text-text-heading dark:text-white text-xl font-bold leading-tight">Edit Customer Information</h2>
+                    <button class="flex h-8 w-8 cursor-pointer items-center justify-center rounded-full bg-background-light text-text-body hover:bg-border-light dark:bg-white/10 dark:text-white dark:hover:bg-white/20 close-modal-btn" data-modal-id="edit-customer-modal">
+                        <span class="material-symbols-outlined text-xl" data-icon="close">close</span>
+                    </button>
+                </div>
+            </div>
+            <div class="flex-1 overflow-y-auto p-6">
+                <div class="flex flex-col gap-6">
+                    <div class="flex w-full flex-col gap-4 sm:flex-row sm:items-center">
+                        <div class="flex-shrink-0">
+                            <div class="bg-center bg-no-repeat aspect-square bg-cover rounded-full h-24 w-24" data-alt="Profile picture of Alex Johnson" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuDR1ToprpsiwZPVxSHLS7QuoUurQ7DL9GB5ZdY7eMBKA34_pz_JIEqtv2-54xDEuDWuKgujgnMe0i02XxGlrymaF-cGsKXdTbslS1phOhguIZ6nnYX3QCbpSsFK3o_G3bIgbvp0wWECzag0YxD7262MNZuDuH-T_tjwwAQAHAJm0rkU33LI1eZfw3oakqSFkeHtaLeK8JD970URJOrcmrGHa30IBSc2-ugsV3expXJ9MCvQc0srfLP-NXhEaP8QH4TnaCMUgBKTphI");'></div>
+                        </div>
+                        <div class="flex flex-col justify-center">
+                            <p class="text-text-heading dark:text-white text-lg font-bold">Alex Johnson</p>
+                            <p class="text-text-body dark:text-gray-400 text-sm">alex.johnson@example.com</p>
+                            <button class="mt-3 flex w-fit cursor-pointer items-center justify-center overflow-hidden rounded-lg h-9 px-4 bg-background-light text-text-body text-sm font-semibold hover:bg-border-light dark:bg-white/10 dark:text-white dark:hover:bg-white/20">
+                                <span class="truncate">Change Picture</span>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="grid grid-cols-1 gap-x-4 gap-y-6 sm:grid-cols-2">
+                        <label class="flex flex-col col-span-2 sm:col-span-1">
+                            <p class="text-text-heading dark:text-white text-sm font-medium pb-2">Customer Name</p>
+                            <input class="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-lg text-text-body dark:text-white dark:bg-background-dark focus:outline-0 focus:ring-2 focus:ring-accent/50 border border-border-light bg-background-light focus:border-accent dark:border-white/20 dark:focus:border-accent h-12 placeholder:text-text-body/50 p-3 text-base font-normal" value="Alex Johnson">
+                        </label>
+                        <label class="flex flex-col col-span-2 sm:col-span-1">
+                            <p class="text-text-heading dark:text-white text-sm font-medium pb-2">Phone Number</p>
+                            <input class="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-lg text-text-body dark:text-white dark:bg-background-dark focus:outline-0 focus:ring-2 focus:ring-accent/50 border border-border-light bg-background-light focus:border-accent dark:border-white/20 dark:focus:border-accent h-12 placeholder:text-text-body/50 p-3 text-base font-normal" value="+1 (555) 123-4567">
+                        </label>
+                        <label class="flex flex-col col-span-2">
+                            <p class="text-text-heading dark:text-white text-sm font-medium pb-2">Email Address</p>
+                            <input class="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-lg text-text-body dark:text-white dark:bg-background-dark focus:outline-0 focus:ring-2 focus:ring-accent/50 border border-border-light bg-background-light focus:border-accent dark:border-white/20 dark:focus:border-accent h-12 placeholder:text-text-body/50 p-3 text-base font-normal" type="email" value="alex.johnson@example.com">
+                        </label>
+                        <label class="flex flex-col">
+                            <p class="text-text-heading dark:text-white text-sm font-medium pb-2">Age</p>
+                            <input class="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-lg text-text-body dark:text-white dark:bg-background-dark focus:outline-0 focus:ring-2 focus:ring-accent/50 border border-border-light bg-background-light focus:border-accent dark:border-white/20 dark:focus:border-accent h-12 placeholder:text-text-body/50 p-3 text-base font-normal" type="number" value="34">
+                        </label>
+                        <div class="relative flex flex-col">
+                            <p class="text-text-heading dark:text-white text-sm font-medium pb-2">Gender</p>
+                            <select class="form-select flex w-full min-w-0 flex-1 appearance-none items-center overflow-hidden rounded-lg text-text-body dark:text-white dark:bg-background-dark focus:outline-0 focus:ring-2 focus:ring-accent/50 border border-border-light bg-background-light focus:border-accent dark:border-white/20 dark:focus:border-accent h-12 p-3 text-base font-normal pr-8">
+                                <option>Male</option>
+                                <option>Female</option>
+                                <option>Non-binary</option>
+                                <option>Prefer not to say</option>
+                            </select>
+                            <span class="material-symbols-outlined text-text-body dark:text-gray-400 absolute right-3 top-10 pointer-events-none">expand_more</span>
+                        </div>
+                        <div class="relative flex flex-col col-span-2">
+                            <p class="text-text-heading dark:text-white text-sm font-medium pb-2">Skill Level</p>
+                            <select class="form-select flex w-full min-w-0 flex-1 appearance-none items-center overflow-hidden rounded-lg text-text-body dark:text-white dark:bg-background-dark focus:outline-0 focus:ring-2 focus:ring-accent/50 border border-border-light bg-background-light focus:border-accent dark:border-white/20 dark:focus:border-accent h-12 p-3 text-base font-normal pr-8">
+                                <option>Beginner</option>
+                                <option selected>Intermediate</option>
+                                <option>Advanced</option>
+                            </select>
+                            <span class="material-symbols-outlined text-text-body dark:text-gray-400 absolute right-3 top-10 pointer-events-none">expand_more</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="flex flex-col-reverse sm:flex-row sm:justify-end sm:items-center gap-3 border-t border-border-light p-6 bg-background-light dark:bg-black/20 dark:border-white/10">
+                <button class="flex w-full sm:w-auto min-w-[84px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-11 px-4 text-primary dark:text-white text-base font-semibold hover:bg-primary/10 dark:hover:bg-white/10 close-modal-btn" data-modal-id="edit-customer-modal">
+                    <span class="truncate">Cancel</span>
+                </button>
+                <button class="flex w-full sm:w-auto min-w-[84px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-11 px-6 bg-primary text-white text-base font-semibold hover:bg-primary/90">
+                    <span class="truncate">Save Changes</span>
+                </button>
+            </div>
+        </div>
+    </div>
+    <div id="send-customer-message-modal" class="modal-overlay hidden">
+        <div class="flex w-full max-w-2xl flex-col rounded-xl bg-white dark:bg-background-dark">
+            <div class="flex items-center justify-between gap-3 p-6 border-b border-[#d1dbe6] dark:border-primary/20">
+                <p class="text-[#0e141a] dark:text-white tracking-light text-2xl font-bold leading-tight">Send Message to Olivia Chen</p>
+                <button class="flex items-center justify-center rounded-lg h-10 w-10 text-[#517394] dark:text-white/70 hover:bg-[#e8edf2] dark:hover:bg-primary/20 close-modal-btn" data-modal-id="send-customer-message-modal">
+                    <span class="material-symbols-outlined">close</span>
+                </button>
+            </div>
+            <div class="flex flex-col gap-6 p-6">
+                <div class="flex flex-col">
+                    <p class="text-[#0e141a] dark:text-white text-base font-medium leading-normal pb-2">To</p>
+                    <div class="flex w-full items-center rounded-lg border border-[#d1dbe6] dark:border-primary/20 bg-[#f8fafb] dark:bg-background-dark/50 h-14 p-4">
+                        <p class="text-[#517394] dark:text-white/70 text-base font-normal">Olivia Chen &lt;olivia.chen@email.com&gt;</p>
+                    </div>
+                </div>
+                <label class="flex flex-col min-w-40 flex-1">
+                    <p class="text-[#0e141a] dark:text-white text-base font-medium leading-normal pb-2">Subject (Optional)</p>
+                    <input class="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-lg text-[#0e141a] dark:text-white focus:outline-0 focus:ring-2 focus:ring-primary/50 border border-[#d1dbe6] dark:border-primary/20 bg-white dark:bg-background-dark h-14 placeholder:text-[#517394] dark:placeholder:text-white/50 p-[15px] text-base font-normal leading-normal" placeholder="e.g., Your upcoming lesson" value="">
+                </label>
+                <label class="flex flex-col min-w-40 flex-1">
+                    <p class="text-[#0e141a] dark:text-white text-base font-medium leading-normal pb-2">Message</p>
+                    <textarea class="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-lg text-[#0e141a] dark:text-white focus:outline-0 focus:ring-2 focus:ring-primary/50 border border-[#d1dbe6] dark:border-primary/20 bg-white dark:bg-background-dark min-h-48 placeholder:text-[#517394] dark:placeholder:text-white/50 p-[15px] text-base font-normal leading-normal" placeholder="Type your message here..."></textarea>
+                </label>
+                <div class="flex items-center gap-4 bg-transparent min-h-14 justify-between">
+                    <div class="flex items-center gap-3">
+                        <input class="form-checkbox h-5 w-5 rounded border-[#d1dbe6] dark:border-primary/20 border-2 bg-transparent text-primary checked:bg-primary checked:border-primary focus:ring-2 focus:ring-offset-0 focus:ring-offset-transparent dark:focus:ring-offset-background-dark focus:ring-primary/50" id="sms-toggle" type="checkbox">
+                        <label class="text-[#0e141a] dark:text-white text-base font-normal leading-normal flex-1 truncate cursor-pointer" for="sms-toggle">Also send as SMS</label>
+                    </div>
+                </div>
+            </div>
+            <div class="flex flex-wrap justify-end gap-3 p-6 border-t border-[#d1dbe6] dark:border-primary/20">
+                <button class="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-12 px-6 bg-transparent text-[#0e141a] dark:text-white text-base font-medium leading-normal hover:bg-[#e8edf2] dark:hover:bg-primary/20 close-modal-btn" data-modal-id="send-customer-message-modal">
+                    <span class="truncate">Cancel</span>
+                </button>
+                <button class="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-12 px-6 bg-primary text-white text-base font-medium leading-normal hover:bg-primary/90">
+                    <span class="truncate">Send Message</span>
+                </button>
+            </div>
+        </div>
+    </div>
     <!-- Modals -->
     <div id="upload-logo-modal" class="modal-overlay hidden">
         <div class="w-full max-w-lg rounded-xl bg-surface font-body shadow-2xl">
@@ -1198,7 +1475,7 @@
                 <!-- PageHeading -->
                 <div class="flex flex-wrap items-center justify-between gap-3 p-6 border-b border-gray-200 dark:border-gray-700">
                     <p class="text-text-heading dark:text-text-heading-dark text-2xl font-bold leading-tight tracking-tight">Add New Booking</p>
-                    <button class="flex h-10 w-10 cursor-pointer items-center justify-center overflow-hidden rounded-full bg-transparent text-text-body dark:text-text-body-dark hover:bg-gray-100 dark:hover:bg-gray-800 close-modal-btn">
+                    <button class="flex h-10 w-10 cursor-pointer items-center justify-center overflow-hidden rounded-full bg-transparent text-text-body dark:text-text-body-dark hover:bg-gray-100 dark:hover:bg-gray-800 close-modal-btn" data-modal-id="add-booking-modal">
                         <span class="material-symbols-outlined">close</span>
                     </button>
                 </div>
@@ -1298,7 +1575,7 @@
                         <p class="text-text-body dark:text-text-body-dark text-sm">Total Price: <span class="font-bold text-text-heading dark:text-text-heading-dark">$250.00</span></p>
                     </div>
                     <div class="flex gap-3 w-full sm:w-auto">
-                        <button class="flex min-w-[84px] max-w-[480px] flex-1 cursor-pointer items-center justify-center overflow-hidden rounded-lg h-12 px-6 bg-transparent text-text-body dark:text-text-body-dark hover:bg-gray-100 dark:hover:bg-gray-800 text-base font-bold leading-normal close-modal-btn">
+                        <button class="flex min-w-[84px] max-w-[480px] flex-1 cursor-pointer items-center justify-center overflow-hidden rounded-lg h-12 px-6 bg-transparent text-text-body dark:text-text-body-dark hover:bg-gray-100 dark:hover:bg-gray-800 text-base font-bold leading-normal close-modal-btn" data-modal-id="add-booking-modal">
                             <span class="truncate">Cancel</span>
                         </button>
                         <button class="flex min-w-[84px] max-w-[480px] flex-1 cursor-pointer items-center justify-center overflow-hidden rounded-lg h-12 px-6 bg-primary text-white text-base font-bold leading-normal hover:bg-primary/90">
@@ -1313,7 +1590,7 @@
         <div class="flex w-full max-w-2xl flex-col rounded-xl bg-white dark:bg-background-dark">
             <div class="flex items-center justify-between gap-3 p-6 border-b border-[#d1dbe6] dark:border-primary/20">
                 <p class="text-[#0e141a] dark:text-white tracking-light text-2xl font-bold leading-tight">Send Message to Olivia Chen</p>
-                <button class="flex items-center justify-center rounded-lg h-10 w-10 text-[#517394] dark:text-white/70 hover:bg-[#e8edf2] dark:hover:bg-primary/20 close-modal-btn">
+                <button class="flex items-center justify-center rounded-lg h-10 w-10 text-[#517394] dark:text-white/70 hover:bg-[#e8edf2] dark:hover:bg-primary/20 close-modal-btn" data-modal-id="send-message-modal">
                     <span class="material-symbols-outlined">close</span>
                 </button>
             </div>
@@ -1340,7 +1617,7 @@
                 </div>
             </div>
             <div class="flex flex-wrap justify-end gap-3 p-6 border-t border-[#d1dbe6] dark:border-primary/20">
-                <button class="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-12 px-6 bg-transparent text-[#0e141a] dark:text-white text-base font-medium leading-normal hover:bg-[#e8edf2] dark:hover:bg-primary/20 close-modal-btn">
+                <button class="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-12 px-6 bg-transparent text-[#0e141a] dark:text-white text-base font-medium leading-normal hover:bg-[#e8edf2] dark:hover:bg-primary/20 close-modal-btn" data-modal-id="send-message-modal">
                     <span class="truncate">Cancel</span>
                 </button>
                 <button class="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-12 px-6 bg-primary text-white text-base font-medium leading-normal hover:bg-primary/90">
@@ -1354,7 +1631,7 @@
             <!-- Modal Header -->
             <div class="flex flex-shrink-0 items-center justify-between gap-4 border-b border-gray-200 dark:border-white/10 p-4 sm:p-6">
                 <p class="text-xl font-bold text-[#111111] dark:text-white">Add New Instructor</p>
-                <button class="flex h-8 w-8 cursor-pointer items-center justify-center rounded-full bg-gray-100 dark:bg-white/10 text-gray-600 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-white/20 close-modal-btn">
+                <button class="flex h-8 w-8 cursor-pointer items-center justify-center rounded-full bg-gray-100 dark:bg-white/10 text-gray-600 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-white/20 close-modal-btn" data-modal-id="add-instructor-modal">
                     <span class="material-symbols-outlined text-xl">close</span>
                 </button>
             </div>
@@ -1434,14 +1711,14 @@
             </div>
             <!-- Modal Footer -->
             <div class="flex flex-shrink-0 flex-col-reverse items-center justify-end gap-3 border-t border-gray-200 dark:border-white/10 p-4 sm:flex-row sm:p-6">
-                <button class="flex h-10 w-full cursor-pointer items-center justify-center rounded-lg bg-transparent px-4 text-sm font-medium text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-white/10 sm:w-auto close-modal-btn">Cancel</button>
+                <button class="flex h-10 w-full cursor-pointer items-center justify-center rounded-lg bg-transparent px-4 text-sm font-medium text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-white/10 sm:w-auto close-modal-btn" data-modal-id="add-instructor-modal">Cancel</button>
                 <button class="flex h-10 w-full cursor-pointer items-center justify-center rounded-lg bg-primary px-4 text-sm font-medium text-white hover:bg-primary/90 sm:w-auto">Create Instructor</button>
             </div>
         </div>
     </div>
     <div id="delete-instructor-modal" class="modal-overlay hidden">
         <div class="relative flex w-full max-w-md flex-col items-center gap-6 rounded-xl bg-white dark:bg-background-dark p-6 sm:p-8 shadow-2xl">
-            <button class="absolute top-4 right-4 flex h-8 w-8 cursor-pointer items-center justify-center rounded-full text-gray-600 hover:bg-gray-100 dark:text-gray-400 dark:hover:bg-white/10 close-modal-btn">
+            <button class="absolute top-4 right-4 flex h-8 w-8 cursor-pointer items-center justify-center rounded-full text-gray-600 hover:bg-gray-100 dark:text-gray-400 dark:hover:bg-white/10 close-modal-btn" data-modal-id="delete-instructor-modal">
                 <span class="material-symbols-outlined text-2xl">close</span>
             </button>
             <div class="flex h-16 w-16 items-center justify-center rounded-full bg-red-100 dark:bg-red-500/10">
@@ -1458,7 +1735,7 @@
                 <button class="flex h-12 min-w-[84px] w-full cursor-pointer items-center justify-center overflow-hidden rounded-lg bg-red-600 px-5 text-base font-bold leading-normal tracking-[0.015em] text-white transition-colors hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 dark:focus:ring-offset-background-dark">
                     <span class="truncate">Delete Instructor</span>
                 </button>
-                <button class="flex h-12 min-w-[84px] w-full cursor-pointer items-center justify-center overflow-hidden rounded-lg bg-transparent px-5 text-base font-bold leading-normal tracking-[0.015em] text-[#0e141b] transition-colors hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-400 focus:ring-offset-2 dark:text-white dark:hover:bg-white/10 dark:focus:ring-gray-500 close-modal-btn">
+                <button class="flex h-12 min-w-[84px] w-full cursor-pointer items-center justify-center overflow-hidden rounded-lg bg-transparent px-5 text-base font-bold leading-normal tracking-[0.015em] text-[#0e141b] transition-colors hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-400 focus:ring-offset-2 dark:text-white dark:hover:bg-white/10 dark:focus:ring-gray-500 close-modal-btn" data-modal-id="delete-instructor-modal">
                     <span class="truncate">Cancel</span>
                 </button>
             </div>
@@ -1469,7 +1746,7 @@
             <!-- Modal Header -->
             <div class="flex items-center justify-between gap-4 p-6 border-b border-border-light dark:border-border-dark">
                 <p class="text-text-heading-light dark:text-text-heading-dark text-2xl font-black leading-tight tracking-tight">Customer Details: Jen Adler</p>
-                <button class="p-2 text-text-body-light dark:text-text-body-dark rounded-full hover:bg-background-light dark:hover:bg-background-dark close-modal-btn">
+                <button class="p-2 text-text-body-light dark:text-text-body-dark rounded-full hover:bg-background-light dark:hover:bg-background-dark close-modal-btn" data-modal-id="customer-details-modal">
                     <span class="material-symbols-outlined text-2xl">close</span>
                 </button>
             </div>
@@ -1565,7 +1842,7 @@
             <div class="border-b border-border-light p-6 dark:border-white/10">
                 <div class="flex items-center justify-between">
                     <h2 class="text-text-heading dark:text-white text-xl font-bold leading-tight">Edit Customer Information</h2>
-                    <button class="flex h-8 w-8 cursor-pointer items-center justify-center rounded-full bg-background-light text-text-body hover:bg-border-light dark:bg-white/10 dark:text-white dark:hover:bg-white/20 close-modal-btn">
+                    <button class="flex h-8 w-8 cursor-pointer items-center justify-center rounded-full bg-background-light text-text-body hover:bg-border-light dark:bg-white/10 dark:text-white dark:hover:bg-white/20 close-modal-btn" data-modal-id="edit-customer-modal">
                         <span class="material-symbols-outlined text-xl" data-icon="close">close</span>
                     </button>
                 </div>
@@ -1624,11 +1901,51 @@
                 </div>
             </div>
             <div class="flex flex-col-reverse sm:flex-row sm:justify-end sm:items-center gap-3 border-t border-border-light p-6 bg-background-light dark:bg-black/20 dark:border-white/10">
-                <button class="flex w-full sm:w-auto min-w-[84px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-11 px-4 text-primary dark:text-white text-base font-semibold hover:bg-primary/10 dark:hover:bg-white/10 close-modal-btn">
+                <button class="flex w-full sm:w-auto min-w-[84px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-11 px-4 text-primary dark:text-white text-base font-semibold hover:bg-primary/10 dark:hover:bg-white/10 close-modal-btn" data-modal-id="edit-customer-modal">
                     <span class="truncate">Cancel</span>
                 </button>
                 <button class="flex w-full sm:w-auto min-w-[84px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-11 px-6 bg-primary text-white text-base font-semibold hover:bg-primary/90">
                     <span class="truncate">Save Changes</span>
+                </button>
+            </div>
+        </div>
+    </div>
+    <div id="send-customer-message-modal" class="modal-overlay hidden">
+        <div class="flex w-full max-w-2xl flex-col rounded-xl bg-white dark:bg-background-dark">
+            <div class="flex items-center justify-between gap-3 p-6 border-b border-[#d1dbe6] dark:border-primary/20">
+                <p class="text-[#0e141a] dark:text-white tracking-light text-2xl font-bold leading-tight">Send Message to Olivia Chen</p>
+                <button class="flex items-center justify-center rounded-lg h-10 w-10 text-[#517394] dark:text-white/70 hover:bg-[#e8edf2] dark:hover:bg-primary/20 close-modal-btn" data-modal-id="send-customer-message-modal">
+                    <span class="material-symbols-outlined">close</span>
+                </button>
+            </div>
+            <div class="flex flex-col gap-6 p-6">
+                <div class="flex flex-col">
+                    <p class="text-[#0e141a] dark:text-white text-base font-medium leading-normal pb-2">To</p>
+                    <div class="flex w-full items-center rounded-lg border border-[#d1dbe6] dark:border-primary/20 bg-[#f8fafb] dark:bg-background-dark/50 h-14 p-4">
+                        <p class="text-[#517394] dark:text-white/70 text-base font-normal">Olivia Chen &lt;olivia.chen@email.com&gt;</p>
+                    </div>
+                </div>
+                <label class="flex flex-col min-w-40 flex-1">
+                    <p class="text-[#0e141a] dark:text-white text-base font-medium leading-normal pb-2">Subject (Optional)</p>
+                    <input class="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-lg text-[#0e141a] dark:text-white focus:outline-0 focus:ring-2 focus:ring-primary/50 border border-[#d1dbe6] dark:border-primary/20 bg-white dark:bg-background-dark h-14 placeholder:text-[#517394] dark:placeholder:text-white/50 p-[15px] text-base font-normal leading-normal" placeholder="e.g., Your upcoming lesson" value="">
+                </label>
+                <label class="flex flex-col min-w-40 flex-1">
+                    <p class="text-[#0e141a] dark:text-white text-base font-medium leading-normal pb-2">Message</p>
+                    <textarea class="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-lg text-[#0e141a] dark:text-white focus:outline-0 focus:ring-2 focus:ring-primary/50 border border-[#d1dbe6] dark:border-primary/20 bg-white dark:bg-background-dark min-h-48 placeholder:text-[#517394] dark:placeholder:text-white/50 p-[15px] text-base font-normal leading-normal" placeholder="Type your message here..."></textarea>
+                </label>
+                <div class="flex items-center gap-4 bg-transparent min-h-14 justify-between">
+                    <div class="flex items-center gap-3">
+                        <input class="form-checkbox h-5 w-5 rounded border-[#d1dbe6] dark:border-primary/20 border-2 bg-transparent text-primary checked:bg-primary checked:border-primary focus:ring-2 focus:ring-offset-0 focus:ring-offset-transparent dark:focus:ring-offset-background-dark focus:ring-primary/50" id="sms-toggle" type="checkbox">
+                        <label class="text-[#0e141a] dark:text-white text-base font-normal leading-normal flex-1 truncate cursor-pointer" for="sms-toggle">Also send as SMS</label>
+                    </div>
+                </div>
+            </div>
+            <div class="flex flex-wrap justify-end gap-3 p-6 border-t border-[#d1dbe6] dark:border-primary/20">
+                <button class="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-12 px-6 bg-transparent text-[#0e141a] dark:text-white text-base font-medium leading-normal hover:bg-[#e8edf2] dark:hover:bg-primary/20 close-modal-btn" data-modal-id="send-customer-message-modal">
+                    <span class="truncate">Cancel</span>
+                </button>
+                <button class="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-12 px-6 bg-primary text-white text-base font-medium leading-normal hover:bg-primary/90">
+                    <span class="truncate">Send Message</span>
                 </button>
             </div>
         </div>
@@ -1977,6 +2294,14 @@ The KiteOps Team</textarea>
                 'deactivate-lesson-type-modal': document.getElementById('deactivate-lesson-type-modal'),
                 'add-lesson-type-modal': document.getElementById('add-lesson-type-modal'),
                 'activate-lesson-modal': document.getElementById('activate-lesson-modal'),
+                'add-booking-modal': document.getElementById('add-booking-modal'),
+                'send-message-modal': document.getElementById('send-message-modal'),
+                'add-instructor-modal': document.getElementById('add-instructor-modal'),
+                'delete-instructor-modal': document.getElementById('delete-instructor-modal'),
+                'add-customer-modal': document.getElementById('add-customer-modal'),
+                'customer-details-modal': document.getElementById('customer-details-modal'),
+                'send-customer-message-modal': document.getElementById('send-customer-message-modal'),
+                'edit-customer-modal': document.getElementById('edit-customer-modal'),
             };
 
             const openModal = (modalId) => {
@@ -2014,7 +2339,7 @@ The KiteOps Team</textarea>
                     openModal('deactivate-lesson-type-modal');
                 });
             });
-            
+
             document.querySelectorAll('.activate-lesson-btn').forEach(btn => {
                 btn.addEventListener('click', (e) => {
                     e.preventDefault();
@@ -2022,11 +2347,56 @@ The KiteOps Team</textarea>
                 });
             });
 
+            document.getElementById('add-booking-btn').addEventListener('click', (e) => {
+                e.preventDefault();
+                openModal('add-booking-modal');
+            });
+
+             document.getElementById('send-message-btn').addEventListener('click', (e) => {
+                e.preventDefault();
+                openModal('send-message-modal');
+            });
+
+            document.getElementById('add-instructor-btn').addEventListener('click', (e) => {
+                e.preventDefault();
+                openModal('add-instructor-modal');
+            });
+
+            document.getElementById('delete-instructor-btn').addEventListener('click', (e) => {
+                e.preventDefault();
+                openModal('delete-instructor-modal');
+            });
+
+            document.getElementById('add-customer-btn').addEventListener('click', (e) => {
+                e.preventDefault();
+                openModal('add-customer-modal');
+            });
+
+            document.getElementById('view-customer-btn').addEventListener('click', (e) => {
+                e.preventDefault();
+                openModal('customer-details-modal');
+            });
+
+            document.getElementById('send-customer-message-btn').addEventListener('click', (e) => {
+                e.preventDefault();
+                openModal('send-customer-message-modal');
+            });
+
+            document.getElementById('edit-customer-btn').addEventListener('click', (e) => {
+                e.preventDefault();
+                openModal('edit-customer-modal');
+            });
+
+
             document.querySelectorAll('.close-modal-btn').forEach(btn => {
                 btn.addEventListener('click', (e) => {
                     e.preventDefault();
-                    const modalId = btn.dataset.modalId;
-                    closeModal(modalId);
+                    const modalId = btn.getAttribute('data-modal-id');
+                    if (modalId) {
+                        closeModal(modalId);
+                    } else { // Fallback for modals without data-modal-id
+                        btn.closest('.modal-overlay').classList.add('hidden');
+                    }
                 });
             });
         });
