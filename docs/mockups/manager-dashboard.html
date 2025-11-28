@@ -1248,6 +1248,216 @@
     </div>
 
 
+    <div id="resolution-center-modal" class="modal-overlay hidden">
+        <!-- Step 1: Review Lessons -->
+        <div id="resolution-step-1" class="w-full max-w-5xl rounded-lg bg-surface shadow-xl flex flex-col max-h-[90vh]">
+            <div class="flex flex-shrink-0 items-center justify-between border-b border-border-color p-6">
+                <div class="flex flex-col gap-1">
+                    <h2 class="font-display text-xl font-bold text-text-heading">Review Affected Lessons</h2>
+                    <p class="text-sm text-text-body">Strong offshore winds forecast for this afternoon.</p>
+                </div>
+                <button class="flex h-8 w-8 items-center justify-center rounded-full text-text-body transition-colors hover:bg-background-light hover:text-text-heading close-resolution-modal">
+                    <span class="material-symbols-outlined text-xl">close</span>
+                </button>
+            </div>
+            <div class="flex-1 overflow-y-auto p-6">
+                <div class="space-y-6">
+                    <div class="overflow-x-auto rounded border border-border-color">
+                        <table class="min-w-full text-left text-sm">
+                            <thead class="border-b border-border-color bg-background-light">
+                                <tr>
+                                    <th class="px-4 py-3 font-medium text-text-body">Date & Time</th>
+                                    <th class="px-4 py-3 font-medium text-text-body">Lesson / Customer</th>
+                                    <th class="px-4 py-3 font-medium text-text-body">Instructor</th>
+                                    <th class="px-4 py-3 font-medium text-text-body">Status</th>
+                                    <th class="px-4 py-3 font-medium text-text-body text-right">Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody class="divide-y divide-border-color">
+                                <tr>
+                                    <td class="px-4 py-3 text-text-heading">Nov 17, 01:00 PM</td>
+                                    <td class="px-4 py-3">
+                                        <p class="font-medium text-text-heading">Beginner Lesson</p>
+                                        <p class="text-text-body">Emily White</p>
+                                    </td>
+                                    <td class="px-4 py-3 text-text-heading">Mike L.</td>
+                                    <td class="px-4 py-3"><span class="inline-flex items-center rounded-full bg-warning/20 px-2.5 py-0.5 text-xs font-medium text-amber-800">Affected by Weather</span></td>
+                                    <td class="px-4 py-3">
+                                        <div class="flex justify-end gap-2">
+                                            <button class="h-9 cursor-pointer rounded-md border border-border-color bg-surface px-3 text-xs font-medium text-text-heading transition-colors hover:bg-background-light show-resolution-step-3">Notify</button>
+                                            <button class="h-9 cursor-pointer rounded-md bg-primary px-3 text-xs font-medium text-white transition-colors hover:bg-primary/90 show-resolution-step-2">Rebook</button>
+                                            <button class="h-9 cursor-pointer rounded-md bg-destructive/10 px-3 text-xs font-medium text-destructive transition-colors hover:bg-destructive/20">Cancel</button>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="px-4 py-3 text-text-heading">Nov 17, 02:30 PM</td>
+                                    <td class="px-4 py-3">
+                                        <p class="font-medium text-text-heading">Intermediate Wave Riding</p>
+                                        <p class="text-text-body">Carlos Gomez</p>
+                                    </td>
+                                    <td class="px-4 py-3 text-text-heading">Sarah K.</td>
+                                    <td class="px-4 py-3"><span class="inline-flex items-center rounded-full bg-warning/20 px-2.5 py-0.5 text-xs font-medium text-amber-800">Affected by Weather</span></td>
+                                    <td class="px-4 py-3">
+                                        <div class="flex justify-end gap-2">
+                                            <button class="h-9 cursor-pointer rounded-md border border-border-color bg-surface px-3 text-xs font-medium text-text-heading transition-colors hover:bg-background-light show-resolution-step-3">Notify</button>
+                                            <button class="h-9 cursor-pointer rounded-md bg-primary px-3 text-xs font-medium text-white transition-colors hover:bg-primary/90 show-resolution-step-2">Rebook</button>
+                                            <button class="h-9 cursor-pointer rounded-md bg-destructive/10 px-3 text-xs font-medium text-destructive transition-colors hover:bg-destructive/20">Cancel</button>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="px-4 py-3 text-text-heading">Nov 17, 04:00 PM</td>
+                                    <td class="px-4 py-3">
+                                        <p class="font-medium text-text-heading">Private Coaching</p>
+                                        <p class="text-text-body">Jessica Chen</p>
+                                    </td>
+                                    <td class="px-4 py-3 text-text-heading">Mike L.</td>
+                                    <td class="px-4 py-3"><span class="inline-flex items-center rounded-full bg-warning/20 px-2.5 py-0.5 text-xs font-medium text-amber-800">Affected by Weather</span></td>
+                                    <td class="px-4 py-3">
+                                        <div class="flex justify-end gap-2">
+                                            <button class="h-9 cursor-pointer rounded-md border border-border-color bg-surface px-3 text-xs font-medium text-text-heading transition-colors hover:bg-background-light show-resolution-step-3">Notify</button>
+                                            <button class="h-9 cursor-pointer rounded-md bg-primary px-3 text-xs font-medium text-white transition-colors hover:bg-primary/90 show-resolution-step-2">Rebook</button>
+                                            <button class="h-9 cursor-pointer rounded-md bg-destructive/10 px-3 text-xs font-medium text-destructive transition-colors hover:bg-destructive/20">Cancel</button>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                        <label class="mb-2 block text-sm font-medium text-text-heading" for="customer-message">Message to All Affected Customers</label>
+                        <textarea class="w-full rounded-md border border-border-color p-3 text-sm text-text-body focus:border-accent focus:ring-accent" id="customer-message" rows="4">Hi there, due to a forecast of strong offshore winds this afternoon, we unfortunately need to reschedule your kitesurfing lesson for safety reasons. Please use the link in the next email to choose a new time that works for you. We apologize for any inconvenience and look forward to seeing you on the water soon!</textarea>
+                    </div>
+                </div>
+            </div>
+            <div class="flex flex-shrink-0 flex-col-reverse items-center justify-between gap-4 border-t border-border-color p-6 sm:flex-row">
+                <button class="h-10 w-full cursor-pointer rounded-md bg-background-light px-4 text-sm font-medium text-text-heading transition-colors hover:bg-border-color sm:w-auto close-resolution-modal">Dismiss Alert</button>
+                <button class="flex h-10 w-full min-w-[84px] max-w-[480px] shrink-0 cursor-pointer items-center justify-center overflow-hidden rounded-md bg-primary px-4 text-sm font-medium text-white transition-colors hover:bg-primary/90 sm:w-auto">
+                    <span class="truncate">Send All Notifications</span>
+                </button>
+            </div>
+        </div>
+
+        <!-- Step 2: Rebook Lesson -->
+        <div id="resolution-step-2" class="w-full max-w-2xl rounded-lg bg-surface shadow-xl flex-col max-h-[90vh] hidden">
+            <div class="flex flex-shrink-0 items-center justify-between bg-accent p-4 rounded-t-lg">
+                <h2 class="font-display text-lg font-bold text-white">Rebook Lesson: Emily White</h2>
+                <button class="flex h-8 w-8 items-center justify-center rounded-full text-white transition-colors hover:bg-white/20 close-resolution-modal">
+                    <span class="material-symbols-outlined text-xl">close</span>
+                </button>
+            </div>
+            <div class="p-6 space-y-6">
+                <div class="rounded-md border border-border-color bg-background-light p-4">
+                    <p class="text-sm text-text-body">
+                        <span class="font-medium text-text-heading">Original:</span> Beginner Lesson with Mike L. on Nov 17, 2025 at 01:00 PM
+                    </p>
+                </div>
+                <div class="space-y-4">
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-sm font-medium text-text-heading mb-1.5" for="new-date">New Date</label>
+                            <input class="w-full h-10 rounded-md border border-border-color px-3 text-sm text-text-body focus:border-accent focus:ring-accent" id="new-date" type="date" value="2025-11-18"/>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-text-heading mb-1.5" for="new-time">New Time</label>
+                            <select class="w-full h-10 rounded-md border border-border-color px-3 text-sm text-text-body focus:border-accent focus:ring-accent" id="new-time">
+                                <option>09:00 AM - 11:00 AM</option>
+                                <option>11:00 AM - 01:00 PM</option>
+                                <option selected="">01:00 PM - 03:00 PM</option>
+                                <option>03:00 PM - 05:00 PM</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-text-heading mb-1.5" for="instructor">Instructor</label>
+                        <select class="w-full h-10 rounded-md border border-border-color px-3 text-sm text-text-body focus:border-accent focus:ring-accent" id="instructor">
+                            <option selected="">Mike L. (Available)</option>
+                            <option>Sarah K. (Available)</option>
+                            <option>John D. (Available)</option>
+                        </select>
+                    </div>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-sm font-medium text-text-heading mb-1.5" for="lesson-type">Lesson Type</label>
+                            <select class="w-full h-10 rounded-md border border-border-color px-3 text-sm text-text-body focus:border-accent focus:ring-accent" id="lesson-type">
+                                <option selected="">Beginner Lesson</option>
+                                <option>Intermediate Wave Riding</option>
+                                <option>Private Coaching</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-text-heading mb-1.5" for="skill-level">Skill Level</label>
+                            <select class="w-full h-10 rounded-md border border-border-color px-3 text-sm text-text-body focus:border-accent focus:ring-accent" id="skill-level">
+                                <option selected="">Beginner</option>
+                                <option>Intermediate</option>
+                                <option>Advanced</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="flex items-center">
+                    <input checked="" class="h-4 w-4 rounded border-border-color text-accent focus:ring-accent" id="send-confirmation" type="checkbox"/>
+                    <label class="ml-2 block text-sm text-text-body" for="send-confirmation">Send automatic rebooking confirmation to customer</label>
+                </div>
+            </div>
+            <div class="flex flex-shrink-0 flex-row items-center justify-end gap-4 border-t border-border-color p-4">
+                <button class="text-sm font-medium text-accent transition-colors hover:text-accent/80 back-to-step-1">Cancel</button>
+                <button class="flex h-10 min-w-[84px] max-w-[480px] shrink-0 cursor-pointer items-center justify-center overflow-hidden rounded-md bg-primary px-4 text-sm font-medium text-white transition-colors hover:bg-primary/90">
+                    <span class="truncate">Confirm Rebook</span>
+                </button>
+            </div>
+        </div>
+
+        <!-- Step 3: Notify Customer -->
+        <div id="resolution-step-3" class="m-auto flex w-full max-w-2xl flex-col rounded-xl border border-border-color bg-surface shadow-lg dark:border-zinc-800 dark:bg-background-dark hidden">
+            <div class="flex items-center justify-between gap-4 border-b border-border-color p-6 dark:border-zinc-800">
+                <p class="text-xl font-bold tracking-tight text-text-heading dark:text-white">Notify Customer: Jane Doe</p>
+                <button class="flex h-8 w-8 cursor-pointer items-center justify-center overflow-hidden rounded-full bg-transparent text-text-body transition-colors hover:bg-background-light dark:text-zinc-400 dark:hover:bg-zinc-800 close-resolution-modal">
+                    <span class="material-symbols-outlined text-xl">close</span>
+                </button>
+            </div>
+            <div class="flex flex-col gap-6 p-6">
+                <div class="flex flex-col">
+                    <p class="pb-2 text-sm font-medium text-text-heading dark:text-zinc-300">Recipient</p>
+                    <div class="flex h-12 w-full items-center rounded-lg border border-border-color bg-background-light px-4 text-sm text-text-body dark:border-zinc-700 dark:bg-zinc-800 dark:text-zinc-400">
+                        Jane Doe &lt;jane.doe@example.com&gt;
+                    </div>
+                </div>
+                <div class="flex flex-col">
+                    <p class="pb-2 text-sm font-medium text-text-heading dark:text-zinc-300">Lesson Details</p>
+                    <div class="flex h-12 w-full items-center rounded-lg border border-border-color bg-background-light px-4 text-sm text-text-body dark:border-zinc-700 dark:bg-zinc-800 dark:text-zinc-400">
+                        Private Kitesurfing Lesson with John A. on Oct 26, 2024 at 2:00 PM
+                    </div>
+                </div>
+                <label class="flex flex-col">
+                    <p class="pb-2 text-sm font-medium text-text-heading dark:text-zinc-300">Message</p>
+                    <textarea class="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-lg border border-border-color bg-surface p-4 text-sm font-normal leading-normal text-text-heading placeholder:text-text-body/70 focus:border-primary/50 focus:outline-0 focus:ring-2 focus:ring-primary/20 dark:border-zinc-700 dark:bg-zinc-900 dark:text-white dark:placeholder:text-zinc-500" rows="6">Hi Jane,
+
+Unfortunately, your Private Kitesurfing Lesson with John A. on October 26th at 2:00 PM needs to be rebooked due to strong winds forecasted.
+
+Your safety is our top priority. Please contact us at your earliest convenience to reschedule.
+
+Best,
+The KiteOps Team</textarea>
+                </label>
+                <label class="flex cursor-pointer items-center gap-x-3">
+                    <input class="h-5 w-5 rounded border-2 border-border-color bg-transparent text-primary checked:border-primary checked:bg-primary focus:ring-primary/20 focus:ring-offset-0 dark:border-zinc-600 dark:checked:bg-primary dark:focus:ring-offset-background-dark" type="checkbox"/>
+                    <p class="text-sm font-normal leading-normal text-text-body dark:text-zinc-300">Send as SMS</p>
+                </label>
+            </div>
+            <div class="flex flex-row-reverse items-center gap-4 border-t border-border-color p-6 dark:border-zinc-800">
+                <button class="flex min-w-[84px] cursor-pointer items-center justify-center overflow-hidden rounded-lg bg-primary px-4 py-2.5 text-sm font-medium leading-normal text-white transition-colors hover:bg-primary/90">
+                    <span class="truncate">Send Notification</span>
+                </button>
+                <button class="flex min-w-[84px] cursor-pointer items-center justify-center overflow-hidden rounded-lg bg-transparent px-4 py-2.5 text-sm font-medium leading-normal text-text-body transition-colors hover:bg-background-light dark:text-zinc-300 dark:hover:bg-zinc-800 back-to-step-1">
+                    <span class="truncate">Cancel</span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+
     <script>
         document.addEventListener('DOMContentLoaded', function () {
             const mainViews = {
@@ -1319,6 +1529,54 @@
             });
 
             showMainView('dashboard');
+            
+            // New Resolution Center Modal script
+            const resolutionCenterModal = document.getElementById('resolution-center-modal');
+            const openResolutionModalBtn = document.querySelector('#dashboard-view button .truncate');
+            const closeResolutionModalBtns = document.querySelectorAll('.close-resolution-modal');
+            
+            const step1 = document.getElementById('resolution-step-1');
+            const step2 = document.getElementById('resolution-step-2');
+            const step3 = document.getElementById('resolution-step-3');
+
+            const showStep2Btns = document.querySelectorAll('.show-resolution-step-2');
+            const showStep3Btns = document.querySelectorAll('.show-resolution-step-3');
+            const backToStep1Btns = document.querySelectorAll('.back-to-step-1');
+
+            function showResolutionStep(step) {
+                step1.classList.add('hidden');
+                step2.classList.add('hidden');
+                step3.classList.add('hidden');
+                if (step === 1) step1.classList.remove('hidden');
+                if (step === 2) step2.classList.remove('hidden');
+                if (step === 3) step3.classList.remove('hidden');
+                resolutionCenterModal.classList.remove('hidden');
+            }
+
+            openResolutionModalBtn.addEventListener('click', () => {
+                showResolutionStep(1);
+            });
+
+            closeResolutionModalBtns.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    resolutionCenterModal.classList.add('hidden');
+                });
+            });
+
+            showStep2Btns.forEach(btn => {
+                btn.addEventListener('click', () => showResolutionStep(2));
+            });
+            
+            showStep3Btns.forEach(btn => {
+                btn.addEventListener('click', () => showResolutionStep(3));
+            });
+
+            backToStep1Btns.forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    showResolutionStep(1);
+                });
+            });
         });
     </script>
 </body>
