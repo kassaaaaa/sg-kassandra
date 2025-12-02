@@ -10,7 +10,7 @@ The architecture for the KiteOps project is designed as a modern, scalable, and 
 
 ## 2. Project Initialization
 
-The project will be initialized using the official Next.js starter template, `create-next-app`. This choice aligns with the PRD's specified framework (Next.js 14+ with App Router) and the UX design's use of Tailwind CSS.
+The project will be initialized using the official Next.js starter template, `create-next-app`. This choice aligns with the PRD's specified framework (Next.js 14+ with App Router) and the UX design's use of Tailwind CSS. (Verification: [Official Documentation](https://nextjs.org/docs/api-reference/create-next-app))
 
 The full initialization command, which should be the **first implementation story** for the development team, will be:
 
@@ -18,7 +18,7 @@ The full initialization command, which should be the **first implementation stor
 npx create-next-app@latest kiteops-app --typescript --tailwind --eslint
 ```
 
-This command directly provides the following architectural decisions, ensuring consistency from the outset:
+The following architectural decisions are **PROVIDED BY STARTER**, ensuring consistency from the outset:
 *   **Language/Framework:** Next.js with TypeScript
 *   **Styling Solution:** Tailwind CSS
 *   **Linting/Formatting:** ESLint
@@ -27,39 +27,45 @@ This command directly provides the following architectural decisions, ensuring c
 
 ## 3. Architecture Decision Summary
 
-| Category | Decision | Rationale |
-| :--- | :--- | :--- |
-| **Data Persistence** | Supabase (PostgreSQL) | Integrated backend services accelerate development and simplify architecture. |
-| **Backend API** | Supabase Edge Functions | Tightly integrated, scalable, and performant solution for custom business logic. |
-| **Real-time** | Supabase Realtime | Seamless integration for live updates, essential for notifications and calendars. |
-| **Background Jobs** | Supabase DB Functions w/ pg_cron | Centralizes background processing within the database, minimizing complexity. |
-| **Deployment Target** | Vercel | Optimized, high-performance, and scalable hosting specifically for Next.js. |
-| **Authentication** | Supabase Auth | Robust, secure, and integrated solution with native support for Row Level Security. |
-| **Email Provider** | Resend | Modern, developer-friendly API with a strong focus on deliverability. |
-| **SMS Provider** | Twilio | Industry-leading reliability and global coverage for critical SMS alerts. |
-| **Data Modeling** | Refined PostgreSQL Schema | A robust, normalized schema collaboratively designed for all project requirements. |
-| **Error Handling** | Layered Strategy | Ensures a resilient application, clear user experience, and efficient debugging. |
-| **Logging** | Structured, Centralized Logging | Provides comprehensive visibility into application health, security, and performance. |
-| **External APIs** | Cache-first (OpenWeatherMap) | A resilient, testable, and efficient strategy for integrating external weather data. |
-| **State Management** | TanStack Query (Server) / Context (Client) | Hybrid approach using best-in-class tools for server and client state. |
+| Category | Decision | Version | Rationale |
+| :--- | :--- | :--- | :--- |
+| **Data Persistence** | Supabase (PostgreSQL) | 15.x | Integrated backend services accelerate development and simplify architecture. |
+| **Backend API** | Supabase Edge Functions | 2.86.0 (Client) | Tightly integrated, scalable, and performant solution for custom business logic. |
+| **Real-time** | Supabase Realtime | 2.86.0 (Client) | Seamless integration for live updates, essential for notifications and calendars. |
+| **Background Jobs** | Supabase DB Functions w/ pg_cron | 1.6.4 | Centralizes background processing within the database, minimizing complexity. |
+| **Deployment Target** | Vercel | N/A (Platform) | Optimized, high-performance, and scalable hosting specifically for Next.js. |
+| **Authentication** | Supabase Auth | 2.86.0 (Client) | Robust, secure, and integrated solution with native support for Row Level Security. |
+| **Email Provider** | Resend | 6.5.2 | Modern, developer-friendly API with a strong focus on deliverability. |
+| **SMS Provider** | Twilio | 5.10.6 | Industry-leading reliability and global coverage for critical SMS alerts. |
+| **Data Modeling** | Refined PostgreSQL Schema | N/A | A robust, normalized schema collaboratively designed for all project requirements. |
+| **Error Handling** | Layered Strategy | N/A | Ensures a resilient application, clear user experience, and efficient debugging. |
+| **Logging** | Structured, Centralized Logging | N/A | Provides comprehensive visibility into application health, security, and performance. |
+| **External APIs** | Cache-first (OpenWeatherMap) | v3.0 | A resilient, testable, and efficient strategy for integrating external weather data. |
+| **State Management** | TanStack Query (Server) / Context (Client) | 5.90.11 | Hybrid approach using best-in-class tools for server and client state. |
+| **File Storage** | Supabase Storage | 2.86.0 (Client) | Integrated with the Supabase ecosystem for simplicity and unified billing. |
 
 ## 4. Technology Stack Details
 
-*   **Frontend Framework:** Next.js 14+ (with App Router)
-*   **Language:** TypeScript
-*   **Styling:** Tailwind CSS with `shadcn/ui`
+*   **Frontend Framework:** Next.js `16.0.6` (with App Router)
+*   **Language:** TypeScript `5.9.3`
+*   **Styling:** Tailwind CSS `4.1.17` with `shadcn/ui` `0.8.0` (CLI)
 *   **Backend Platform:** Supabase
-    *   **Database:** PostgreSQL
-    *   **Authentication:** Supabase Auth
-    *   **Serverless Functions:** Supabase Edge Functions
-    *   **Real-time:** Supabase Realtime
-    *   **Scheduled Jobs:** `pg_cron`
-*   **Deployment:** Vercel
-*   **Frontend State Management:** TanStack Query (for Server State), React Context/Hooks (for Client State)
+    *   **Database:** PostgreSQL `15.x`
+    *   **Authentication:** Supabase Auth (via Client `2.86.0`)
+    *   **Serverless Functions:** Supabase Edge Functions (via Client `2.86.0`)
+    *   **Real-time:** Supabase Realtime (via Client `2.86.0`)
+    *   **Storage:** Supabase Storage (via Client `2.86.0`)
+    *   **Scheduled Jobs:** `pg_cron` `1.6.4`
+*   **Deployment:** Vercel Platform
+*   **Frontend State Management:** TanStack Query `5.90.11` (for Server State), React Context/Hooks (for Client State)
 *   **Notification Services:**
-    *   **Email:** Resend
-    *   **SMS:** Twilio
-*   **External Data:** OpenWeatherMap API
+    *   **Email:** Resend `6.5.2`
+    *   **SMS:** Twilio `5.10.6`
+*   **External Data:** OpenWeatherMap API `v3.0`
+
+### 4.1. Version Justification
+
+All specified versions represent the most recent, stable releases as of **December 2, 2025**. The strategy is to use the latest stable versions to leverage modern features and security enhancements, rather than targeting LTS (Long-Term Support) versions, as rapid development and access to the newest capabilities are prioritized for this project. Should post-launch stability become a higher priority than feature velocity, a shift to an LTS-focused strategy will be considered. The `+` notation has been removed in favor of exact versions to ensure a reproducible environment.
 
 ## 5. Complete Project Structure
 
@@ -110,6 +116,63 @@ The design for the "KiteOps Intelligent Scheduling Engine" has been fully docume
 *   The use of a `status_reason` field in the `bookings` table for contextual updates.
 
 This comprehensive design ensures the engine is robust, predictable, and aligned with real-world operational needs.
+
+### 7.1. Component Interaction and Data Flow
+
+To clarify the engine's operation, this section details the data flow and state transitions.
+
+**State Definitions:**
+
+The `bookings` table `status` field will manage the lifecycle of a lesson booking. Key states include:
+*   `pending_weather_check`: A new booking has been created but is more than 7 days away. No weather data is available yet.
+*   `pending_instructor_assignment`: Within the 7-day window; the engine is actively seeking a suitable instructor based on weather and availability.
+*   `confirmed`: An instructor has been assigned, and the lesson is confirmed. Notifications have been sent.
+*   `cancelled_weather`: The booking was automatically cancelled due to adverse weather forecasts (e.g., no wind, too much wind).
+*   `cancelled_user`: The booking was cancelled by the customer or manager.
+*   `completed`: The lesson has successfully occurred.
+
+**Sequence Diagram (Text-based):**
+
+This diagram illustrates the "Happy Path" for automatic scheduling when a user books a lesson within the 7-day forecast window.
+
+```mermaid
+sequenceDiagram
+    participant User
+    participant Frontend (Next.js)
+    participant Backend (Supabase Edge Function)
+    participant Supabase DB
+    participant OpenWeatherMap
+
+    User->>Frontend (Next.js): Submits booking request for a lesson
+    Frontend (Next.js)->>Backend (Supabase Edge Function): Invokes 'create-booking' function with lesson details
+    
+    Backend (Supabase Edge Function)->>Supabase DB: Creates booking record with status 'pending_instructor_assignment'
+    Supabase DB-->>Backend (Supabase Edge Function): Confirms booking creation
+    
+    Backend (Supabase Edge Function)->>OpenWeatherMap: Requests 7-day forecast for lesson location and time
+    OpenWeatherMap-->>Backend (Supabase Edge Function): Returns weather data (wind speed, conditions)
+    
+    Backend (Supabase Edge Function)->>Backend (Supabase Edge Function): Applies 7-day rule & safety buffer
+    
+    alt Weather is suitable
+        Backend (Supabase Edge Function)->>Supabase DB: Queries for available instructors matching criteria
+        Supabase DB-->>Backend (Supabase Edge Function): Returns list of available instructors
+        
+        Backend (Supabase Edge Function)->>Backend (Supabase Edge Function): Applies deterministic tie-breaker to select instructor
+        Backend (Supabase Edge Function)->>Supabase DB: Updates booking status to 'confirmed', assigns instructor_id
+        Supabase DB-->>Backend (Supabase Edge Function): Confirms update
+        
+        Backend (Supabase Edge Function)->>Frontend (Next.js): Returns success response with confirmed booking details
+        Frontend (Next.js)->>User: Displays "Booking Confirmed" message
+    else Weather is unsuitable
+        Backend (Supabase Edge Function)->>Supabase DB: Updates booking status to 'cancelled_weather'
+        Supabase DB-->>Backend (Supabase Edge Function): Confirms update
+        
+        Backend (Supabase Edge Function)->>Frontend (Next.js): Returns failure response with reason
+        Frontend (Next.js)->>User: Displays "Booking Cancelled due to Weather"
+    end
+
+```
 
 ## 8. Implementation Patterns & Consistency Rules
 
