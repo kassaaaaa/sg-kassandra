@@ -61,3 +61,7 @@ so that we have a consistent and automated foundation for development and deploy
 ### Completion Notes List
 
 ### File List
+
+## Change Log
+
+- 2025-12-02: Initial creation (BIP)
