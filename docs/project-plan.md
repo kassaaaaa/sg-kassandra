@@ -47,9 +47,9 @@
 ## Fase 2
 
 - [ ] Solutioning
-  - [ ] /run-agent-task architect \*create-architecture {prompt / user-input-file}
-    - [ ] File: architecture.md
-  - [ ] /run-agent-task pm \*create-epics-and-stories {prompt / user-input-file}
+  - [x] /run-agent-task architect \*create-architecture {prompt / user-input-file}
+    - [x] File: architecture.md
+  - [x] /run-agent-task pm \*create-epics-and-stories {prompt / user-input-file}
     - [ ] File: epics.md
   - [ ] /run-agent-task tea \*test-design {prompt / user-input-file}
   - [ ] /run-agent-task architect \*solutioning-gate-check {prompt / user-input-file}
