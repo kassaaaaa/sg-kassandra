@@ -1,0 +1,75 @@
+# generated: 2025-12-02
+# project: ibe160
+# project_key: IBE-160
+# tracking_system: file-system
+# story_location: /Users/kassa/KI-programmering/kiteops/SG-Kassandra/docs/sprint-artifacts
+
+# STATUS DEFINITIONS:
+# ==================
+# Epic Status:
+#   - backlog: Epic exists in epic file but not contexted
+#   - contexted: Next epic tech context created by *epic-tech-context (required)
+#
+# Story Status:
+#   - backlog: Story only exists in epic file
+#   - drafted: Story file created in stories folder by *create-story
+#   - ready-for-dev: Draft approved and story context created by *story-ready
+#   - in-progress: Developer actively working on implementation by *dev-story
+#   - review: Implementation complete, ready for review by *code-review
+#   - done: Story completed by *story-done
+#
+# Retrospective Status:
+#   - optional: Can be completed but not required
+#   - completed: Retrospective has been done by *retrospective
+#
+# WORKFLOW NOTES:
+# ===============
+# - Epics should be 'contexted' before stories can be 'drafted'
+# - SM typically drafts next story ONLY after previous one is 'done' to incorporate learnings
+# - Dev moves story to 'review', dev reviews, then Dev moves to 'done'
+
+generated: 2025-12-02
+project: ibe160
+project_key: IBE-160
+tracking_system: file-system
+story_location: /Users/kassa/KI-programmering/kiteops/SG-Kassandra/docs/sprint-artifacts
+
+development_status:
+  epic-1: backlog
+  1-1-initialize-next-js-project-and-setup-ci-cd: backlog
+  1-2-setup-supabase-backend-and-schema: backlog
+  1-3-implement-core-ui-component-library: backlog
+  1-4-user-registration-and-email-verification: backlog
+  1-5-user-login-and-session-management: backlog
+  1-6-implement-role-based-access-control-rbac: backlog
+  1-7-instructor-profile-management: backlog
+  1-8-instructor-availability-management: backlog
+  epic-1-retrospective: optional
+  epic-2: backlog
+  2-1-integrate-weather-api: backlog
+  2-2-lesson-search-and-filtering-ui: backlog
+  2-3-guest-booking-flow: backlog
+  2-4-initial-scheduling-engine: backlog
+  2-5-booking-confirmation-and-summary: backlog
+  2-6-view-booking-via-secure-link: backlog
+  2-7-support-for-multi-session-bookings: backlog
+  2-8-implement-captcha-on-booking-form: backlog
+  epic-2-retrospective: optional
+  epic-3: backlog
+  3-1-instructor-dashboard-ui: backlog
+  3-2-manager-dashboard-ui: backlog
+  3-3-build-manager-resolution-center-ui: backlog
+  3-4-manager-master-calendar-view: backlog
+  3-5-manager-manual-booking-management: backlog
+  3-6-manager-school-settings-configuration: backlog
+  3-7-customer-and-instructor-management: backlog
+  3-8-handle-no-show-and-early-lesson-termination: backlog
+  epic-3-retrospective: optional
+  epic-4: backlog
+  4-1-core-notification-service: backlog
+  4-2-booking-status-notifications: backlog
+  4-3-automated-lesson-reminders: backlog
+  4-4-weather-api-fallback-mechanism: backlog
+  4-5-notification-logging-and-monitoring: backlog
+  4-6-manager-confirmation-for-automated-rebooking: backlog
+  epic-4-retrospective: optional
