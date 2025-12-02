@@ -31,7 +31,7 @@ KiteOps will be a centralized platform that provides a simple and intuitive way 
 
 **General & System**
 *   FR001: The system shall provide role-based access control for Guest, Customer, Instructor, and Manager roles. (Scope: MVP)
-*   FR002: The system shall allow users to register for Customer, Instructor, or Manager accounts with email verification. (Scope: MVP)
+*   FR002: The system shall allow users to register for Instructor or Manager accounts with email verification. (Scope: MVP)
 *   FR003: The system shall allow registered users to log in. (Scope: MVP)
 *   FR004: The system shall integrate with a weather API to fetch real-time weather data for scheduling. (Scope: MVP)
 *   FR005: The system's intelligent scheduling engine shall consider student skill level, weather suitability, and instructor load balancing when assigning instructors. (Dependencies: FR004, FR019) (Scope: MVP)
@@ -46,7 +46,7 @@ KiteOps will be a centralized platform that provides a simple and intuitive way 
 *   FR012: Customers must accept cancellation, rebooking, and refund/credit policies before confirming a booking. These policies must be clearly displayed. (Scope: MVP)
 *   FR013: Customers shall receive a confirmation screen with a booking reference number after a successful booking. (Scope: MVP)
 *   FR014: Customers shall be able to manage system-initiated rebooking proposals (e.g., due to weather) via a dedicated link sent by email. (Scope: MVP)
-*   FR015: Registered customers shall have a dashboard to view their upcoming and past lessons. (Scope: MVP)
+*   FR015: Guests who have booked lessons shall be able to view their upcoming and past lessons via a secure link or booking reference. (Scope: MVP)
 
 **Instructor**
 *   FR016: Instructors shall be able to create and manage a professional profile including certifications, lesson types they can teach, and availability preferences. (Scope: MVP)
@@ -94,7 +94,7 @@ KiteOps will be a centralized platform that provides a simple and intuitive way 
 #### 1. Customer Journey (Guest Booking)
 
 *   **Backbone:** Discover & Start Booking → Find a Lesson → Book a Lesson → Manage Booking → Attend Lesson.
-*   **Optimized Flow:** The user arrives on the site and immediately sets search parameters to see available lessons. They select a slot and review a summary. Only at the final confirmation step are they asked to enter contact info and accept policies. After booking, the confirmation page offers a one-click option to create an account, pre-filling their details for future use. All confirmations and notifications are handled via email and SMS.
+*   **Optimized Flow:** The user arrives on the site and immediately sets search parameters to see available lessons. They select a slot and review a summary. Only at the final confirmation step are they asked to enter contact info and accept policies. After booking, all confirmations and notifications are handled via email and SMS.
 
 #### 2. Instructor Journey
 
