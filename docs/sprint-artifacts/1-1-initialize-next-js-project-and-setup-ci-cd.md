@@ -1,6 +1,6 @@
 # Story 1.1: Initialize Next.js Project and Setup CI/CD
 
-Status: drafted
+Status: ready-for-dev
 
 ## Story
 
@@ -50,7 +50,8 @@ so that we have a consistent and automated foundation for development and deploy
 
 ### Context Reference
 
-<!-- Path(s) to story context XML will be added here by context workflow -->
+- /Users/kassa/KI-programmering/kiteops/SG-Kassandra/docs/sprint-artifacts/1-1-initialize-next-js-project-and-setup-ci-cd.context.xml
+
 
 ### Agent Model Used
 
