@@ -18,12 +18,17 @@ so that we have a consistent and automated foundation for development and deploy
 
 - [ ] Task 1 (AC: #1)
   - [ ] Run `npx create-next-app@latest . --typescript --tailwind --eslint`.
+  - [ ] **Test:** Write a `Vitest` unit test to check that `package.json` contains `typescript`, `tailwindcss`, and `eslint` as dependencies.
+  - [ ] **Test:** Write a `Vitest` unit test to verify that `tailwind.config.ts` and `.eslintrc.json` files exist at the root.
 - [ ] Task 2 (AC: #2)
   - [ ] Create a new project on Vercel.
   - [ ] Connect the Vercel project to the project's git repository.
+  - [ ] **Test (Manual):** Confirm that the Vercel project dashboard shows the repository as connected.
 - [ ] Task 3 (AC: #3)
   - [ ] Configure the Vercel project to run `npm run lint` and `npm run test` on each deployment.
   - [ ] Ensure the main branch is automatically deployed to production.
+  - [ ] **Test:** After a push to a PR, inspect the Vercel deployment logs to confirm that the `lint` and `test` commands were executed.
+  - [ ] **Test (E2E):** Write a basic `Playwright` test that navigates to the deployed Vercel URL and verifies the presence of a key element (e.g., the Next.js welcome page `<h1>`). The CI should run this test post-deployment.
 
 ## Dev Notes
 
