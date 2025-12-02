@@ -1,9 +1,9 @@
-# {{project_name}} - Epic Breakdown
+# ibe160 - Epic Breakdown
 
-**Author:** {{user_name}}
-**Date:** {{date}}
-**Project Level:** {{project_level}}
-**Target Scale:** {{target_scale}}
+**Author:** BIP
+**Date:** Tuesday, December 2, 2025
+**Project Level:** 3
+**Target Scale:** Complex system with multiple user roles and automated scheduling
 
 ---
 
