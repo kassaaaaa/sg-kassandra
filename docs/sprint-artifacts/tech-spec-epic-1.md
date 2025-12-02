@@ -193,7 +193,7 @@ The implementation of Epic 1 relies on the following key dependencies and extern
 The following acceptance criteria are derived directly from the user stories defined for Epic 1 in `epics.md`, ensuring all requirements are atomic and testable.
 
 ### Story 1.1: Initialize Next.js Project and Setup CI/CD
-*   **AC1.1.1:** A new Next.js project named `kiteops-app` is created with TypeScript, Tailwind CSS, and ESLint configured.
+*   **AC1.1.1:** The project is initialized as a Next.js application in the root directory with TypeScript, Tailwind CSS, and ESLint configured.
 *   **AC1.1.2:** The project is connected to a Vercel account for automated deployments.
 *   **AC1.1.3:** A basic CI pipeline is configured to run linting and tests on every push to the main branch.
 
