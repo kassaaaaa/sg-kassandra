@@ -193,7 +193,7 @@ The implementation of Epic 1 relies on the following key dependencies and extern
 The following acceptance criteria are derived directly from the user stories defined for Epic 1 in `epics.md`, ensuring all requirements are atomic and testable.
 
 ### Story 1.1: Initialize Next.js Project and Setup CI/CD
-*   **AC1.1.1:** The project is initialized as a Next.js application in the root directory with TypeScript, Tailwind CSS, and ESLint configured.
+*   **AC1.1.1:** The root directory contains a new subdirectory named `app`, which is initialized as a Next.js application with TypeScript, Tailwind CSS, and ESLint configured.
 *   **AC1.1.2:** The project is connected to a Vercel account for automated deployments.
 *   **AC1.1.3:** A basic CI pipeline is configured to run linting and tests on every push to the main branch.
 
@@ -237,7 +237,7 @@ This table maps the Acceptance Criteria (ACs) to their corresponding Functional 
 
 | Acceptance Criteria | Functional Requirement(s) | Spec Section(s) | Component(s)/API(s) | Test Idea |
 | :------------------ | :------------------------ | :-------------- | :------------------ | :-------- |
-| AC1.1.1             | N/A                       | Architecture (2), UX (2.1) | Next.js CLI, Vercel | Verify project structure/dependencies. |
+| AC1.1.1             | N/A                       | Architecture (2), UX (2.1) | Next.js CLI, Vercel | Verify `app` subdirectory exists and contains project structure/dependencies. |
 | AC1.1.2             | N/A                       | Architecture (3) | Vercel | Confirm Vercel deployment of a simple page. |
 | AC1.1.3             | N/A                       | N/A                       | GitHub Actions/Vercel | Push to main branch, verify CI runs lint/tests. |
 | AC1.2.1             | N/A                       | Architecture (6)          | Supabase CLI/SQL    | Inspect Supabase database for table schemas. |

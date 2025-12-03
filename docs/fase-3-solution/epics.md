@@ -104,7 +104,7 @@ As a Developer, I want to initialize the Next.js application and configure the b
 **And** a basic CI pipeline is configured to run linting and tests on every push to the main branch.
 
 **Prerequisites:** None
-**Technical Notes:** Use the command `npx create-next-app@latest . --typescript --tailwind --eslint` as specified in `architecture.md`. Set up the Vercel project and connect the Git repository.
+**Technical Notes:** First, create a new subdirectory named `app`. Then, initialize the Next.js project inside the `app` subdirectory using the command `npx create-next-app@latest . --typescript --tailwind --eslint` as specified in `architecture.md`. Set up the Vercel project and connect the Git repository.
 
 ### Story 1.2: Setup Supabase Backend and Schema
 As a Developer, I want to initialize the Supabase project and apply the initial database schema, so that the backend infrastructure is ready for development.

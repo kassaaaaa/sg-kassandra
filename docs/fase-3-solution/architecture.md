@@ -10,12 +10,15 @@ The architecture for the KiteOps project is designed as a modern, scalable, and 
 
 ## 2. Project Initialization
 
-The project will be initialized using the official Next.js starter template, `create-next-app`. This choice aligns with the PRD's specified framework (Next.js 14+ with App Router) and the UX design's use of Tailwind CSS. (Verification: [Official Documentation](https://nextjs.org/docs/api-reference/create-next-app))
+The project will be initialized using the official Next.js starter template, `create-next-app`, within a new subdirectory named `app`. This choice aligns with the PRD's specified framework (Next.js 14+ with App Router) and the UX design's use of Tailwind CSS. (Verification: [Official Documentation](https://nextjs.org/docs/api-reference/create-next-app))
 
 The full initialization command, which should be the **first implementation story** for the development team, will be:
 
 ```bash
-npx create-next-app@latest kiteops-app --typescript --tailwind --eslint
+# First, create the subdirectory
+mkdir app
+# Then, initialize the Next.js project inside 'app'
+cd app && npx create-next-app@latest . --typescript --tailwind --eslint
 ```
 
 The following architectural decisions are **PROVIDED BY STARTER**, ensuring consistency from the outset:
@@ -23,7 +26,7 @@ The following architectural decisions are **PROVIDED BY STARTER**, ensuring cons
 *   **Styling Solution:** Tailwind CSS
 *   **Linting/Formatting:** ESLint
 *   **Build Tooling:** Integrated Next.js build system (Webpack/Turbopack)
-*   **Project Structure:** Standard Next.js App Router project layout
+*   **Project Structure:** Standard Next.js App Router project layout within the `app` subdirectory.
 
 ## 3. Architecture Decision Summary
 

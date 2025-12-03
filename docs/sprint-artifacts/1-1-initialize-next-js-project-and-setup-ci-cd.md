@@ -10,16 +10,17 @@ so that we have a consistent and automated foundation for development and deploy
 
 ## Acceptance Criteria
 
-1. The root directory is initialized as a Next.js project with TypeScript, Tailwind CSS, and ESLint configured.
+1. The root directory contains a new subdirectory named `app`, which is initialized as a Next.js project with TypeScript, Tailwind CSS, and ESLint configured.
 2. The project is connected to a Vercel account for automated deployments.
 3. A basic CI pipeline is configured to run linting and tests on every push to the main branch.
 
 ## Tasks / Subtasks
 
 - [ ] Task 1 (AC: #1)
-  - [ ] Run `npx create-next-app@latest . --typescript --tailwind --eslint`.
-  - [ ] **Test:** Write a `Vitest` unit test to check that `package.json` contains `typescript`, `tailwindcss`, and `eslint` as dependencies.
-  - [ ] **Test:** Write a `Vitest` unit test to verify that `tailwind.config.ts` and `.eslintrc.json` files exist at the root.
+  - [ ] Create a new subdirectory named `app`.
+  - [ ] Initialize the Next.js project inside the `app` subdirectory using: `npx create-next-app@latest . --typescript --tailwind --eslint`.
+  - [ ] **Test:** Write a `Vitest` unit test to check that `package.json` contains `typescript`, `tailwindcss`, and `eslint` as dependencies in the `app` subdirectory.
+  - [ ] **Test:** Write a `Vitest` unit test to verify that `tailwind.config.ts` and `.eslintrc.json` files exist at the root of the `app` subdirectory.
 - [ ] Task 2 (AC: #2)
   - [ ] Create a new project on Vercel.
   - [ ] Connect the Vercel project to the project's git repository.
@@ -37,7 +38,7 @@ so that we have a consistent and automated foundation for development and deploy
 
 ### Project Structure Notes
 
-- The initial project structure will be the standard Next.js App Router layout.
+- The initial project structure will be the standard Next.js App Router layout within the `app` subdirectory.
 - No conflicts with the unified project structure are expected as this story establishes it.
 
 ### References
@@ -65,4 +66,5 @@ so that we have a consistent and automated foundation for development and deploy
 
 ## Change Log
 
+- 2025-12-03: Updated Task 1 and AC 1 to initialize Next.js project in 'app' subdirectory due to naming restrictions. (BIP)
 - 2025-12-02: Initial creation (BIP)
