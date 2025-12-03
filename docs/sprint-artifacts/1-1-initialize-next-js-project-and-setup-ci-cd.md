@@ -16,11 +16,11 @@ so that we have a consistent and automated foundation for development and deploy
 
 ## Tasks / Subtasks
 
-- [ ] Task 1 (AC: #1)
-  - [ ] Create a new subdirectory named `app`.
-  - [ ] Initialize the Next.js project inside the `app` subdirectory using: `npx create-next-app@latest . --typescript --tailwind --eslint`.
-  - [ ] **Test:** Write a `Vitest` unit test to check that `package.json` contains `typescript`, `tailwindcss`, and `eslint` as dependencies in the `app` subdirectory.
-  - [ ] **Test:** Write a `Vitest` unit test to verify that `tailwind.config.ts` and `.eslintrc.json` files exist at the root of the `app` subdirectory.
+- [x] Task 1 (AC: #1)
+  - [x] Create a new subdirectory named `app`.
+  - [x] Initialize the Next.js project inside the `app` subdirectory using: `npx create-next-app@latest . --typescript --tailwind --eslint`.
+  - [x] **Test:** Write a `Vitest` unit test to check that `package.json` contains `typescript`, `tailwindcss`, and `eslint` as dependencies in the `app` subdirectory.
+  - [x] **Test:** Write a `Vitest` unit test to verify that `eslint.config.mjs` exists and that Tailwind is configured (e.g., via `postcss.config.mjs` or `globals.css`).
 - [ ] Task 2 (AC: #2)
   - [ ] Create a new project on Vercel.
   - [ ] Connect the Vercel project to the project's git repository.
