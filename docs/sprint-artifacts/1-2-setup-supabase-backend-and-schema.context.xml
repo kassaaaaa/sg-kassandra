@@ -1,0 +1,227 @@
+<story-context id=".bmad/bmm/workflows/4-implementation/story-context/template" v="1.0">
+  <metadata>
+    <epicId>1</epicId>
+    <storyId>2</storyId>
+    <title>Setup Supabase Backend and Schema</title>
+    <status>drafted</status>
+    <generatedAt>Thursday, December 4, 2025</generatedAt>
+    <generator>BMAD Story Context Workflow</generator>
+    <sourceStoryPath>docs/sprint-artifacts/1-2-setup-supabase-backend-and-schema.md</sourceStoryPath>
+  </metadata>
+
+  <story>
+    <asA>Developer</asA>
+    <iWant>to set up the Supabase backend, define the initial database schema with Row Level Security (RLS), and configure the Supabase client in the Next.js application</iWant>
+    <soThat>we have a secure and structured foundation for data persistence and authentication.</soThat>
+    <tasks>
+- [ ] Task 1 (AC: #3, #4)
+  - [ ] Install `@supabase/supabase-js` version `2.86.0` in the `app` directory.
+  - [ ] Create `.env.example` in the `app` root with `NEXT_PUBLIC_SUPABASE_URL` and `NEXT_PUBLIC_SUPABASE_ANON_KEY`.
+  - [ ] Create `app/lib/db.ts` to initialize and export the Supabase client using the environment variables.
+  - [ ] **Test:** Write a Vitest unit test for `app/lib/db.ts` to ensure it throws an error if env vars are missing and exports a client instance.
+- [ ] Task 2 (AC: #1, #2)
+  - [ ] Create a `supabase/migrations` directory in the project root.
+  - [ ] Create a migration file `supabase/migrations/20251204000000_initial_schema.sql`.
+  - [ ] Define the SQL for `profiles`, `lessons`, `bookings`, `availability`, `instructor_details`, `customer_details`, and `instructor_lesson_types`.
+  - [ ] Include `ALTER TABLE ... ENABLE ROW LEVEL SECURITY;` for all tables.
+  - [ ] Include generic policies (e.g., `CREATE POLICY "Deny Public Access" ON ... FOR ALL USING (false);`) to satisfy the "default deny" requirement until specific policies are added in later stories.
+- [ ] Task 3 (Verify)
+  - [ ] **Test (Integration):** Create a script `scripts/test-supabase-connection.ts` (or a test file `tests/integration/supabase.test.ts`) that uses the client to perform a simple query (e.g., `supabase.from('profiles').select('count', { count: 'exact', head: true })`) to verify connectivity and valid credentials. *Note: Requires a running Supabase instance or mock.*
+</tasks>
+  </story>
+
+  <acceptanceCriteria>
+    1. The `profiles`, `lessons`, `bookings`, `availability`, `instructor_details`, `customer_details`, and `instructor_lesson_types` tables are created in the Supabase database as per the architecture.
+    2. Row Level Security (RLS) is enabled on all created tables with a default "deny all" policy for public access.
+    3. The Supabase client is configured and exported from `app/lib/db.ts`.
+    4. Environment variables for Supabase URL and Anon Key are configured in `.env.local` (and documented in `.env.example`).
+  </acceptanceCriteria>
+
+  <artifacts>
+    <docs>
+      <doc>
+        <path>docs/sprint-artifacts/tech-spec-epic-1.md</path>
+        <title>Epic Technical Specification: Foundation, Authentication, and Instructor Profiles</title>
+        <section>Overview</section>
+        <snippet>This technical specification details Epic 1: "Foundation, Authentication, and Instructor Profiles"... establishes the fundamental technical infrastructure, implements core user authentication mechanisms, and enables instructors to manage their professional profiles and availability.</snippet>
+      </doc>
+      <doc>
+        <path>docs/sprint-artifacts/tech-spec-epic-1.md</path>
+        <title>Epic Technical Specification: Foundation, Authentication, and Instructor Profiles</title>
+        <section>Objectives and Scope</section>
+        <snippet>Establish the core technical foundation using Next.js, Supabase, and a consistent UI component library. Implement robust user registration (FR002) and login (FR003) with email verification. Implement role-based access control (FR001) to secure application routes and data.</snippet>
+      </doc>
+      <doc>
+        <path>docs/sprint-artifacts/tech-spec-epic-1.md</path>
+        <title>Epic Technical Specification: Foundation, Authentication, and Instructor Profiles</title>
+        <section>System Architecture Alignment</section>
+        <snippet>Epic 1 is foundational and directly aligns with the core architectural decisions outlined in architecture.md. The implementation will utilize: Next.js (Frontend), Supabase (Backend), Tailwind CSS & shadcn/ui, TypeScript, Vercel, Resend.</snippet>
+      </doc>
+      <doc>
+        <path>docs/sprint-artifacts/tech-spec-epic-1.md</path>
+        <title>Epic Technical Specification: Foundation, Authentication, and Instructor Profiles</title>
+        <section>Detailed Design - Data Models and Contracts</section>
+        <snippet>The following data models are central to Epic 1. All tables will have Row Level Security (RLS) enabled with default-deny policies, as specified in architecture.md.</snippet>
+      </doc>
+      <doc>
+        <path>docs/sprint-artifacts/tech-spec-epic-1.md</path>
+        <title>Epic Technical Specification: Foundation, Authentication, and Instructor Profiles</title>
+        <section>Detailed Design - APIs and Interfaces</section>
+        <snippet>As the project uses the Supabase JS Client, direct interaction with the database will be favored over custom REST endpoints for core CRUD. Key client-side "API" calls will be: Authentication, Data Management (via lib/db.ts client).</snippet>
+      </doc>
+      <doc>
+        <path>docs/sprint-artifacts/tech-spec-epic-1.md</path>
+        <title>Epic Technical Specification: Foundation, Authentication, and Instructor Profiles</title>
+        <section>Dependencies and Integrations - Core Dependencies</section>
+        <snippet>The implementation of Epic 1 relies on the following key dependencies and external service integrations... Supabase Client `2.86.0`.</snippet>
+      </doc>
+      <doc>
+        <path>docs/sprint-artifacts/tech-spec-epic-1.md</path>
+        <title>Epic Technical Specification: Foundation, Authentication, and Instructor Profiles</title>
+        <section>Acceptance Criteria (Authoritative) - Story 1.2: Setup Supabase Backend and Schema</section>
+        <snippet>AC1.2.1: The `profiles`, `lessons`, `bookings`, `availability`, `instructor_details`, and `customer_details` tables are created as per the data model in `architecture.md`. AC1.2.2: Row Level Security (RLS) is enabled on all tables with default-deny policies. AC1.2.3: The Supabase client is configured in the Next.js application in `lib/db.ts`.</snippet>
+      </doc>
+      <doc>
+        <path>docs/fase-3-solution/architecture.md</path>
+        <title>Architecture Document: KiteOps</title>
+        <section>Executive Summary</section>
+        <snippet>The architecture for the KiteOps project is designed as a modern, scalable, and performant web application. It leverages a Jamstack-inspired approach with a Next.js frontend deployed on Vercel. The backend is a comprehensive suite of services provided by Supabase, including a PostgreSQL database, user authentication, real-time updates, and serverless Edge Functions.</snippet>
+      </doc>
+      <doc>
+        <path>docs/fase-3-solution/architecture.md</path>
+        <title>Architecture Document: KiteOps</title>
+        <section>Architecture Decision Summary</section>
+        <snippet>Data Persistence: Supabase (PostgreSQL), Backend API: Supabase Edge Functions, Authentication: Supabase Auth.</snippet>
+      </doc>
+      <doc>
+        <path>docs/fase-3-solution/architecture.md</path>
+        <title>Architecture Document: KiteOps</title>
+        <section>Technology Stack Details</section>
+        <snippet>Backend Platform: Supabase (Database: PostgreSQL `15.x`, Authentication: Supabase Auth (via Client `2.86.0`), Serverless Functions: Supabase Edge Functions (via Client `2.86.0`)).</snippet>
+      </doc>
+      <doc>
+        <path>docs/fase-3-solution/architecture.md</path>
+        <title>Architecture Document: KiteOps</title>
+        <section>Data Architecture</section>
+        <snippet>The data model is a normalized PostgreSQL schema designed for Supabase. It is centered around the `auth.users` table and a custom `profiles` table to manage roles and user-specific data. Key tables include `profiles`, `lessons`, `bookings`, `availability`, `instructor_details`, `customer_details`, and a many-to-many link table `instructor_lesson_types`.</snippet>
+      </doc>
+      <doc>
+        <path>docs/fase-3-solution/architecture.md</path>
+        <title>Architecture Document: KiteOps</title>
+        <section>Security & Performance</section>
+        <snippet>Security: Handled by Supabase Auth, with fine-grained access control implemented via PostgreSQL Row Level Security (RLS) based on the user's role in the `profiles` table.</snippet>
+      </doc>
+    </docs>
+    <code>
+      <artifact>
+        <path>app/lib/db.ts</path>
+        <kind>client-configuration</kind>
+        <symbol>Supabase Client Initialization</symbol>
+        <reason>This file will contain the Supabase client setup and configuration, as outlined in Task 1.</reason>
+      </artifact>
+      <artifact>
+        <path>supabase/migrations/YYYYMMDDHHMMSS_initial_schema.sql</path>
+        <kind>database-migration</kind>
+        <symbol>Initial Supabase Schema</symbol>
+        <reason>This file will define the initial database schema with RLS, as outlined in Task 2. The exact timestamp in the filename will vary.</reason>
+      </artifact>
+    </code>
+    <dependencies>
+      <npm>
+        <package name="next" version="16.0.7" />
+        <package name="react" version="19.2.0" />
+        <package name="react-dom" version="19.2.0" />
+        <package name="typescript" version="^5" />
+        <package name="tailwindcss" version="^4" />
+        <package name="@supabase/supabase-js" version="2.86.0" reason="Core dependency for Supabase interaction, as per Tech Spec" />
+        <package name="@playwright/test" version="^1.40.1" />
+        <package name="vitest" version="^4.0.15" />
+        <package name="eslint" version="^9" />
+        <package name="eslint-config-next" version="16.0.7" />
+        <package name="@tailwindcss/postcss" version="^4" />
+        <package name="@types/node" version="^20" />
+        <package name="@types/react" version="^19" />
+        <package name="@types/react-dom" version="^19" />
+      </npm>
+      <frameworks>
+        <framework name="Next.js" version="16.0.7" />
+        <framework name="Supabase" version="N/A" />
+        <framework name="Tailwind CSS" version="^4" />
+        <framework name="shadcn/ui" version="0.8.0" />
+        <framework name="TanStack Query" version="5.90.11" />
+      </frameworks>
+      <services>
+        <service name="Vercel" purpose="Deployment & Hosting" />
+        <service name="Resend" purpose="Transactional Email" />
+      </services>
+    </dependencies>
+  </artifacts>
+  </artifacts>
+
+  <constraints>
+    <constraint>RLS Strategy: Start with restrictive policies. We will open them up in Story 1.6 (RBAC).</constraint>
+    <constraint>Client Initialization: Ensure the client is a singleton or initialized correctly to avoid connection exhaustion.</constraint>
+    <constraint>Project Structure: The `supabase` folder should be at the project root, peer to `app/`.</constraint>
+    <constraint>Naming: `kebab-case` for API routes, `snake_case` for database objects, `PascalCase` for React components.</constraint>
+    <constraint>Structure: Feature-based component organization and co-located test files.</constraint>
+    <constraint>Date/Time: UTC storage is mandatory, with all logic performed in the school's local time zone.</constraint>
+    <constraint>Security: Fine-grained access control implemented via PostgreSQL Row Level Security (RLS) based on the user's role in the `profiles` table.</constraint>
+  </constraints>
+  <interfaces>
+    <interface>
+      <name>Supabase Auth `signUp`</name>
+      <kind>Function Signature</kind>
+      <signature>supabase.auth.signUp({ email, password, options: { data: { role } } })</signature>
+      <path>app/lib/db.ts</path>
+    </interface>
+    <interface>
+      <name>Supabase Auth `signInWithPassword`</name>
+      <kind>Function Signature</kind>
+      <signature>supabase.auth.signInWithPassword({ email, password })</signature>
+      <path>app/lib/db.ts</path>
+    </interface>
+    <interface>
+      <name>Supabase Data `from().update().eq()`</name>
+      <kind>Function Signature</kind>
+      <signature>supabase.from('table_name').update({ ...data }).eq('column', value)</signature>
+      <path>app/lib/db.ts</path>
+    </interface>
+    <interface>
+      <name>Supabase Data `from().insert()`</name>
+      <kind>Function Signature</kind>
+      <signature>supabase.from('table_name').insert([{ ...data }])</signature>
+      <path>app/lib/db.ts</path>
+    </interface>
+    <interface>
+      <name>Supabase Data `from().select().eq()`</name>
+      <kind>Function Signature</kind>
+      <signature>supabase.from('table_name').select('*').eq('column', value)</signature>
+      <path>app/lib/db.ts</path>
+    </interface>
+  </interfaces>
+  <tests>
+    <standards>
+      The project employs a layered testing strategy including Unit, Integration, and End-to-End tests. Unit tests validate business logic in services and UI components in isolation. Integration tests verify interactions between the Next.js frontend and Supabase backend. E2E tests cover critical user flows.
+    </standards>
+    <locations>
+      <location>app/__tests__/</location>
+      <location>tests/e2e/</location>
+      <location>scripts/test-supabase-connection.ts</location>
+      <location>tests/integration/supabase.test.ts</location>
+    </locations>
+    <ideas>
+      <idea ac_id="AC1.2.3">
+        Write a Vitest unit test for `app/lib/db.ts` to ensure it throws an error if environment variables for Supabase are missing and exports a client instance.
+      </idea>
+      <idea ac_id="AC1.2.1">
+        Inspect the Supabase database to verify the creation and schema of `profiles`, `lessons`, `bookings`, `availability`, `instructor_details`, `customer_details`, and `instructor_lesson_types` tables.
+      </idea>
+      <idea ac_id="AC1.2.2">
+        Attempt to perform unauthorized data access to the newly created tables with RLS enabled to confirm default "deny all" policies are active.
+      </idea>
+      <idea ac_id="AC1.2.3">
+        Create an integration script/test (`scripts/test-supabase-connection.ts` or `tests/integration/supabase.test.ts`) that uses the configured Supabase client to perform a simple query (e.g., `supabase.from('profiles').select('count', { count: 'exact', head: true })`) to verify connectivity and valid credentials against a running Supabase instance or mock.
+      </idea>
+    </ideas>
+  </tests>
+</story-context>

@@ -1,6 +1,6 @@
 # Story 1.2: Setup Supabase Backend and Schema
 
-Status: drafted
+Status: ready-for-dev
 
 ## Story
 
@@ -47,12 +47,13 @@ so that we have a secure and structured foundation for data persistence and auth
 
 - [Source: docs/sprint-artifacts/tech-spec-epic-1.md#story-1-2-setup-supabase-backend-and-schema]
 - [Source: docs/fase-3-solution/architecture.md#6-data-architecture]
+- [Source: docs/fase-3-solution/epics.md]
 
 ## Dev Agent Record
 
 ### Context Reference
 
-<!-- Path(s) to story context XML will be added here by context workflow -->
+- docs/sprint-artifacts/1-2-setup-supabase-backend-and-schema.context.xml
 
 ### Agent Model Used
 
@@ -74,3 +75,7 @@ so that we have a secure and structured foundation for data persistence and auth
 - **Linting:** ESLint is configured; ensure `lib/db.ts` and new files adhere to rules.
 
 [Source: docs/sprint-artifacts/1-1-initialize-next-js-project-and-setup-ci-cd.md#Dev-Agent-Record]
+
+## Change Log
+
+- 2025-12-04: Initial creation (BIP)
