@@ -1,0 +1,16 @@
+{
+  "build": {
+    "env": {
+      "NEXT_PUBLIC_VERCEL_ENV": "production"
+    }
+  },
+  "devCommand": "npm run dev",
+  "buildCommand": "npm run build && npm run lint && npm run test && npm run playwright",
+  "installCommand": "npm install",
+  "rootDirectory": "app/",
+  "git": {
+    "deploymentEnabled": true,
+    "pullRequestPreview": true,
+    "rollbackProductionBuilds": true
+  }
+}

@@ -1,40 +1,41 @@
 import { describe, it, expect } from 'vitest';
-import fs from 'fs';
 import path from 'path';
+import fs from 'fs';
 
-describe('Project Structure', () => {
-  const appRoot = path.resolve(__dirname, '..');
+const appDir = process.cwd();
 
-  it('should have specific dependencies in package.json', () => {
-    const packageJsonPath = path.join(appRoot, 'package.json');
+describe('Project Structure and Dependencies', () => {
+  it('should have package.json containing typescript, tailwindcss, and eslint as devDependencies', () => {
+    const packageJsonPath = path.join(appDir, 'package.json');
     const packageJson = JSON.parse(fs.readFileSync(packageJsonPath, 'utf-8'));
 
-    const allDeps = { ...packageJson.dependencies, ...packageJson.devDependencies };
-
-    expect(allDeps).toHaveProperty('typescript');
-    expect(allDeps).toHaveProperty('tailwindcss');
-    expect(allDeps).toHaveProperty('eslint');
+    expect(packageJson.devDependencies).toHaveProperty('typescript');
+    expect(packageJson.devDependencies).toHaveProperty('tailwindcss');
+    expect(packageJson.devDependencies).toHaveProperty('eslint');
   });
 
-  it('should have configuration files', () => {
-    const eslintConfig = path.join(appRoot, 'eslint.config.mjs');
-    expect(fs.existsSync(eslintConfig)).toBe(true);
+  it('should have eslint.config.mjs', () => {
+    const eslintConfigPath = path.join(appDir, 'eslint.config.mjs');
+    expect(fs.existsSync(eslintConfigPath)).toBe(true);
+  });
 
-    // Check for Tailwind config (v4 style)
-    // Either postcss.config.mjs or direct css import
-    const postcssConfig = path.join(appRoot, 'postcss.config.mjs');
-    const globalCss = path.join(appRoot, 'app', 'globals.css');
-    
-    const hasPostCss = fs.existsSync(postcssConfig);
-    let hasTailwindInCss = false;
-    
-    if (fs.existsSync(globalCss)) {
-      const cssContent = fs.readFileSync(globalCss, 'utf-8');
-      if (cssContent.includes('@import "tailwindcss"')) {
-        hasTailwindInCss = true;
-      }
+  it('should have tailwindcss configured via postcss.config.mjs or globals.css', () => {
+    const postcssConfigPath = path.join(appDir, 'postcss.config.mjs');
+    const globalsCssPath = path.join(appDir, 'app/globals.css');
+
+    // Check if postcss.config.mjs exists and contains tailwindcss
+    if (fs.existsSync(postcssConfigPath)) {
+      const postcssConfig = fs.readFileSync(postcssConfigPath, 'utf-8');
+      expect(postcssConfig).toContain('tailwindcss');
+    } else if (fs.existsSync(globalsCssPath)) {
+      // If postcss.config.mjs doesn't exist, check globals.css for tailwind directives
+      const globalsCss = fs.readFileSync(globalsCssPath, 'utf-8');
+      expect(globalsCss).toContain('@tailwind base');
+      expect(globalsCss).toContain('@tailwind components');
+      expect(globalsCss).toContain('@tailwind utilities');
+    } else {
+      // Neither file found, fail the test
+      expect(true).toBe(false); // Force fail
     }
-
-    expect(hasPostCss || hasTailwindInCss).toBe(true);
   });
 });

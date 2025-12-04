@@ -1,0 +1,14 @@
+{
+  "name": "sg-kassandra",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "playwright": "playwright test"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.40.1"
+  },
+  "workspaces": [
+    "app"
+  ]
+}
