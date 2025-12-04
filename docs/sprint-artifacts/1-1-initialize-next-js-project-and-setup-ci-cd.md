@@ -21,10 +21,10 @@ so that we have a consistent and automated foundation for development and deploy
   - [x] Initialize the Next.js project inside the `app` subdirectory using: `npx create-next-app@latest . --typescript --tailwind --eslint`.
   - [x] **Test:** Write a `Vitest` unit test to check that `package.json` contains `typescript`, `tailwindcss`, and `eslint` as dependencies in the `app` subdirectory.
   - [x] **Test:** Write a `Vitest` unit test to verify that `eslint.config.mjs` exists and that Tailwind is configured (e.g., via `postcss.config.mjs` or `globals.css`).
-- [ ] Task 2 (AC: #2)
-  - [ ] Create a new project on Vercel.
-  - [ ] Connect the Vercel project to the project's git repository.
-  - [ ] **Test (Manual):** Confirm that the Vercel project dashboard shows the repository as connected.
+- [x] Task 2 (AC: #2)
+  - [x] Create a new project on Vercel.
+  - [x] Connect the Vercel project to the project's git repository.
+  - [x] **Test (Manual):** Confirm that the Vercel project dashboard shows the repository as connected.
 - [ ] Task 3 (AC: #3)
   - [ ] Configure the Vercel project to run `npm run lint` and `npm run test` on each deployment.
   - [ ] Ensure the main branch is automatically deployed to production.
@@ -52,7 +52,6 @@ so that we have a consistent and automated foundation for development and deploy
 ### Context Reference
 
 - /Users/kassa/KI-programmering/kiteops/SG-Kassandra/docs/sprint-artifacts/1-1-initialize-next-js-project-and-setup-ci-cd.context.xml
-
 
 ### Agent Model Used
 
