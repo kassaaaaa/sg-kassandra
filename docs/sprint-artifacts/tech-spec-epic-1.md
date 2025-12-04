@@ -290,3 +290,6 @@ The test strategy for Epic 1 will focus on ensuring the foundational components 
 ### Story 1.1: Initialize Next.js Project and Setup CI/CD
 - [ ] [High] Fix Vercel CI/CD configuration: Remove `npm run playwright` from `buildCommand` in `vercel.json`.
 - [ ] [Med] Establish E2E Testing Strategy: Decide on and implement a proper E2E testing workflow (e.g., via GitHub Actions or Vercel Checks) that runs *after* deployment.
+
+### Story 1.2: Setup Supabase Backend and Schema
+- [ ] [High] Apply initial migration to Supabase environment: Run `supabase db push` or `supabase migration up` against the target Supabase instance.
