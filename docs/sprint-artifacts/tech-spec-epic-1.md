@@ -284,3 +284,9 @@ The test strategy for Epic 1 will focus on ensuring the foundational components 
         3.  User logs in and is redirected to the dashboard.
         4.  User navigates to their profile and updates it.
         5.  User navigates to the calendar and successfully adds a new availability slot.
+
+## Post-Review Follow-ups
+
+### Story 1.1: Initialize Next.js Project and Setup CI/CD
+- [ ] [High] Fix Vercel CI/CD configuration: Remove `npm run playwright` from `buildCommand` in `vercel.json`.
+- [ ] [Med] Establish E2E Testing Strategy: Decide on and implement a proper E2E testing workflow (e.g., via GitHub Actions or Vercel Checks) that runs *after* deployment.
