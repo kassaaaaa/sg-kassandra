@@ -82,5 +82,6 @@ so that we have a consistent and automated foundation for development and deploy
 
 ## Change Log
 
+- 2025-12-04: Completed Task 3 (CI/CD setup), added E2E tests, updated status to review. (Amelia)
 - 2025-12-03: Updated Task 1 and AC 1 to initialize Next.js project in 'app' subdirectory due to naming restrictions. (BIP)
 - 2025-12-02: Initial creation (BIP)
