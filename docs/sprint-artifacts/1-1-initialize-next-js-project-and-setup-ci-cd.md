@@ -1,6 +1,6 @@
 # Story 1.1: Initialize Next.js Project and Setup CI/CD
 
-Status: in-progress
+Status: review
 
 ## Story
 
@@ -32,8 +32,8 @@ so that we have a consistent and automated foundation for development and deploy
   - [x] **Test (E2E):** Write a basic `Playwright` test that navigates to the deployed Vercel URL and verifies the presence of a key element (e.g., the Next.js welcome page `<h1>`). The CI should run this test post-deployment.
 
 ### Review Follow-ups (AI)
-- [ ] [AI-Review][High] Remove `&& npm run playwright` from `vercel.json` `buildCommand`. (AC #3)
-- [ ] [AI-Review][Med] Create a separate CI workflow (e.g., GitHub Actions) to run Playwright tests *after* deployment, or remove the requirement for E2E in CI for this initial story if acceptable. (AC #3)
+- [x] [AI-Review][High] Remove `&& npm run playwright` from `vercel.json` `buildCommand`. (AC #3)
+- [x] [AI-Review][Med] Create a separate CI workflow (e.g., GitHub Actions) to run Playwright tests *after* deployment, or remove the requirement for E2E in CI for this initial story if acceptable. (AC #3)
 
 ## Dev Notes
 
@@ -76,6 +76,8 @@ so that we have a consistent and automated foundation for development and deploy
 - Implemented basic E2E test using Playwright.
 - Verified all tests pass locally.
 - Story ready for review.
+- ✅ Resolved review finding [High]: Remove `&& npm run playwright` from `vercel.json` `buildCommand`.
+- ✅ Resolved review finding [Med]: Create a separate CI workflow (e.g., GitHub Actions) to run Playwright tests.
 
 ### File List
 - vercel.json
@@ -83,9 +85,11 @@ so that we have a consistent and automated foundation for development and deploy
 - tests/e2e/home.spec.ts
 - playwright.config.ts
 - app/__tests__/project-structure.test.ts
+- .github/workflows/ci.yml
 
 ## Change Log
 
+- 2025-12-04: Addressed code review findings - 2 items resolved (Date: 2025-12-04). (Amelia)
 - 2025-12-04: Senior Developer Review - Changes Requested. (Amelia)
 - 2025-12-04: Completed Task 3 (CI/CD setup), added E2E tests, updated status to review. (Amelia)
 - 2025-12-03: Updated Task 1 and AC 1 to initialize Next.js project in 'app' subdirectory due to naming restrictions. (BIP)
@@ -149,8 +153,8 @@ The Vercel build command in `vercel.json` is misconfigured. It attempts to run `
 ### Action Items
 
 **Code Changes Required:**
-- [ ] [High] Remove `&& npm run playwright` from `vercel.json` `buildCommand`. (AC #3) [file: vercel.json:7]
-- [ ] [Med] Create a separate CI workflow (e.g., GitHub Actions) to run Playwright tests *after* deployment, or remove the requirement for E2E in CI for this initial story if acceptable. (AC #3)
+- [x] [High] Remove `&& npm run playwright` from `vercel.json` `buildCommand`. (AC #3) [file: vercel.json:7]
+- [x] [Med] Create a separate CI workflow (e.g., GitHub Actions) to run Playwright tests *after* deployment, or remove the requirement for E2E in CI for this initial story if acceptable. (AC #3)
 
 **Advisory Notes:**
 - Note: Ensure `playwright.config.ts` remains in root as per current structure, but be aware of how Vercel's `rootDirectory: "app/"` affects path resolution if you later integrate E2E checks.
