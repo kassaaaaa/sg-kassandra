@@ -1,6 +1,6 @@
 # Story 1.2: Setup Supabase Backend and Schema
 
-Status: ready-for-dev
+Status: review
 
 ## Story
 
@@ -17,19 +17,19 @@ so that we have a secure and structured foundation for data persistence and auth
 
 ## Tasks / Subtasks
 
-- [ ] Task 1 (AC: #3, #4)
-  - [ ] Install `@supabase/supabase-js` version `2.86.0` in the `app` directory.
-  - [ ] Create `.env.example` in the `app` root with `NEXT_PUBLIC_SUPABASE_URL` and `NEXT_PUBLIC_SUPABASE_ANON_KEY`.
-  - [ ] Create `app/lib/db.ts` to initialize and export the Supabase client using the environment variables.
-  - [ ] **Test:** Write a Vitest unit test for `app/lib/db.ts` to ensure it throws an error if env vars are missing and exports a client instance.
-- [ ] Task 2 (AC: #1, #2)
-  - [ ] Create a `supabase/migrations` directory in the project root.
-  - [ ] Create a migration file `supabase/migrations/20251204000000_initial_schema.sql`.
-  - [ ] Define the SQL for `profiles`, `lessons`, `bookings`, `availability`, `instructor_details`, `customer_details`, and `instructor_lesson_types`.
-  - [ ] Include `ALTER TABLE ... ENABLE ROW LEVEL SECURITY;` for all tables.
-  - [ ] Include generic policies (e.g., `CREATE POLICY "Deny Public Access" ON ... FOR ALL USING (false);`) to satisfy the "default deny" requirement until specific policies are added in later stories.
-- [ ] Task 3 (Verify)
-  - [ ] **Test (Integration):** Create a script `scripts/test-supabase-connection.ts` (or a test file `tests/integration/supabase.test.ts`) that uses the client to perform a simple query (e.g., `supabase.from('profiles').select('count', { count: 'exact', head: true })`) to verify connectivity and valid credentials. *Note: Requires a running Supabase instance or mock.*
+- [x] Task 1 (AC: #3, #4)
+  - [x] Install `@supabase/supabase-js` version `2.86.0` in the `app` directory.
+  - [x] Create `.env.example` in the `app` root with `NEXT_PUBLIC_SUPABASE_URL` and `NEXT_PUBLIC_SUPABASE_ANON_KEY`.
+  - [x] Create `app/lib/db.ts` to initialize and export the Supabase client using the environment variables.
+  - [x] **Test:** Write a Vitest unit test for `app/lib/db.ts` to ensure it throws an error if env vars are missing and exports a client instance.
+- [x] Task 2 (AC: #1, #2)
+  - [x] Create a `supabase/migrations` directory in the project root.
+  - [x] Create a migration file `supabase/migrations/20251204000000_initial_schema.sql`.
+  - [x] Define the SQL for `profiles`, `lessons`, `bookings`, `availability`, `instructor_details`, `customer_details`, and `instructor_lesson_types`.
+  - [x] Include `ALTER TABLE ... ENABLE ROW LEVEL SECURITY;` for all tables.
+  - [x] Include generic policies (e.g., `CREATE POLICY "Deny Public Access" ON ... FOR ALL USING (false);`) to satisfy the "default deny" requirement until specific policies are added in later stories.
+- [x] Task 3 (Verify)
+  - [x] **Test (Integration):** Create a script `scripts/test-supabase-connection.ts` (or a test file `tests/integration/supabase.test.ts`) that uses the client to perform a simple query (e.g., `supabase.from('profiles').select('count', { count: 'exact', head: true })`) to verify connectivity and valid credentials. *Note: Requires a running Supabase instance or mock.*
 
 ## Dev Notes
 
@@ -57,13 +57,25 @@ so that we have a secure and structured foundation for data persistence and auth
 
 ### Agent Model Used
 
-{{agent_model_name_version}}
+gemini-2.0-flash-exp
 
 ### Debug Log References
 
 ### Completion Notes List
 
+- 2025-12-04: Implemented Supabase client initialization in `app/lib/db.ts` with strict env var validation.
+- 2025-12-04: Added Vitest unit tests in `app/__tests__/lib/db.test.ts`.
+- 2025-12-04: Created initial database schema migration in `supabase/migrations/20251204000000_initial_schema.sql` covering all required tables and RLS policies.
+- 2025-12-04: Created connectivity verification script `scripts/test-supabase-connection.ts`.
+
 ### File List
+
+- app/.env.example
+- app/lib/db.ts
+- app/__tests__/lib/db.test.ts
+- supabase/migrations/20251204000000_initial_schema.sql
+- scripts/test-supabase-connection.ts
+- tests/integration/
 
 ### Learnings from Previous Story
 
