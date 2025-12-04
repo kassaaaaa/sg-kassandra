@@ -1,6 +1,6 @@
 # Story 1.4: User Registration and Email Verification
 
-Status: drafted
+Status: ready-for-dev
 
 ## Story
 
@@ -55,6 +55,10 @@ so that I can access the secure features of the KiteOps application with a verif
 - **UI:**
   - Reuse `LessonCard` style or standard Card component for the registration form container.
   - Follow UX spec for "Success" feedback (redirect to verification page).
+- **Coding Standards:**
+  - Adhere to `PascalCase` for React components and `kebab-case` for utility classes/files as per `architecture.md` Section 8.
+- **Testing Standards:**
+  - Follow the layered testing strategy (Unit, Integration, E2E) defined in `architecture.md` and `tech-spec-epic-1.md`.
 
 ### Project Structure Notes
 
@@ -64,22 +68,31 @@ so that I can access the secure features of the KiteOps application with a verif
 ### References
 
 - [Source: docs/sprint-artifacts/tech-spec-epic-1.md#Story-1-4-user-registration-and-email-verification-fr002]
+- [Source: docs/fase-3-solution/epics.md#Story-1-4-user-registration-and-email-verification]
 - [Source: docs/fase-2-plan/PRD.md#FR002]
 - [Source: docs/fase-3-solution/architecture.md#Data-Architecture]
 - [Source: docs/fase-3-solution/architecture.md#Workflows-and-Sequencing]
+- [Source: docs/fase-3-solution/architecture.md#8-implementation-patterns-consistency-rules]
+
+### Learnings from Previous Stories
+
+**From Story 1.3 (Status: done)**
+
+- **New Files Created**:
+  - `app/components/LessonCard.tsx`: Custom lesson card component.
+  - `app/app/globals.css`: Updated with Tailwind v4 config and custom variables.
+  - `app/components/ui/*`: Core shadcn/ui components (Button, Input, Card, etc.).
+  - `app/__tests__/components/LessonCard.test.tsx`: Unit tests for LessonCard.
+- **Architectural Decisions**:
+  - UI components reside in `app/components/ui/`.
+  - Custom components like `LessonCard` reside in `app/components/`.
+  - Testing uses `vitest` and `react-testing-library`.
+- **Warnings/Recommendations**:
+  - Ensure new UI components follow the established patterns (shadcn/ui + Tailwind).
+  - Use the `cn` utility for class merging.
+  - Verify accessibility (aria-labels) for all interactive elements.
 
 ## Dev Agent Record
 
 ### Context Reference
-
-<!-- Path(s) to story context XML will be added here by context workflow -->
-
-### Agent Model Used
-
-{{agent_model_name_version}}
-
-### Debug Log References
-
-### Completion Notes List
-
-### File List
+- docs/sprint-artifacts/1-4-user-registration-and-email-verification.context.xml

@@ -1,0 +1,125 @@
+<story-context id=".bmad/bmm/workflows/4-implementation/story-context/template" v="1.0">
+  <metadata>
+    <epicId>1</epicId>
+    <storyId>1-4</storyId>
+    <title>User Registration and Email Verification</title>
+    <status>drafted</status>
+    <generatedAt>Friday, December 5, 2025</generatedAt>
+    <generator>BMAD Story Context Workflow</generator>
+    <sourceStoryPath>docs/sprint-artifacts/1-4-user-registration-and-email-verification.md</sourceStoryPath>
+  </metadata>
+
+  <story>
+    <asA>New User (Instructor or Manager)</asA>
+    <iWant>register for an account and verify my email address</iWant>
+    <soThat>I can access the secure features of the KiteOps application with a verified identity</soThat>
+    <tasks>
+- [ ] Task 1: Setup Resend Integration
+  - [ ] Configure Resend API key in environment variables (`.env.local`).
+  - [ ] Configure Supabase Auth to use Resend for transactional emails (SMTP settings or Supabase integration). [Source: Architecture 4]
+- [ ] Task 2: Implement Database Trigger for Profile Creation
+  - [ ] Write a Supabase migration SQL script to create a trigger on `auth.users` insert.
+  - [ ] The trigger function should insert a row into `public.profiles` taking the `id` and `role` (from metadata) of the new user. [Source: Tech Spec 1.4, Architecture 6]
+  - [ ] **Testing:** Verify manually via SQL editor that inserting a user creates a profile.
+- [ ] Task 3: Implement `AuthService`
+  - [ ] Create `app/lib/auth-service.ts` to handle authentication logic.
+  - [ ] Implement `register` method wrapping `supabase.auth.signUp`.
+  - [ ] Ensure `options.data` includes the selected role for the trigger to use.
+- [ ] Task 4: Create Sign Up UI
+  - [ ] Create `app/(auth)/signup/page.tsx` (or similar route).
+  - [ ] Implement a Sign Up form using `react-hook-form`, `zod`, and `shadcn/ui` components (Form, Input, Button, Select).
+  - [ ] Form fields: Email, Password, Role (Instructor/Manager).
+  - [ ] **Testing:** Unit test form validation logic (required fields, email format).
+- [ ] Task 5: Create "Check Email" Page
+  - [ ] Create `app/(auth)/verify-email/page.tsx`.
+  - [ ] Style with standard layout components to instruct user to check inbox.
+- [ ] Task 6: Integration
+  - [ ] Connect Sign Up form to `AuthService.register`.
+  - [ ] Handle success/error states and redirection.
+  - [ ] **Testing:** Perform a manual registration flow: Sign up -> Check DB (`auth.users` & `public.profiles`) -> Check Email (Resend logs/inbox).
+    </tasks>
+  </story>
+
+  <acceptanceCriteria>
+1.  **User Creation:** A new user is created in the Supabase `auth.users` table upon form submission.
+2.  **Profile Creation:** A corresponding entry is automatically created in the `public.profiles` table with the selected role (e.g., 'instructor', 'manager').
+3.  **Email Verification:** The system sends a verification email to the user's provided address via Resend (integrated with Supabase Auth).
+4.  **User Feedback:** Upon successful submission, the user is redirected to a "Check your email" confirmation page with clear instructions.
+  </acceptanceCriteria>
+
+  <artifacts>
+    <docs>
+      <doc>
+        <path>docs/fase-2-plan/PRD.md</path>
+        <title>Product Requirements Document</title>
+        <section>Functional Requirements - General & System</section>
+        <snippet>FR002: The system shall allow users to register for Instructor or Manager accounts with email verification. FR003: The system shall allow registered users to log in.</snippet>
+      </doc>
+      <doc>
+        <path>docs/sprint-artifacts/tech-spec-epic-1.md</path>
+        <title>Tech Spec Epic 1</title>
+        <section>Detailed Design</section>
+        <snippet>AuthService handles user registration using Supabase Auth. `profiles` table stores role-based info. Story 1.4 ACs: User created in `auth.users` and `profiles`, verification email sent.</snippet>
+      </doc>
+      <doc>
+        <path>docs/fase-3-solution/architecture.md</path>
+        <title>Architecture Document</title>
+        <section>6. Data Architecture</section>
+        <snippet>Data model centered around `auth.users` and custom `profiles` table. Security handled by Supabase Auth and RLS.</snippet>
+      </doc>
+    </docs>
+    <code>
+      <artifact>
+        <path>app/lib/db.ts</path>
+        <kind>Supabase Client</kind>
+        <symbol>supabase</symbol>
+        <reason>Used for DB interactions.</reason>
+      </artifact>
+      <artifact>
+        <path>supabase/migrations/20251204000000_initial_schema.sql</path>
+        <kind>Migration</kind>
+        <symbol>create table public.profiles</symbol>
+        <reason>Defines target table for profile creation.</reason>
+      </artifact>
+    </code>
+    <dependencies>
+      <dep>@supabase/supabase-js</dep>
+      <dep>react-hook-form</dep>
+      <dep>zod</dep>
+      <dep>@hookform/resolvers</dep>
+      <dep>next</dep>
+      <dep>sonner</dep>
+    </dependencies>
+  </artifacts>
+
+  <constraints>
+    <constraint>Use Zod for strict form validation.</constraint>
+    <constraint>Use Supabase database trigger for profile creation to ensure consistency.</constraint>
+    <constraint>Ensure `NEXT_PUBLIC_SUPABASE_URL`, `NEXT_PUBLIC_SUPABASE_ANON_KEY`, and `RESEND_API_KEY` are available.</constraint>
+    <constraint>Reuse `LessonCard` style or standard Card component for registration form.</constraint>
+    <constraint>Adhere to PascalCase for components and kebab-case for files.</constraint>
+  </constraints>
+  <interfaces>
+    <interface>
+      <name>Supabase Auth SignUp</name>
+      <kind>Function Signature</kind>
+      <signature>supabase.auth.signUp({ email, password, options: { data: { role: 'instructor' } } })</signature>
+      <path>node_modules/@supabase/supabase-js</path>
+    </interface>
+    <interface>
+      <name>profiles table</name>
+      <kind>Database Table</kind>
+      <signature>id (uuid), role (text)</signature>
+      <path>supabase/migrations/20251204000000_initial_schema.sql</path>
+    </interface>
+  </interfaces>
+  <tests>
+    <standards>Follow layered testing strategy: Unit tests for logic/components using Vitest, E2E tests for flows using Playwright.</standards>
+    <locations>app/__tests__, tests/e2e</locations>
+    <ideas>
+      <idea>Unit: Test form validation (email format, required fields).</idea>
+      <idea>Integration: Test AuthService.register with mocked Supabase.</idea>
+      <idea>E2E: Full registration flow (Form -> DB -> Success Page).</idea>
+    </ideas>
+  </tests>
+</story-context>
