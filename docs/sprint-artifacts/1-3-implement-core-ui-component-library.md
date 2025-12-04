@@ -1,6 +1,6 @@
 # Story 1.3: Implement Core UI Component Library
 
-Status: drafted
+Status: ready-for-dev
 
 ## Story
 
@@ -103,6 +103,8 @@ so that all subsequent UI development is consistent, efficient, and aligns with 
 ## Dev Agent Record
 
 ### Context Reference
+
+- docs/sprint-artifacts/1-3-implement-core-ui-component-library.context.xml
 
 ### Agent Model Used
 

@@ -1,0 +1,103 @@
+<story-context id="1-3-implement-core-ui-component-library" v="1.0">
+  <metadata>
+    <epicId>1</epicId>
+    <storyId>1.3</storyId>
+    <title>Implement Core UI Component Library</title>
+    <status>drafted</status>
+    <generatedAt>2025-12-04</generatedAt>
+    <generator>BMAD Story Context Workflow</generator>
+    <sourceStoryPath>docs/sprint-artifacts/1-3-implement-core-ui-component-library.md</sourceStoryPath>
+  </metadata>
+
+  <story>
+    <asA>Developer</asA>
+    <iWant>set up and configure the `shadcn/ui` design system and integrate the core UX patterns</iWant>
+    <soThat>all subsequent UI development is consistent, efficient, and aligns with the defined user experience</soThat>
+    <tasks>
+- [ ] Task 1 (AC: #1, #2): Install and configure `shadcn/ui`
+  - [ ] Initialize `shadcn/ui` using the CLI within the `app/` directory. [Source: `architecture.md` Section 4, `ux-design-specification.md` Section 2.1]
+  - [ ] Add `Button`, `Input`, `Card`, and `Modal` components via `shadcn/ui` CLI. [Source: `ux-design-specification.md` Section 5.1]
+  - [ ] **Testing:** Verify `shadcn/ui` components render correctly and are customizable.
+- [ ] Task 2 (AC: #3): Configure Tailwind CSS for UX Design System
+  - [ ] Update `tailwind.config.mjs` (or `app/globals.css` for v4) to include the color palette from `ux-design-specification.md` (Section 2.2).
+  - [ ] Configure typography (font families, sizes, weights, line height) based on `ux-design-specification.md` (Section 2.3).
+  - [ ] Define spacing scale (multiples of 8px) in `tailwind.config.mjs` based on `ux-design-specification.md` (Section 2.4).
+  - [ ] **Testing:** Visually inspect that colors, fonts, and spacing align with UX specification.
+- [ ] Task 3 (AC: #4): Implement Custom `Lesson Card` Component
+  - [ ] Create `LessonCard.tsx` component in `app/components/` following the anatomy and behavior specified in `ux-design-specification.md` (Section 5.2.1).
+  - [ ] Ensure `LessonCard` adheres to accessibility guidelines (focus order, ARIA attributes, contrast). [Source: `ux-design-specification.md` Section 5.2.1, 7.2]
+  - [ ] **Testing:** Create unit tests for `LessonCard` using a testing library (e.g., React Testing Library) to verify correct rendering and behavior.
+  - [ ] **Testing:** Perform manual accessibility checks (keyboard navigation, screen reader compatibility).
+- [ ] Task 4 (AC: #5): Configure Core UX Patterns
+  - [ ] Review and apply button hierarchy (Primary, Secondary, Tertiary, Destructive actions) as defined in `ux-design-specification.md` (Section 6.1).
+  - [ ] Implement feedback patterns (Success, Error, Loading) using toast/snackbar notifications and inline error messages as defined in `ux-design-specification.md` (Section 6.2).
+  - [ ] Configure form patterns (Label Position, Required Field Indicator, Validation Timing, Error Display) as defined in `ux-design-specification.md` (Section 6.3).
+  - [ ] Implement modal patterns (Size Variants, Dismiss Behavior, Focus Management) as defined in `ux-design-specification.md` (Section 6.4).
+  - [ ] **Testing:** Verify that all implemented UX patterns function as specified and adhere to accessibility guidelines.
+    </tasks>
+  </story>
+
+  <acceptanceCriteria>
+1.  `shadcn/ui` is installed and configured in the Next.js project.
+2.  The core components (Button, Input, Card, Modal) from `shadcn/ui` are configured and ready for use.
+3.  The color palette, typography, and spacing from `ux-design-specification.md` are configured as Tailwind CSS theme variables.
+4.  The custom `Lesson Card` component is created and available for use, following the specifications in `ux-design-specification.md` (Section 5.2.1).
+5.  The core UX patterns for buttons, forms, and modals (Section 6 of `ux-design-specification.md`) are implemented or configured for project-wide use.
+  </acceptanceCriteria>
+
+  <artifacts>
+    <docs>
+      <doc path="docs/fase-2-plan/ux-design-specification.md" title="UX Design Specification" section="2. Design System & Visual Foundation">
+        Defines official color palette (Primary Navy #0A2540, Accent Sky Blue #4A90E2), Typography (Manrope for headings, Inter for body), and Spacing (8px base). Specifies Shadcn/ui as the library.
+      </doc>
+      <doc path="docs/fase-2-plan/ux-design-specification.md" title="UX Design Specification" section="5.2.1 Lesson Card">
+        Detailed anatomy of Lesson Card: Main content left (Icon, Title, Desc, Details), Time slot area right (Buttons). States: Default, Hover, Booked.
+      </doc>
+      <doc path="docs/fase-3-solution/architecture.md" title="Architecture Document" section="4. Technology Stack Details">
+        Specifies Next.js 16, Tailwind CSS 4, shadcn/ui 0.8.0. Project structure: app/ directory.
+      </doc>
+      <doc path="docs/sprint-artifacts/tech-spec-epic-1.md" title="Epic 1 Tech Spec" section="Story 1.3">
+        ACs for implementing core component library. Confirming scope includes shadcn config and custom LessonCard.
+      </doc>
+    </docs>
+    <code>
+      <item path="app/app/globals.css" kind="file" symbol="root" lines="1-20" reason="Location for CSS variables and Tailwind @theme configuration." />
+      <item path="app/package.json" kind="file" symbol="dependencies" reason="Dependency manifest to update with shadcn/ui packages." />
+      <item path="app/app/layout.tsx" kind="file" symbol="RootLayout" reason="Place to configure fonts (Manrope/Inter)." />
+    </code>
+    <dependencies>
+      <dep name="shadcn/ui" version="0.8.0" ecosystem="npm" />
+      <dep name="tailwindcss" version="^4.0.0" ecosystem="npm" />
+      <dep name="lucide-react" version="latest" ecosystem="npm" />
+      <dep name="class-variance-authority" version="latest" ecosystem="npm" />
+      <dep name="clsx" version="latest" ecosystem="npm" />
+      <dep name="tailwind-merge" version="latest" ecosystem="npm" />
+    </dependencies>
+  </artifacts>
+
+  <constraints>
+    <constraint type="Architecture">All new components must be in `app/components/`. Shadcn components in `app/components/ui/`.</constraint>
+    <constraint type="Architecture">Run all `npm` and `npx` commands inside the `app/` subdirectory.</constraint>
+    <constraint type="Style">Use Tailwind CSS v4 variables in `app/app/globals.css` for theming (colors, radius).</constraint>
+    <constraint type="Accessibility">Ensure WCAG 2.1 AA compliance (contrast, keyboard nav) for all components.</constraint>
+    <constraint type="Naming">PascalCase for components (e.g., `LessonCard.tsx`).</constraint>
+  </constraints>
+
+  <interfaces>
+    <!-- No existing interfaces found relevant for pure UI story -->
+  </interfaces>
+
+  <tests>
+    <standards>
+      Create unit tests for complex components (LessonCard) using React Testing Library. Verify accessibility.
+    </standards>
+    <locations>
+      <loc>app/__tests__/components/</loc>
+    </locations>
+    <ideas>
+      <idea ac="4">Test LessonCard renders correct props (title, details)</idea>
+      <idea ac="4">Test LessonCard time slots are clickable/disabled based on state</idea>
+      <idea ac="2">Test generic Button variants render correctly</idea>
+    </ideas>
+  </tests>
+</story-context>
