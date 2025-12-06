@@ -1,4 +1,3 @@
-
 'use client';
 
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -17,19 +16,35 @@ import {
 import { Textarea } from '@/components/ui/textarea';
 import { toast } from 'sonner';
 import { createClient } from '@/lib/supabase/client';
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
+import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
+import { ProfileService } from '@/lib/profile-service';
 
 const instructorProfileSchema = z.object({
-  certifications: z.string().optional(),
-  lesson_types: z.string().optional(),
+  certifications: z.string().trim().optional(),
+  lesson_types: z.string().trim().optional(),
 });
 
 type InstructorProfileFormValues = z.infer<typeof instructorProfileSchema>;
 
 export default function ProfileSettingsPage() {
   const supabase = createClient();
-  const [loading, setLoading] = useState(true);
-  const [userId, setUserId] = useState<string | null>(null);
+  const queryClient = useQueryClient();
+
+  const { data: user, isLoading: isUserLoading } = useQuery({
+    queryKey: ['user'],
+    queryFn: async () => {
+      const { data: { user } } = await supabase.auth.getUser();
+      if (!user) throw new Error("Not authenticated");
+      return user;
+    }
+  });
+
+  const { data: profile, isLoading: isProfileLoading } = useQuery({
+    queryKey: ['profile', user?.id],
+    queryFn: () => ProfileService.getProfile(user!.id),
+    enabled: !!user?.id,
+  });
 
   const form = useForm<InstructorProfileFormValues>({
     resolver: zodResolver(instructorProfileSchema),
@@ -40,73 +55,48 @@ export default function ProfileSettingsPage() {
   });
 
   useEffect(() => {
-    async function fetchProfile() {
-      setLoading(true);
-      const { data: { user } } = await supabase.auth.getUser();
-      if (!user) {
-        toast.error('User not authenticated.');
-        setLoading(false);
-        return;
-      }
-      setUserId(user.id);
-
-      const { data, error } = await supabase
-        .from('instructor_details')
-        .select('certifications, lesson_types')
-        .eq('user_id', user.id)
-        .single();
-
-      if (error && error.code !== 'PGRST116') { // PGRST116 means no rows found (new instructor)
-        toast.error('Failed to fetch profile: ' + error.message);
-      } else if (data) {
-        form.reset({
-          certifications: data.certifications?.join(', ') || '',
-          lesson_types: data.lesson_types?.join(', ') || '',
-        });
-      }
-      setLoading(false);
+    if (profile) {
+      form.reset({
+        certifications: profile.certifications?.join(', ') || '',
+        lesson_types: profile.lesson_types?.join(', ') || '',
+      });
     }
+  }, [profile, form]);
 
-    fetchProfile();
-  }, [supabase, form]);
+  const mutation = useMutation({
+    mutationFn: async (values: InstructorProfileFormValues) => {
+      if (!user?.id) throw new Error("No user ID");
 
-  async function onSubmit(values: InstructorProfileFormValues) {
-    if (!userId) {
-      toast.error('User ID not available. Please log in again.');
-      return;
-    }
+      const certificationsArray = values.certifications
+        ? values.certifications.split(',').map((s) => s.trim()).filter(Boolean)
+        : [];
+      const lessonTypesArray = values.lesson_types
+        ? values.lesson_types.split(',').map((s) => s.trim()).filter(Boolean)
+        : [];
 
-    setLoading(true);
-
-    const certificationsArray = values.certifications
-      ? values.certifications.split(',').map((s) => s.trim()).filter(Boolean)
-      : [];
-    const lessonTypesArray = values.lesson_types
-      ? values.lesson_types.split(',').map((s) => s.trim()).filter(Boolean)
-      : [];
-
-    const { error } = await supabase
-      .from('instructor_details')
-      .upsert(
-        {
-          user_id: userId,
-          certifications: certificationsArray,
-          lesson_types: lessonTypesArray,
-        },
-        { onConflict: 'user_id' }
-      );
-
-    if (error) {
-      console.error('Supabase update error:', error);
-      toast.error('Failed to update profile: ' + error.message);
-    } else {
+      await ProfileService.updateProfile(user.id, {
+        certifications: certificationsArray,
+        lesson_types: lessonTypesArray
+      });
+    },
+    onSuccess: () => {
       console.log('Profile updated successfully!');
       toast.success('Profile updated successfully!');
+      queryClient.invalidateQueries({ queryKey: ['profile', user?.id] });
+    },
+    onError: (error) => {
+      console.error('Update error:', error);
+      toast.error('Failed to update profile: ' + error.message);
     }
-    setLoading(false);
+  });
+
+  function onSubmit(values: InstructorProfileFormValues) {
+    mutation.mutate(values);
   }
 
-  if (loading) {
+  const isLoading = isUserLoading || isProfileLoading;
+
+  if (isLoading) {
     return <div className="p-4">Loading profile...</div>;
   }
 
@@ -158,8 +148,8 @@ export default function ProfileSettingsPage() {
               </FormItem>
             )}
           />
-          <Button type="submit" disabled={loading}>
-            {loading ? 'Saving...' : 'Update profile'}
+          <Button type="submit" disabled={mutation.isPending}>
+            {mutation.isPending ? 'Saving...' : 'Update profile'}
           </Button>
         </form>
       </Form>

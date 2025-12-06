@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Inter, Manrope } from "next/font/google";
 import { Toaster } from "@/components/ui/sonner";
+import Providers from "./providers";
 import "./globals.css";
 
 const inter = Inter({
@@ -28,8 +29,10 @@ export default function RootLayout({
       <body
         className={`${inter.variable} ${manrope.variable} antialiased font-sans`}
       >
-        {children}
-        <Toaster />
+        <Providers>
+          {children}
+          <Toaster />
+        </Providers>
       </body>
     </html>
   );

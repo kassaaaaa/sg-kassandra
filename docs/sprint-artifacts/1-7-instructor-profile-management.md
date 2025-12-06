@@ -37,9 +37,9 @@ so that **customers can see my qualifications and the system can match me to app
 
 ### Review Follow-ups (AI)
 
-- [ ] [AI-Review][High] Uncomment and fix assertions in `tests/e2e/profile.spec.ts` to actually verify persistence, feedback, and validation (AC 1, 2, 3).
-- [ ] [AI-Review][Med] Refactor data fetching in `page.tsx` to use TanStack Query instead of `useEffect`.
-- [ ] [AI-Review][Low] Enhance Zod schema in `page.tsx` to ensure `certifications` and `lesson_types` are not empty strings if that is the intent.
+- [x] [AI-Review][High] Uncomment and fix assertions in `tests/e2e/profile.spec.ts` to actually verify persistence, feedback, and validation (AC 1, 2, 3).
+- [x] [AI-Review][Med] Refactor data fetching in `page.tsx` to use TanStack Query instead of `useEffect`.
+- [x] [AI-Review][Low] Enhance Zod schema in `page.tsx` to ensure `certifications` and `lesson_types` are not empty strings if that is the intent.
 - **2025-12-06**: Senior Developer Review notes appended.
 
 ## Dev Notes
@@ -123,9 +123,32 @@ The core UI and database logic implementation is correct, and the E2E tests now 
 ### Action Items
 
 **Code Changes Required:**
-- [ ] [Med] Refactor data fetching in `page.tsx` to use TanStack Query instead of `useEffect` [file: app/app/(protected)/settings/profile/page.tsx]
-- [ ] [Low] Enhance Zod schema in `page.tsx` to ensure `certifications` and `lesson_types` are not empty strings if that is the intent [file: app/app/(protected)/settings/profile/page.tsx]
-- [ ] [Low] Create a dedicated `lib/profile-service.ts` to encapsulate profile update logic [file: app/lib/profile-service.ts]
+- [x] [Med] Refactor data fetching in `page.tsx` to use TanStack Query instead of `useEffect` [file: app/app/(protected)/settings/profile/page.tsx]
+- [x] [Low] Enhance Zod schema in `page.tsx` to ensure `certifications` and `lesson_types` are not empty strings if that is the intent [file: app/app/(protected)/settings/profile/page.tsx]
+- [x] [Low] Create a dedicated `lib/profile-service.ts` to encapsulate profile update logic [file: app/lib/profile-service.ts]
 
 **Advisory Notes:**
 - Note: Consider adding more robust validation (e.g., specific regex patterns or predefined lists) for certifications and lesson types.
+
+## Dev Agent Record
+
+### Completion Notes
+- **2025-12-06**: Addressed all code review findings.
+    - Refactored `page.tsx` to use TanStack Query (`useQuery`, `useMutation`) replacing `useEffect`.
+    - Created `app/lib/profile-service.ts` to encapsulate Supabase logic.
+    - Created `app/app/providers.tsx` to provide `QueryClient`.
+    - Wrapped app in `Providers` in `layout.tsx`.
+    - Enhanced Zod schema with `trim()`.
+    - Verified all tests pass including console log checks.
+
+## File List
+
+- app/app/(protected)/settings/profile/page.tsx
+- app/lib/profile-service.ts
+- app/app/providers.tsx
+- app/app/layout.tsx
+- tests/e2e/profile.spec.ts
+
+## Change Log
+
+- 2025-12-06: Addressed code review findings - 3 items resolved (Date: 2025-12-06). Refactored for TanStack Query and Service Layer.
