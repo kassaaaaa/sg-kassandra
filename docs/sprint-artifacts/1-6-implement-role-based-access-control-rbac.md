@@ -1,6 +1,6 @@
 # Story 1.6: Implement Role-Based Access Control (RBAC)
 
-Status: review
+Status: done
 
 ## Story
 
@@ -195,3 +195,58 @@ Summary: 13 of 15 completed tasks verified, 1 questionable, 1 falsely marked com
 
 **Advisory Notes:**
 *   - Note: Consider adding detailed logging within `app/middleware.ts` for unauthorized access attempts (e.g., to `/unauthorized`) for improved observability and security auditing.
+
+# Senior Developer Review (AI)
+
+**Reviewer:** BIP
+**Date:** 2025-12-06
+**Outcome:** Approve
+
+**Summary:**
+The code has been updated to address the critical findings from the previous review. Specifically, robust E2E tests have been added to `tests/e2e/rbac.spec.ts` to verify Row Level Security (RLS) policies and authenticated route access. The implementation of RLS policies in SQL remains correct, and the middleware logic is sound.
+
+**Key Findings (by severity):**
+
+*   **LOW severity:**
+    *   **RLS Test Coverage (Instructor Details):** While RLS tests were added for `profiles` (update restriction) and `availability` (delete restriction), a specific test case for `instructor_details` is missing from `rbac.spec.ts`. However, the SQL policy for `instructor_details` uses the identical `auth.uid() = user_id` pattern as `availability`, and the migration file is verified. This is a minor coverage gap rather than a security risk.
+
+**Acceptance Criteria Coverage:**
+
+| AC#   | Description | Status | Evidence |
+| :---- | :---------- | :----- | :------- |
+| 1.1.1 | Route Protection (Middleware) | IMPLEMENTED | `app/middleware.ts` |
+| 1.1.2 | Role-Based Route Access | IMPLEMENTED | `app/middleware.ts`, `tests/e2e/rbac.spec.ts` (Authenticated user test) |
+| 1.1.3 | Database Security (RLS - Profiles) | IMPLEMENTED | `migrations/...enable_rbac_rls.sql`, `tests/e2e/rbac.spec.ts` (User A cannot update User B) |
+| 1.1.4 | Database Security (RLS - Instructor Details) | IMPLEMENTED | `migrations/...enable_rbac_rls.sql` |
+| 1.1.5 | Database Security (RLS - Availability) | IMPLEMENTED | `migrations/...enable_rbac_rls.sql`, `tests/e2e/rbac.spec.ts` (Instructor A cannot delete Instructor B availability) |
+| 1.1.6 | Unauthorized Access Redirection | IMPLEMENTED | `app/middleware.ts` |
+
+Summary: 6 of 6 acceptance criteria fully implemented.
+
+**Task Completion Validation:**
+
+| Task | Marked As | Verified As | Evidence |
+| :--- | :-------- | :---------- | :------- |
+| Task 1: Implement Next.js Middleware | [x] | VERIFIED COMPLETE | `app/middleware.ts` |
+| Task 2: Create RLS Policies Migration | [x] | VERIFIED COMPLETE | `migrations/...enable_rbac_rls.sql` |
+| Task 3: Verify RLS & Middleware | [x] | VERIFIED COMPLETE | `tests/e2e/rbac.spec.ts` |
+| Follow-up: Implement RLS E2E Tests | [x] | VERIFIED COMPLETE | `tests/e2e/rbac.spec.ts` (Lines 70+, 95+) |
+| Follow-up: Implement Auth E2E Test | [x] | VERIFIED COMPLETE | `tests/e2e/rbac.spec.ts` (Lines 55+) |
+
+Summary: 5 of 5 tasks verified.
+
+**Test Coverage and Gaps:**
+*   **E2E:** Significant improvement. Now covers RLS enforcement (negative testing) and positive authentication flows.
+*   **Gap:** `instructor_details` specific RLS test is missing, but risk is low due to pattern match.
+
+**Architectural Alignment:**
+*   Implementation follows the architecture (Supabase Auth + RLS, Next.js Middleware).
+
+**Security Notes:**
+*   RLS is correctly implemented using `auth.uid()`.
+*   Middleware correctly uses `createServerClient`.
+
+**Action Items:**
+
+**Advisory Notes:**
+*   - Note: Add a specific E2E test case for `instructor_details` RLS policy to ensure full table coverage in future sprints.
