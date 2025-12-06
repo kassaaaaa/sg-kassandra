@@ -9,7 +9,7 @@ create table public.profiles (
 create table public.instructor_details (
   user_id uuid references public.profiles(id) on delete cascade not null primary key,
   certifications text[],
-  -- lesson_types text[], -- redundant with instructor_lesson_types table, keeping implicit or using relation
+  lesson_types text[],
   updated_at timestamptz default now()
 );
 

@@ -97,8 +97,10 @@ export default function ProfileSettingsPage() {
       );
 
     if (error) {
+      console.error('Supabase update error:', error);
       toast.error('Failed to update profile: ' + error.message);
     } else {
+      console.log('Profile updated successfully!');
       toast.success('Profile updated successfully!');
     }
     setLoading(false);

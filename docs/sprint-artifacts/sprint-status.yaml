@@ -42,7 +42,7 @@ development_status:
   1-4-user-registration-and-email-verification: done
   1-5-user-login-and-session-management: done
   1-6-implement-role-based-access-control-rbac: done
-  1-7-instructor-profile-management: review
+  1-7-instructor-profile-management: in-progress
   1-8-instructor-availability-management: backlog
   epic-1-retrospective: optional
   epic-2: backlog
