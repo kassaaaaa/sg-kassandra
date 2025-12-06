@@ -36,6 +36,10 @@ export async function middleware(req: NextRequest) {
 
   const { data: { user } } = await supabase.auth.getUser()
 
+  // Debug logging
+  console.log('Middleware: User:', user ? user.id : 'No user');
+  console.log('Middleware: Path:', req.nextUrl.pathname);
+
   // If user is not logged in and tries to access a protected route, redirect to login
   if (!user && req.nextUrl.pathname.startsWith('/dashboard')) {
     const redirectUrl = req.nextUrl.clone()
@@ -54,6 +58,8 @@ export async function middleware(req: NextRequest) {
   if (user && isProtectedRoute) {
     const userRole = user.user_metadata.role as string | undefined
     const allowedRoles = protectedRoutes[Object.keys(protectedRoutes).find(route => req.nextUrl.pathname.startsWith(route)) || '']
+    console.log('Middleware: User Role:', userRole);
+    console.log('Middleware: Allowed Roles:', allowedRoles);
 
     if (!userRole || !allowedRoles.includes(userRole)) {
       // User is authenticated but not authorized for this route
