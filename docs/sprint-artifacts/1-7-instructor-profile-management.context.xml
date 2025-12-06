@@ -1,0 +1,240 @@
+<story-context id=".bmad/bmm/workflows/4-implementation/story-context/template" v="1.0">
+  <metadata>
+    <epicId>1</epicId>
+    <storyId>7</storyId>
+    <title>Instructor Profile Management</title>
+    <status>drafted</status>
+    <generatedAt>2025-12-06</generatedAt>
+    <generator>BMAD Story Context Workflow</generator>
+    <sourceStoryPath>docs/sprint-artifacts/1-7-instructor-profile-management.md</sourceStoryPath>
+  </metadata>
+
+  <story>
+    <asA>Instructor</asA>
+    <iWant>to manage my professional profile (certifications, lesson types)</iWant>
+    <soThat>customers can see my qualifications and the system can match me to appropriate lessons</soThat>
+        <tasks>
+      <task id="1" description="Create Profile Management UI" ac-refs="1,3">
+        <subtask>Create `app/app/(protected)/settings/profile/page.tsx` (or similar appropriate route).</subtask>
+        <subtask>Implement a form using `react-hook-form` and `zod` schema for `instructor_details` (certifications, lesson_types).</subtask>
+        <subtask>Fetch existing profile data to populate the form on load.</subtask>
+      </task>
+      <task id="2" description="Implement Profile Update Logic" ac-refs="1,4">
+        <subtask>Create/Update `ProfileService` (or similar in `lib/db.ts` or `lib/profile-service.ts`) to handle `update` operations on `instructor_details`.</subtask>
+        <subtask>Ensure the update call uses the authenticated user's ID (via RLS context).</subtask>
+      </task>
+      <task id="3" description="Add User Feedback" ac-refs="2">
+        <subtask>Integrate `shadcn/ui` toast component to show "Profile updated successfully" or error messages.</subtask>
+      </task>
+      <task id="4" description="Automated Testing" ac-refs="1,2,3,4">
+        <subtask>Implement E2E test in `tests/e2e/profile.spec.ts` (or similar).</subtask>
+        <subtask>Test case: Login as instructor -&gt; Navigate to profile -&gt; Update details -&gt; Verify persistence (AC 1).</subtask>
+        <subtask>Test case: Verify User Feedback: Toast appears on success (AC 2).</subtask>
+        <subtask>Test case: Verify Data Validation: Invalid inputs are rejected (AC 3).</subtask>
+        <subtask>Test case: Verify RLS (implicit in success of update, but explicit negative test covered in 1.6 - verify here that *authorized* update works) (AC 4).</subtask>
+      </task>
+    </tasks>
+  </story>
+
+    <acceptanceCriteria>
+    <criterion id="1" title="Profile Update Persistence">When an instructor updates their profile information (certifications, lesson types) on the settings page, the changes are persisted to the `instructor_details` table.</criterion>
+    <criterion id="2" title="User Feedback">A success notification (toast) is displayed to the instructor upon successful save.</criterion>
+    <criterion id="3" title="Data Validation">The system accepts valid arrays of text for certifications and lesson types.</criterion>
+    <criterion id="4" title="Security">Instructors can only update their own profile details (enforced by RLS).</criterion>
+  </acceptanceCriteria>
+
+  <artifacts>
+        <docs>
+      <artifact>
+        <path>docs/fase-2-plan/PRD.md</path>
+        <title>IBE160 Product Requirements Document</title>
+        <section>Functional Requirements</section>
+        <snippet>FR016: Instructors shall be able to create and manage a professional profile including certifications, lesson types they can teach, and availability preferences.</snippet>
+      </artifact>
+      <artifact>
+        <path>docs/fase-3-solution/architecture.md</path>
+        <title>Architecture Document: KiteOps</title>
+        <section>Data Architecture</section>
+        <snippet>The data model is a normalized PostgreSQL schema... Key tables include `profiles`, `lessons`, `bookings`, `availability`, `instructor_details`, `customer_details`, and a many-to-many link table `instructor_lesson_types`.</snippet>
+      </artifact>
+      <artifact>
+        <path>docs/fase-3-solution/architecture.md</path>
+        <title>Architecture Document: KiteOps</title>
+        <section>Security &amp; Performance</section>
+        <snippet>Security: Handled by Supabase Auth, with fine-grained access control implemented via PostgreSQL Row Level Security (RLS) based on the user's role in the `profiles` table.</snippet>
+      </artifact>
+      <artifact>
+        <path>docs/fase-2-plan/ux-design-specification.md</path>
+        <title>UX Design Specification</title>
+        <section>Instructor Pages</section>
+        <snippet>Instructor Settings - Profile, Skills &amp; Certifications, Availability Rules</snippet>
+      </artifact>
+      <artifact>
+        <path>docs/fase-3-solution/epics.md</path>
+        <title>ibe160 - Epic Breakdown</title>
+        <section>Story 1.7: Instructor Profile Management</section>
+        <snippet>As a Developer, I want to build the instructor profile settings page, so that instructors can manage their professional information. Prerequisites: Story 1.6. Technical Notes: Create a form using React Hook Form and Zod for validation. The page should be under the `(protected)/settings` route group.</snippet>
+      </artifact>
+      <artifact>
+        <path>docs/folder-structure.md</path>
+        <title>Folder Structure &amp; Monorepo</title>
+        <section>Root</section>
+        <snippet>Root: Acts as the workspace root. It manages global dependencies (like Playwright), CI/CD configurations, and the project's &quot;BMad&quot; workflow.</snippet>
+      </artifact>
+      <artifact>
+        <path>docs/folder-structure.md</path>
+        <title>Folder Structure &amp; Monorepo</title>
+        <section>1. Folder Structure &amp; Monorepo</section>
+        <snippet>app/: Contains the actual Next.js application.</snippet>
+      </artifact>
+    </docs>
+        <code>
+      <artifact>
+        <path>supabase/migrations/20251204000000_initial_schema.sql</path>
+        <kind>SQL Migration</kind>
+        <symbol>public.instructor_details</symbol>
+        <lines>8-9</lines>
+        <reason>Defines the schema for instructor profile data.</reason>
+      </artifact>
+      <artifact>
+        <path>supabase/migrations/20251206000000_enable_rbac_rls.sql</path>
+        <kind>SQL Migration</kind>
+        <symbol>public.instructor_details RLS Policy</symbol>
+        <lines>9-14</lines>
+        <reason>Implements Row Level Security for instructor_details, ensuring instructors can only manage their own data.</reason>
+      </artifact>
+      <artifact>
+        <path>app/lib/auth-service.ts</path>
+        <kind>TypeScript Service</kind>
+        <symbol>AuthService</symbol>
+        <lines>5</lines>
+        <reason>Existing authentication service that may be used for user session management.</reason>
+      </artifact>
+      <artifact>
+        <path>app/lib/db.ts</path>
+        <kind>TypeScript Utility</kind>
+        <symbol>supabase</symbol>
+        <reason>Supabase client instance for database interactions.</reason>
+      </artifact>
+      <artifact>
+        <path>app/middleware.ts</path>
+        <kind>TypeScript Middleware</kind>
+        <reason>Handles route protection and role-based access control; needs updates for the /settings route.</reason>
+      </artifact>
+    </code>
+        <dependencies>
+      <ecosystem name="Node.js (Root)">
+        <package name="@playwright/test" version="^1.40.1" type="dev" />
+        <package name="dotenv" version="^16.4.5" type="dev" />
+      </ecosystem>
+      <ecosystem name="Node.js (App)">
+        <package name="@hookform/resolvers" version="^5.2.2" type="prod" />
+        <package name="@radix-ui/react-dialog" version="^1.1.15" type="prod" />
+        <package name="@radix-ui/react-label" version="^2.1.8" type="prod" />
+        <package name="@radix-ui/react-select" version="^2.2.6" type="prod" />
+        <package name="@radix-ui/react-slot" version="^1.2.4" type="prod" />
+        <package name="@supabase/ssr" version="^0.8.0" type="prod" />
+        <package name="@supabase/supabase-js" version="^2.86.0" type="prod" />
+        <package name="class-variance-authority" version="^0.7.1" type="prod" />
+        <package name="clsx" version="^2.1.1" type="prod" />
+        <package name="lucide-react" version="^0.555.0" type="prod" />
+        <package name="next" version="16.0.7" type="prod" />
+        <package name="next-themes" version="^0.4.6" type="prod" />
+        <package name="react" version="19.2.0" type="prod" />
+        <package name="react-dom" version="19.2.0" type="prod" />
+        <package name="react-hook-form" version="^7.68.0" type="prod" />
+        <package name="sonner" version="^2.0.7" type="prod" />
+        <package name="tailwind-merge" version="^3.4.0" type="prod" />
+        <package name="zod" version="^4.1.13" type="prod" />
+        <package name="@tailwindcss/postcss" version="^4" type="dev" />
+        <package name="@testing-library/dom" version="^10.4.1" type="dev" />
+        <package name="@testing-library/react" version="^16.3.0" type="dev" />
+        <package name="@types/node" version="^20" type="dev" />
+        <package name="@types/react" version="^19" type="dev" />
+        <package name="@types/react-dom" version="^19" type="dev" />
+        <package name="@vitejs/plugin-react" version="^5.1.1" type="dev" />
+        <package name="eslint" version="^9" type="dev" />
+        <package name="eslint-config-next" version="16.0.7" type="dev" />
+        <package name="jsdom" version="^27.2.0" type="dev" />
+        <package name="tailwindcss" version="^4" type="dev" />
+        <package name="tw-animate-css" version="^1.4.0" type="dev" />
+        <package name="typescript" version="^5" type="dev" />
+        <package name="vitest" version="^4.0.15" type="dev" />
+      </ecosystem>
+      <framework name="Next.js" version="16.0.7" />
+      <framework name="Supabase" />
+      <framework name="Tailwind CSS" version="^4" />
+      <framework name="shadcn/ui" />
+      <framework name="React Hook Form" version="^7.68.0" />
+      <framework name="Zod" version="^4.1.13" />
+    </dependencies>
+  </artifacts>
+
+    <constraints>
+    <constraint>
+      <type>Data Schema</type>
+      <description>`instructor_details` table requires `certifications` (TEXT[]) and `lesson_types` (TEXT[]) columns.</description>
+    </constraint>
+    <constraint>
+      <type>Security (RLS)</type>
+      <description>Row Level Security is enabled on `instructor_details` table, allowing instructors to manage only their own data (auth.uid() = user_id).</description>
+    </constraint>
+    <constraint>
+      <type>UI Components</type>
+      <description>Utilize existing `shadcn/ui` components for consistency. Custom multi-select or tag input may be needed for array fields.</description>
+    </constraint>
+    <constraint>
+      <type>Service Layer</type>
+      <description>Consider creating a dedicated `lib/profile-service.ts` for profile update logic, or extend `lib/db.ts` if logic remains simple.</description>
+    </constraint>
+    <constraint>
+      <type>Route Protection</type>
+      <description>Ensure `app/middleware.ts` is updated to protect the `(protected)/settings` route group.</description>
+    </constraint>
+    <constraint>
+      <type>Dependencies</type>
+      <description>Adhere to `@supabase/ssr` patterns for authentication and cookie management where applicable.</description>
+    </constraint>
+    <constraint>
+      <type>Form Validation</type>
+      <description>Implement forms using `react-hook-form` and `zod` for schema validation.</description>
+    </constraint>
+  </constraints>
+    <interfaces>
+    <interface>
+      <name>public.instructor_details</name>
+      <kind>PostgreSQL Table</kind>
+      <signature>CRUD operations for instructor profile data (certifications TEXT[], lesson_types TEXT[]).</signature>
+      <path>supabase/migrations/20251204000000_initial_schema.sql</path>
+    </interface>
+    <interface>
+      <name>AuthService</name>
+      <kind>TypeScript Service</kind>
+      <signature>Provides authentication related functions (e.g., getUser, login, logout).</signature>
+      <path>app/lib/auth-service.ts</path>
+    </interface>
+    <interface>
+      <name>Supabase Client</name>
+      <kind>TypeScript Library</kind>
+      <signature>Client for interacting with Supabase database and authentication services.</signature>
+      <path>app/lib/db.ts</path>
+    </interface>
+  </interfaces>
+  <tests>
+        <standards>
+      The project employs a layered testing strategy. End-to-End (E2E) tests are implemented using Playwright, configured at the root level (`playwright.config.ts`) and located in `tests/e2e/`. These tests automatically start the Next.js server before execution. Unit and Integration tests are written using Vitest, configured in `app/vitest.config.ts`, and reside in `app/__tests__/`. The pattern of robust E2E testing, as established in Story 1.6 for RLS, should be continued for this feature.
+    </standards>
+        <locations>
+      <location>tests/e2e/</location>
+      <location>app/__tests__/</location>
+      <location>tests/e2e/profile.spec.ts</location>
+    </locations>
+        <ideas>
+      <idea ac-ref="1">Test case: Login as instructor -&gt; Navigate to profile -&gt; Update details -&gt; Verify persistence.</idea>
+      <idea ac-ref="2">Test case: Verify User Feedback: Toast appears on successful save.</idea>
+      <idea ac-ref="3">Test case: Verify Data Validation: Invalid inputs (e.g., non-array for certifications) are rejected.</idea>
+      <idea ac-ref="4">Test case: Verify RLS: Attempt to update another instructor's profile (negative test, should fail).</idea>
+      <idea ac-ref="4">Test case: Verify RLS: Ensure authorized update for own profile works (positive test).</idea>
+    </ideas>
+  </tests>
+</story-context>

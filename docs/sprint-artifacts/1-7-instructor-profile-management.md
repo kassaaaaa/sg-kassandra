@@ -1,6 +1,6 @@
 # Story 1.7: Instructor Profile Management
 
-Status: drafted
+Status: ready-for-dev
 
 ## Story
 
@@ -9,6 +9,8 @@ I want **to manage my professional profile (certifications, lesson types)**,
 so that **customers can see my qualifications and the system can match me to appropriate lessons**.
 
 ## Acceptance Criteria
+
+(Source: Defined in `docs/fase-3-solution/epics.md` (Story 1.7) and refined with technical details from `docs/fase-3-solution/architecture.md` (Data Architecture).)
 
 1.  **Profile Update Persistence:** When an instructor updates their profile information (certifications, lesson types) on the settings page, the changes are persisted to the `instructor_details` table.
 2.  **User Feedback:** A success notification (toast) is displayed to the instructor upon successful save.
@@ -26,10 +28,12 @@ so that **customers can see my qualifications and the system can match me to app
   - [ ] Ensure the update call uses the authenticated user's ID (via RLS context).
 - [ ] Task 3: Add User Feedback (AC: 2)
   - [ ] Integrate `shadcn/ui` toast component to show "Profile updated successfully" or error messages.
-- [ ] Task 4: Automated Testing (AC: 1, 4)
+- [ ] Task 4: Automated Testing (AC: 1, 2, 3, 4)
   - [ ] Implement E2E test in `tests/e2e/profile.spec.ts` (or similar).
-  - [ ] Test case: Login as instructor -> Navigate to profile -> Update details -> Verify persistence.
-  - [ ] Test case: Verify RLS (implicit in success of update, but explicit negative test covered in 1.6 - verify here that *authorized* update works).
+  - [ ] Test case: Login as instructor -> Navigate to profile -> Update details -> Verify persistence (AC 1).
+  - [ ] Test case: Verify User Feedback: Toast appears on success (AC 2).
+  - [ ] Test case: Verify Data Validation: Invalid inputs are rejected (AC 3).
+  - [ ] Test case: Verify RLS (implicit in success of update, but explicit negative test covered in 1.6 - verify here that *authorized* update works) (AC 4).
 
 ## Dev Notes
 
@@ -37,6 +41,11 @@ so that **customers can see my qualifications and the system can match me to app
 - **RLS:** Row Level Security is enabled on `instructor_details`. The policy `allow insert/update using (auth.uid() = user_id)` allows instructors to manage their own data.
 - **UI Components:** Use existing `shadcn/ui` components (Input, Button, maybe a multi-select or tag input for arrays if available, otherwise comma-separated text input for MVP).
 - **Service Layer:** Consider creating a dedicated `lib/profile-service.ts` if `lib/db.ts` is getting crowded, or keep in `db.ts` if simple.
+
+### References
+
+- **Epics:** `docs/fase-3-solution/epics.md` (Section: Epic 1 > Story 1.7) [Source: docs/fase-3-solution/epics.md]
+- **Architecture:** `docs/fase-3-solution/architecture.md` (Sections: Data Architecture, Security) [Source: docs/fase-3-solution/architecture.md]
 
 ### Learnings from Previous Story
 
@@ -54,7 +63,7 @@ so that **customers can see my qualifications and the system can match me to app
 
 ### Context Reference
 
-<!-- Path(s) to story context XML will be added here by context workflow -->
+- docs/sprint-artifacts/1-7-instructor-profile-management.context.xml
 
 ### Agent Model Used
 
@@ -65,3 +74,8 @@ Gemini 2.0 Flash (cli)
 ### Completion Notes List
 
 ### File List
+
+## Change Log
+
+- **2025-12-06**: Initial Draft.
+- **2025-12-06**: Updated based on validation feedback: Added specific citations, clarified AC sources, and expanded testing tasks.
