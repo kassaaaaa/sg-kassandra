@@ -1,0 +1,128 @@
+<story-context id="docs/sprint-artifacts/template" v="1.1">
+  <metadata>
+    <epicId>1</epicId>
+    <storyId>6</storyId>
+    <title>Implement Role-Based Access Control (RBAC)</title>
+    <status>drafted</status>
+    <generatedAt>2025-12-06</generatedAt>
+    <generator>BMAD Story Context Workflow</generator>
+    <sourceStoryPath>docs/sprint-artifacts/1-6-implement-role-based-access-control-rbac.md</sourceStoryPath>
+  </metadata>
+
+  <story>
+    <asA>System Administrator</asA>
+    <iWant>to enforce Role-Based Access Control (RBAC) on both the application routes and the database</iWant>
+    <soThat>users can only access the pages and data permitted for their specific role (Guest, Customer, Instructor, Manager)</soThat>
+    <tasks>
+      <task>Implement Next.js Middleware (AC: 1, 2, 6)</task>
+      <task>Create RLS Policies Migration (AC: 3, 4, 5)</task>
+      <task>Verify RLS &amp; Middleware (Integration Testing)</task>
+    </tasks>
+  </story>
+
+  <acceptanceCriteria>
+    <criterion>Route Protection (Middleware): A Next.js middleware intercepts all requests to protected routes (e.g., /dashboard, /calendar, /settings) and redirects unauthenticated users to the /login page.</criterion>
+    <criterion>Role-Based Route Access: The middleware verifies the user's role (fetched from their session or profile) and redirects authorized users to their destination.</criterion>
+    <criterion>Database Security (RLS - Profiles): Row Level Security (RLS) is enabled on the profiles table. Users can only SELECT and UPDATE their own profile row.</criterion>
+    <criterion>Database Security (RLS - Instructor Details): RLS is enabled on the instructor_details table. Instructors can UPDATE their own details. Public/Authenticated users can SELECT (to view profiles).</criterion>
+    <criterion>Database Security (RLS - Availability): RLS is enabled on the availability table. Instructors can INSERT, UPDATE, and DELETE their own availability slots.</criterion>
+    <criterion>Unauthorized Access Redirection: Attempts to access restricted pages result in a redirection to a safe default (e.g., /dashboard or /login).</criterion>
+  </acceptanceCriteria>
+
+  <artifacts>
+    <docs>
+      <doc>
+        <path>docs/sprint-artifacts/tech-spec-epic-1.md</path>
+        <title>Epic Technical Specification: Foundation, Authentication, and Instructor Profiles</title>
+        <section>Detailed Design - Services and Modules</section>
+        <snippet>RBAC Middleware: A Next.js middleware that intercepts requests to protected routes, validates the user's role from their session, and redirects if unauthorized.</snippet>
+      </doc>
+      <doc>
+        <path>docs/sprint-artifacts/tech-spec-epic-1.md</path>
+        <title>Epic Technical Specification: Foundation, Authentication, and Instructor Profiles</title>
+        <section>Acceptance Criteria (Authoritative)</section>
+        <snippet>Story 1.6: Implement Role-Based Access Control (RBAC). When an unauthorized user attempts to access a protected route, they are redirected... Supabase RLS policies prevent unauthorized data access.</snippet>
+      </doc>
+      <doc>
+        <path>docs/fase-3-solution/architecture.md</path>
+        <title>Architecture Document: KiteOps</title>
+        <section>10. Security &amp; Performance</section>
+        <snippet>Security: Handled by Supabase Auth, with fine-grained access control implemented via PostgreSQL Row Level Security (RLS) based on the user's role in the profiles table.</snippet>
+      </doc>
+      <doc>
+        <path>docs/fase-3-solution/architecture.md</path>
+        <title>Architecture Document: KiteOps</title>
+        <section>3. Architecture Decision Summary</section>
+        <snippet>Authentication: Supabase Auth (via Client 2.86.0). Robust, secure, and integrated solution with native support for Row Level Security.</snippet>
+      </doc>
+    <doc>
+        <path>docs/fase-2-plan/PRD.md</path>
+        <title>IBE160 Product Requirements Document (PRD)</title>
+        <section>Requirements - Functional Requirements</section>
+        <snippet>FR001: The system shall provide role-based access control for Guest, Customer, Instructor, and Manager roles. (Scope: MVP). NFR03 (Security): All user data... must be encrypted... system must follow best practices for authentication and authorization.</snippet>
+      </doc>
+    </docs>
+    <code>
+      <item>
+        <path>app/lib/auth-service.ts</path>
+        <kind>service</kind>
+        <symbol>AuthService</symbol>
+        <reason>Existing auth service logic, useful for understanding role handling.</reason>
+      </item>
+      <item>
+        <path>app/lib/db.ts</path>
+        <kind>module</kind>
+        <symbol>supabase</symbol>
+        <reason>Current Supabase client configuration (Note: Likely needs update or separate client for Middleware/SSR).</reason>
+      </item>
+      <item>
+        <path>supabase/migrations/20251204000000_initial_schema.sql</path>
+        <kind>migration</kind>
+        <symbol>profiles, instructor_details, availability</symbol>
+        <reason>Initial schema definition with RLS enabled and default deny policies.</reason>
+      </item>
+    </code>
+    <dependencies>
+      <dep>next: 16.0.7</dep>
+      <dep>@supabase/supabase-js: ^2.86.0</dep>
+      <dep>@supabase/ssr: (MISSING - Required for Middleware)</dep>
+    </dependencies>
+  </artifacts>
+
+  <constraints>
+    <constraint>MUST use @supabase/ssr for middleware implementation to handle cookies correctly in Next.js App Router.</constraint>
+    <constraint>Middleware file must be placed at app/middleware.ts (relative to project root).</constraint>
+    <constraint>RLS policies must use auth.uid() for secure user identification.</constraint>
+    <constraint>Do NOT put sensitive logic in client-side code; rely on RLS for data security.</constraint>
+  </constraints>
+
+  <interfaces>
+    <interface>
+      <name>middleware</name>
+      <kind>Next.js Middleware</kind>
+      <signature>export async function middleware(req: NextRequest)</signature>
+      <path>app/middleware.ts</path>
+    </interface>
+    <interface>
+      <name>RLS Policies</name>
+      <kind>PostgreSQL Policy</kind>
+      <signature>create policy "name" on table for action using (condition)</signature>
+      <path>supabase/migrations/&lt;timestamp&gt;_enable_rbac_rls.sql</path>
+    </interface>
+  </interfaces>
+
+  <tests>
+    <standards>
+      - Middleware Logic: Create a dedicated test file (e.g., app/__tests__/middleware.test.ts) using Vitest to mock NextRequest/NextResponse and verify redirection logic for different roles.
+      - Integration/E2E: Use Playwright to simulate a full user journey: attempt access to /dashboard as Guest (expect redirect), and as Authenticated User (expect success).
+      - RLS Verification: Manually verify policies via Supabase Dashboard or SQL scripts until automated DB testing is configured.
+    </standards>
+    <locations>app/__tests__/, tests/e2e/</locations>
+    <ideas>
+      <idea>Middleware redirects unauthenticated user from /dashboard to /login</idea>
+      <idea>Middleware allows authenticated user to access /dashboard</idea>
+      <idea>RLS prevents User A from updating User B's profile</idea>
+      <idea>RLS allows Instructor to update their own availability</idea>
+    </ideas>
+  </tests>
+</story-context>

@@ -1,6 +1,6 @@
 # Story 1.6: Implement Role-Based Access Control (RBAC)
 
-Status: drafted
+Status: ready-for-dev
 
 ## Story
 
@@ -24,12 +24,14 @@ so that **users can only access the pages and data permitted for their specific 
   - [ ] Configure `matcher` to apply to protected paths (e.g., `/dashboard/:path*`, `/settings/:path*`).
   - [ ] Implement logic to check for Supabase session using `createMiddlewareClient`.
   - [ ] Implement redirection logic: if no session, redirect to `/login`.
+  - [ ] **Test:** Verify redirection locally by attempting to access `/dashboard` without a session.
 - [ ] Task 2: Create RLS Policies Migration (AC: 3, 4, 5)
   - [ ] Create a new Supabase migration file `supabase/migrations/<timestamp>_enable_rbac_rls.sql`.
   - [ ] Enable RLS on `profiles`, `instructor_details`, `availability` tables.
   - [ ] Write policy for `profiles`: `allow select, update using (auth.uid() = id)`.
   - [ ] Write policy for `instructor_details`: `allow select`, `allow insert/update using (auth.uid() = user_id)`.
   - [ ] Write policy for `availability`: `allow select`, `allow all using (auth.uid() = instructor_id)`.
+  - [ ] **Test:** Verify policies via Supabase dashboard or SQL script by simulating different user IDs.
 - [ ] Task 3: Verify RLS & Middleware (Integration Testing)
   - [ ] Create a test script or manual verification steps to confirm:
     - Unauthenticated access to `/dashboard` redirects to `/login`.
@@ -53,13 +55,14 @@ so that **users can only access the pages and data permitted for their specific 
 ### References
 
 - **Tech Spec:** `docs/sprint-artifacts/tech-spec-epic-1.md` [Source: docs/sprint-artifacts/tech-spec-epic-1.md]
+- **Epics:** `docs/fase-3-solution/epics.md` [Source: docs/fase-3-solution/epics.md]
 - **Architecture:** `docs/fase-3-solution/architecture.md` [Source: docs/fase-3-solution/architecture.md]
 
 ## Dev Agent Record
 
 ### Context Reference
 
-<!-- Path(s) to story context XML will be added here by context workflow -->
+- `docs/sprint-artifacts/1-6-implement-role-based-access-control-rbac.context.xml`
 
 ### Agent Model Used
 
@@ -80,3 +83,5 @@ Google Gemini 2.0 Flash (cli)
 - **Testing**: Follow existing patterns in `app/__tests__/`.
 
 [Source: docs/sprint-artifacts/1-5-user-login-and-session-management.md]
+
+## Change Log
