@@ -34,9 +34,7 @@ const formSchema = z.object({
   password: z.string().min(8, {
     message: 'Password must be at least 8 characters.',
   }),
-  role: z.enum(['instructor', 'manager'], {
-    required_error: 'Please select a role.',
-  }),
+  role: z.enum(['instructor', 'manager']),
 });
 
 export default function SignupPage() {
