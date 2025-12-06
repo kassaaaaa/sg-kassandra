@@ -152,3 +152,65 @@ The core UI and database logic implementation is correct, and the E2E tests now 
 ## Change Log
 
 - 2025-12-06: Addressed code review findings - 3 items resolved (Date: 2025-12-06). Refactored for TanStack Query and Service Layer.
+
+## Senior Developer Review (AI)
+
+- **Reviewer**: Amelia (AI Agent)
+- **Date**: Saturday, December 6, 2025
+- **Outcome**: **APPROVE**
+- **Justification**: The implementation now aligns with the architecture (using TanStack Query), the service layer is properly separated, and all acceptance criteria are verified by tests.
+
+### Summary
+The code has been refactored to use TanStack Query for state management, satisfying the architectural requirements. A dedicated `ProfileService` now handles data interactions, cleaning up the component logic. E2E tests are passing and verify persistence and feedback.
+
+### Key Findings
+
+- **[Info] Architecture Alignment**: The switch to TanStack Query and `ProfileService` is excellent and aligns with the project standards.
+- **[Info] Robustness**: The `upsert` logic in `ProfileService` correctly handles both new and existing profiles.
+- **[Info] Validation**: The input transformation logic (`split`, `trim`, `filter`) robustly handles user input for array fields.
+
+### Acceptance Criteria Coverage
+
+| AC# | Description | Status | Evidence |
+| :--- | :--- | :--- | :--- |
+| 1 | Profile Update Persistence | **VERIFIED COMPLETE** | `tests/e2e/profile.spec.ts` (Update and Reload steps), `app/lib/profile-service.ts` |
+| 2 | User Feedback (Toast) | **VERIFIED COMPLETE** | `tests/e2e/profile.spec.ts` (Console log check), `app/app/(protected)/settings/profile/page.tsx` |
+| 3 | Data Validation | **VERIFIED COMPLETE** | `app/app/(protected)/settings/profile/page.tsx` (Logic converts input to valid array), `tests/e2e/profile.spec.ts` |
+| 4 | Security (RLS) | **VERIFIED COMPLETE** | `app/lib/profile-service.ts` (uses user ID), RLS policy exists (Story 1.6) |
+
+**Summary**: 4 of 4 acceptance criteria fully implemented.
+
+### Task Completion Validation
+
+| Task | Marked As | Verified As | Evidence |
+| :--- | :--- | :--- | :--- |
+| Task 1: Create Profile Management UI | [x] | **VERIFIED COMPLETE** | `app/app/(protected)/settings/profile/page.tsx` |
+| Task 2: Implement Profile Update Logic | [x] | **VERIFIED COMPLETE** | `app/lib/profile-service.ts` |
+| Task 3: Add User Feedback | [x] | **VERIFIED COMPLETE** | `app/app/(protected)/settings/profile/page.tsx` |
+| Task 4: Automated Testing | [x] | **VERIFIED COMPLETE** | `tests/e2e/profile.spec.ts` |
+
+**Summary**: 4 of 4 completed tasks verified.
+
+### Test Coverage and Gaps
+- **Coverage**: E2E tests cover the happy path, persistence, and basic feedback.
+- **Gap**: Toast visibility is verified via console proxy; strict UI element visibility check would be better but is not blocking.
+
+### Architectural Alignment
+- **Compliant**: TanStack Query is now used.
+- **Compliant**: Service layer pattern adopted.
+- **Compliant**: Shadcn UI components used.
+
+### Security Notes
+- RLS is the primary defense and is correctly relied upon.
+
+### Best-Practices and References
+- **State Management**: Correctly using `useQuery` and `useMutation`.
+- **Typing**: Types are defined in the service and used in the component.
+
+### Action Items
+
+**Code Changes Required:**
+- None.
+
+**Advisory Notes:**
+- Note: Consider upgrading E2E tests to check for the actual Toast DOM element visibility instead of console logs for higher fidelity testing.
