@@ -1,6 +1,6 @@
 # Story 1.5: User Login and Session Management
 
-Status: drafted
+Status: ready-for-dev
 
 ## Story
 
@@ -20,23 +20,23 @@ so that I can access my personalized dashboard and manage my school activities s
 
 ## Tasks / Subtasks
 
-- [ ] Task 1: Update `AuthService`
+- [ ] Task 1: Update `AuthService` (AC: 1)
   - [ ] Add `login(email, password)` method to `app/lib/auth-service.ts` wrapping `supabase.auth.signInWithPassword`.
   - [ ] Add `logout()` method for completeness (even if UI not fully ready, good to have logic).
   - [ ] Add `getUserRole()` helper to fetch `public.profiles.role` for the current user to support redirection.
-- [ ] Task 2: Create Login UI
+- [ ] Task 2: Create Login UI (AC: 1, 4, 5)
   - [ ] Create `app/app/(auth)/login/page.tsx`.
   - [ ] Implement Login form using `react-hook-form`, `zod`, and `shadcn/ui` components (Form, Input, Button).
   - [ ] Form fields: Email, Password.
   - [ ] Add "Sign Up" link for users who don't have an account.
   - [ ] **Testing:** Unit test form validation logic.
-- [ ] Task 3: Implement Redirection Logic
+- [ ] Task 3: Implement Redirection Logic (AC: 2)
   - [ ] In the Login page submit handler, after successful auth, fetch the user's role using `AuthService` (or direct DB call if service wrapper is thin).
   - [ ] specific dashboard routes:
     - Instructor -> `/dashboard` (Instructor Dashboard - Story 3.1)
     - Manager -> `/dashboard` (Manager Dashboard - Story 3.2)
     *   *Decision:* Since both share `/dashboard` in early implementation or might differ, logic should be extensible. For now, redirect both to `/dashboard`.
-- [ ] Task 4: Integration & Error Handling
+- [ ] Task 4: Integration & Error Handling (AC: 3, 4)
   - [ ] Handle `AuthApiError` and display appropriate messages (e.g., "Invalid login credentials").
   - [ ] **Testing:** Manual verification of login flow (valid/invalid credentials).
 
@@ -45,6 +45,14 @@ so that I can access my personalized dashboard and manage my school activities s
 - **Architecture Pattern:** Continue using `AuthService` facade for Supabase interactions.
 - **Security:** Ensure no sensitive user data (like password hash) is exposed to the client beyond what Supabase handles safely.
 - **Supabase Auth:** `signInWithPassword` returns a session object. This session is automatically persisted to local storage by the Supabase client.
+
+### References
+- **Tech Spec:** `docs/sprint-artifacts/tech-spec-epic-1.md` [Source: docs/sprint-artifacts/tech-spec-epic-1.md]
+- **Epics:** `docs/fase-3-solution/epics.md` [Source: docs/fase-3-solution/epics.md]
+- **Architecture:** `docs/fase-3-solution/architecture.md` [Source: docs/fase-3-solution/architecture.md]
+
+### Project Structure Notes
+- Follow the pattern in `docs/sprint-artifacts/1-4-user-registration-and-email-verification.md` regarding `app/app/(auth)/` directory structure.
 
 ### Learnings from Previous Story
 
@@ -61,7 +69,7 @@ so that I can access my personalized dashboard and manage my school activities s
 
 ### Context Reference
 
-<!-- Path(s) to story context XML will be added here by context workflow -->
+- docs/sprint-artifacts/1-5-user-login-and-session-management.context.xml
 
 ### Agent Model Used
 

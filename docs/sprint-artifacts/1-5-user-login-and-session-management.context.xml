@@ -1,0 +1,154 @@
+<story-context id="docs/sprint-artifacts/template" v="1.1">
+  <metadata>
+    <epicId>1</epicId>
+    <storyId>5</storyId>
+    <title>User Login and Session Management</title>
+    <status>drafted</status>
+    <generatedAt>2025-12-06</generatedAt>
+    <generator>BMAD Story Context Workflow</generator>
+    <sourceStoryPath>docs/sprint-artifacts/1-5-user-login-and-session-management.md</sourceStoryPath>
+  </metadata>
+
+  <story>
+    <asA>Registered User (Instructor or Manager)</asA>
+    <iWant>to log in to the application using my email and password</iWant>
+    <soThat>I can access my personalized dashboard and manage my school activities securely</soThat>
+    <tasks>
+      <task>Update AuthService (AC: 1)</task>
+      <task>Create Login UI (AC: 1, 4, 5)</task>
+      <task>Implement Redirection Logic (AC: 2)</task>
+      <task>Integration &amp; Error Handling (AC: 3, 4)</task>
+    </tasks>
+  </story>
+
+  <acceptanceCriteria>
+    <criterion>Authentication: Users can successfully log in using valid credentials (email and password).</criterion>
+    <criterion>Role-Based Redirection: Upon successful login, the user is automatically redirected to their role-specific dashboard (e.g., /dashboard).</criterion>
+    <criterion>Session Persistence: The user's session is maintained across browser refreshes/reloads.</criterion>
+    <criterion>Error Handling: Incorrect login attempts display a clear, user-friendly error message.</criterion>
+    <criterion>Form Validation: The login form validates input before submission.</criterion>
+  </acceptanceCriteria>
+
+  <artifacts>
+    <docs>
+      <doc>
+        <path>docs/sprint-artifacts/tech-spec-epic-1.md</path>
+        <title>Epic Technical Specification: Foundation, Authentication, and Instructor Profiles</title>
+        <section>Detailed Design - Services and Modules</section>
+        <snippet>AuthService: Handles user registration, login, session management, and password resets using Supabase Auth. Inputs: User credentials. Outputs: User session/JWT.</snippet>
+      </doc>
+      <doc>
+        <path>docs/sprint-artifacts/tech-spec-epic-1.md</path>
+        <title>Epic Technical Specification: Foundation, Authentication, and Instructor Profiles</title>
+        <section>Detailed Design - APIs and Interfaces</section>
+        <snippet>User Login: supabase.auth.signInWithPassword({ email, password })</snippet>
+      </doc>
+      <doc>
+        <path>docs/fase-3-solution/architecture.md</path>
+        <title>Architecture Document: KiteOps</title>
+        <section>Technology Stack Details</section>
+        <snippet>Authentication: Supabase Auth (via Client 2.86.0). Robust, secure, and integrated solution with native support for Row Level Security.</snippet>
+      </doc>
+      <doc>
+        <path>docs/fase-2-plan/ux-design-specification.md</path>
+        <title>UX Design Specification</title>
+        <section>6.3. Form Patterns</section>
+        <snippet>Label Position: Labels will be placed above their corresponding input fields... Validation Timing: Form validation will occur on blur... Error Display: Inline error messages will appear below the input field in red text.</snippet>
+      </doc>
+      <doc>
+        <path>docs/fase-2-plan/ux-design-specification.md</path>
+        <title>UX Design Specification</title>
+        <section>6.1. Button Hierarchy</section>
+        <snippet>Primary Action: Solid, dark background (#0A2540) with white text. Used for the single most important action on a screen.</snippet>
+      </doc>
+      <doc>
+        <path>docs/sprint-artifacts/1-5-user-login-and-session-management.md</path>
+        <title>Story 1.5: User Login and Session Management</title>
+        <section>Full Content</section>
+        <snippet>Refer to this file for the authoritative source of the story, acceptance criteria, and detailed tasks.</snippet>
+      </doc>
+      <doc>
+        <path>docs/fase-3-solution/epics.md</path>
+        <title>Epics and User Stories</title>
+        <section>Epic 1: Foundation</section>
+        <snippet>Story 1.5: User Login and Session Management. As a Registered User (Instructor or Manager), I want to log in... so that I can access my personalized dashboard.</snippet>
+      </doc>
+    </docs>
+    <code>
+      <item>
+        <path>app/lib/auth-service.ts</path>
+        <kind>service</kind>
+        <symbol>AuthService</symbol>
+        <reason>Existing service to be extended with login, logout, and getUserRole methods. (Current content lines 5-22)</reason>
+      </item>
+      <item>
+        <path>app/app/(auth)/signup/page.tsx</path>
+        <kind>component</kind>
+        <symbol>SignupPage</symbol>
+        <reason>Reference implementation for auth forms using react-hook-form, zod, and shadcn/ui. (Form logic lines 43-77, JSX lines 80-140)</reason>
+      </item>
+      <item>
+        <path>app/lib/db.ts</path>
+        <kind>module</kind>
+        <symbol>supabase</symbol>
+        <reason>Supabase client instance used by AuthService. (Lines 3-10)</reason>
+      </item>
+      <item>
+        <path>app/__tests__/auth/signup.test.tsx</path>
+        <kind>test</kind>
+        <symbol>SignupPage Test Suite</symbol>
+        <reason>Testing pattern to replicate for LoginPage tests. (Tests lines 33-78)</reason>
+      </item>
+    </code>
+    <dependencies>
+      <dep>next: 16.0.7</dep>
+      <dep>@supabase/supabase-js: ^2.86.0</dep>
+      <dep>react-hook-form: ^7.68.0</dep>
+      <dep>zod: ^4.1.13</dep>
+      <dep>sonner: ^2.0.7</dep>
+      <dep>@hookform/resolvers: ^5.2.2</dep>
+      <dep>lucide-react: ^0.555.0</dep>
+    </dependencies>
+  </artifacts>
+
+  <constraints>
+    <constraint>Use AuthService facade for all Supabase Auth interactions; do not call supabase.auth directly in UI components.</constraint>
+    <constraint>UI must use shadcn/ui components (Card, Form, Input, Button) matching the visual style of SignupPage.</constraint>
+    <constraint>Form validation must be implemented using Zod schema and react-hook-form.</constraint>
+    <constraint>Error messages should be displayed using 'sonner' toast notifications.</constraint>
+    <constraint>Redirect logic must determine user role securely (via public.profiles table) after auth.</constraint>
+  </constraints>
+
+  <interfaces>
+    <interface>
+      <name>login</name>
+      <kind>function signature</kind>
+      <signature>login(email: string, password: string): Promise&lt;AuthResponse&gt;</signature>
+      <path>app/lib/auth-service.ts</path>
+    </interface>
+    <interface>
+      <name>logout</name>
+      <kind>function signature</kind>
+      <signature>logout(): Promise&lt;void&gt;</signature>
+      <path>app/lib/auth-service.ts</path>
+    </interface>
+    <interface>
+      <name>getUserRole</name>
+      <kind>function signature</kind>
+      <signature>getUserRole(): Promise&lt;UserRole | null&gt;</signature>
+      <path>app/lib/auth-service.ts</path>
+    </interface>
+  </interfaces>
+
+  <tests>
+    <standards>Use Vitest and React Testing Library. Mock AuthService, next/navigation, and sonner. Test both success and error paths. Ensure form validation is tested.</standards>
+    <locations>app/__tests__/auth/</locations>
+    <ideas>
+      <idea>Render login form with all fields</idea>
+      <idea>Submit form with valid credentials calls AuthService.login and redirects</idea>
+      <idea>Submit form with invalid credentials displays error toast</idea>
+      <idea>Form validation prevents submission of invalid email or empty password</idea>
+      <idea>Verify redirection based on role (if logic is implemented in component)</idea>
+    </ideas>
+  </tests>
+</story-context>
