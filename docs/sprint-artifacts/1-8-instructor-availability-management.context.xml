@@ -1,0 +1,168 @@
+<story-context id="1-8-instructor-availability-management" v="1.0">
+  <metadata>
+    <epicId>1</epicId>
+    <storyId>8</storyId>
+    <title>Instructor Availability Management</title>
+    <status>drafted</status>
+    <generatedAt>2025-12-07</generatedAt>
+    <generator>BMAD Story Context Workflow</generator>
+    <sourceStoryPath>docs/sprint-artifacts/1-8-instructor-availability-management.md</sourceStoryPath>
+  </metadata>
+
+  <story>
+    <asA>Instructor</asA>
+    <iWant>to manage my availability (add, modify, remove time slots, set recurrence)</iWant>
+    <soThat>I can prevent scheduling conflicts and ensure customers book lessons only when I am actually free</soThat>
+    <tasks>
+      - [ ] Task 1: Implement Availability Service (AC: 1, 3)
+      - [ ] Task 2: Create Availability Calendar UI (AC: 2)
+      - [ ] Task 3: Implement Add Availability Modal (AC: 1, 4)
+      - [ ] Task 4: Integrate and Validate (AC: 1, 2, 3, 4)
+      - [ ] Task 5: Automated Testing (AC: 1, 3)
+    </tasks>
+  </story>
+
+  <acceptanceCriteria>
+    1. **Availability Persistence:** New availability entries are created in the `availability` table upon submission from the calendar UI.
+    2. **Visual Feedback:** The calendar view updates immediately to show the new availability slots, styled as per the UX spec (Section 5.2.2).
+    3. **Overlap Prevention:** The system prevents the creation of overlapping availability slots for the same instructor, providing an error message if an overlap is attempted (FR008).
+    4. **Recurrence Support:** Instructors can set simple recurrence rules (e.g., weekly) for their availability (FR019).
+  </acceptanceCriteria>
+
+  <artifacts>
+    <docs>
+      <doc>
+        <path>docs/sprint-artifacts/tech-spec-epic-1.md</path>
+        <title>Epic Technical Specification: Foundation, Authentication, and Instructor Profiles</title>
+        <section>Data Models and Contracts</section>
+        <snippet>
+          **`availability` Table**
+          *   Purpose: Stores when an instructor is available to teach.
+          *   Schema:
+              *   `id` (BIGSERIAL, Primary Key)
+              *   `instructor_id` (UUID, FK to `profiles.id`)
+              *   `start_time` (TIMESTAMPTZ)
+              *   `end_time` (TIMESTAMPTZ)
+              *   `recurrence_rule` (TEXT, e.g., iCal RRULE string for weekly/bi-weekly recurrence)
+        </snippet>
+      </doc>
+      <doc>
+        <path>docs/sprint-artifacts/tech-spec-epic-1.md</path>
+        <title>Epic Technical Specification: Foundation, Authentication, and Instructor Profiles</title>
+        <section>Services and Modules</section>
+        <snippet>
+          **AvailabilityService**| Manages CRUD operations for instructor availability, including creating recurring slots and preventing overlaps (FR008). | Inputs: Availability data. Outputs: Created/updated availability slots.
+        </snippet>
+      </doc>
+      <doc>
+        <path>docs/fase-2-plan/ux-design-specification.md</path>
+        <title>UX Design Specification</title>
+        <section>5.2.2. Availability Calendar (Instructor)</section>
+        <snippet>
+          **Purpose:** To provide instructors with a clear, interactive overview of their schedule.
+          **Anatomy:** Header, Legend, Calendar Grid, Event Blocks.
+          **Color-Coding:** Available: Dashed-border block with light green background.
+        </snippet>
+      </doc>
+      <doc>
+        <path>docs/fase-2-plan/ux-design-specification.md</path>
+        <title>UX Design Specification</title>
+        <section>3.4.2. Instructor - Manage Availability</section>
+        <snippet>
+          **Approach:** Modal Form.
+          **Flow:** Dashboard -> Calendar -> Add Availability -> Fill Form (Date, Start, End, Recurrence) -> Save -> Calendar Update.
+        </snippet>
+      </doc>
+    </docs>
+    <code>
+      <artifact>
+        <path>app/lib/profile-service.ts</path>
+        <kind>service</kind>
+        <symbol>ProfileService</symbol>
+        <reason>Reference pattern for service implementation (Singleton object, direct Supabase calls).</reason>
+      </artifact>
+      <artifact>
+        <path>app/lib/supabase/client.ts</path>
+        <kind>utility</kind>
+        <symbol>createClient</symbol>
+        <reason>Factory for creating browser-side Supabase client, to be used in AvailabilityService.</reason>
+      </artifact>
+      <artifact>
+        <path>app/components/ui/dialog.tsx</path>
+        <kind>component</kind>
+        <symbol>Dialog</symbol>
+        <reason>UI component for the "Add Availability" modal.</reason>
+      </artifact>
+      <artifact>
+        <path>app/components/ui/form.tsx</path>
+        <kind>component</kind>
+        <symbol>Form</symbol>
+        <reason>UI component for building the availability form.</reason>
+      </artifact>
+    </code>
+    <dependencies>
+      <dep>@tanstack/react-query</dep>
+      <dep>react-hook-form</dep>
+      <dep>zod</dep>
+      <dep>@supabase/supabase-js</dep>
+      <dep>lucide-react</dep>
+      <dep>sonner</dep>
+      <dep>date-fns (Suggested for date manipulation)</dep>
+    </dependencies>
+  </artifacts>
+
+  <constraints>
+    <constraint>
+      <description>Overlap Prevention</description>
+      <details>The system must prevent creation of overlapping slots. This should be checked at the service/database level before insertion.</details>
+    </constraint>
+    <constraint>
+      <description>RLS Compliance</description>
+      <details>Instructors can only view and manage their own availability records. RLS policies must enforce this.</details>
+    </constraint>
+    <constraint>
+      <description>Time Zone Handling</description>
+      <details>Availability times must be stored in UTC (TIMESTAMPTZ) but displayed in the user's/school's local time.</details>
+    </constraint>
+    <constraint>
+      <description>State Management</description>
+      <details>Use TanStack Query (useQuery, useMutation) for all data fetching and updates to ensure UI consistency and caching.</details>
+    </constraint>
+  </constraints>
+
+  <interfaces>
+    <interface>
+      <name>AvailabilityService.getAvailability</name>
+      <kind>Function Signature</kind>
+      <signature>async getAvailability(instructorId: string, startDate: Date, endDate: Date): Promise&lt;Availability[]&gt;</signature>
+      <path>app/lib/availability-service.ts</path>
+    </interface>
+    <interface>
+      <name>AvailabilityService.createAvailability</name>
+      <kind>Function Signature</kind>
+      <signature>async createAvailability(data: { instructor_id: string; start_time: Date; end_time: Date; recurrence_rule?: string }): Promise&lt;void&gt;</signature>
+      <path>app/lib/availability-service.ts</path>
+    </interface>
+    <interface>
+      <name>AvailabilityService.deleteAvailability</name>
+      <kind>Function Signature</kind>
+      <signature>async deleteAvailability(id: string): Promise&lt;void&gt;</signature>
+      <path>app/lib/availability-service.ts</path>
+    </interface>
+  </interfaces>
+
+  <tests>
+    <standards>
+      Use Playwright for E2E testing. Tests should verify the full user flow: viewing the calendar, opening the modal, adding a slot, and verifying it appears. Unit tests for the service logic (overlap detection) are encouraged if complex.
+    </standards>
+    <locations>
+      <loc>tests/e2e/availability.spec.ts</loc>
+    </locations>
+    <ideas>
+      <idea>Test: Add single slot -> Verify persistence and UI update.</idea>
+      <idea>Test: Add overlapping slot -> Verify error message and no DB insertion.</idea>
+      <idea>Test: Delete slot -> Verify removal from UI and DB.</idea>
+      <idea>Test: Week navigation -> Verify correct dates and slots are shown.</idea>
+    </ideas>
+  </tests>
+</story-context>

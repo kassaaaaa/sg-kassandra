@@ -43,7 +43,7 @@ development_status:
   1-5-user-login-and-session-management: done
   1-6-implement-role-based-access-control-rbac: done
   1-7-instructor-profile-management: done
-  1-8-instructor-availability-management: drafted
+  1-8-instructor-availability-management: ready-for-dev
   epic-1-retrospective: optional
   epic-2: backlog
   2-1-integrate-weather-api: backlog

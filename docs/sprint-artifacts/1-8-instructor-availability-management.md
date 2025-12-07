@@ -1,6 +1,6 @@
 # Story 1.8: Instructor Availability Management
 
-Status: drafted
+Status: ready-for-dev
 
 ## Story
 
@@ -85,6 +85,7 @@ so that **I can prevent scheduling conflicts and ensure customers book lessons o
 ### Context Reference
 - **Tech Spec:** `docs/sprint-artifacts/tech-spec-epic-1.md`
 - **Story:** `docs/sprint-artifacts/1-8-instructor-availability-management.md`
+- **Context File:** `docs/sprint-artifacts/1-8-instructor-availability-management.context.xml`
 
 ### Agent Model Used
 - Model: gemini-2.0-flash-exp
