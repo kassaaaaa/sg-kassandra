@@ -1,4 +1,5 @@
 import { createClient } from '@/lib/supabase/client';
+import { addWeeks, isBefore, isAfter, startOfDay, endOfDay } from 'date-fns';
 
 export type Availability = {
   id: number;
@@ -11,26 +12,66 @@ export type Availability = {
 export const AvailabilityService = {
   async getAvailability(instructorId: string, startDate: Date, endDate: Date): Promise<Availability[]> {
     const supabase = createClient();
+    
+    // Fetch ALL slots for this instructor that started before the end of the requested view
     const { data, error } = await supabase
       .from('availability')
       .select('*')
       .eq('instructor_id', instructorId)
-      .gte('start_time', startDate.toISOString())
-      .lte('end_time', endDate.toISOString());
+      .lte('start_time', endDate.toISOString());
 
-    if (error) {
-      throw new Error(error.message);
+    if (error) throw new Error(error.message);
+
+    const allSlots = data as Availability[];
+    
+    // Filter one-time slots that fall within the requested range
+    const oneTime = allSlots.filter(s => 
+        !s.recurrence_rule && 
+        s.start_time >= startDate.toISOString() && 
+        s.end_time <= endDate.toISOString()
+    );
+
+    // Filter recurring slots
+    const recurring = allSlots.filter(s => !!s.recurrence_rule);
+
+    const expanded: Availability[] = [...oneTime];
+
+    // Expand recurring slots
+    if (recurring.length > 0) {
+      recurring.forEach(slot => {
+        if (slot.recurrence_rule === 'WEEKLY' || slot.recurrence_rule === 'FREQ=WEEKLY') {
+          let currentStart = new Date(slot.start_time);
+          let currentEnd = new Date(slot.end_time);
+          
+          // Safety break
+          let safety = 0;
+          while (isBefore(currentStart, endDate) && safety < 1000) {
+            safety++;
+            
+            // Check if this instance falls within the requested window
+            if (currentStart < endDate && currentEnd > startDate) {
+                expanded.push({
+                    ...slot,
+                    start_time: currentStart.toISOString(),
+                    end_time: currentEnd.toISOString(),
+                });
+            }
+            
+            // Advance one week
+            currentStart = addWeeks(currentStart, 1);
+            currentEnd = addWeeks(currentEnd, 1);
+          }
+        }
+      });
     }
 
-    return data as Availability[];
+    return expanded;
   },
 
-  async createAvailability(data: { instructor_id: string; start_time: Date; end_time: Date; recurrence_rule?: string }): Promise<void> {
+  async createAvailability(data: { instructor_id: string; start_time: Date; end_time: Date; recurrence_rule?: string | null }): Promise<void> {
     const supabase = createClient();
 
     // Overlap check
-    // We check if there are any slots that overlap with the new slot.
-    // Two time ranges (StartA, EndA) and (StartB, EndB) overlap if StartA < EndB and EndA > StartB.
     const { data: overlapping, error: overlapError } = await supabase
       .from('availability')
       .select('id')

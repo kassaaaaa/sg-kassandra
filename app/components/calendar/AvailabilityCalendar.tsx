@@ -125,7 +125,7 @@ export function AvailabilityCalendar({ availability, onAddSlot, onDeleteSlot }: 
                     return (
                         <div
                             key={slot.id}
-                            className="absolute left-1 right-1 rounded border border-emerald-500 bg-emerald-50/90 p-1 text-xs text-emerald-900 shadow-sm overflow-hidden group z-10"
+                            className="absolute left-1 right-1 rounded border border-dashed border-emerald-500 bg-emerald-50/90 p-1 text-xs text-emerald-900 shadow-sm overflow-hidden group z-10"
                             style={{ top: `${top}px`, height: `${height}px` }}
                         >
                             <div className="font-semibold">{format(start, 'HH:mm')} - {format(end, 'HH:mm')}</div>
