@@ -57,45 +57,63 @@ export async function handleRequest(req: Request, supabaseClient: any) {
 
     if (cacheError) {
       console.error("Error fetching from cache:", cacheError);
+      // Allow fallback to API fetch even if cache read fails
     }
 
     if (cachedData && cachedData.length > 0) {
       const cacheAge = Date.now() - new Date(cachedData[0].created_at).getTime();
       if (cacheAge < 3600000) { // 1 hour in milliseconds
         return new Response(JSON.stringify(cachedData[0].data), {
-          headers: { "Content-Type": "application/json" },
+          headers: { "Content-Type": "application/json", "X-Cache-Status": "hit" },
         });
       }
     }
 
-    const weatherData = await fetchWeather(SCHOOL_LAT, SCHOOL_LON);
+    // Cache is stale or doesn't exist, attempt to fetch fresh data
+    try {
+      const weatherData = await fetchWeather(SCHOOL_LAT, SCHOOL_LON);
 
-    const { error: insertError } = await supabaseClient
-      .from("weather_cache")
-      .insert({
-        location: "main_beach",
-        data: weatherData,
+      const { error: insertError } = await supabaseClient
+        .from("weather_cache")
+        .insert({
+          location: "main_beach",
+          data: weatherData,
+        });
+
+      if (insertError) {
+        // Log error but still return fresh data to the client
+        console.error("Error inserting into cache:", insertError);
+      }
+
+      return new Response(JSON.stringify(weatherData), {
+        headers: { "Content-Type": "application/json", "X-Cache-Status": "miss" },
       });
-
-    if (insertError) {
-      console.error("Error inserting into cache:", insertError);
+    } catch (fetchError: unknown) {
+      console.error("Failed to fetch new weather data:", (fetchError as Error).message);
+      if (cachedData && cachedData.length > 0) {
+        console.log("Returning stale cache as fallback.");
+        return new Response(JSON.stringify(cachedData[0].data), {
+          headers: { "Content-Type": "application/json", "X-Cache-Status": "stale" },
+        });
+      }
+      // If fetch fails and there's no cached data, re-throw to outer catch
+      throw new Error("Failed to fetch new weather data and no cache is available.");
     }
-
-    return new Response(JSON.stringify(weatherData), {
-      headers: { "Content-Type": "application/json" },
-    });
-  } catch (error) {
-    return new Response(JSON.stringify({ error: error.message }), {
+  } catch (error: unknown) {
+    return new Response(JSON.stringify({ error: (error as Error).message }), {
       status: 500,
       headers: { "Content-Type": "application/json" },
     });
   }
 }
 
-serve(async (req) => {
-  const supabaseClient = createClient(
-    Deno.env.get("SUPABASE_URL") ?? "",
-    Deno.env.get("SUPABASE_SERVICE_ROLE_KEY") ?? ""
-  );
-  return handleRequest(req, supabaseClient);
-});
+// Only run the server when the script is executed directly
+if (import.meta.main) {
+  serve(async (req) => {
+    const supabaseClient = createClient(
+      Deno.env.get("SUPABASE_URL") ?? "",
+      Deno.env.get("SUPABASE_SERVICE_ROLE_KEY") ?? ""
+    );
+    return handleRequest(req, supabaseClient);
+  });
+}

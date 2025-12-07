@@ -1,6 +1,6 @@
 # Story 2.1: Implement Weather API Poller & Caching
 
-Status: blocked
+Status: in progress
 
 ## Story
 
@@ -22,20 +22,20 @@ so that **the scheduling engine can make informed, wind-dependent decisions with
 
 ## Tasks / Subtasks
 
-- [ ] Task 1: Database Schema Setup (AC: 3, 4)
-  - [ ] Create migration for `weather_cache` table.
-  - [ ] Schema: `id` (BigInt), `location` (JSON/String), `forecast_time` (TIMESTAMPTZ), `data` (JSONB), `created_at` (TIMESTAMPTZ).
-  - [ ] Enable RLS (Service Role only for write, Authenticated/Service for read).
-- [ ] Task 2: Environment Configuration (AC: 2)
-  - [ ] Configure OpenWeatherMap API Key in Supabase Vault/Secrets.
-  - [ ] Define school coordinates (Lat/Lon) as environment variables or config constants.
-- [ ] Task 3: Implement Edge Function `weather-poller` (AC: 1, 2, 3, 5)
-  - [ ] Initialize function using Supabase CLI.
-  - [ ] Implement `fetchWeather` logic (External Call).
-  - [ ] Implement `getWeather` logic (Check Cache -> Fetch if stale -> Save to Cache -> Return).
-  - [ ] Handle API errors and edge cases.
+- [x] Task 1: Database Schema Setup (AC: 3, 4)
+  - [x] Create migration for `weather_cache` table.
+  - [x] Schema: `id` (BigInt), `location` (JSON/String), `forecast_time` (TIMESTAMPTZ), `data` (JSONB), `created_at` (TIMESTAMPTZ).
+  - [x] Enable RLS (Service Role only for write, Authenticated/Service for read).
+- [x] Task 2: Environment Configuration (AC: 2)
+  - [x] Configure OpenWeatherMap API Key in Supabase Vault/Secrets.
+  - [x] Define school coordinates (Lat/Lon) as environment variables or config constants.
+- [x] Task 3: Implement Edge Function `weather-poller` (AC: 1, 2, 3, 5)
+  - [x] Initialize function using Supabase CLI.
+  - [x] Implement `fetchWeather` logic (External Call).
+  - [x] Implement `getWeather` logic (Check Cache -> Fetch if stale -> Save to Cache -> Return).
+  - [x] Handle API errors and edge cases.
 - [ ] Task 4: Testing & Verification (AC: 2, 3, 5)
-  - [ ] Create unit tests for the caching logic (mocking the DB and API).
+  - [x] Create unit tests for the caching logic (mocking the DB and API).
   - [ ] Create an integration test invocation script.
   - [ ] Verify rate limiting protection (ensure multiple rapid calls result in 1 API hit).
 
