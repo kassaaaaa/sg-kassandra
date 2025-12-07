@@ -44,7 +44,7 @@ development_status:
   1-6-implement-role-based-access-control-rbac: done
   1-7-instructor-profile-management: done
   1-8-instructor-availability-management: done
-  epic-1-retrospective: optional
+  epic-1-retrospective: completed
   epic-2: backlog
   2-1-integrate-weather-api: backlog
   2-2-lesson-search-and-filtering-ui: backlog
