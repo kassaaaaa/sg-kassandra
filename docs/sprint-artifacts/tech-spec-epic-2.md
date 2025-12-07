@@ -113,6 +113,17 @@ This implementation strictly adheres to the architecture defined in `architectur
 7.  **Edge Function** writes to DB (`bookings`, `customer_details`).
 8.  **Frontend** receives success, displays Confirmation Screen with Ref #.
 
+### Key Algorithms
+
+**Instructor Load Balancing Strategy:**
+(Aligned with `docs/fase-3-solution/scheduling-logic.md`)
+1.  **Filter:** Identify all instructors who are available and qualified for the lesson level.
+2.  **Load Calculation:** Count confirmed and pending bookings for each candidate for the specific date (calculated in **School's Time Zone**).
+3.  **Selection (Least-Loaded):** Select the instructor with the minimum booking count.
+4.  **Tie-Breakers (in order):**
+    *   **Earliest Finishing Lesson:** Prioritize instructors who finish their currently assigned lessons earliest.
+    *   **Alphabetical:** If still tied, sort alphabetically by name (deterministic fallback).
+
 ## Non-Functional Requirements
 
 ### Performance
@@ -136,11 +147,22 @@ This implementation strictly adheres to the architecture defined in `architectur
 
 ## Dependencies and Integrations
 
-*   **OpenWeatherMap API:** Account created, API Key secured.
+*   **OpenWeatherMap API:** Current One Call API 3.0 (Account created, API Key secured).
 *   **Twilio / Resend:** (Dependencies from Epic 4 for notifications, but required for Story 2.6 confirmation email).
-*   **reCAPTCHA:** Account and keys required.
-*   **Supabase Edge Functions:** Environment setup.
-*   **`shadcn/ui`:** Components (Modal, Card, Form, Calendar) - Set up in Epic 1.
+*   **Google reCAPTCHA:** v3 (Account and keys required).
+*   **Supabase:**
+    *   **Edge Functions:** Deno runtime (latest).
+    *   **Client SDK (`@supabase/supabase-js`):** ^2.86.0.
+    *   **SSR (`@supabase/ssr`):** ^0.8.0.
+*   **Frontend Frameworks:**
+    *   **Next.js:** 16.0.7 (App Router).
+    *   **React:** 19.2.0.
+    *   **TanStack Query:** ^5.90.12.
+    *   **React Hook Form:** ^7.68.0.
+    *   **Zod:** ^4.1.13.
+*   **UI Components:**
+    *   **`shadcn/ui`:** Components (Modal, Card, Form, Calendar) via Radix primitives (latest compatible).
+    *   **Tailwind CSS:** v4.
 
 ## Acceptance Criteria (Authoritative)
 
@@ -198,7 +220,6 @@ This implementation strictly adheres to the architecture defined in `architectur
     *   *Mitigation:* Aggressive caching and client-side throttle.
 *   **Assumption:** Epic 4 Notification Service is available or we stub it out for Epic 2.
     *   *Decision:* Stub out via logging if Epic 4 service not ready, but prioritize Epic 4 basic setup if possible.
-*   **Assumption:** "Load Balancing" algorithm details are sufficient in Architecture doc.
 *   **Question:** Do we need to handle "Group Lessons" where multiple strangers book the same slot?
     *   *Answer:* PRD implies individual or private group. Multi-student scheduling is complex. Assuming 1 Booking = 1 Slot capacity for MVP unless specified otherwise.
 
