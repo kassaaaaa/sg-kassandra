@@ -47,60 +47,63 @@ async function fetchWeather(lat: string, lon: string) {
 }
 
 export async function handleRequest(req: Request, supabaseClient: any) {
-  try {
-    const { data: cachedData, error: cacheError } = await supabaseClient
-      .from("weather_cache")
-      .select("data, created_at")
-      .eq("location", "main_beach")
-      .order("created_at", { ascending: false })
-      .limit(1);
+  // 1. Attempt to retrieve the most recent cache entry
+  const { data: cachedData, error: cacheError } = await supabaseClient
+    .from("weather_cache")
+    .select("data, created_at")
+    .eq("location", "main_beach")
+    .order("created_at", { ascending: false })
+    .limit(1);
 
-    if (cacheError) {
-      console.error("Error fetching from cache:", cacheError);
-      // Allow fallback to API fetch even if cache read fails
-    }
+  if (cacheError) {
+    console.error("Error fetching from cache:", cacheError);
+    // Don't return; proceed to API fetch as a fallback
+  }
 
-    if (cachedData && cachedData.length > 0) {
-      const cacheAge = Date.now() - new Date(cachedData[0].created_at).getTime();
-      if (cacheAge < 3600000) { // 1 hour in milliseconds
-        return new Response(JSON.stringify(cachedData[0].data), {
-          headers: { "Content-Type": "application/json", "X-Cache-Status": "hit" },
-        });
-      }
-    }
+  const cachedEntry = cachedData && cachedData.length > 0 ? cachedData[0] : null;
 
-    // Cache is stale or doesn't exist, attempt to fetch fresh data
-    try {
-      const weatherData = await fetchWeather(SCHOOL_LAT, SCHOOL_LON);
-
-      const { error: insertError } = await supabaseClient
-        .from("weather_cache")
-        .insert({
-          location: "main_beach",
-          data: weatherData,
-        });
-
-      if (insertError) {
-        // Log error but still return fresh data to the client
-        console.error("Error inserting into cache:", insertError);
-      }
-
-      return new Response(JSON.stringify(weatherData), {
-        headers: { "Content-Type": "application/json", "X-Cache-Status": "miss" },
+  // 2. Check if the cache is fresh enough
+  if (cachedEntry) {
+    const cacheAgeMs = Date.now() - new Date(cachedEntry.created_at).getTime();
+    const ONE_HOUR_MS = 3600000;
+    if (cacheAgeMs < ONE_HOUR_MS) {
+      return new Response(JSON.stringify(cachedEntry.data), {
+        headers: { "Content-Type": "application/json", "X-Cache-Status": "hit" },
       });
-    } catch (fetchError: unknown) {
-      console.error("Failed to fetch new weather data:", (fetchError as Error).message);
-      if (cachedData && cachedData.length > 0) {
-        console.log("Returning stale cache as fallback.");
-        return new Response(JSON.stringify(cachedData[0].data), {
-          headers: { "Content-Type": "application/json", "X-Cache-Status": "stale" },
-        });
-      }
-      // If fetch fails and there's no cached data, re-throw to outer catch
-      throw new Error("Failed to fetch new weather data and no cache is available.");
     }
-  } catch (error: unknown) {
-    return new Response(JSON.stringify({ error: (error as Error).message }), {
+  }
+
+  // 3. Cache is stale or missing, so fetch from the external API
+  try {
+    const weatherData = await fetchWeather(SCHOOL_LAT, SCHOOL_LON);
+
+    // Asynchronously insert into cache; don't block the response
+    supabaseClient
+      .from("weather_cache")
+      .insert({ location: "main_beach", data: weatherData })
+      .then(({ error: insertError }: { error: any }) => {
+        if (insertError) {
+          console.error("Error inserting into cache:", insertError);
+        }
+      });
+
+    return new Response(JSON.stringify(weatherData), {
+      headers: { "Content-Type": "application/json", "X-Cache-Status": "miss" },
+    });
+  } catch (apiError: unknown) {
+    const errorMessage = (apiError as Error).message;
+    console.error(`External API fetch failed: ${errorMessage}`);
+
+    // 4. API failed, so fallback to the stale cache if it exists
+    if (cachedEntry) {
+      console.log("API fetch failed. Returning stale cache as fallback.");
+      return new Response(JSON.stringify(cachedEntry.data), {
+        headers: { "Content-Type": "application/json", "X-Cache-Status": "stale" },
+      });
+    }
+
+    // 5. API failed and there's no cache at all, return a server error
+    return new Response(JSON.stringify({ error: "Failed to fetch weather data and no cache is available." }), {
       status: 500,
       headers: { "Content-Type": "application/json" },
     });

@@ -46,7 +46,7 @@ development_status:
   1-8-instructor-availability-management: done
   epic-1-retrospective: completed
   epic-2: contexted
-  2-1-integrate-weather-api: blocked
+  2-1-integrate-weather-api: review
   2-2-lesson-search-and-filtering-ui: backlog
   2-3-guest-booking-flow: backlog
   2-4-initial-scheduling-engine: backlog
