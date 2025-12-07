@@ -1,6 +1,6 @@
 # Story 2.1: Implement Weather API Poller & Caching
 
-Status: ready-for-dev
+Status: ready-for-review
 
 ## Story
 
@@ -90,8 +90,14 @@ Gemini-2.5-Flash
 ### Debug Log References
 
 ### Completion Notes List
+- The Deno tests for the `weather-poller` edge function could not be run because the `deno` command was not found in the environment. The tests have been written and the edge function has been refactored to be testable, but the tests themselves have not been executed.
 
 ### File List
+- `supabase/migrations/20251207000000_create_weather_cache.sql`
+- `docs/sprint-artifacts/2-1-environment-config-instructions.md`
+- `supabase/functions/weather-poller/index.ts`
+- `supabase/functions/weather-poller/__tests__/index.test.ts`
+
 
 ## Change Log
 
