@@ -65,7 +65,7 @@ export default function TestUIPage() {
                         Email Address <span className="text-destructive">*</span>
                     </label>
                     <Input id="email" placeholder="name@example.com" />
-                    <p className="text-sm text-muted-foreground">We'll never share your email.</p>
+                    <p className="text-sm text-muted-foreground">We&apos;ll never share your email.</p>
                 </div>
             </CardContent>
             <CardFooter>

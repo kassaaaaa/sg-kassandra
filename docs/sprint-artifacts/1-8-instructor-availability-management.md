@@ -1,6 +1,6 @@
 # Story 1.8: Instructor Availability Management
 
-Status: ready-for-dev
+Status: review
 
 ## Story
 
@@ -19,32 +19,32 @@ so that **I can prevent scheduling conflicts and ensure customers book lessons o
 
 ## Tasks / Subtasks
 
-- [ ] Task 1: Implement Availability Service (AC: 1, 3)
-  - [ ] Create `app/lib/availability-service.ts`.
-  - [ ] Implement `getAvailability(instructorId, startDate, endDate)`.
-  - [ ] Implement `createAvailability(availabilityData)` with overlap check logic.
-  - [ ] Implement `deleteAvailability(availabilityId)`.
-  - [ ] Ensure RLS compliance (instructor can only manage their own availability).
-- [ ] Task 2: Create Availability Calendar UI (AC: 2)
-  - [ ] Create `app/app/(protected)/calendar/page.tsx`.
-  - [ ] Implement `AvailabilityCalendar` component (Custom or Library) matching UX Spec 5.2.2.
-    - [ ] Weekly view.
-    - [ ] Navigation (Next/Prev week).
-    - [ ] Visual distinction for available vs blocked slots.
-  - [ ] Integrate `shadcn/ui` components (Button, Dialog for adding slots).
-- [ ] Task 3: Implement Add Availability Modal (AC: 1, 4)
-  - [ ] Create a form with Date, Start Time, End Time, and Recurrence (Weekly/None).
-  - [ ] Use `react-hook-form` and `zod` for validation.
-  - [ ] Connect to `AvailabilityService` using TanStack Query (`useMutation`).
-- [ ] Task 4: Integrate and Validate (AC: 1, 2, 3, 4)
-  - [ ] Connect Calendar to `getAvailability` using TanStack Query (`useQuery`).
-  - [ ] Handle Optimistic Updates or Invalidate Queries on mutation success.
-  - [ ] Show Toast notifications for success/error.
-- [ ] Task 5: Automated Testing (AC: 1, 3)
-  - [ ] Create `tests/e2e/availability.spec.ts`.
-  - [ ] Test: Add single slot -> Verify persistence and UI update.
-  - [ ] Test: Add overlapping slot -> Verify error message.
-  - [ ] Test: Delete slot -> Verify removal.
+- [x] Task 1: Implement Availability Service (AC: 1, 3)
+  - [x] Create `app/lib/availability-service.ts`.
+  - [x] Implement `getAvailability(instructorId, startDate, endDate)`.
+  - [x] Implement `createAvailability(availabilityData)` with overlap check logic.
+  - [x] Implement `deleteAvailability(availabilityId)`.
+  - [x] Ensure RLS compliance (instructor can only manage their own availability).
+- [x] Task 2: Create Availability Calendar UI (AC: 2)
+  - [x] Create `app/app/(protected)/calendar/page.tsx`.
+  - [x] Implement `AvailabilityCalendar` component (Custom or Library) matching UX Spec 5.2.2.
+    - [x] Weekly view.
+    - [x] Navigation (Next/Prev week).
+    - [x] Visual distinction for available vs blocked slots.
+  - [x] Integrate `shadcn/ui` components (Button, Dialog for adding slots).
+- [x] Task 3: Implement Add Availability Modal (AC: 1, 4)
+  - [x] Create a form with Date, Start Time, End Time, and Recurrence (Weekly/None).
+  - [x] Use `react-hook-form` and `zod` for validation.
+  - [x] Connect to `AvailabilityService` using TanStack Query (`useMutation`).
+- [x] Task 4: Integrate and Validate (AC: 1, 2, 3, 4)
+  - [x] Connect Calendar to `getAvailability` using TanStack Query (`useQuery`).
+  - [x] Handle Optimistic Updates or Invalidate Queries on mutation success.
+  - [x] Show Toast notifications for success/error.
+- [x] Task 5: Automated Testing (AC: 1, 3)
+  - [x] Create `tests/e2e/availability.spec.ts`.
+  - [x] Test: Add single slot -> Verify persistence and UI update.
+  - [x] Test: Add overlapping slot -> Verify error message.
+  - [x] Test: Delete slot -> Verify removal.
 
 ## Dev Notes
 
@@ -91,21 +91,28 @@ so that **I can prevent scheduling conflicts and ensure customers book lessons o
 - Model: gemini-2.0-flash-exp
 
 ### Debug Log References
-- (None yet)
+- (None)
 
 ### Completion Notes List
-- [ ] Confirmed availability persistence
-- [ ] Verified overlap prevention logic
-- [ ] Checked recurrence UI
+- [x] Confirmed availability persistence
+- [x] Verified overlap prevention logic
+- [x] Checked recurrence UI
+- [x] Implemented `AvailabilityService` with overlap check.
+- [x] Created `AvailabilityCalendar` with weekly view.
+- [x] Created `AddAvailabilityDialog` with form validation.
+- [x] Integrated everything in `CalendarPage`.
+- [x] Added E2E tests covering add, overlap check, and delete.
 
 ### File List
 #### New Files
 - `app/lib/availability-service.ts`
+- `app/components/calendar/AvailabilityCalendar.tsx`
+- `app/components/calendar/AddAvailabilityDialog.tsx`
 - `app/app/(protected)/calendar/page.tsx`
 - `tests/e2e/availability.spec.ts`
 
 #### Modified Files
-- `app/lib/db.ts` (if needed for types)
+- `docs/sprint-artifacts/sprint-status.yaml`
 
 ## Change Log
 
@@ -113,3 +120,4 @@ so that **I can prevent scheduling conflicts and ensure customers book lessons o
 |---|---|---|
 | 2025-12-06 | Bob (SM) | Initial Draft created |
 | 2025-12-06 | Bob (SM) | Updated with validation fixes (AC refs, Dev Record, Structure Notes) |
+| 2025-12-07 | Amelia (Dev) | Implemented Story 1.8 (Tasks 1-5) |
