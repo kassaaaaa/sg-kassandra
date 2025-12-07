@@ -1,6 +1,6 @@
 # Story 2.1: Implement Weather API Poller & Caching
 
-Status: ready-for-review
+Status: blocked
 
 ## Story
 
@@ -105,3 +105,65 @@ Gemini-2.5-Flash
 |---|---|---|
 | 2025-12-07 | Bob (SM) | Initial Draft created |
 | 2025-12-07 | Bob (SM) | Added Change Log section per validation |
+---
+
+## Senior Developer Review (AI)
+
+- **Reviewer**: Amelia (Developer Agent)
+- **Date**: 2025-12-07
+- **Outcome**: <span style="color:red; font-weight:bold;">Blocked</span>
+  - **Justification**: The review is blocked due to a **HIGH severity** security finding. A secret (API key) has been hardcoded and committed to the repository. This must be removed and the git history cleansed before the story can be approved.
+
+### Summary
+The core implementation of the weather polling and caching mechanism is functionally correct and aligns with the specified architecture. However, the review is **BLOCKED** due to a critical security vulnerability. Additionally, a medium-severity deviation from the required error handling logic was found, and several process gaps were noted regarding task tracking and testing.
+
+### Key Findings (by severity)
+
+- **[HIGH] Exposed Secret in Documentation**: The OpenWeatherMap API key is hardcoded in the setup instructions file (`docs/sprint-artifacts/2-1-environment-config-instructions.md`). Secrets must never be committed to version control.
+- **[MEDIUM] Incorrect Error Handling Fallback**: The function does not return stale cached data if the external API fails, which contradicts the resiliency requirement in AC #5. It currently returns a generic 500 error immediately.
+- **[LOW] Incomplete Testing**: While unit tests were written, the developer noted they could not be executed. Furthermore, the required integration tests and rate-limit verification tests were not provided.
+- **[PROCESS] Inaccurate Task Status**: All implementation tasks were completed, but none were marked as complete (`[x]`) in the story's "Tasks / Subtasks" section. This misrepresents the actual progress of the story.
+
+### Acceptance Criteria Coverage
+
+| AC# | Description | Status | Evidence |
+| :--- | :--- | :--- | :--- |
+| 1 | Edge Function Deployment | **IMPLEMENTED** | `supabase/functions/weather-poller/index.ts` exists. |
+| 2 | External Integration | **IMPLEMENTED** | `fetchWeather` function correctly calls the OWM API. |
+| 3 | Caching Mechanism | **IMPLEMENTED** | `handleRequest` checks cache age before fetching new data. |
+| 4 | Data Structure | **IMPLEMENTED** | `supabase/migrations/..._create_weather_cache.sql` matches spec. |
+| 5 | Error Handling | **PARTIAL** | `try/catch` block exists but does not return stale cache on fetch failure. |
+
+**Summary: 4 of 5 acceptance criteria fully implemented.**
+
+### Task Completion Validation
+
+| Task | Marked As | Verified As | Evidence |
+| :--- | :--- | :--- | :--- |
+| 1: DB Schema | Incomplete `[ ]` | **VERIFIED COMPLETE** | `..._create_weather_cache.sql` is correct. |
+| 2: Env Config | Incomplete `[ ]` | **VERIFIED COMPLETE** | `...-config-instructions.md` and env var usage are correct. |
+| 3: Edge Func | Incomplete `[ ]` | **VERIFIED COMPLETE** | `index.ts` contains the required logic. |
+| 4: Testing | Incomplete `[ ]` | **PARTIAL** | Unit tests written but not run; integration tests missing. |
+
+**Summary: 3 of 4 completed tasks were verified. All completed tasks were falsely marked as incomplete.**
+
+### Test Coverage and Gaps
+- **Unit Tests:** Written for caching logic but were not executed.
+- **Integration Tests:** Missing. No script was provided to verify the live function against the database.
+- **E2E / Rate-Limit Tests:** Missing. No verification was provided for the rate-limiting protection.
+
+### Architectural Alignment
+The implementation correctly follows the **Cache-first** pattern defined in the architecture document. It properly utilizes a Supabase Edge Function for external integration.
+
+### Security Notes
+The hardcoded API key is a critical vulnerability. The key should be immediately rotated, removed from the file, and the commit history should be cleansed to remove any trace of the secret.
+
+### Action Items
+
+**Code Changes Required:**
+- [ ] **[High]** Remove the hardcoded API key from `docs/sprint-artifacts/2-1-environment-config-instructions.md` and instruct the user to purge it from git history. **(BLOCKER)**
+- [ ] **[Medium]** Modify the error handling logic in `supabase/functions/weather-poller/index.ts` to return the last valid cached data when an external API fetch fails (AC #5).
+- [ ] **[Low]** Ensure all tests in `supabase/functions/weather-poller/__tests__/index.test.ts` can be executed successfully within the development environment.
+
+**Process Changes Required:**
+- [ ] **[Process]** Update the "Tasks / Subtasks" section in `docs/sprint-artifacts/2-1-integrate-weather-api.md` to accurately reflect the completed work.

@@ -5,7 +5,7 @@
 To set the OpenWeatherMap API key, run the following Supabase CLI command:
 
 ```bash
-supabase secrets set OPENWEATHERMAP_API_KEY="4e88a06255d6a0d8249bb29eb62d5ddd"
+supabase secrets set OPENWEATHERMAP_API_KEY="your_api_key_here"
 ```
 
 ## Environment Variables
