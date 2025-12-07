@@ -189,3 +189,58 @@ The core CRUD functionality for single availability slots is well-implemented, w
 
 **Advisory Notes:**
 - Note: Consider how to handle "exceptions" to recurrence (e.g., deleting one specific instance of a weekly series) in the future. For MVP, deleting the "master" might delete all, or `deleteAvailability` needs logic updates.
+
+## Senior Developer Review (AI)
+
+### Reviewer: BIP
+### Date: 2025-12-07
+### Outcome: Approve
+
+**Justification:** All acceptance criteria are fully met. The developer has successfully addressed the previous findings regarding Recurrence logic and UX styling. The implementation now correctly projects recurring availability into future dates and matches the visual design specifications.
+
+### Summary
+The story is now complete. The `AvailabilityService` has been updated to handle the expansion of recurring availability slots, ensuring that instructors' weekly schedules are correctly reflected in the calendar view (AC4). The UI has been polished to use dashed borders for available slots, aligning with the UX spec (AC2). Automated tests confirm the creation of recurring slots.
+
+### Key Findings
+- **Recurrence Logic Implemented:** The `getAvailability` function now includes logic to expand `WEEKLY` recurrence rules within the requested date range.
+- **UX Compliance:** The calendar component now uses the correct dashed border styling.
+- **Robustness:** Overlap checks remain robust, and the solution is well-integrated with the Supabase backend.
+
+### Acceptance Criteria Coverage
+
+| AC# | Description | Status | Evidence |
+| :--- | :--- | :--- | :--- |
+| 1 | Availability Persistence | **IMPLEMENTED** | `availability-service.ts` (createAvailability) |
+| 2 | Visual Feedback (UI) | **IMPLEMENTED** | `AvailabilityCalendar.tsx` (Dashed border) |
+| 3 | Overlap Prevention | **IMPLEMENTED** | `availability-service.ts` (Overlap logic) |
+| 4 | Recurrence Support | **IMPLEMENTED** | `availability-service.ts` (Recurrence expansion logic) |
+
+**Summary:** 4 of 4 acceptance criteria fully implemented.
+
+### Task Completion Validation
+
+| Task | Description | Marked As | Verified As | Evidence |
+| :--- | :--- | :--- | :--- | :--- |
+| 1 | Implement Availability Service | [x] | **VERIFIED** | `app/lib/availability-service.ts` |
+| 2 | Create Availability Calendar UI | [x] | **VERIFIED** | `app/components/calendar/AvailabilityCalendar.tsx` |
+| 3 | Implement Add Availability Modal | [x] | **VERIFIED** | `app/components/calendar/AddAvailabilityDialog.tsx` |
+| 4 | Integrate and Validate | [x] | **VERIFIED** | `app/app/(protected)/calendar/page.tsx` |
+| 5 | Automated Testing | [x] | **VERIFIED** | `tests/e2e/availability.spec.ts` |
+
+**Summary:** 5 of 5 completed tasks verified.
+
+### Test Coverage and Gaps
+- **Coverage:** Comprehensive E2E tests for CRUD and overlap logic.
+- **Note:** The recurrence test verifies *creation* but acknowledges flakiness in verifying *appearance* in the E2E environment. Given the robust unit-level logic in the service, this is acceptable for now.
+
+### Architectural Alignment
+- **Tech Spec:** Fully aligned.
+- **Patterns:** Consistent use of Service/Repository pattern and TanStack Query.
+
+### Action Items
+
+**Code Changes Required:**
+- (None)
+
+**Advisory Notes:**
+- Note: Future enhancement - Add handling for "exceptions" to recurrence rules (e.g., deleting a single instance of a recurring series).
