@@ -1,6 +1,6 @@
 # Story 2.1: Implement Weather API Poller & Caching
 
-Status: drafted
+Status: ready-for-dev
 
 ## Story
 
@@ -82,7 +82,7 @@ so that **the scheduling engine can make informed, wind-dependent decisions with
 ## Dev Agent Record
 
 ### Context Reference
-<!-- Path(s) to story context XML will be added here by context workflow -->
+- docs/sprint-artifacts/2-1-integrate-weather-api.context.xml
 
 ### Agent Model Used
 Gemini-2.5-Flash
@@ -92,3 +92,10 @@ Gemini-2.5-Flash
 ### Completion Notes List
 
 ### File List
+
+## Change Log
+
+| Date | Author | Description |
+|---|---|---|
+| 2025-12-07 | Bob (SM) | Initial Draft created |
+| 2025-12-07 | Bob (SM) | Added Change Log section per validation |
