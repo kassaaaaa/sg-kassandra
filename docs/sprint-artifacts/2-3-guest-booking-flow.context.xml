@@ -1,0 +1,123 @@
+<story-context id="{bmad_folder}/bmm/workflows/4-implementation/story-context/template" v="1.0">
+  <metadata>
+    <epicId>2</epicId>
+    <storyId>3</storyId>
+    <title>Guest Booking Flow</title>
+    <status>drafted</status>
+    <generatedAt>2025-12-08</generatedAt>
+    <generator>BMAD Story Context Workflow</generator>
+    <sourceStoryPath>docs/sprint-artifacts/2-3-guest-booking-flow.md</sourceStoryPath>
+  </metadata>
+
+  <story>
+    <asA>Customer</asA>
+    <iWant>to book a lesson as a guest by providing my contact details at the final step</iWant>
+    <soThat>I can complete a booking without needing to create an account first</soThat>
+    <tasks>
+      <task id="1" depends_on="" ac_refs="1,2,3,5">Frontend: Build Guest Booking Modal</task>
+      <task id="1.1" depends_on="1" ac_refs="">Create `app/components/BookingForm.tsx` component.</task>
+      <task id="1.2" depends_on="1" ac_refs="">Implement form fields for Name, Email, Phone, and the policy checkbox using `shadcn/ui`.</task>
+      <task id="1.3" depends_on="1" ac_refs="">Use `react-hook-form` and `zod` for client-side validation.</task>
+      <task id="2" depends_on="1" ac_refs="4">Frontend: API Integration</task>
+      <task id="2.1" depends_on="2" ac_refs="">Create `app/lib/booking-service.ts` to handle the API call.</task>
+      <task id="2.2" depends_on="2.1" ac_refs="">Integrate the service with `BookingForm` to submit data to the `create-booking` Edge Function.</task>
+      <task id="2.3" depends_on="2.1" ac_refs="">Handle success and error states from the API call.</task>
+      <task id="3" depends_on="" ac_refs="4">Backend: Create `create-booking` Edge Function</task>
+      <task id="3.1" depends_on="3" ac_refs="">Create `supabase/functions/create-booking/index.ts`.</task>
+      <task id="3.2" depends_on="3.1" ac_refs="">Implement logic to receive booking data.</task>
+      <task id="3.3" depends_on="3.2" ac_refs="">Validate incoming data with Zod.</task>
+      <task id="3.4" depends_on="3.2" ac_refs="">(Placeholder) Invoke the `scheduling-engine` (to be built in Story 2.4).</task>
+      <task id="3.5" depends_on="3.2" ac_refs="">(Placeholder) Create records in `customer_details` and `bookings` tables.</task>
+      <task id="4" depends_on="2,3" ac_refs="1,2,3,4,5">E2E Testing</task>
+      <task id="4.1" depends_on="4" ac_refs="">Write a Playwright test to simulate the guest booking flow.</task>
+      <task id="4.2" depends_on="4.1" ac_refs="">Verify the modal opens, validation works, and the form can be submitted.</task>
+    </tasks>
+  </story>
+
+  <acceptanceCriteria>
+      <criterion id="1">The booking modal opens upon selecting a lesson time slot from the search results.</criterion>
+      <criterion id="2">The modal form collects the guest's **Full Name**, **Email**, and **Phone Number**.</criterion>
+      <criterion id="3">A mandatory checkbox for "I accept the cancellation and rebooking policies" is present and must be checked to proceed.</criterion>
+      <criterion id="4">On form submission, the collected data is sent to the backend `create-booking` endpoint.</criterion>
+      <criterion id="5">All fields are required, and the email format is validated.</criterion>
+    </acceptanceCriteria>
+
+  <artifacts>
+    <docs>
+      <doc>
+        <path>docs/sprint-artifacts/tech-spec-epic-2.md</path>
+        <title>Epic Technical Specification: Customer Booking and Core Scheduling</title>
+        <section>Story 2.3: Guest Booking</section>
+        <snippet>Modal opens on slot selection. Collects Name, Email, Phone. "I accept policies" checkbox is mandatory. Submits data to backend.</snippet>
+      </doc>
+    </docs>
+    <code>
+      <artifact>
+        <path>app/components/LessonSearch.tsx</path>
+        <kind>component</kind>
+        <symbol>LessonSearch</symbol>
+        <lines></lines>
+        <reason>This component will trigger the booking modal.</reason>
+      </artifact>
+      <artifact>
+        <path>supabase/functions/get-available-lessons/index.ts</path>
+        <kind>edge-function</kind>
+        <symbol></symbol>
+        <lines></lines>
+        <reason>The new create-booking function should follow the structure of this existing function.</reason>
+      </artifact>
+    </code>
+    <dependencies>
+      <dependency>
+        <name>next</name>
+        <version>16.0.7</version>
+      </dependency>
+      <dependency>
+        <name>react</name>
+        <version>19.2.0</version>
+      </dependency>
+      <dependency>
+        <name>@supabase/ssr</name>
+        <version>^0.8.0</version>
+      </dependency>
+      <dependency>
+        <name>@supabase/supabase-js</name>
+        <version>^2.86.0</version>
+      </dependency>
+      <dependency>
+        <name>react-hook-form</name>
+        <version>^7.68.0</version>
+      </dependency>
+      <dependency>
+        <name>zod</name>
+        <version>^4.1.13</version>
+      </dependency>
+      <dependency>
+        <name>@radix-ui/react-dialog</name>
+        <version>^1.1.15</version>
+      </dependency>
+    </dependencies>
+  </artifacts>
+
+  <constraints>
+      <constraint>The `create-booking` Edge Function will need to run with the `service_role` to insert data into tables with RLS policies.</constraint>
+      <constraint>The `create-booking` endpoint will need to be protected by CAPTCHA (Story 2.8) and have rate limiting in a production environment.</constraint>
+    </constraints>
+  <interfaces>
+      <interface>
+        <name>create-booking</name>
+        <kind>REST endpoint</kind>
+        <signature>POST /functions/v1/create-booking with body { lesson_type_id, start_time, customer_info: { name, email, phone }, captcha_token }</signature>
+        <path>supabase/functions/create-booking/index.ts</path>
+      </interface>
+    </interfaces>
+  <tests>
+    <standards>E2E testing with Playwright is the standard for verifying user flows.</standards>
+    <locations>tests/e2e</locations>
+    <ideas>
+      <idea ac_ref="1,2,3,4,5">Write a Playwright test to simulate the guest booking flow.</idea>
+      <idea ac_ref="1,5">Verify the modal opens and validation works.</idea>
+      <idea ac_ref="4">Verify the form can be submitted successfully.</idea>
+    </ideas>
+  </tests>
+</story-context>

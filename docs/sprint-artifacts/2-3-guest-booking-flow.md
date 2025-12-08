@@ -1,6 +1,6 @@
 # Story 2.3: Guest Booking Flow
 
-Status: drafted
+Status: ready-for-dev
 
 ## Requirements Context Summary
 
@@ -36,13 +36,13 @@ so that **I can complete a booking without needing to create an account first**.
   - [ ] Create `app/lib/booking-service.ts` to handle the API call.
   - [ ] Integrate the service with `BookingForm` to submit data to the `create-booking` Edge Function.
   - [ ] Handle success and error states from the API call.
-- [ ] Task 3 (AC: #) - Backend: Create `create-booking` Edge Function
+- [ ] Task 3 (AC: #4) - Backend: Create `create-booking` Edge Function
   - [ ] Create `supabase/functions/create-booking/index.ts`.
   - [ ] Implement logic to receive booking data.
   - [ ] Validate incoming data with Zod.
   - [ ] (Placeholder) Invoke the `scheduling-engine` (to be built in Story 2.4).
   - [ ] (Placeholder) Create records in `customer_details` and `bookings` tables.
-- [ ] Task 4 (AC: #) - E2E Testing
+- [ ] Task 4 (AC: #1, 2, 3, 4, 5) - E2E Testing
   - [ ] Write a Playwright test to simulate the guest booking flow.
   - [ ] Verify the modal opens, validation works, and the form can be submitted.
 
@@ -69,12 +69,13 @@ so that **I can complete a booking without needing to create an account first**.
 - **Tech Spec:** `docs/sprint-artifacts/tech-spec-epic-2.md`
 - **PRD:** `docs/fase-2-plan/PRD.md`
 - **UX Design:** `docs/fase-2-plan/ux-design-specification.md`
+- **Wireframe:** `docs/wireframes/customer-booking.html`
 
 ## Dev Agent Record
 
 ### Context Reference
 
-<!-- Path(s) to story context XML will be added here by context workflow -->
+- docs/sprint-artifacts/2-3-guest-booking-flow.context.xml
 
 ### Agent Model Used
 
