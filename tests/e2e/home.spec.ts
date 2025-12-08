@@ -11,5 +11,5 @@ test('get started link', async ({ page }) => {
   await page.goto('/');
 
   // Expect an h1 heading with the actual text found on the page
-  await expect(page.locator('h1')).toHaveText('To get started, edit the page.tsx file.');
+  await expect(page.locator('h1')).toHaveText('Book Your Kite Surfing Lesson');
 });

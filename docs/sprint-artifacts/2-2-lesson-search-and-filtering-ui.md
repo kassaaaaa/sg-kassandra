@@ -1,6 +1,6 @@
 # Story 2.2: Lesson Search and Filtering UI
 
-Status: ready-for-dev
+Status: review
 
 ## Story
 
@@ -21,29 +21,29 @@ so that **I can easily find and book a lesson that suits my schedule and needs**
 
 ## Tasks / Subtasks
 
-- [ ] Task 1: Backend - Implement `get-available-lessons` Edge Function
-  - [ ] Create `supabase/functions/get-available-lessons/index.ts`.
-  - [ ] Implement logic to query `availability` table for open slots.
-  - [ ] (Optional for MVP, but recommended) Check `weather_cache` to flag or filter out bad-weather days if logic permits.
-  - [ ] Validate inputs using Zod (Date, Skill, Type).
-  - [ ] Return JSON array: `[{ lesson_id, start_time, end_time, available_slots }]`.
-  - [ ] **Test:** Unit/Integration test for the function.
-- [ ] Task 2: Frontend - Create `LessonSearch` Component
-  - [ ] Create `app/components/LessonSearch.tsx` (Client Component).
-  - [ ] Implement filter controls (Date Picker, Select for Skill/Type) using `shadcn/ui`.
-  - [ ] Integrate **TanStack Query** to fetch data from `get-available-lessons`.
-  - [ ] Implement loading skeleton/spinner.
-- [ ] Task 3: Frontend - Integrate `LessonCard` and Results List
-  - [ ] Render the list of `LessonCard` components from the query data.
-  - [ ] Handle empty state ("No lessons found").
-  - [ ] Ensure responsive layout (grid for cards).
-- [ ] Task 4: Integration & E2E Testing
-  - [ ] **Test:** Verify Date Picker correctly formats and passes date to API (AC 1).
-  - [ ] **Test:** Verify Skill Level and Lesson Type dropdowns filter results correctly (AC 1, 2).
-  - [ ] **Test:** Verify "Loading..." state appears while fetching (NFR).
-  - [ ] **Test:** Verify "No lessons available" message appears when API returns empty array (AC 5).
-  - [ ] **Test:** Verify Lesson Cards display correct time, instructor, and price (AC 4).
-  - [ ] **Test:** Verify responsiveness on mobile/desktop (AC 1).
+- [x] Task 1: Backend - Implement `get-available-lessons` Edge Function
+  - [x] Create `supabase/functions/get-available-lessons/index.ts`.
+  - [x] Implement logic to query `availability` table for open slots.
+  - [x] (Optional for MVP, but recommended) Check `weather_cache` to flag or filter out bad-weather days if logic permits.
+  - [x] Validate inputs using Zod (Date, Skill, Type).
+  - [x] Return JSON array: `[{ lesson_id, start_time, end_time, available_slots }]`.
+  - [x] **Test:** Unit/Integration test for the function.
+- [x] Task 2: Frontend - Create `LessonSearch` Component
+  - [x] Create `app/components/LessonSearch.tsx` (Client Component).
+  - [x] Implement filter controls (Date Picker, Select for Skill/Type) using `shadcn/ui`.
+  - [x] Integrate **TanStack Query** to fetch data from `get-available-lessons`.
+  - [x] Implement loading skeleton/spinner.
+- [x] Task 3: Frontend - Integrate `LessonCard` and Results List
+  - [x] Render the list of `LessonCard` components from the query data.
+  - [x] Handle empty state ("No lessons found").
+  - [x] Ensure responsive layout (grid for cards).
+- [x] Task 4: Integration & E2E Testing
+  - [x] **Test:** Verify Date Picker correctly formats and passes date to API (AC 1).
+  - [x] **Test:** Verify Skill Level and Lesson Type dropdowns filter results correctly (AC 1, 2).
+  - [x] **Test:** Verify "Loading..." state appears while fetching (NFR).
+  - [x] **Test:** Verify "No lessons available" message appears when API returns empty array (AC 5).
+  - [x] **Test:** Verify Lesson Cards display correct time, instructor, and price (AC 4).
+  - [x] **Test:** Verify responsiveness on mobile/desktop (AC 1).
 
 ## Dev Notes
 
@@ -92,4 +92,17 @@ so that **I can easily find and book a lesson that suits my schedule and needs**
 
 ### Completion Notes List
 
+- Implemented `get-available-lessons` Edge Function with Zod validation and availability query logic.
+- Created `LessonSearch` Client Component with Date, Skill, and Type filters using `shadcn/ui` components.
+- Integrated `TanStack Query` for async data fetching.
+- Added accessibility labels to search inputs.
+- Created E2E test `tests/e2e/search.spec.ts` covering the search flow and empty states.
+- Verified all Acceptance Criteria via E2E tests.
+
 ### File List
+
+- supabase/functions/get-available-lessons/index.ts
+- supabase/functions/_shared/cors.ts
+- tests/integration/get-available-lessons.test.ts
+- app/components/LessonSearch.tsx
+- tests/e2e/search.spec.ts
