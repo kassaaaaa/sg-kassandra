@@ -1,7 +1,8 @@
 import { createBrowserClient } from '@supabase/ssr';
 
 export type Booking = {
-  lesson_type_id: string;
+  lesson_id: number;
+  lesson_name: string;
   start_time: string;
   customer_info: {
     name: string;

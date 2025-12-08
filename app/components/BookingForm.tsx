@@ -35,11 +35,15 @@ const formSchema = z.object({
 });
 
 export function BookingForm({
-  lessonTypeId,
-  startTime,
+  lessonId,
+  lessonName,
+  slotId,
+  onClose,
 }: {
-  lessonTypeId: string;
-  startTime: string;
+  lessonId: number;
+  lessonName: string;
+  slotId: string;
+  onClose: () => void;
 }) {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submissionError, setSubmissionError] = useState<string | null>(null);
@@ -61,8 +65,9 @@ export function BookingForm({
     setIsSuccess(false);
 
     const booking: Booking = {
-      lesson_type_id: lessonTypeId,
-      start_time: startTime,
+      lesson_id: lessonId,
+      lesson_name: lessonName,
+      start_time: slotId,
       customer_info: {
         name: values.fullName,
         email: values.email,
@@ -74,6 +79,7 @@ export function BookingForm({
       await createBooking(booking);
       setIsSuccess(true);
       form.reset();
+      onClose();
     } catch (error) {
       if (error instanceof Error) {
         setSubmissionError(error.message);
