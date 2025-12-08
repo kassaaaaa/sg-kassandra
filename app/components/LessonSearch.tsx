@@ -9,6 +9,8 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { LessonCard } from '@/components/LessonCard';
+import { BookingForm } from '@/components/BookingForm';
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from '@/components/ui/dialog';
 import { Loader2 } from 'lucide-react';
 
 interface AvailabilityResult {
@@ -32,6 +34,9 @@ export function LessonSearch() {
   const [date, setDate] = useState<string>('');
   const [skill, setSkill] = useState<string>('');
   const [lessonType, setLessonType] = useState<string>('');
+  const [isBookingModalOpen, setIsBookingModalOpen] = useState(false);
+  const [selectedLesson, setSelectedLesson] = useState<GroupedLesson | null>(null);
+  const [selectedSlotId, setSelectedSlotId] = useState<string | null>(null);
 
   const fetchLessons = async () => {
     if (!date) return [];
@@ -156,13 +161,34 @@ export function LessonSearch() {
                     available: true
                 }))}
                 onTimeSlotClick={(slotId) => {
-                    console.log('Book', slotId, group.lesson_id);
+                  setSelectedLesson(group);
+                  setSelectedSlotId(slotId);
+                  setIsBookingModalOpen(true);
                 }}
               />
             ))}
           </div>
         )}
       </div>
+
+      {selectedLesson && selectedSlotId && (
+        <Dialog open={isBookingModalOpen} onOpenChange={setIsBookingModalOpen}>
+          <DialogContent className="sm:max-w-[425px]">
+            <DialogHeader>
+              <DialogTitle>Book {selectedLesson.lesson_name} at {format(new Date(selectedSlotId), 'HH:mm')}</DialogTitle>
+              <DialogDescription>
+                Provide your contact details to finalize your booking.
+              </DialogDescription>
+            </DialogHeader>
+            <BookingForm 
+              lessonId={selectedLesson.lesson_id}
+              lessonName={selectedLesson.lesson_name}
+              slotId={selectedSlotId}
+              onClose={() => setIsBookingModalOpen(false)}
+            />
+          </DialogContent>
+        </Dialog>
+      )}
     </div>
   );
 }
