@@ -77,15 +77,14 @@ export async function handleRequest(req: Request, supabaseClient: any) {
   try {
     const weatherData = await fetchWeather(SCHOOL_LAT, SCHOOL_LON);
 
-    // Asynchronously insert into cache; don't block the response
-    supabaseClient
+    // Insert into cache; await to ensure execution before runtime termination
+    const { error: insertError } = await supabaseClient
       .from("weather_cache")
-      .insert({ location: "main_beach", data: weatherData })
-      .then(({ error: insertError }: { error: any }) => {
-        if (insertError) {
-          console.error("Error inserting into cache:", insertError);
-        }
-      });
+      .insert({ location: "main_beach", data: weatherData });
+
+    if (insertError) {
+      console.error("Error inserting into cache:", insertError);
+    }
 
     return new Response(JSON.stringify(weatherData), {
       headers: { "Content-Type": "application/json", "X-Cache-Status": "miss" },

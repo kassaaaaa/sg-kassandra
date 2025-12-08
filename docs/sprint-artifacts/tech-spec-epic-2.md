@@ -229,3 +229,7 @@ This implementation strictly adheres to the architecture defined in `architectur
 *   **Integration Testing:** Verify Edge Functions interact correctly with Supabase DB (RLS checks, Inserts).
 *   **E2E Testing:** Critical path: Search -> Book -> Confirm. Verify CAPTCHA integration.
 *   **Mocking:** Weather API must be mocked in all automated tests to ensure determinism.
+
+## Post-Review Follow-ups
+
+- [x] [Medium] Story 2.1: Await the cache insertion promise in `weather-poller` to ensure execution before runtime termination (AC #3).
