@@ -4,7 +4,8 @@ import { corsHeaders } from '../_shared/cors.ts';
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.44.2';
 
 const bookingSchema = z.object({
-  lesson_type_id: z.string().uuid(),
+  lesson_id: z.number(),
+  lesson_name: z.string(),
   start_time: z.string().datetime(),
   customer_info: z.object({
     name: z.string(),
@@ -20,7 +21,7 @@ serve(async (req) => {
 
   try {
     const body = await req.json();
-    const { lesson_type_id, start_time, customer_info } = bookingSchema.parse(body);
+    const { lesson_id, lesson_name, start_time, customer_info } = bookingSchema.parse(body);
 
     const supabaseAdmin = createClient(
       Deno.env.get('SUPABASE_URL') ?? '',
@@ -50,7 +51,8 @@ serve(async (req) => {
       .from('bookings')
       .insert({
         customer_id: customer_id,
-        lesson_id: lesson_type_id,
+        lesson_id: lesson_id,
+        lesson_name: lesson_name,
         start_time: start_time,
         status: 'pending_assignment', // Initially pending until instructor is assigned
       })
