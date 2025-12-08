@@ -1,5 +1,3 @@
-# Story 2.2: Lesson Search and Filtering UI
-
 Status: done
 
 ## Story
@@ -110,6 +108,7 @@ so that **I can easily find and book a lesson that suits my schedule and needs**
 ## Change Log
 
 - 2025-12-08: Senior Developer Review notes appended. Status updated to done. (Amelia)
+- 2025-12-08: Implemented advisory notes (Unit Tests, Rate Limiting, UI Label). (Amelia)
 
 # Senior Developer Review (AI)
 

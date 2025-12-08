@@ -2,6 +2,8 @@ import { serve } from "https://deno.land/std@0.168.0/http/server.ts"
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2"
 import { z } from "https://deno.land/x/zod@v3.21.4/mod.ts";
 import { corsHeaders } from "../_shared/cors.ts";
+import { calculateSlots } from "./logic.ts";
+import { checkRateLimit } from "../_shared/rate-limiter.ts";
 
 const QuerySchema = z.object({
   date: z.string().regex(/^\d{4}-\d{2}-\d{2}$/),
@@ -32,6 +34,16 @@ export async function handleRequest(req: Request) {
       Deno.env.get('SUPABASE_URL') ?? '',
       Deno.env.get('SUPABASE_SERVICE_ROLE_KEY') ?? ''
     )
+
+    // Rate Limiting
+    const clientIp = req.headers.get('x-forwarded-for') || 'unknown';
+    const { allowed } = await checkRateLimit(supabase, `ip:${clientIp}`, 60, 60); // 60 reqs per 60s
+    if (!allowed) {
+      return new Response(JSON.stringify({ error: 'Too Many Requests' }), {
+        status: 429,
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+      });
+    }
 
     const { date, skill_level, lesson_type } = query.data;
 
@@ -94,71 +106,14 @@ export async function handleRequest(req: Request) {
     if (bkError) throw bkError;
 
     // 6. Calculate Slots
-    const results: any[] = [];
-
-    for (const lesson of lessons) {
-      const durationMs = lesson.duration_minutes * 60 * 1000;
-      const relevantInstructors = instructorLessons
-        .filter(il => il.lesson_id === lesson.id)
-        .map(il => il.instructor_id);
-
-      const allSlots: any[] = [];
-
-      for (const instrId of relevantInstructors) {
-        const instrAvail = availabilities?.filter(a => a.instructor_id === instrId) || [];
-        const instrBookings = bookings?.filter(b => b.instructor_id === instrId) || [];
-
-        for (const avail of instrAvail) {
-           let slotStart = new Date(Math.max(new Date(avail.start_time).getTime(), new Date(startOfDay).getTime()));
-           const availEnd = new Date(Math.min(new Date(avail.end_time).getTime(), new Date(endOfDay).getTime()));
-
-           while (slotStart.getTime() + durationMs <= availEnd.getTime()) {
-             const slotEnd = new Date(slotStart.getTime() + durationMs);
-             
-             // Check collision
-             const isBooked = instrBookings.some(b => {
-               const bStart = new Date(b.start_time).getTime();
-               const bEnd = new Date(b.end_time).getTime();
-               return (slotStart.getTime() < bEnd && slotEnd.getTime() > bStart);
-             });
-
-             if (!isBooked) {
-               allSlots.push({
-                 start_time: slotStart.toISOString(),
-                 end_time: slotEnd.toISOString(),
-                 instructor_id: instrId
-               });
-             }
-
-             // Step by 30 mins
-             slotStart = new Date(slotStart.getTime() + 30 * 60000); 
-           }
-        }
-      }
-
-      // De-dupe slots by time and aggregate
-      const uniqueTimes = new Map();
-      
-      allSlots.sort((a, b) => a.start_time.localeCompare(b.start_time));
-
-      for (const s of allSlots) {
-        const key = s.start_time;
-        if (!uniqueTimes.has(key)) {
-           uniqueTimes.set(key, {
-             start_time: s.start_time,
-             available_slots: 1, 
-             lesson_id: lesson.id,
-             lesson_name: lesson.name,
-             price: lesson.price,
-             duration: lesson.duration_minutes
-           });
-        } else {
-           uniqueTimes.get(key).available_slots++;
-        }
-      }
-      
-      results.push(...Array.from(uniqueTimes.values()));
-    }
+    const results = calculateSlots(
+      lessons, 
+      instructorLessons, 
+      availabilities || [], 
+      bookings || [], 
+      startOfDay, 
+      endOfDay
+    );
 
     return new Response(JSON.stringify(results), {
       headers: { ...corsHeaders, 'Content-Type': 'application/json' },

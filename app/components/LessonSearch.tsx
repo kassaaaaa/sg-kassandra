@@ -149,7 +149,7 @@ export function LessonSearch() {
                 description={`${group.duration} minute session`}
                 price={`€${group.price}`} 
                 duration={`${group.duration} min`}
-                instructor="Expert Instructor" 
+                instructor="Certified Instructor" 
                 timeSlots={group.slots.map(s => ({
                     id: s.start_time, 
                     time: format(new Date(s.start_time), 'HH:mm'),

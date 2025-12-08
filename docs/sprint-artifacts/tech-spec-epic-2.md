@@ -233,6 +233,6 @@ This implementation strictly adheres to the architecture defined in `architectur
 ## Post-Review Follow-ups
 
 - [x] [Medium] Story 2.1: Await the cache insertion promise in `weather-poller` to ensure execution before runtime termination (AC #3).
-- [ ] [Low] Story 2.2: Add unit tests for `get-available-lessons` slot calculation logic to ensure robustness against edge cases (e.g., lessons spanning midnight, complex overlaps).
-- [ ] [Low] Story 2.2: Consider implementing rate limiting on the `get-available-lessons` Edge Function.
-- [ ] [Low] Story 2.2: Update "Expert Instructor" label in `LessonCard` to be dynamic or more generic ("Certified Instructor") if assignment happens later.
+- [x] [Low] Story 2.2: Add unit tests for `get-available-lessons` slot calculation logic to ensure robustness against edge cases (e.g., lessons spanning midnight, complex overlaps).
+- [x] [Low] Story 2.2: Consider implementing rate limiting on the `get-available-lessons` Edge Function.
+- [x] [Low] Story 2.2: Update "Expert Instructor" label in `LessonCard` to be dynamic or more generic ("Certified Instructor") if assignment happens later.
