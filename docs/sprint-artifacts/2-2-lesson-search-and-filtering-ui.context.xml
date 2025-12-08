@@ -1,0 +1,165 @@
+<story-context id="2-2-lesson-search-and-filtering-ui.context.xml" v="1.0">
+  <metadata>
+    <epicId>2</epicId>
+    <storyId>2-2</storyId>
+    <title>Lesson Search and Filtering UI</title>
+    <status>drafted</status>
+    <generatedAt>2025-12-08</generatedAt>
+    <generator>BMAD Story Context Workflow</generator>
+    <sourceStoryPath>docs/sprint-artifacts/2-2-lesson-search-and-filtering-ui.md</sourceStoryPath>
+  </metadata>
+
+  <story>
+    <asA>Customer</asA>
+    <iWant>to filter available lessons by skill level, lesson type, and date</iWant>
+    <soThat>I can easily find and book a lesson that suits my schedule and needs</soThat>
+    <tasks>
+- [ ] Task 1: Backend - Implement `get-available-lessons` Edge Function
+  - [ ] Create `supabase/functions/get-available-lessons/index.ts`.
+  - [ ] Implement logic to query `availability` table for open slots.
+  - [ ] (Optional for MVP) Check `weather_cache`.
+  - [ ] Validate inputs using Zod (Date, Skill, Type).
+  - [ ] Return JSON array.
+  - [ ] Test: Unit/Integration test for the function.
+- [ ] Task 2: Frontend - Create `LessonSearch` Component
+  - [ ] Create `app/components/LessonSearch.tsx` (Client Component).
+  - [ ] Implement filter controls (Date Picker, Select for Skill/Type) using `shadcn/ui`.
+  - [ ] Integrate **TanStack Query** to fetch data.
+  - [ ] Implement loading skeleton/spinner.
+- [ ] Task 3: Frontend - Integrate `LessonCard` and Results List
+  - [ ] Render the list of `LessonCard` components.
+  - [ ] Handle empty state ("No lessons found").
+  - [ ] Ensure responsive layout.
+- [ ] Task 4: Integration & E2E Testing
+  - [ ] Verify Date Picker, Skill Level, and Lesson Type filters.
+  - [ ] Verify "Loading..." state.
+  - [ ] Verify "No lessons available" message.
+  - [ ] Verify Lesson Cards display.
+  - [ ] Verify responsiveness.
+    </tasks>
+  </story>
+
+  <acceptanceCriteria>
+1.  **Search Interface:** User-friendly interface to select **Date**, **Skill Level** (Beginner, Intermediate, Advanced), and **Lesson Type** (Private, Group).
+2.  **Dynamic Results:** List of available lessons updates asynchronously based on selected filters.
+3.  **Availability Logic:** Results reflect actual instructor availability (via `get-available-lessons` API).
+4.  **Lesson Display:** Available slots are rendered using `LessonCard` component (created in Story 1.3).
+5.  **Empty State:** Clear "No lessons available" message if no slots match.
+6.  **Performance:** Search results load in under 1 second (NFR).
+  </acceptanceCriteria>
+
+  <artifacts>
+    <docs>
+      <doc>
+        <path>docs/fase-2-plan/PRD.md</path>
+        <title>Product Requirements Document</title>
+        <section>Requirements (Functional & Non-Functional)</section>
+        <snippet>FR010: Customers shall be able to filter available lessons by skill level, lesson type, and date. NFR01: All user-facing pages and dashboards shall load in under 3 seconds.</snippet>
+      </doc>
+      <doc>
+        <path>docs/sprint-artifacts/tech-spec-epic-2.md</path>
+        <title>Epic 2 Technical Specification</title>
+        <section>Detailed Design > APIs and Interfaces</section>
+        <snippet>Edge Function: `get-available-lessons`. Method: GET. Query Params: `date`, `skill_level`, `lesson_type`. Response: `[{ lesson_id, start_time, available_slots }]`.</snippet>
+      </doc>
+      <doc>
+        <path>docs/fase-2-plan/ux-design-specification.md</path>
+        <title>UX Design Specification</title>
+        <section>3.4.1 Customer - Find and Book a Lesson</section>
+        <snippet>Entry & Search: User sees a clean search form... Selects desired lesson type, skill level, and date... System displays a list of available lessons that match the criteria.</snippet>
+      </doc>
+      <doc>
+        <path>docs/fase-3-solution/architecture.md</path>
+        <title>Architecture Document</title>
+        <section>Technology Stack Details</section>
+        <snippet>Frontend: Next.js (App Router), TanStack Query. Backend: Supabase Edge Functions. Database: PostgreSQL with RLS.</snippet>
+      </doc>
+      <doc>
+        <path>docs/fase-3-solution/epics.md</path>
+        <title>Epics</title>
+        <section>Epic 2: Customer Booking and Core Scheduling</section>
+        <snippet>Story 2.2: Lesson Search and Filtering UI. As a Customer, I want to filter available lessons by skill level, lesson type, and date...</snippet>
+      </doc>
+      <doc>
+        <path>docs/wireframes/customer-booking.html</path>
+        <title>Customer Booking Wireframe</title>
+        <section>Find Your Lesson Form</section>
+        <snippet>&lt;label for="lesson-type"&gt;Lesson Type&lt;/label&gt; &lt;select id="lesson-type"&gt;...&lt;/select&gt; &lt;label for="skill-level"&gt;Skill Level&lt;/label&gt; &lt;select id="skill-level"&gt;...&lt;/select&gt; &lt;input id="date" type="date" /&gt;</snippet>
+      </doc>
+    </docs>
+    <code>
+      <item>
+        <path>app/components/LessonCard.tsx</path>
+        <kind>component</kind>
+        <symbol>LessonCard</symbol>
+        <lines>1-70</lines>
+        <reason>Reuse this existing component to display individual search results.</reason>
+      </item>
+      <item>
+        <path>app/lib/db.ts</path>
+        <kind>lib</kind>
+        <symbol>createClient</symbol>
+        <reason>Use for Supabase client initialization if needed for direct calls, though Edge Functions via `functions.invoke` is preferred.</reason>
+      </item>
+    </code>
+    <dependencies>
+      <dep>@tanstack/react-query</dep>
+      <dep>lucide-react</dep>
+      <dep>zod</dep>
+      <dep>date-fns</dep>
+      <dep>@supabase/supabase-js</dep>
+      <dep>shadcn/ui (Button, Calendar, Select, Popover)</dep>
+    </dependencies>
+  </artifacts>
+
+  <constraints>
+    <constraint>Use **TanStack Query** for async state management of search results.</constraint>
+    <constraint>Backend logic must be in **Supabase Edge Function** (`get-available-lessons`).</constraint>
+    <constraint>Search results must load in under **1 second**.</constraint>
+    <constraint>Use `shadcn/ui` components for form controls (Date Picker, Select).</constraint>
+    <constraint>Ensure responsive design (mobile-first).</constraint>
+  </constraints>
+
+  <interfaces>
+    <interface>
+      <name>get-available-lessons</name>
+      <kind>Edge Function (REST)</kind>
+      <signature>GET /get-available-lessons?date={ISO_DATE}&amp;skill={SKILL}&amp;type={TYPE}</signature>
+      <path>supabase/functions/get-available-lessons/index.ts</path>
+    </interface>
+    <interface>
+      <name>LessonCardProps</name>
+      <kind>Component Prop Interface</kind>
+      <signature>
+interface LessonCardProps {
+  title: string;
+  description: string;
+  price: string;
+  duration: string;
+  instructor: string;
+  timeSlots: TimeSlot[];
+  onTimeSlotClick: (slotId: string) => void;
+  className?: string;
+}
+      </signature>
+      <path>app/components/LessonCard.tsx</path>
+    </interface>
+  </interfaces>
+
+  <tests>
+    <standards>
+      Use **Vitest** for unit testing components and logic. Use **Playwright** for E2E testing of the search flow. Ensure accessibility compliance (ARIA labels on inputs).
+    </standards>
+    <locations>
+      <loc>tests/e2e/</loc>
+      <loc>app/__tests__/</loc>
+    </locations>
+    <ideas>
+      <testId>T1</testId><description>Verify Date Picker formats date correctly for API</description>
+      <testId>T2</testId><description>Verify Skill/Type dropdowns trigger refetch</description>
+      <testId>T3</testId><description>Verify Empty State component renders when API returns []</description>
+      <testId>T4</testId><description>Verify LessonCard list renders correct number of items</description>
+      <testId>T5</testId><description>Mock API latency to verify Loading Skeleton appears</description>
+    </ideas>
+  </tests>
+</story-context>

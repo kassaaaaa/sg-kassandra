@@ -1,6 +1,6 @@
 # Story 2.2: Lesson Search and Filtering UI
 
-Status: drafted
+Status: ready-for-dev
 
 ## Story
 
@@ -38,8 +38,12 @@ so that **I can easily find and book a lesson that suits my schedule and needs**
   - [ ] Handle empty state ("No lessons found").
   - [ ] Ensure responsive layout (grid for cards).
 - [ ] Task 4: Integration & E2E Testing
-  - [ ] Verify the flow: Select Filter -> Loading -> Results appear.
-  - [ ] Verify "No results" case.
+  - [ ] **Test:** Verify Date Picker correctly formats and passes date to API (AC 1).
+  - [ ] **Test:** Verify Skill Level and Lesson Type dropdowns filter results correctly (AC 1, 2).
+  - [ ] **Test:** Verify "Loading..." state appears while fetching (NFR).
+  - [ ] **Test:** Verify "No lessons available" message appears when API returns empty array (AC 5).
+  - [ ] **Test:** Verify Lesson Cards display correct time, instructor, and price (AC 4).
+  - [ ] **Test:** Verify responsiveness on mobile/desktop (AC 1).
 
 ## Dev Notes
 
@@ -69,13 +73,16 @@ so that **I can easily find and book a lesson that suits my schedule and needs**
 ### References
 
 - **Tech Spec:** `docs/sprint-artifacts/tech-spec-epic-2.md`
+- **Epics:** `docs/fase-3-solution/epics.md`
+- **Architecture:** `docs/fase-3-solution/architecture.md`
+- **PRD:** `docs/fase-2-plan/PRD.md`
 - **Design:** `docs/wireframes/customer-booking.html` (if applicable)
 
 ## Dev Agent Record
 
 ### Context Reference
 
-<!-- Path(s) to story context XML will be added here by context workflow -->
+- docs/sprint-artifacts/2-2-lesson-search-and-filtering-ui.context.xml
 
 ### Agent Model Used
 
