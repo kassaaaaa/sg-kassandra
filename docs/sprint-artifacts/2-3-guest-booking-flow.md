@@ -1,6 +1,6 @@
 # Story 2.3: Guest Booking Flow
 
-Status: ready-for-dev
+Status: review
 
 ## Requirements Context Summary
 
@@ -28,23 +28,23 @@ so that **I can complete a booking without needing to create an account first**.
 
 ## Tasks / Subtasks
 
-- [ ] Task 1 (AC: #1, 2, 3, 5) - Frontend: Build Guest Booking Modal
-  - [ ] Create `app/components/BookingForm.tsx` component.
-  - [ ] Implement form fields for Name, Email, Phone, and the policy checkbox using `shadcn/ui`.
-  - [ ] Use `react-hook-form` and `zod` for client-side validation.
-- [ ] Task 2 (AC: #4) - Frontend: API Integration
-  - [ ] Create `app/lib/booking-service.ts` to handle the API call.
-  - [ ] Integrate the service with `BookingForm` to submit data to the `create-booking` Edge Function.
-  - [ ] Handle success and error states from the API call.
-- [ ] Task 3 (AC: #4) - Backend: Create `create-booking` Edge Function
-  - [ ] Create `supabase/functions/create-booking/index.ts`.
-  - [ ] Implement logic to receive booking data.
-  - [ ] Validate incoming data with Zod.
-  - [ ] (Placeholder) Invoke the `scheduling-engine` (to be built in Story 2.4).
-  - [ ] (Placeholder) Create records in `customer_details` and `bookings` tables.
-- [ ] Task 4 (AC: #1, 2, 3, 4, 5) - E2E Testing
-  - [ ] Write a Playwright test to simulate the guest booking flow.
-  - [ ] Verify the modal opens, validation works, and the form can be submitted.
+- [x] Task 1 (AC: #1, 2, 3, 5) - Frontend: Build Guest Booking Modal
+  - [x] Create `app/components/BookingForm.tsx` component.
+  - [x] Implement form fields for Name, Email, Phone, and the policy checkbox using `shadcn/ui`.
+  - [x] Use `react-hook-form` and `zod` for client-side validation.
+- [x] Task 2 (AC: #4) - Frontend: API Integration
+  - [x] Create `app/lib/booking-service.ts` to handle the API call.
+  - [x] Integrate the service with `BookingForm` to submit data to the `create-booking` Edge Function.
+  - [x] Handle success and error states from the API call.
+- [x] Task 3 (AC: #4) - Backend: Create `create-booking` Edge Function
+  - [x] Create `supabase/functions/create-booking/index.ts`.
+  - [x] Implement logic to receive booking data.
+  - [x] Validate incoming data with Zod.
+  - [x] (Placeholder) Invoke the `scheduling-engine` (to be built in Story 2.4).
+  - [x] (Placeholder) Create records in `customer_details` and `bookings` tables.
+- [x] Task 4 (AC: #1, 2, 3, 4, 5) - E2E Testing
+  - [x] Write a Playwright test to simulate the guest booking flow.
+  - [x] Verify the modal opens, validation works, and the form can be submitted.
 
 ## Dev Notes
 
@@ -85,8 +85,19 @@ so that **I can complete a booking without needing to create an account first**.
 
 ### Completion Notes List
 
+- Implemented the guest booking flow, including the `BookingForm` component, `booking-service`, and the `create-booking` Edge Function.
+- Added client-side validation with `zod` and `react-hook-form`.
+- Added server-side validation with `zod` in the Edge Function.
+- Created an E2E test with Playwright to cover the entire guest booking flow.
+
 ### File List
+
+- `app/components/BookingForm.tsx`
+- `app/lib/booking-service.ts`
+- `supabase/functions/create-booking/index.ts`
+- `tests/e2e/guest-booking.spec.ts`
 
 ## Change Log
 
 - 2025-12-08: Story created by Bob (Scrum Master).
+- 2025-12-08: Story implemented by Amelia (Developer Agent).
