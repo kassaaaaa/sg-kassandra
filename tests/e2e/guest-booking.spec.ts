@@ -11,30 +11,11 @@ const supabaseAdmin = (supabaseUrl && supabaseKey)
 test('guest booking flow', async ({ page }) => {
   page.on('console', msg => console.log('PAGE LOG:', msg.text()));
   
-  // 1. Go to the home page where LessonSearch is mounted
-  await page.goto('/');
-
-  // Wait for lessons to load (look for a lesson card)
-  // If no lessons are available by default (e.g. need to select date), we might need to select date.
-  // LessonSearch.tsx initializes date with '' (empty).
-  // fetchLessons returns [] if !date.
-  // So we MUST select a date.
-  
-  // Set a date in the future (e.g., tomorrow)
   const tomorrow = new Date();
   tomorrow.setDate(tomorrow.getDate() + 1);
   const dateStr = tomorrow.toISOString().split('T')[0];
-  
-  await page.fill('input[type="date"]', dateStr);
-  
-  // Wait for loading or results
-  // Expect at least one lesson card or "No lessons" message
-  // If we rely on real backend, we might not get lessons.
-  // Ideally we should mock the API response for stable testing.
-  
-  // For now, let's assume the test environment (or mocked API) returns something.
-  // But wait, Playwright can mock network requests!
-  
+
+  // Setup Mocks FIRST
   await page.route('**/functions/v1/get-available-lessons*', async route => {
     const json = [
       {
@@ -49,6 +30,24 @@ test('guest booking flow', async ({ page }) => {
     await route.fulfill({ json });
   });
 
+  await page.route('**/functions/v1/create-booking', async route => {
+    await route.fulfill({ 
+      status: 200, 
+      contentType: 'application/json',
+      body: JSON.stringify({ 
+        success: true,
+        booking_reference: 'TEST-REF-123',
+        instructor_name: 'Mock Instructor'
+      }) 
+    });
+  });
+  
+  // 1. Go to the home page where LessonSearch is mounted
+  await page.goto('/');
+
+  // Set a date in the future (e.g., tomorrow)
+  await page.fill('input[type="date"]', dateStr);
+  
   // Verify the card appears
   await expect(page.locator('text=Test Kitesurfing Lesson')).toBeVisible();
 
@@ -75,16 +74,13 @@ test('guest booking flow', async ({ page }) => {
   await page.fill('input[name="phone"]', '1234567890');
   await page.check('button[role="checkbox"]'); // Radix Checkbox is a button
 
-  // Mock the create-booking endpoint
-  await page.route('**/functions/v1/create-booking', async route => {
-    await route.fulfill({ status: 200, body: JSON.stringify({ success: true }) });
-  });
-
   // 5. Submit the form
   await page.click('button:has-text("Book Lesson")');
 
   // 6. Verify success message
-  await expect(page.locator('h5:has-text("Booking Successful!")')).toBeVisible();
+  await expect(page.locator('text=Booking Confirmed!')).toBeVisible();
+  await expect(page.locator('text=TEST-REF-123')).toBeVisible();
+  await expect(page.locator('text=Mock Instructor')).toBeVisible();
 
   // 7. DB Verification (Optional)
   if (supabaseAdmin) {

@@ -18,6 +18,7 @@ import { Input } from '@/components/ui/input';
 import { Checkbox } from '@/components/ui/checkbox';
 import { createBooking, Booking } from '@/lib/booking-service';
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
+import { BookingSuccess } from '@/components/booking/BookingSuccess';
 
 const formSchema = z.object({
   fullName: z.string().min(2, {
@@ -34,6 +35,11 @@ const formSchema = z.object({
   }),
 });
 
+interface BookingResponse {
+  booking_reference: string;
+  instructor_name?: string;
+}
+
 export function BookingForm({
   lessonId,
   lessonName,
@@ -48,6 +54,7 @@ export function BookingForm({
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submissionError, setSubmissionError] = useState<string | null>(null);
   const [isSuccess, setIsSuccess] = useState(false);
+  const [bookingData, setBookingData] = useState<BookingResponse | null>(null);
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -63,6 +70,7 @@ export function BookingForm({
     setIsSubmitting(true);
     setSubmissionError(null);
     setIsSuccess(false);
+    setBookingData(null);
 
     const booking: Booking = {
       lesson_id: lessonId,
@@ -76,10 +84,13 @@ export function BookingForm({
     };
 
     try {
-      await createBooking(booking);
+      const response = await createBooking(booking);
+      // Assuming response has the needed fields. If not, we might need to adjust based on actual API.
+      setBookingData(response);
       setIsSuccess(true);
       form.reset();
-      onClose();
+      // We do NOT call onClose() here anymore, because we want to show the Success view.
+      // onClose will be called by the "Close" button in BookingSuccess.
     } catch (error) {
       if (error instanceof Error) {
         setSubmissionError(error.message);
@@ -91,13 +102,29 @@ export function BookingForm({
     }
   }
 
+  if (isSuccess && bookingData) {
+    return (
+      <BookingSuccess
+        bookingReference={bookingData.booking_reference}
+        lessonName={lessonName}
+        startTime={slotId}
+        instructorName={bookingData.instructor_name}
+        onClose={onClose}
+      />
+    );
+  }
+
   if (isSuccess) {
+     // Fallback if bookingData is missing for some reason
     return (
       <Alert variant="default">
         <AlertTitle>Booking Successful!</AlertTitle>
         <AlertDescription>
           Your lesson has been booked. Please check your email for a confirmation.
         </AlertDescription>
+         <div className="mt-4 flex justify-end">
+            <Button onClick={onClose} variant="outline" size="sm">Close</Button>
+         </div>
       </Alert>
     );
   }

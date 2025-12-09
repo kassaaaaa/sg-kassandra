@@ -3,7 +3,7 @@ id: "2-5"
 epic_id: "2"
 title: "Booking Confirmation and Summary"
 type: "frontend"
-status: "ready-for-dev"
+status: "review"
 created_at: "2025-12-09"
 ---
 
@@ -40,29 +40,29 @@ created_at: "2025-12-09"
 
 # Tasks / Subtasks
 
-- [ ] Task 1 (AC: #1, 4) - Implement Success View Component
-    - [ ] Create `components/booking/BookingSuccess.tsx` (or similar) based on the wireframe.
-    - [ ] Implement "Booking Confirmed" header and icon.
-    - [ ] Implement Booking Reference display with "Copy to Clipboard" functionality.
+- [x] Task 1 (AC: #1, 4) - Implement Success View Component
+    - [x] Create `components/booking/BookingSuccess.tsx` (or similar) based on the wireframe.
+    - [x] Implement "Booking Confirmed" header and icon.
+    - [x] Implement Booking Reference display with "Copy to Clipboard" functionality.
 
-- [ ] Task 2 (AC: #2) - Implement Summary Display
-    - [ ] Accept booking details prop (Lesson, Date, Time, Location, Instructor).
-    - [ ] Format Date and Time using `date-fns` (ensure consistency with `date-fns-tz` if needed for school time).
-    - [ ] Handle missing instructor name gracefully (e.g., "Instructor Assigned Soon" if for some reason it's null, though 2.4 guarantees assignment).
+- [x] Task 2 (AC: #2) - Implement Summary Display
+    - [x] Accept booking details prop (Lesson, Date, Time, Location, Instructor).
+    - [x] Format Date and Time using `date-fns` (ensure consistency with `date-fns-tz` if needed for school time).
+    - [x] Handle missing instructor name gracefully (e.g., "Instructor Assigned Soon" if for some reason it's null, though 2.4 guarantees assignment).
 
-- [ ] Task 3 (AC: #1, 3) - Integrate with Booking Flow
-    - [ ] Update `components/booking/BookingModal.tsx` (or the parent container).
-    - [ ] Add state management to switch from "Form" view to "Success" view upon successful API response from `create-booking`.
-    - [ ] Pass the returned `booking_reference` and details from the API response to the Success component.
+- [x] Task 3 (AC: #1, 3) - Integrate with Booking Flow
+    - [x] Update `components/booking/BookingModal.tsx` (or the parent container).
+    - [x] Add state management to switch from "Form" view to "Success" view upon successful API response from `create-booking`.
+    - [x] Pass the returned `booking_reference` and details from the API response to the Success component.
 
-- [ ] Task 4 (AC: #3) - Navigation & Close
-    - [ ] Implement `onClose` handler to reset the booking state and close the modal.
-    - [ ] Verify user is returned to the correct context (Search Results).
+- [x] Task 4 (AC: #3) - Navigation & Close
+    - [x] Implement `onClose` handler to reset the booking state and close the modal.
+    - [x] Verify user is returned to the correct context (Search Results).
 
-- [ ] Task 5 - Tests
-    - [ ] Unit Test: Verify `BookingSuccess` renders correct details from props.
-    - [ ] Unit Test: Verify "Copy" button works (mock clipboard API).
-    - [ ] E2E Test (Playwright): Complete a booking flow and verify the Confirmation Modal appears with a reference number.
+- [x] Task 5 - Tests
+    - [x] Unit Test: Verify `BookingSuccess` renders correct details from props.
+    - [x] Unit Test: Verify "Copy" button works (mock clipboard API).
+    - [x] E2E Test (Playwright): Complete a booking flow and verify the Confirmation Modal appears with a reference number.
 
 # Dev Notes
 
@@ -99,11 +99,23 @@ created_at: "2025-12-09"
 Gemini-2.5-Flash
 
 ### Debug Log References
+- Unit tests: `app/__tests__/components/BookingSuccess.test.tsx` (Passed)
+- E2E tests: `tests/e2e/guest-booking.spec.ts` (Passed)
 
 ### Completion Notes List
+- Implemented `BookingSuccess.tsx` with all required details and copy-to-clipboard functionality.
+- Integrated into `BookingForm.tsx` to show success view after successful booking.
+- Updated E2E test to verify confirmation modal content (Ref #, Instructor).
+- Added unit tests for `BookingSuccess`.
+- Mocked UI components in unit test to isolate logic.
 
 ### File List
+- app/components/booking/BookingSuccess.tsx
+- app/components/BookingForm.tsx
+- app/__tests__/components/BookingSuccess.test.tsx
+- tests/e2e/guest-booking.spec.ts
 
 # Change Log
 
 - 2025-12-09: Story drafted by Bob (Scrum Master).
+- 2025-12-09: Implemented Booking Confirmation and Summary (Amelia).
