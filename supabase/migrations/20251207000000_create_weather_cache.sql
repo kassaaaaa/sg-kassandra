@@ -3,7 +3,7 @@ create table weather_cache (
   location text not null, -- generic identifier like 'main_beach'
   data jsonb not null,    -- the OWM response payload
   created_at timestamp with time zone default now() not null,
-  valid_until timestamp with time zone generated always as (created_at + interval '1 hour') stored
+  valid_until timestamp with time zone default (now() + interval '1 hour') not null
 );
 
 alter table weather_cache enable row level security;
