@@ -36,6 +36,7 @@ const formSchema = z.object({
 });
 
 interface BookingResponse {
+  success: boolean;
   booking_reference: string;
   instructor_name?: string;
   secure_token?: string;
@@ -85,13 +86,14 @@ export function BookingForm({
     };
 
     try {
-      const response = await createBooking(booking);
-      // Assuming response has the needed fields. If not, we might need to adjust based on actual API.
-      setBookingData(response);
-      setIsSuccess(true);
-      form.reset();
-      // We do NOT call onClose() here anymore, because we want to show the Success view.
-      // onClose will be called by the "Close" button in BookingSuccess.
+      const response: BookingResponse = await createBooking(booking);
+      if (response.success) {
+        setBookingData(response);
+        setIsSuccess(true);
+        form.reset();
+      } else {
+        throw new Error('Booking failed. Please try again.');
+      }
     } catch (error) {
       if (error instanceof Error) {
         setSubmissionError(error.message);
