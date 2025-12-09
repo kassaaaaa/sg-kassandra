@@ -3,7 +3,7 @@ id: "2-5"
 epic_id: "2"
 title: "Booking Confirmation and Summary"
 type: "frontend"
-status: "drafted"
+status: "ready-for-dev"
 created_at: "2025-12-09"
 ---
 
@@ -83,6 +83,8 @@ created_at: "2025-12-09"
 - **Wireframe:** `docs/wireframes/customer-booking.html` (See `booking-confirmed-modal` section).
 - **Tech Spec:** `docs/sprint-artifacts/tech-spec-epic-2.md`.
 - **UX Spec:** `docs/fase-2-plan/ux-design-specification.md`.
+- **Epics:** `docs/fase-3-solution/epics.md`.
+- **Architecture:** `docs/fase-1-analysis/research-technical-2025-10-29.md`.
 
 ### Project Structure Notes
 - New Component: `app/components/booking/BookingSuccess.tsx` (suggested).
@@ -91,7 +93,7 @@ created_at: "2025-12-09"
 # Dev Agent Record
 
 ### Context Reference
-<!-- Path(s) to story context XML will be added here by context workflow -->
+- docs/sprint-artifacts/2-5-booking-confirmation-and-summary.context.xml
 
 ### Agent Model Used
 Gemini-2.5-Flash
@@ -101,3 +103,7 @@ Gemini-2.5-Flash
 ### Completion Notes List
 
 ### File List
+
+# Change Log
+
+- 2025-12-09: Story drafted by Bob (Scrum Master).

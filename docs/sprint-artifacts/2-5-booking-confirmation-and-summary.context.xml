@@ -1,0 +1,154 @@
+<story-context id="docs/sprint-artifacts/2-5-booking-confirmation-and-summary.context.xml" v="1.0">
+  <metadata>
+    <epicId>2</epicId>
+    <storyId>5</storyId>
+    <title>Booking Confirmation and Summary</title>
+    <status>drafted</status>
+    <generatedAt>2025-12-09</generatedAt>
+    <generator>BMAD Story Context Workflow</generator>
+    <sourceStoryPath>docs/sprint-artifacts/2-5-booking-confirmation-and-summary.md</sourceStoryPath>
+  </metadata>
+
+  <story>
+    <asA>Guest Customer</asA>
+    <iWant>receive immediate visual confirmation and a summary of my booking details after payment/submission</iWant>
+    <soThat>I know my lesson is secured and I have a reference number for future communication.</soThat>
+    <tasks>
+      - [ ] Task 1 (AC: #1, 4) - Implement Success View Component
+          - [ ] Create `components/booking/BookingSuccess.tsx` (or similar) based on the wireframe.
+          - [ ] Implement "Booking Confirmed" header and icon.
+          - [ ] Implement Booking Reference display with "Copy to Clipboard" functionality.
+
+      - [ ] Task 2 (AC: #2) - Implement Summary Display
+          - [ ] Accept booking details prop (Lesson, Date, Time, Location, Instructor).
+          - [ ] Format Date and Time using `date-fns` (ensure consistency with `date-fns-tz` if needed for school time).
+          - [ ] Handle missing instructor name gracefully (e.g., "Instructor Assigned Soon" if for some reason it's null, though 2.4 guarantees assignment).
+
+      - [ ] Task 3 (AC: #1, 3) - Integrate with Booking Flow
+          - [ ] Update `components/booking/BookingModal.tsx` (or the parent container).
+          - [ ] Add state management to switch from "Form" view to "Success" view upon successful API response from `create-booking`.
+          - [ ] Pass the returned `booking_reference` and details from the API response to the Success component.
+
+      - [ ] Task 4 (AC: #3) - Navigation & Close
+          - [ ] Implement `onClose` handler to reset the booking state and close the modal.
+          - [ ] Verify user is returned to the correct context (Search Results).
+
+      - [ ] Task 5 - Tests
+          - [ ] Unit Test: Verify `BookingSuccess` renders correct details from props.
+          - [ ] Unit Test: Verify "Copy" button works (mock clipboard API).
+          - [ ] E2E Test (Playwright): Complete a booking flow and verify the Confirmation Modal appears with a reference number.
+    </tasks>
+  </story>
+
+  <acceptanceCriteria>
+    ### 1. UI Confirmation (Modal)
+    - [ ] Upon successful booking submission, the Booking Modal content transitions to a "Success" state (or opens a distinct Success Modal).
+    - [ ] Displays a clear success message: "Booking Confirmed!".
+    - [ ] Displays the **Booking Reference Number** (e.g., "KO-2025-883") prominently.
+    - [ ] Includes a "Copy" button next to the reference number to copy it to the clipboard.
+
+    ### 2. Booking Summary
+    - [ ] Displays a summary of the confirmed booking details:
+        - **Lesson Type:** (e.g., "Private Beginner's Course")
+        - **Date & Time:** Formatted clearly (e.g., "Saturday, Aug 24, 2025 @ 10:00 AM"). Timezone should be explicit or clearly implied as local to the school.
+        - **Location:** (e.g., "Sandy Point Beach")
+        - **Instructor:** First Name of the assigned instructor (e.g., "Alex").
+
+    ### 3. Navigation & Feedback
+    - [ ] Displays a message indicating a confirmation email has been sent.
+    - [ ] Provides a "Close" button (and "X" icon) to dismiss the modal.
+    - [ ] Closing the modal returns the user to the Search Results page (or the state prior to opening the booking modal).
+
+    ### 4. Component Usage
+    - [ ] Uses the `booking-confirmed-modal` design pattern from `docs/wireframes/customer-booking.html`.
+    - [ ] Reuses standard UI components (`Button`, `Card`, `Dialog`/`Modal`) from `shadcn/ui` library where possible.
+  </acceptanceCriteria>
+
+  <artifacts>
+    <docs>
+      <doc>
+        <path>docs/sprint-artifacts/tech-spec-epic-2.md</path>
+        <title>Epic Technical Specification: Customer Booking and Core Scheduling</title>
+        <section>Detailed Design / Workflows and Sequencing</section>
+        <snippet>8. Frontend receives success, displays Confirmation Screen with Ref #.</snippet>
+      </doc>
+      <doc>
+        <path>docs/sprint-artifacts/tech-spec-epic-2.md</path>
+        <title>Epic Technical Specification: Customer Booking and Core Scheduling</title>
+        <section>Acceptance Criteria (Authoritative) / Story 2.5: Confirmation</section>
+        <snippet>1. UI displays "Booking Confirmed". 2. Shows Booking Reference (e.g., "KO-2025-883"). 3. Shows Summary: Date, Time, Instructor (First Name), Location.</snippet>
+      </doc>
+      <doc>
+        <path>docs/fase-2-plan/ux-design-specification.md</path>
+        <title>UX Design Specification</title>
+        <section>3.4.1. Customer - Find and Book a Lesson / Flow Steps</section>
+        <snippet>4. Success: User sees: The modal content changes to a success message: "Booking Confirmed! A confirmation has been sent to your email."</snippet>
+      </doc>
+    </docs>
+    <code>
+      <file>
+        <path>app/components/BookingForm.tsx</path>
+        <kind>component</kind>
+        <symbol>BookingForm</symbol>
+        <lines>45-132</lines>
+        <reason>Current booking form. Needs to be updated to handle success state and show confirmation component, or pass data to parent to show confirmation.</reason>
+      </file>
+      <file>
+        <path>app/lib/booking-service.ts</path>
+        <kind>service</kind>
+        <symbol>createBooking</symbol>
+        <lines>14-46</lines>
+        <reason>Handles API call. Needs to ensure it returns the full booking response (reference, instructor, etc.) to the component.</reason>
+      </file>
+      <file>
+        <path>app/components/ui/card.tsx</path>
+        <kind>component</kind>
+        <symbol>Card, CardContent</symbol>
+        <reason>Standard UI component for grouping summary details.</reason>
+      </file>
+      <file>
+        <path>app/components/ui/button.tsx</path>
+        <kind>component</kind>
+        <symbol>Button</symbol>
+        <reason>Standard UI component for "Close" and "Copy" actions.</reason>
+      </file>
+      <file>
+        <path>app/components/ui/dialog.tsx</path>
+        <kind>component</kind>
+        <symbol>Dialog, DialogContent</symbol>
+        <reason>Modal container for the success view.</reason>
+      </file>
+    </code>
+    <dependencies>
+      <dep>date-fns</dep>
+      <dep>lucide-react</dep>
+      <dep>react-hook-form</dep>
+      <dep>zod</dep>
+    </dependencies>
+  </artifacts>
+
+  <constraints>
+    - **State Management:** Use local state (React `useState`) to handle the transition from "Submitting" to "Success".
+    - **Styling:** Tailwind CSS with `shadcn/ui` components.
+    - **Time Zone:** Display time consistent with the school's location.
+    - **Component Structure:** New component `BookingSuccess.tsx` should be used.
+  </constraints>
+  <interfaces>
+    <interface>
+      <name>create-booking response</name>
+      <kind>JSON</kind>
+      <signature>{ success: true, booking_reference: "REF-123", status: "confirmed", lesson_details: { ... } }</signature>
+      <path>docs/sprint-artifacts/tech-spec-epic-2.md</path>
+    </interface>
+  </interfaces>
+  <tests>
+    <standards>Use Playwright for E2E testing of the full booking flow. Use Vitest/React Testing Library for unit testing the BookingSuccess component.</standards>
+    <locations>tests/e2e/, app/__tests__/components/</locations>
+    <ideas>
+      - Mock `createBooking` response to return a mock booking reference.
+      - Verify `BookingSuccess` component displays the mocked reference.
+      - Verify clipboard copy interaction (mock `navigator.clipboard`).
+      - E2E: Complete flow from search -> book -> success modal.
+    </ideas>
+  </tests>
+</story-context>
