@@ -7,6 +7,8 @@ Status: Draft
 
 ---
 
+***Note (2025-12-09): Stories 2-7 (Multi-Session Bookings) and 2-8 (CAPTCHA) were removed from this epic to de-scope the MVP and accelerate delivery.***
+
 ## Overview
 
 This epic focuses on implementing the core value proposition of KiteOps: the ability for customers to easily book lessons that are intelligently scheduled based on weather and instructor availability. It encompasses the end-to-end booking flow for guests, the integration of the OpenWeatherMap API, and the initial version of the "Intelligent Scheduling Engine". This epic bridges the foundation built in Epic 1 with the operational workflows to be expanded in Epic 3.
@@ -20,8 +22,6 @@ This epic focuses on implementing the core value proposition of KiteOps: the abi
 *   **Intelligent Scheduling Engine:** Serverless logic to assign instructors based on availability, weather, and load balancing (Story 2.4).
 *   **Booking Confirmation:** Summary display and reference number generation (Story 2.5).
 *   **Secure Booking Access:** View-only page for guests accessed via secure token link (Story 2.6).
-*   **Multi-Session Support:** Handling linked bookings for courses/clinics (Story 2.7).
-*   **Security:** CAPTCHA implementation on booking form (Story 2.8).
 
 ### Out-of-Scope
 *   **Payments:** Full payment gateway integration (deferred to future release).
@@ -200,9 +200,6 @@ This implementation strictly adheres to the architecture defined in `architectur
 2.  Token validation ensures access only to that specific booking.
 3.  Link is included in confirmation email (mock/log if Email service not ready).
 
-**Story 2.8: CAPTCHA**
-1.  Booking request fails if CAPTCHA token missing/invalid.
-2.  Legitimate users experience minimal friction (v3 invisible).
 
 ## Traceability Mapping
 
@@ -212,7 +209,6 @@ This implementation strictly adheres to the architecture defined in `architectur
 | Story 2.4 - AC 3 (Weather) | Workflows | `scheduling-engine` | Integration: Simulate high wind, ensure booking rejected/flagged. |
 | Story 2.4 - AC 4 (Load Balance) | Workflows | `scheduling-engine` | Unit: 2 Instructors available, 1 has 0 bookings, 1 has 5. Ensure 0 assigned. |
 | Story 2.6 - AC 2 (Token) | Security | `(auth)/booking/[token]` | E2E: Visit link with modified token, expect 403/404. |
-| Story 2.8 - AC 1 (Captcha) | Security | `create-booking` | E2E: Submit payload without token, expect 400. |
 
 ## Risks, Assumptions, Open Questions
 

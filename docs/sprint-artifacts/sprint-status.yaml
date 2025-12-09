@@ -52,8 +52,6 @@ development_status:
   2-4-implement-intelligent-scheduling-engine: done
   2-5-booking-confirmation-and-summary: done
   2-6-view-booking-via-secure-link: done
-  2-7-support-for-multi-session-bookings: backlog
-  2-8-implement-captcha-on-booking-form: backlog
   epic-2-retrospective: optional
   epic-3: backlog
   3-1-instructor-dashboard-ui: backlog
