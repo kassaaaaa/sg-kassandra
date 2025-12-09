@@ -2,7 +2,7 @@ import { createClient } from '@/lib/supabase/client';
 
 export type InstructorProfile = {
   certifications: string[] | null;
-  lesson_types: string[] | null;
+  lesson_types?: string[] | null; // Making this optional as it is not managed here
 };
 
 export const ProfileService = {
@@ -30,7 +30,6 @@ export const ProfileService = {
         {
           user_id: userId,
           certifications: profile.certifications,
-          lesson_types: profile.lesson_types,
         },
         { onConflict: 'user_id' }
       );

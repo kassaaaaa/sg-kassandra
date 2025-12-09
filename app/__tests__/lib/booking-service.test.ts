@@ -43,6 +43,9 @@ describe('getBookingByToken', () => {
     expect(result).toEqual(mockBookingData);
     expect(mockSupabaseClient.functions.invoke).toHaveBeenCalledWith('get-booking-by-token', {
       body: JSON.stringify({ token: mockToken }),
+      headers: {
+        Authorization: expect.stringContaining('Bearer'),
+      }
     });
   });
 
@@ -65,6 +68,9 @@ describe('getBookingByToken', () => {
     await expect(getBookingByToken(mockToken)).rejects.toThrow('Invalid or expired token');
     expect(mockSupabaseClient.functions.invoke).toHaveBeenCalledWith('get-booking-by-token', {
       body: JSON.stringify({ token: mockToken }),
+      headers: {
+        Authorization: expect.stringContaining('Bearer'),
+      }
     });
   });
 
