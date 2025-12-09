@@ -61,15 +61,21 @@ serve(async (req) => {
         }),
     });
 
-    if (!schedulingResponse.ok) {
-        const errorData = await schedulingResponse.json();
-        throw new Error(`Scheduling failed: ${errorData.message || errorData.error}`);
+    let instructorId = null;
+    if (schedulingResponse.ok) {
+        const schedulingResult = await schedulingResponse.json();
+        instructorId = schedulingResult.data.instructor_id;
+    } else {
+        console.error("Scheduling engine failed or returned error");
+        // We continue with null instructor (pending assignment)
     }
 
-    const schedulingResult = await schedulingResponse.json();
-    const instructorId = schedulingResult.data.instructor_id;
+    // 4. Generate Booking Reference
+    const year = new Date().getFullYear();
+    const randomSuffix = Math.floor(1000 + Math.random() * 9000); // 4 digit random
+    const bookingReference = `KO-${year}-${randomSuffix}`;
 
-    // 4. Create Booking (Guest)
+    // 5. Create Booking (Guest)
     const { data: bookingData, error: bookingError } = await supabaseAdmin
       .from('bookings')
       .insert({
@@ -81,7 +87,7 @@ serve(async (req) => {
         guest_name: customer_info.name,
         guest_email: customer_info.email,
         guest_phone: customer_info.phone,
-        // customer_id is null for guests
+        booking_reference: bookingReference,
       })
       .select('id')
       .single();
@@ -90,7 +96,21 @@ serve(async (req) => {
       throw new Error(`Failed to create booking: ${bookingError.message}`);
     }
 
-    return new Response(JSON.stringify({ success: true, booking_id: bookingData.id }), {
+    // 6. Fetch Instructor Name
+    let instructorName = "Instructor Assigned Soon";
+    if (instructorId) {
+        const { data: userData, error: userError } = await supabaseAdmin.auth.admin.getUserById(instructorId);
+        if (userData && userData.user) {
+             instructorName = userData.user.user_metadata.full_name || userData.user.user_metadata.name || "Instructor";
+        }
+    }
+
+    return new Response(JSON.stringify({ 
+        success: true, 
+        booking_id: bookingData.id,
+        booking_reference: bookingReference,
+        instructor_name: instructorName
+    }), {
       headers: { ...corsHeaders, 'Content-Type': 'application/json' },
       status: 200,
     });
@@ -104,7 +124,7 @@ serve(async (req) => {
     }
     return new Response(JSON.stringify({ error: error instanceof Error ? error.message : 'Unknown error' }), {
       headers: { ...corsHeaders, 'Content-Type': 'application/json' },
-      status: 400, // Return 400 to show message in frontend, or 500
+      status: 400,
     });
   }
 });
