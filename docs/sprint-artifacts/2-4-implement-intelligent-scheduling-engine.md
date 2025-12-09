@@ -3,7 +3,7 @@ id: "2-4"
 epic_id: "2"
 title: "Implement Intelligent Scheduling Engine"
 type: "backend"
-status: "drafted"
+status: "review"
 created_at: "2025-12-09"
 ---
 
@@ -48,35 +48,35 @@ created_at: "2025-12-09"
 
 # Tasks / Subtasks
 
-- [ ] Task 1 (AC: #1, 2) - Scaffold Scheduling Engine Function
-    - [ ] Create `supabase/functions/scheduling-engine/index.ts`.
-    - [ ] Implement input validation using Zod (`lesson_type_id`, `start_time`, `end_time`).
-    - [ ] Setup Service Role client for DB access.
-    - [ ] Implement "7-Day Rule" date check logic.
-    - [ ] Create unit tests for date logic and input validation (AC #1).
+- [x] Task 1 (AC: #1, 2) - Scaffold Scheduling Engine Function
+    - [x] Create `supabase/functions/scheduling-engine/index.ts`.
+    - [x] Implement input validation using Zod (`lesson_type_id`, `start_time`, `end_time`).
+    - [x] Setup Service Role client for DB access.
+    - [x] Implement "7-Day Rule" date check logic.
+    - [x] Create unit tests for date logic and input validation (AC #1).
 
-- [ ] Task 2 (AC: #2) - Implement Weather Logic
-    - [ ] Fetch cached weather from `weather_cache` table (implemented in Story 2.1).
-    - [ ] Fetch `school_settings` for wind limits (mock if table not ready, or use defaults).
-    - [ ] Implement comparison logic (Forecast vs Limits).
-    - [ ] Add unit tests for "safe" vs "unsafe" weather scenarios (AC #2).
+- [x] Task 2 (AC: #2) - Implement Weather Logic
+    - [x] Fetch cached weather from `weather_cache` table (implemented in Story 2.1).
+    - [x] Fetch `school_settings` for wind limits (mock if table not ready, or use defaults).
+    - [x] Implement comparison logic (Forecast vs Limits).
+    - [x] Add unit tests for "safe" vs "unsafe" weather scenarios (AC #2).
 
-- [ ] Task 3 (AC: #3) - Implement Instructor Filtering
-    - [ ] Write SQL query or RPC to fetch instructors matching `lesson_type`.
-    - [ ] Extend query to check for `bookings` overlap.
-    - [ ] Extend query to check `availability` (must have `available` slot, must NOT have `blocked`).
-    - [ ] Create integration test with seeded instructor data to verify filtering (AC #3).
+- [x] Task 3 (AC: #3) - Implement Instructor Filtering
+    - [x] Write SQL query or RPC to fetch instructors matching `lesson_type`.
+    - [x] Extend query to check for `bookings` overlap.
+    - [x] Extend query to check `availability` (must have `available` slot, must NOT have `blocked`).
+    - [x] Create integration test with seeded instructor data to verify filtering (AC #3).
 
-- [ ] Task 4 (AC: #4) - Implement Load Balancing (Tie-Breaker)
-    - [ ] Implement "Daily Load" calculation (count bookings per instructor for the target date).
-    - [ ] **Critical:** Ensure `date-fns-tz` is used for School Time Zone conversion.
-    - [ ] Implement sorting logic: Load ASC -> Earliest Finish ASC -> Name ASC.
-    - [ ] Create unit tests for the ranking algorithm with various mock instructor scenarios (AC #4).
+- [x] Task 4 (AC: #4) - Implement Load Balancing (Tie-Breaker)
+    - [x] Implement "Daily Load" calculation (count bookings per instructor for the target date).
+    - [x] **Critical:** Ensure `date-fns-tz` is used for School Time Zone conversion.
+    - [x] Implement sorting logic: Load ASC -> Earliest Finish ASC -> Name ASC.
+    - [x] Create unit tests for the ranking algorithm with various mock instructor scenarios (AC #4).
 
-- [ ] Task 5 (AC: #5) - Failure Handling & Cleanup
-    - [ ] Ensure specific error codes (`weather_unsuitable`, `no_instructor_available`) are returned.
-    - [ ] Create unit tests to verify error responses (AC #5).
-    - [ ] Final code cleanup and comments.
+- [x] Task 5 (AC: #5) - Failure Handling & Cleanup
+    - [x] Ensure specific error codes (`weather_unsuitable`, `no_instructor_available`) are returned.
+    - [x] Create unit tests to verify error responses (AC #5).
+    - [x] Final code cleanup and comments.
 
 # Dev Notes
 
@@ -109,10 +109,10 @@ created_at: "2025-12-09"
 # Dev Agent Record
 
 ### Context Reference
-- (Pending creation)
+- docs/sprint-artifacts/2-4-implement-intelligent-scheduling-engine.context.xml
 
 ### Agent Model Used
-- (Pending)
+- Gemini-2.5-Flash
 
 ### Debug Log References
 - (Pending)
@@ -121,8 +121,14 @@ created_at: "2025-12-09"
 - (Pending)
 
 ### File List
-- (Pending)
+- supabase/functions/scheduling-engine/index.ts
+- supabase/functions/scheduling-engine/__tests__/index.test.ts
+- supabase/functions/scheduling-engine/__tests__/integration.test.ts
 
 # Change Log
 
 - 2025-12-09: Story drafted by Bob (Scrum Master).
+- 2025-12-09: Implemented Task 1 (Scaffolding) and Task 2 (Weather Logic) - Amelia.
+- 2025-12-09: Implemented Task 3 (Instructor Filtering) - Amelia.
+- 2025-12-09: Implemented Task 4 (Load Balancing) - Amelia.
+- 2025-12-09: Implemented Task 5 (Failure Handling) - Amelia.
