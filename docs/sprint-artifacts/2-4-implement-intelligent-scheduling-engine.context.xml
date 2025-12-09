@@ -1,0 +1,148 @@
+<context-reference id="2-4-implement-intelligent-scheduling-engine">
+  <story-id>2-4</story-id>
+  <story-title>Implement Intelligent Scheduling Engine</story-title>
+  <story-status>drafted</story-status>
+  <epic-id>2</epic-id>
+  <created-at>2025-12-09</created-at>
+
+  <summary>
+    The story focuses on implementing an intelligent scheduling engine that assigns available and qualified instructors to new booking requests. It considers real-time weather conditions and instructor workload to ensure safe lesson scheduling, maximize instructor utilization, and enable fair work distribution.
+  </summary>
+
+  <user-story>
+    As a System, I want to intelligently assign an available and qualified instructor to a new booking request, considering real-time weather conditions and current workload, so that lessons are scheduled safely, maximizing instructor utilization and ensuring fair distribution of work without manual intervention.
+  </user-story>
+
+  <acceptance-criteria>
+    <h3>1. Input Handling</h3>
+    <ul>
+      <li>The engine accepts a payload containing: <code>lesson_type_id</code>, <code>start_time</code> (ISO 8601), and <code>end_time</code> (ISO 8601).</li>
+      <li>Inputs are validated for format and logical consistency (e.g., start &lt; end).</li>
+    </ul>
+    <h3>2. Weather Qualification Logic</h3>
+    <ul>
+      <li><strong>7-Day Rule:</strong> If the booking is &gt; 7 days in the future, the weather check is skipped (assumed suitable).</li>
+      <li><strong>Weather Check:</strong> If within 7 days, the engine retrieves cached weather data for the requested slot.</li>
+      <li><strong>Suitability:</strong> The system compares forecast data (wind speed, direction) against the <code>school_settings</code> rules for the specific <code>lesson_type</code>.</li>
+      <li><strong>Rejection:</strong> If conditions are deemed "unsafe" or "unsuitable", the scheduling attempt is rejected with a specific <code>weather_unsuitable</code> error.</li>
+    </ul>
+    <h3>3. Instructor Filtering</h3>
+    <ul>
+      <li><strong>Qualification:</strong> Filters the pool of instructors to only those linked to the requested <code>lesson_type_id</code> in <code>instructor_lesson_types</code>.</li>
+      <li><strong>Availability:</strong> Further filters to exclude instructors who have:
+        <ul>
+          <li>An overlapping booking in the <code>bookings</code> table (status <code>confirmed</code> or <code>pending</code>).</li>
+          <li>A <code>blocked</code> entry in the <code>availability</code> table for the requested time.</li>
+          <li>No <code>available</code> entry covering the requested slot in the <code>availability</code> table.</li>
+        </ul>
+      </li>
+    </ul>
+    <h3>4. Load Balancing &amp; Assignment (Tie-Breaker)</h3>
+    <ul>
+      <li><strong>Load Calculation:</strong> For all remaining qualified and available instructors, calculate their "Daily Load" (count of confirmed/pending bookings for that specific calendar day).
+        <ul>
+          <li><em>Critical:</em> "Day" must be determined using the <strong>School's Local Time Zone</strong> (configured in settings), not UTC.</li>
+        </ul>
+      </li>
+      <li><strong>Ranking Strategy:</strong> Sort candidates by:
+        <ol>
+          <li><strong>Lowest Load:</strong> Fewest bookings for the day.</li>
+          <li><strong>Earliest Finish:</strong> Earliest end time of their last assigned lesson (to group free time).</li>
+          <li><strong>Alphabetical:</strong> Deterministic fallback by name.</li>
+        </ol>
+      </li>
+      <li><strong>Assignment:</strong> Select the top-ranked instructor and return their <code>instructor_id</code>.</li>
+    </ul>
+    <h3>5. Failure Handling</h3>
+    <ul>
+      <li>Returns a clear error code if no instructors are available (<code>no_instructor_available</code>).</li>
+      <li>Returns a clear error code if weather is the blocking factor (<code>weather_unsuitable</code>).</li>
+    </ul>
+  </acceptance-criteria>
+
+  <tasks>
+    <ul>
+      <li>Task 1 (AC: #1, 2) - Scaffold Scheduling Engine Function
+        <ul>
+          <li>Create <code>supabase/functions/scheduling-engine/index.ts</code>.</li>
+          <li>Implement input validation using Zod (<code>lesson_type_id</code>, <code>start_time</code>, <code>end_time</code>).</li>
+          <li>Setup Service Role client for DB access.</li>
+          <li>Implement "7-Day Rule" date check logic.</li>
+          <li>Create unit tests for date logic and input validation (AC #1).</li>
+        </ul>
+      </li>
+      <li>Task 2 (AC: #2) - Implement Weather Logic
+        <ul>
+          <li>Fetch cached weather from <code>weather_cache</code> table (implemented in Story 2.1).</li>
+          <li>Fetch <code>school_settings</code> for wind limits (mock if table not ready, or use defaults).</li>
+          <li>Implement comparison logic (Forecast vs Limits).
+          <li>Add unit tests for "safe" vs "unsafe" weather scenarios (AC #2).</li>
+        </ul>
+      </li>
+      <li>Task 3 (AC: #3) - Implement Instructor Filtering
+        <ul>
+          <li>Write SQL query or RPC to fetch instructors matching <code>lesson_type</code>.</li>
+          <li>Extend query to check for <code>bookings</code> overlap.</li>
+          <li>Extend query to check <code>availability</code> (must have <code>available</code> slot, must NOT have <code>blocked</code>).</li>
+          <li>Create integration test with seeded instructor data to verify filtering (AC #3).</li>
+        </ul>
+      </li>
+      <li>Task 4 (AC: #4) - Implement Load Balancing (Tie-Breaker)
+        <ul>
+          <li>Implement "Daily Load" calculation (count bookings per instructor for the target date).</li>
+          <li><strong>Critical:</strong> Ensure <code>date-fns-tz</code> is used for School Time Zone conversion.</li>
+          <li>Implement sorting logic: Load ASC -&gt; Earliest Finish ASC -&gt; Name ASC.</li>
+          <li>Create unit tests for the ranking algorithm with various mock instructor scenarios (AC #4).</li>
+        </ul>
+      </li>
+      <li>Task 5 (AC: #5) - Failure Handling &amp; Cleanup
+        <ul>
+          <li>Ensure specific error codes (<code>weather_unsuitable</code>, <code>no_instructor_available</code>) are returned.</li>
+          <li>Create unit tests to verify error responses (AC #5).</li>
+          <li>Final code cleanup and comments.</li>
+        </ul>
+      </li>
+    </ul>
+  </tasks>
+
+  <dev-notes>
+    <h3>Learnings from Previous Story</h3>
+    <p><strong>From Story 2.3 (Status: done)</strong></p>
+    <ul>
+      <li><strong>Service Role Pattern:</strong> Story 2.3 established using <code>service_role</code> key in Edge Functions for writing to <code>bookings</code>. This story must do the same for reading restricted <code>bookings</code> and <code>availability</code> data.</li>
+      <li><strong>New Tables:</strong> <code>bookings</code> table was modified with <code>guest_</code> fields. We will query this table to check for overlaps.</li>
+      <li><strong>Time Handling:</strong> Story 2.3 required precise <code>end_time</code> calculation. This story introduces Time Zone complexity; ensure <code>date-fns-tz</code> is correctly used as noted in Technical Notes.</li>
+      <li><strong>Review Items:</strong> No blocking review items from 2.3.</li>
+    </ul>
+    <p>[Source: docs/sprint-artifacts/2-3-guest-booking-flow.md#Dev-Agent-Record]</p>
+    <h3>Architecture patterns and constraints</h3>
+    <ul>
+      <li><strong>Edge Function:</strong> Core logic resides in <code>supabase/functions/scheduling-engine</code>.</li>
+      <li><strong>Pure Functions:</strong> Complex scheduling logic (ranking, filtering) should be testable pure functions separated from DB fetching code.</li>
+      <li><strong>Performance:</strong> Minimizing DB round-trips is crucial. Prefer complex SQL/RPC or fetching all candidate data in one go and filtering in-memory if dataset is small (&lt; 50 instructors).</li>
+    </ul>
+    <p>[Source: docs/fase-3-solution/architecture.md#7-novel-pattern-intelligent-scheduling-engine]</p>
+    <h3>References</h3>
+    <ul>
+      <li><strong>Tech Spec:</strong> <code>docs/sprint-artifacts/tech-spec-epic-2.md</code></li>
+      <li><strong>Logic Design:</strong> <code>docs/fase-3-solution/scheduling-logic.md</code></li>
+      <li><strong>PRD:</strong> <code>docs/fase-2-plan/PRD.md</code></li>
+      <li><strong>Epics:</strong> <code>docs/fase-3-solution/epics.md</code></li>
+    </ul>
+    <h3>Project Structure Notes</h3>
+    <ul>
+      <li>New function: <code>supabase/functions/scheduling-engine/index.ts</code></li>
+      <li>Shared logic: <code>app/lib/utils.ts</code> (if applicable for time helpers, otherwise keep in function utils).</li>
+    </ul>
+
+    <h3>Testing Guidelines</h3>
+    <ul>
+      <li><strong>Unit Tests:</strong> All pure functions and complex logic within the scheduling engine should have dedicated unit tests. Aim for high code coverage. Locations: <code>supabase/functions/scheduling-engine/__tests__/</code></li>
+      <li><strong>Integration Tests:</strong> Test database interactions, instructor filtering, and load balancing logic with seeded data. Locations: <code>tests/integration/scheduling-engine/</code></li>
+      <li><strong>End-to-End Tests:</strong> Although not strictly part of this story's immediate tasks, consider future E2E tests covering the full booking flow with scheduling. Locations: <code>tests/e2e/</code></li>
+      <li><strong>Mocking:</strong> External dependencies (e.g., weather API if not cached, or complex DB interactions for unit tests) should be properly mocked.</li>
+    </ul>
+  </dev-notes>
+
+  <context-date>2025-12-09</context-date>
+</context-reference>

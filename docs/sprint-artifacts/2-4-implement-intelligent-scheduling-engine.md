@@ -3,7 +3,7 @@ id: "2-4"
 epic_id: "2"
 title: "Implement Intelligent Scheduling Engine"
 type: "backend"
-status: "draft"
+status: "drafted"
 created_at: "2025-12-09"
 ---
 
@@ -13,6 +13,8 @@ created_at: "2025-12-09"
 **So that** lessons are scheduled safely, maximizing instructor utilization and ensuring fair distribution of work without manual intervention.
 
 # Acceptance Criteria
+
+(Source: `docs/sprint-artifacts/tech-spec-epic-2.md` - Story 2.4)
 
 ### 1. Input Handling
 - [ ] The engine accepts a payload containing: `lesson_type_id`, `start_time` (ISO 8601), and `end_time` (ISO 8601).
@@ -44,9 +46,83 @@ created_at: "2025-12-09"
 - [ ] Returns a clear error code if no instructors are available (`no_instructor_available`).
 - [ ] Returns a clear error code if weather is the blocking factor (`weather_unsuitable`).
 
-# Technical Notes
-- **Architecture:** Implemented as a Supabase Edge Function (`scheduling-engine`).
-- **Data Access:** Uses `supabase-js` client with Service Role key (server-side only) to query `profiles`, `bookings`, `availability`, and `weather_cache`.
-- **Time Zones:** Use a library like `date-fns-tz` to handle School Time Zone conversions strictly. Do not rely on server system time.
-- **Performance:** This function is on the critical path for booking. Logic must be optimized (e.g., single complex SQL query or efficient in-memory filtering of fetched datasets).
-- **Reference:** See `docs/fase-3-solution/scheduling-logic.md` for detailed algorithms.
+# Tasks / Subtasks
+
+- [ ] Task 1 (AC: #1, 2) - Scaffold Scheduling Engine Function
+    - [ ] Create `supabase/functions/scheduling-engine/index.ts`.
+    - [ ] Implement input validation using Zod (`lesson_type_id`, `start_time`, `end_time`).
+    - [ ] Setup Service Role client for DB access.
+    - [ ] Implement "7-Day Rule" date check logic.
+    - [ ] Create unit tests for date logic and input validation (AC #1).
+
+- [ ] Task 2 (AC: #2) - Implement Weather Logic
+    - [ ] Fetch cached weather from `weather_cache` table (implemented in Story 2.1).
+    - [ ] Fetch `school_settings` for wind limits (mock if table not ready, or use defaults).
+    - [ ] Implement comparison logic (Forecast vs Limits).
+    - [ ] Add unit tests for "safe" vs "unsafe" weather scenarios (AC #2).
+
+- [ ] Task 3 (AC: #3) - Implement Instructor Filtering
+    - [ ] Write SQL query or RPC to fetch instructors matching `lesson_type`.
+    - [ ] Extend query to check for `bookings` overlap.
+    - [ ] Extend query to check `availability` (must have `available` slot, must NOT have `blocked`).
+    - [ ] Create integration test with seeded instructor data to verify filtering (AC #3).
+
+- [ ] Task 4 (AC: #4) - Implement Load Balancing (Tie-Breaker)
+    - [ ] Implement "Daily Load" calculation (count bookings per instructor for the target date).
+    - [ ] **Critical:** Ensure `date-fns-tz` is used for School Time Zone conversion.
+    - [ ] Implement sorting logic: Load ASC -> Earliest Finish ASC -> Name ASC.
+    - [ ] Create unit tests for the ranking algorithm with various mock instructor scenarios (AC #4).
+
+- [ ] Task 5 (AC: #5) - Failure Handling & Cleanup
+    - [ ] Ensure specific error codes (`weather_unsuitable`, `no_instructor_available`) are returned.
+    - [ ] Create unit tests to verify error responses (AC #5).
+    - [ ] Final code cleanup and comments.
+
+# Dev Notes
+
+### Learnings from Previous Story
+**From Story 2.3 (Status: done)**
+- **Service Role Pattern:** Story 2.3 established using `service_role` key in Edge Functions for writing to `bookings`. This story must do the same for reading restricted `bookings` and `availability` data.
+- **New Tables:** `bookings` table was modified with `guest_` fields. We will query this table to check for overlaps.
+- **Time Handling:** Story 2.3 required precise `end_time` calculation. This story introduces Time Zone complexity; ensure `date-fns-tz` is correctly used as noted in Technical Notes.
+- **Review Items:** No blocking review items from 2.3.
+
+[Source: docs/sprint-artifacts/2-3-guest-booking-flow.md#Dev-Agent-Record]
+
+### Architecture patterns and constraints
+- **Edge Function:** Core logic resides in `supabase/functions/scheduling-engine`.
+- **Pure Functions:** Complex scheduling logic (ranking, filtering) should be testable pure functions separated from DB fetching code.
+- **Performance:** Minimizing DB round-trips is crucial. Prefer complex SQL/RPC or fetching all candidate data in one go and filtering in-memory if dataset is small (< 50 instructors).
+
+[Source: docs/fase-3-solution/architecture.md#7-novel-pattern-intelligent-scheduling-engine]
+
+### References
+- **Tech Spec:** `docs/sprint-artifacts/tech-spec-epic-2.md`
+- **Logic Design:** `docs/fase-3-solution/scheduling-logic.md`
+- **PRD:** `docs/fase-2-plan/PRD.md`
+- **Epics:** `docs/fase-3-solution/epics.md`
+
+### Project Structure Notes
+- New function: `supabase/functions/scheduling-engine/index.ts`
+- Shared logic: `app/lib/utils.ts` (if applicable for time helpers, otherwise keep in function utils).
+
+# Dev Agent Record
+
+### Context Reference
+- (Pending creation)
+
+### Agent Model Used
+- (Pending)
+
+### Debug Log References
+- (Pending)
+
+### Completion Notes List
+- (Pending)
+
+### File List
+- (Pending)
+
+# Change Log
+
+- 2025-12-09: Story drafted by Bob (Scrum Master).
