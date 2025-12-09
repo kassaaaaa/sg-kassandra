@@ -52,6 +52,9 @@ export async function getBookingByToken(token: string) {
   );
 
   const { data, error } = await supabase.functions.invoke('get-booking-by-token', {
+    headers: {
+      'Authorization': `Bearer ${process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY}`
+    },
     body: JSON.stringify({ token }),
   });
 
