@@ -8,6 +8,9 @@ const requestSchema = z.object({
 });
 
 serve(async (req) => {
+  // Log all incoming request headers for debugging
+  console.log("Incoming Request Headers:", Object.fromEntries(req.headers.entries()));
+
   if (req.method === 'OPTIONS') {
     return new Response('ok', { headers: corsHeaders });
   }
