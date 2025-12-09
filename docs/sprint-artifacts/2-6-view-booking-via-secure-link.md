@@ -1,6 +1,6 @@
 # Story 2.6: View Booking Via Secure Link
 
-Status: drafted
+Status: ready-for-dev
 
 ## Story
 
@@ -72,7 +72,7 @@ so that I can easily access my lesson information without needing to log in.
 
 ### Context Reference
 
-<!-- Path(s) to story context XML will be added here by context workflow -->
+- docs/sprint-artifacts/2-6-view-booking-via-secure-link.context.xml
 
 ### Agent Model Used
 
