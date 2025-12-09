@@ -1,6 +1,6 @@
 # Story 2.3: Guest Booking Flow
 
-Status: review
+Status: done
 
 ## Requirements Context Summary
 
@@ -101,6 +101,7 @@ so that **I can complete a booking without needing to create an account first**.
   - Creating a migration to add `guest_email`, `guest_name`, and `guest_phone` to the `bookings` table, allowing bookings without a registered `customer_id`.
   - Updating the Edge Function to calculate `end_time` from lesson duration (fetched from DB) and properly insert guest details into `bookings` instead of failing to insert into `customer_details`.
   - Correcting the `status` enum value to `pending_instructor_assignment`.
+  - Ensuring local Supabase services are running and functions are served/deployed.
 
 ### File List
 
