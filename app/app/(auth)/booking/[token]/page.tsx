@@ -75,12 +75,13 @@ export default function BookingDetailsPage() {
     lessons, // joined data
     instructor_name,
     booking_reference,
-    status
+    status,
+    location // Now top-level
   } = booking;
 
   // Assuming lessons is an object from the single join
   const lessonName = lessons?.name || 'Lesson';
-  const location = lessons?.location || 'Sandy Point Beach';
+  // const location = lessons?.location || 'Sandy Point Beach';
   const durationMinutes = lessons?.duration_minutes || 60;
   
   const startDate = new Date(start_time);

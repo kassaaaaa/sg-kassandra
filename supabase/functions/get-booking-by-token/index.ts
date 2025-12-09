@@ -35,18 +35,23 @@ serve(async (req) => {
     const { data: booking, error: bookingError } = await supabaseAdmin
       .from('bookings')
       .select(`
-        *,
+        id,
+        start_time,
+        end_time,
+        status,
+        location,
+        booking_reference,
+        secure_token_expires_at,
+        instructor_id,
         lessons (
           name,
-          duration_minutes,
-          location_id
+          duration_minutes
         )
       `)
       .eq('secure_token', token)
       .single();
 
     if (bookingError || !booking) {
-      // Log the actual error for debugging
       console.error("Booking fetch error:", bookingError);
       throw new Error('Invalid or expired token');
     }
@@ -56,36 +61,19 @@ serve(async (req) => {
        throw new Error('Token has expired');
     }
 
-    // 3. Fetch Location Name
-    let locationName = "Sandy Point Beach"; // Default or fallback
-    if (booking.lessons && booking.lessons.location_id) {
-        const { data: locationData, error: locationError } = await supabaseAdmin
-          .from('locations')
-          .select('name')
-          .eq('id', booking.lessons.location_id)
-          .single();
-        if (locationData) {
-            locationName = locationData.name;
-        }
-    }
-
-    // 4. Fetch Instructor Name (if assigned)
+    // 3. Fetch Instructor Name (if assigned)
     let instructorName = "Pending Assignment";
     if (booking.instructor_id) {
         const { data: userData, error: userError } = await supabaseAdmin.auth.admin.getUserById(booking.instructor_id);
-        if (userData && userData.user) {
+        if (userError) {
+          console.error("Error fetching instructor details:", userError.message);
+        } else if (userData && userData.user) {
              instructorName = userData.user.user_metadata.full_name || userData.user.user_metadata.name || "Instructor";
         }
     }
 
-    // N.B. The 'lessons' object in the original booking still contains location_id.
-    // We overwrite it with the fetched name for the client's convenience.
     const responseData = {
         ...booking,
-        lessons: {
-            ...booking.lessons,
-            location: locationName // Replace location_id with name
-        },
         instructor_name: instructorName
     };
 
