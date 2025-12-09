@@ -44,3 +44,36 @@ export async function createBooking(booking: Booking) {
 
   return data;
 }
+
+export async function getBookingByToken(token: string) {
+  const supabase = createBrowserClient(
+    process.env.NEXT_PUBLIC_SUPABASE_URL!,
+    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
+  );
+
+  const { data, error } = await supabase.functions.invoke('get-booking-by-token', {
+    body: JSON.stringify({ token }),
+  });
+
+  if (error) {
+    try {
+      if (typeof error === 'object' && error !== null && 'context' in error) {
+         const errorBody = await (error as any).context.json();
+         if (errorBody && errorBody.error) {
+             const msg = typeof errorBody.error === 'string' ? errorBody.error : JSON.stringify(errorBody.error);
+             throw new Error(msg);
+         }
+      }
+
+      if (error instanceof Error) {
+         throw new Error(error.message);
+      }
+    } catch (e) {
+        if (e instanceof Error && e.message !== "Unknown Edge Function Error") throw e;
+        throw new Error(error.message || "Unknown Edge Function Error");
+    }
+    throw new Error(error.message || "Unknown Edge Function Error");
+  }
+
+  return data;
+}

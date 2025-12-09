@@ -12,6 +12,7 @@ interface BookingSuccessProps {
   startTime: string; // ISO string
   location?: string;
   instructorName?: string;
+  secureToken?: string;
   onClose: () => void;
 }
 
@@ -19,16 +20,18 @@ export function BookingSuccess({
   bookingReference,
   lessonName,
   startTime,
-  location = 'Sandy Point Beach', // Default as per AC/Context usually implies a specific location or provided by lesson
+  location = 'Sandy Point Beach',
   instructorName,
+  secureToken,
   onClose,
 }: BookingSuccessProps) {
   const formattedDate = format(new Date(startTime), 'EEEE, MMM d, yyyy @ h:mm a');
 
   const copyToClipboard = () => {
     navigator.clipboard.writeText(bookingReference);
-    // Optional: could add a toast here for "Copied!" feedback
   };
+  
+  const bookingLink = secureToken ? `${window.location.origin}/booking/${secureToken}` : null;
 
   return (
     <div className="flex flex-col space-y-6">
@@ -38,11 +41,6 @@ export function BookingSuccess({
             <CheckCircle className="mr-2 h-6 w-6" />
             Booking Confirmed!
             </DialogTitle>
-            {/* Close button provided by Dialog primitive usually, but AC asks for "Close" button. 
-                We can add a redundant one or rely on the main action button. 
-                The AC says "Provides a 'Close' button (and 'X' icon)". 
-                Dialog usually has X icon. We'll add a main Close button at bottom.
-            */}
         </div>
       </DialogHeader>
 
@@ -50,6 +48,11 @@ export function BookingSuccess({
         <p className="text-muted-foreground">
           Your lesson has been successfully booked. A confirmation email has been sent.
         </p>
+        {bookingLink && (
+             <p className="text-sm text-blue-600 underline cursor-pointer" onClick={() => window.open(bookingLink, '_blank')}>
+                View Booking Details
+             </p>
+        )}
       </div>
 
       <Card className="bg-muted/50">

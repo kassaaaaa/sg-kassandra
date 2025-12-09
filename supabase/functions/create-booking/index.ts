@@ -89,7 +89,7 @@ serve(async (req) => {
         guest_phone: customer_info.phone,
         booking_reference: bookingReference,
       })
-      .select('id')
+      .select('id, secure_token')
       .single();
     
     if (bookingError) {
@@ -109,6 +109,7 @@ serve(async (req) => {
         success: true, 
         booking_id: bookingData.id,
         booking_reference: bookingReference,
+        secure_token: bookingData.secure_token,
         instructor_name: instructorName
     }), {
       headers: { ...corsHeaders, 'Content-Type': 'application/json' },

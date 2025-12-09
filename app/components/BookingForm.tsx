@@ -38,6 +38,7 @@ const formSchema = z.object({
 interface BookingResponse {
   booking_reference: string;
   instructor_name?: string;
+  secure_token?: string;
 }
 
 export function BookingForm({
@@ -109,6 +110,7 @@ export function BookingForm({
         lessonName={lessonName}
         startTime={slotId}
         instructorName={bookingData.instructor_name}
+        secureToken={bookingData.secure_token}
         onClose={onClose}
       />
     );
