@@ -171,8 +171,8 @@ export function LessonSearch() {
         )}
       </div>
 
-      {selectedLesson && selectedSlotId && (
-        <Dialog open={isBookingModalOpen} onOpenChange={setIsBookingModalOpen}>
+      <Dialog open={isBookingModalOpen} onOpenChange={setIsBookingModalOpen}>
+        {selectedLesson && selectedSlotId && (
           <DialogContent className="sm:max-w-[425px]">
             <DialogHeader>
               <DialogTitle>Book {selectedLesson.lesson_name} at {format(new Date(selectedSlotId), 'HH:mm')}</DialogTitle>
@@ -187,8 +187,8 @@ export function LessonSearch() {
               onClose={() => setIsBookingModalOpen(false)}
             />
           </DialogContent>
-        </Dialog>
-      )}
+        )}
+      </Dialog>
     </div>
   );
 }

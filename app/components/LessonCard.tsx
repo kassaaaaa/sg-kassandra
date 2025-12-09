@@ -72,6 +72,7 @@ export function LessonCard({
           {timeSlots.map((slot) => (
             <Button
               key={slot.id}
+              type="button"
               variant={slot.available ? "secondary" : "ghost"}
               disabled={!slot.available}
               onClick={() => slot.available && onTimeSlotClick(slot.id)}

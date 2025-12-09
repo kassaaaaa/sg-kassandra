@@ -45,6 +45,9 @@ so that **I can complete a booking without needing to create an account first**.
 - [x] Task 4 (AC: #1, 2, 3, 4, 5) - E2E Testing
   - [x] Write a Playwright test to simulate the guest booking flow.
   - [x] Verify the modal opens, validation works, and the form can be submitted.
+- [x] Task 5 (Bug Fix) - Fix available lesson click issue
+  - [x] Investigate why clicking available lesson doesn't trigger booking flow (AC #1)
+  - [x] Verify fix with local testing
 
 ## Dev Notes
 
@@ -89,6 +92,7 @@ so that **I can complete a booking without needing to create an account first**.
 - Added client-side validation with `zod` and `react-hook-form`.
 - Added server-side validation with `zod` in the Edge Function.
 - Created an E2E test with Playwright to cover the entire guest booking flow.
+- Fixed a bug where the booking modal would not open on some environments by refactoring the `Dialog` implementation in `LessonSearch.tsx` to ensure the root component is always mounted.
 
 ### File List
 
