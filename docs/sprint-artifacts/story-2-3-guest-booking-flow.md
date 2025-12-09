@@ -48,6 +48,10 @@ so that **I can complete a booking without needing to create an account first**.
 - [x] Task 5 (Bug Fix) - Fix available lesson click issue
   - [x] Investigate why clicking available lesson doesn't trigger booking flow (AC #1)
   - [x] Verify fix with local testing
+- [x] Task 6 (Bug Fix) - Fix Edge Function non-2xx error
+  - [x] Investigate `create-booking` function logic and error handling
+  - [x] Check DB permissions (RLS) and environment variables
+  - [x] Verify fix
 
 ## Dev Notes
 
@@ -93,6 +97,10 @@ so that **I can complete a booking without needing to create an account first**.
 - Added server-side validation with `zod` in the Edge Function.
 - Created an E2E test with Playwright to cover the entire guest booking flow.
 - Fixed a bug where the booking modal would not open on some environments by refactoring the `Dialog` implementation in `LessonSearch.tsx` to ensure the root component is always mounted.
+- Fixed `create-booking` Edge Function error ("non-2xx status") by:
+  - Creating a migration to add `guest_email`, `guest_name`, and `guest_phone` to the `bookings` table, allowing bookings without a registered `customer_id`.
+  - Updating the Edge Function to calculate `end_time` from lesson duration (fetched from DB) and properly insert guest details into `bookings` instead of failing to insert into `customer_details`.
+  - Correcting the `status` enum value to `pending_instructor_assignment`.
 
 ### File List
 
@@ -100,6 +108,9 @@ so that **I can complete a booking without needing to create an account first**.
 - `app/lib/booking-service.ts`
 - `supabase/functions/create-booking/index.ts`
 - `tests/e2e/guest-booking.spec.ts`
+- `app/components/LessonSearch.tsx`
+- `app/components/LessonCard.tsx`
+- `supabase/migrations/20251209000000_add_guest_fields_to_bookings.sql`
 
 ## Change Log
 

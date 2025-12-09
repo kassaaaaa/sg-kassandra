@@ -5,7 +5,7 @@ import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.44.2';
 
 const bookingSchema = z.object({
   lesson_id: z.number(),
-  lesson_name: z.string(),
+  // lesson_name is not needed for logic, we fetch it from DB to verify
   start_time: z.string().datetime(),
   customer_info: z.object({
     name: z.string(),
@@ -21,62 +21,63 @@ serve(async (req) => {
 
   try {
     const body = await req.json();
-    const { lesson_id, lesson_name, start_time, customer_info } = bookingSchema.parse(body);
+    const { lesson_id, start_time, customer_info } = bookingSchema.parse(body);
 
     const supabaseAdmin = createClient(
       Deno.env.get('SUPABASE_URL') ?? '',
       Deno.env.get('SUPABASE_SERVICE_ROLE_KEY') ?? ''
     );
 
-    // TODO: Invoke scheduling-engine to get an instructor_id
-
-    // Upsert customer details
-    const { data: customerData, error: customerError } = await supabaseAdmin
-      .from('customer_details')
-      .upsert({
-        email: customer_info.email,
-        full_name: customer_info.name,
-        phone: customer_info.phone,
-      }, { onConflict: 'email' })
-      .select('id')
+    // 1. Fetch Lesson Details (Duration)
+    const { data: lesson, error: lessonError } = await supabaseAdmin
+      .from('lessons')
+      .select('duration_minutes')
+      .eq('id', lesson_id)
       .single();
 
-    if (customerError) {
-      throw new Error(`Failed to create customer: ${customerError.message}`);
+    if (lessonError || !lesson) {
+      throw new Error(`Invalid lesson_id: ${lessonError?.message || 'Not found'}`);
     }
-    const customer_id = customerData.id;
 
-    // Create booking
+    // 2. Calculate End Time
+    const startDate = new Date(start_time);
+    const endDate = new Date(startDate.getTime() + lesson.duration_minutes * 60 * 1000);
+
+    // 3. Create Booking (Guest)
     const { data: bookingData, error: bookingError } = await supabaseAdmin
       .from('bookings')
       .insert({
-        customer_id: customer_id,
         lesson_id: lesson_id,
-        lesson_name: lesson_name,
         start_time: start_time,
-        status: 'pending_assignment', // Initially pending until instructor is assigned
+        end_time: endDate.toISOString(),
+        status: 'pending_instructor_assignment',
+        guest_name: customer_info.name,
+        guest_email: customer_info.email,
+        guest_phone: customer_info.phone,
+        // customer_id is null for guests
       })
-      .select('booking_reference')
+      .select('id')
       .single();
     
     if (bookingError) {
       throw new Error(`Failed to create booking: ${bookingError.message}`);
     }
 
-    return new Response(JSON.stringify({ success: true, booking_reference: bookingData.booking_reference }), {
+    return new Response(JSON.stringify({ success: true, booking_id: bookingData.id }), {
       headers: { ...corsHeaders, 'Content-Type': 'application/json' },
       status: 200,
     });
   } catch (error) {
+    console.error('Booking Error:', error);
     if (error instanceof z.ZodError) {
       return new Response(JSON.stringify({ error: error.issues }), {
         headers: { ...corsHeaders, 'Content-Type': 'application/json' },
         status: 400,
       });
     }
-    return new Response(JSON.stringify({ error: error.message }), {
+    return new Response(JSON.stringify({ error: error instanceof Error ? error.message : 'Unknown error' }), {
       headers: { ...corsHeaders, 'Content-Type': 'application/json' },
-      status: 400,
+      status: 400, // Return 400 to show message in frontend, or 500
     });
   }
 });
