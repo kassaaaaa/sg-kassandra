@@ -209,6 +209,21 @@ function createFullMockClient(mocks: any) {
     }
 }
 
+Deno.test("Handle Request - Unauthorized", async () => {
+    const req = new Request("http://localhost", {
+        method: "POST",
+        body: JSON.stringify({}),
+        headers: { "x-internal-secret": "wrong-secret" }
+    });
+    
+    // Pass null as client since it shouldn't be reached
+    const response = await handleRequest(req, null);
+    const json = await response.json();
+    
+    assertEquals(response.status, 401);
+    assertEquals(json.error, "Unauthorized");
+});
+
 Deno.test("Handle Request - Weather Unsuitable", async () => {
     const req = new Request("http://localhost", {
         method: "POST",
@@ -216,7 +231,8 @@ Deno.test("Handle Request - Weather Unsuitable", async () => {
             lesson_type_id: 1,
             start_time: "2025-12-10T10:00:00Z",
             end_time: "2025-12-10T12:00:00Z"
-        })
+        }),
+        headers: { "x-internal-secret": "dev-secret" }
     });
     
     const mocks = {
@@ -247,7 +263,8 @@ Deno.test("Handle Request - No Instructor Available", async () => {
             lesson_type_id: 1,
             start_time: "2025-12-20T10:00:00Z", // > 7 days, skip weather
             end_time: "2025-12-20T12:00:00Z"
-        })
+        }),
+        headers: { "x-internal-secret": "dev-secret" }
     });
     
     const mocks = {

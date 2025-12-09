@@ -228,6 +228,16 @@ export async function handleRequest(req: Request, supabaseClient: any) {
       return new Response("ok", { headers: corsHeaders });
     }
 
+    const internalSecret = Deno.env.get("INTERNAL_SERVICE_KEY") || "dev-secret";
+    const authHeader = req.headers.get("x-internal-secret");
+
+    if (authHeader !== internalSecret) {
+      return new Response(JSON.stringify({ error: "Unauthorized" }), {
+        status: 401,
+        headers: { ...corsHeaders, "Content-Type": "application/json" },
+      });
+    }
+
     try {
         const body = await req.json();
         const validationResult = BookingRequestSchema.safeParse(body);
