@@ -43,14 +43,41 @@ serve(async (req) => {
     const startDate = new Date(start_time);
     const endDate = new Date(startDate.getTime() + lesson.duration_minutes * 60 * 1000);
 
-    // 3. Create Booking (Guest)
+    // 3. Call Intelligent Scheduling Engine
+    const supabaseUrl = Deno.env.get('SUPABASE_URL') ?? '';
+    const internalSecret = Deno.env.get('INTERNAL_SERVICE_KEY') || 'dev-secret';
+    const schedulingEngineUrl = `${supabaseUrl}/functions/v1/scheduling-engine`;
+
+    const schedulingResponse = await fetch(schedulingEngineUrl, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'x-internal-secret': internalSecret,
+        },
+        body: JSON.stringify({
+            lesson_type_id: lesson_id,
+            start_time: start_time,
+            end_time: endDate.toISOString(),
+        }),
+    });
+
+    if (!schedulingResponse.ok) {
+        const errorData = await schedulingResponse.json();
+        throw new Error(`Scheduling failed: ${errorData.message || errorData.error}`);
+    }
+
+    const schedulingResult = await schedulingResponse.json();
+    const instructorId = schedulingResult.data.instructor_id;
+
+    // 4. Create Booking (Guest)
     const { data: bookingData, error: bookingError } = await supabaseAdmin
       .from('bookings')
       .insert({
         lesson_id: lesson_id,
+        instructor_id: instructorId,
         start_time: start_time,
         end_time: endDate.toISOString(),
-        status: 'pending_instructor_assignment',
+        status: 'confirmed',
         guest_name: customer_info.name,
         guest_email: customer_info.email,
         guest_phone: customer_info.phone,
