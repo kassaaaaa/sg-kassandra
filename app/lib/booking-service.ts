@@ -22,7 +22,24 @@ export async function createBooking(booking: Booking) {
   });
 
   if (error) {
-    throw new Error(error.message);
+    // Check if the response body contains a specific error message
+    // The supabase.functions.invoke might wrap the error, so we try to extract useful info
+    try {
+      if (error instanceof Error) {
+         throw new Error(error.message);
+      }
+      const errorBody = typeof error === 'object' && error !== null && 'context' in error 
+        ? await (error as any).context.json() 
+        : error;
+        
+       if (errorBody && errorBody.error) {
+           throw new Error(JSON.stringify(errorBody.error));
+       }
+    } catch (e) {
+        // Fallback if JSON parsing fails
+        throw new Error(error.message || "Unknown Edge Function Error");
+    }
+    throw new Error(error.message || "Unknown Edge Function Error");
   }
 
   return data;
