@@ -49,7 +49,7 @@ development_status:
   2-1-integrate-weather-api: done
   2-2-lesson-search-and-filtering-ui: done
   2-3-guest-booking-flow: done
-  2-4-implement-intelligent-scheduling-engine: review
+  2-4-implement-intelligent-scheduling-engine: done
   2-5-booking-confirmation-and-summary: backlog
   2-6-view-booking-via-secure-link: backlog
   2-7-support-for-multi-session-bookings: backlog
