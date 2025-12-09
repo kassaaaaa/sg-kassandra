@@ -238,3 +238,4 @@ This implementation strictly adheres to the architecture defined in `architectur
 - [x] [Low] Story 2.2: Update "Expert Instructor" label in `LessonCard` to be dynamic or more generic ("Certified Instructor") if assignment happens later.
 - [ ] [Low] Story 2.4: Update `fetchSchoolSettings` in `scheduling-engine` to fetch from DB when `school_settings` table is implemented.
 - [x] [Low] Story 2.4: Ensure `timezone` setting is configurable (currently hardcoded to "UTC" in mock) in `scheduling-engine`.
+- [ ] [Low] Story 2.5: `BookingSuccess.tsx` uses a default value for Location ("Sandy Point Beach"). Ensure this is updated if multiple locations are introduced in the future.

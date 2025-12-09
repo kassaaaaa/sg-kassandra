@@ -3,7 +3,7 @@ id: "2-5"
 epic_id: "2"
 title: "Booking Confirmation and Summary"
 type: "frontend"
-status: "review"
+status: "done"
 created_at: "2025-12-09"
 ---
 
@@ -123,6 +123,7 @@ Gemini-2.5-Flash
 
 - 2025-12-09: Story drafted by Bob (Scrum Master).
 - 2025-12-09: Implemented Booking Confirmation and Summary (Amelia).
+- 2025-12-09: Senior Developer Review notes appended (Amelia).
 
 # Senior Developer Review (AI)
 
@@ -181,4 +182,4 @@ The implementation successfully delivers the Booking Confirmation UI and Summary
 ### Action Items
 
 **Advisory Notes:**
-- Note: `BookingSuccess.tsx` uses a default value for Location ("Sandy Point Beach"). Ensure this is updated if multiple locations are introduced in the future.
+- Note: `BookingSuccess.tsx` uses a default value for Location ("Sandy Point Beach") and `BookingForm` does not pass a location prop. While acceptable for MVP if there is only one location, this should be dynamic in the future.
