@@ -31,10 +31,7 @@ serve(async (req) => {
       }
     );
 
-    // DEBUG: Log the token received by the function
-    console.log("Edge function received token:", token);
-
-    // 1. Fetch Booking
+    // 1. Fetch Booking and Lesson Info
     const { data: booking, error: bookingError } = await supabaseAdmin
       .from('bookings')
       .select(`
@@ -42,17 +39,15 @@ serve(async (req) => {
         lessons (
           name,
           duration_minutes,
-          location
+          location_id
         )
       `)
       .eq('secure_token', token)
       .single();
 
-    // DEBUG: Log the result of the database query
-    console.log("DB query result - data:", JSON.stringify(booking, null, 2));
-    console.log("DB query result - error:", JSON.stringify(bookingError, null, 2));
-
     if (bookingError || !booking) {
+      // Log the actual error for debugging
+      console.error("Booking fetch error:", bookingError);
       throw new Error('Invalid or expired token');
     }
 
@@ -61,7 +56,20 @@ serve(async (req) => {
        throw new Error('Token has expired');
     }
 
-    // 3. Fetch Instructor Name (if assigned)
+    // 3. Fetch Location Name
+    let locationName = "Sandy Point Beach"; // Default or fallback
+    if (booking.lessons && booking.lessons.location_id) {
+        const { data: locationData, error: locationError } = await supabaseAdmin
+          .from('locations')
+          .select('name')
+          .eq('id', booking.lessons.location_id)
+          .single();
+        if (locationData) {
+            locationName = locationData.name;
+        }
+    }
+
+    // 4. Fetch Instructor Name (if assigned)
     let instructorName = "Pending Assignment";
     if (booking.instructor_id) {
         const { data: userData, error: userError } = await supabaseAdmin.auth.admin.getUserById(booking.instructor_id);
@@ -70,12 +78,20 @@ serve(async (req) => {
         }
     }
 
+    // N.B. The 'lessons' object in the original booking still contains location_id.
+    // We overwrite it with the fetched name for the client's convenience.
+    const responseData = {
+        ...booking,
+        lessons: {
+            ...booking.lessons,
+            location: locationName // Replace location_id with name
+        },
+        instructor_name: instructorName
+    };
+
     return new Response(JSON.stringify({ 
         success: true, 
-        data: {
-            ...booking,
-            instructor_name: instructorName
-        }
+        data: responseData
     }), {
       headers: { ...corsHeaders, 'Content-Type': 'application/json' },
       status: 200,
