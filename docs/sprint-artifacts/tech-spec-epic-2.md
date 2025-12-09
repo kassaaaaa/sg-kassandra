@@ -236,3 +236,5 @@ This implementation strictly adheres to the architecture defined in `architectur
 - [x] [Low] Story 2.2: Add unit tests for `get-available-lessons` slot calculation logic to ensure robustness against edge cases (e.g., lessons spanning midnight, complex overlaps).
 - [x] [Low] Story 2.2: Consider implementing rate limiting on the `get-available-lessons` Edge Function.
 - [x] [Low] Story 2.2: Update "Expert Instructor" label in `LessonCard` to be dynamic or more generic ("Certified Instructor") if assignment happens later.
+- [ ] [Low] Story 2.4: Update `fetchSchoolSettings` in `scheduling-engine` to fetch from DB when `school_settings` table is implemented.
+- [x] [Low] Story 2.4: Ensure `timezone` setting is configurable (currently hardcoded to "UTC" in mock) in `scheduling-engine`.

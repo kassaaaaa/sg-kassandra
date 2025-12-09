@@ -67,11 +67,13 @@ export async function fetchCachedWeather(supabaseClient: any, location: string =
 }
 
 export async function fetchSchoolSettings(supabaseClient: any): Promise<SchoolSettings> {
+  // TODO: Fetch from school_settings table when implemented (Story 3.6)
+  // For now, use Env Var for timezone and defaults for wind limits
   return {
     wind_limits: {
       "default": { min: 5, max: 13 },
     },
-    timezone: "UTC"
+    timezone: Deno.env.get("SCHOOL_TIMEZONE") || "UTC"
   };
 }
 
