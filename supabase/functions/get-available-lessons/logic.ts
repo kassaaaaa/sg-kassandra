@@ -71,8 +71,8 @@ export function calculateSlots(
             });
           }
 
-          // Step by 30 mins
-          slotStart = new Date(slotStart.getTime() + 30 * 60000);
+          // Step by the lesson duration
+          slotStart = new Date(slotEnd.getTime());
         }
       }
     }
