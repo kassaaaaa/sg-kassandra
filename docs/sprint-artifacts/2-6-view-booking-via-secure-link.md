@@ -88,6 +88,7 @@ so that I can easily access my lesson information without needing to log in.
 - Updated `BookingForm.tsx` and `BookingSuccess.tsx` to display "View Booking" link.
 - Added E2E test `tests/e2e/secure-booking-link.spec.ts` covering full flow and invalid token scenario.
 - Added unit tests for `booking-service.ts` to address review feedback.
+- **Post-Release Hotfix (2025-12-09):** Corrected a critical bug in the `get-booking-by-token` function where the database query incorrectly attempted to select `location` from the `lessons` table instead of the `bookings` table. The query has been fixed to align with the actual schema, and the frontend component was updated to match the corrected data structure. This resolved the "column lessons_1.location does not exist" error.
 
 ### File List
 - supabase/migrations/20251209140000_add_secure_token.sql
