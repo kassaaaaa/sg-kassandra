@@ -106,6 +106,9 @@ serve(async (req) => {
       throw new Error(`Failed to create booking: ${bookingError.message}`);
     }
 
+    // DEBUG: Log the data we got back from the database
+    console.log("Booking data from DB:", bookingData);
+
     // 6. Fetch Instructor Name
     let instructorName = "Instructor Assigned Soon";
     if (instructorId) {

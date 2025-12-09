@@ -87,6 +87,10 @@ export function BookingForm({
 
     try {
       const response: BookingResponse = await createBooking(booking);
+      
+      // DEBUG: Log the entire response from the service
+      console.log("Response from createBooking service:", response);
+
       if (response.success) {
         setBookingData(response);
         setIsSuccess(true);
