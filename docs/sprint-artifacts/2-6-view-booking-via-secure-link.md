@@ -87,6 +87,7 @@ so that I can easily access my lesson information without needing to log in.
 - Created migration `supabase/migrations/20251209140000_add_secure_token.sql` adding `secure_token` and `secure_token_expires_at` to bookings table.
 - Updated `BookingForm.tsx` and `BookingSuccess.tsx` to display "View Booking" link.
 - Added E2E test `tests/e2e/secure-booking-link.spec.ts` covering full flow and invalid token scenario.
+- Added unit tests for `booking-service.ts` to address review feedback.
 
 ### File List
 - supabase/migrations/20251209140000_add_secure_token.sql
@@ -97,9 +98,59 @@ so that I can easily access my lesson information without needing to log in.
 - app/components/booking/BookingSuccess.tsx
 - app/components/BookingForm.tsx
 - tests/e2e/secure-booking-link.spec.ts
+- app/__tests__/lib/booking-service.test.ts
 
 ## Change Log
 
 - 2025-12-09: Story drafted by Bob (Scrum Master).
 - 2025-12-09: Updated based on validation feedback: Added learnings from previous story, refined ACs and tasks, fixed citations.
 - 2025-12-09: Implementation complete. Added secure token logic, backend functions, frontend page, and E2E tests. Status updated to review.
+- 2025-12-09: Addressed review feedback: Added unit tests for `booking-service.ts`. Status updated to review.
+
+---
+
+## Senior Developer Review (AI)
+
+- **Reviewer**: Amelia
+- **Date**: 2025-12-09
+- **Outcome**: Changes Requested
+
+### Summary
+
+The implementation correctly satisfies all functional requirements for viewing a booking via a secure link. The token generation, validation, and error handling are implemented correctly, and the UI is responsive. E2E tests provide good coverage of the user flow. However, the lack of unit tests for the `booking-service.ts` file represents a testing gap that should be addressed.
+
+### Key Findings
+
+- **[Medium]** Missing unit tests for `lib/booking-service.ts`. While the E2E test covers the happy path and basic error states, unit tests are needed to properly isolate and test the `getBookingByToken` function's logic and error handling.
+
+### Acceptance Criteria Coverage
+
+| AC# | Description | Status | Evidence |
+| :-- | :--- | :--- | :--- |
+| 1 | Endpoint `app/(auth)/booking/[token]` renders booking details. | IMPLEMENTED | `app/app/(auth)/booking/[token]/page.tsx` |
+| 2 | Validate `token` for secure access. | IMPLEMENTED | `supabase/functions/get-booking-by-token/index.ts` |
+| 3 | Secure, unique link included in booking confirmation. | IMPLEMENTED | `app/components/booking/BookingSuccess.tsx` |
+| 4 | Booking details are clear, concise, and responsive. | IMPLEMENTED | `app/app/(auth)/booking/[token]/page.tsx` |
+| 5 | Invalid or expired token results in an error. | IMPLEMENTED | `app/app/(auth)/booking/[token]/page.tsx`, `lib/booking-service.ts` |
+
+**Summary: 5 of 5 acceptance criteria fully implemented.**
+
+### Task Completion Validation
+
+| Task | Marked As | Verified As |
+| :--- | :--- | :--- |
+| Implement the `app/(auth)/booking/[token]` page component | [x] | VERIFIED COMPLETE |
+| Implement responsive styling and UX | [x] | VERIFIED COMPLETE |
+| Implement token validation logic | [x] | VERIFIED COMPLETE |
+| Implement error handling for invalid access | [x] | VERIFIED COMPLETE |
+| Integrate the secure link generation | [x] | VERIFIED COMPLETE |
+| Write unit and integration tests | [x] | **QUESTIONABLE** |
+| Write E2E tests for the secure link flow | [x] | VERIFIED COMPLETE |
+
+**Summary: 6 of 7 completed tasks verified. 1 questionable.** The task "Write unit and integration tests" was marked complete, but no unit tests for `booking-service.ts` were found.
+
+### Action Items
+
+**Code Changes Required:**
+- [x] [Medium] Create a new test file `app/__tests__/lib/booking-service.test.ts`.
+- [x] [Medium] Add unit tests for the `getBookingByToken` function in `booking-service.ts`, mocking the Supabase client to test success and error scenarios.
