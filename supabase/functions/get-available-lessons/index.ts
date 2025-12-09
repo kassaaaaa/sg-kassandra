@@ -1,6 +1,7 @@
 import { serve } from "https://deno.land/std@0.168.0/http/server.ts"
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2"
 import { z } from "https://deno.land/x/zod@v3.21.4/mod.ts";
+import { addWeeks, isBefore } from "https://esm.sh/date-fns@4.1.0";
 import { corsHeaders } from "../_shared/cors.ts";
 import { calculateSlots } from "./logic.ts";
 import { checkRateLimit } from "../_shared/rate-limiter.ts";
@@ -10,6 +11,14 @@ const QuerySchema = z.object({
   skill_level: z.enum(['beginner', 'intermediate', 'advanced']).optional(),
   lesson_type: z.string().optional(),
 });
+
+type Availability = {
+  instructor_id: string;
+  start_time: string;
+  end_time: string;
+  recurrence_rule: string | null;
+};
+
 
 export async function handleRequest(req: Request) {
   // Handle CORS
@@ -48,8 +57,8 @@ export async function handleRequest(req: Request) {
     const { date, skill_level, lesson_type } = query.data;
 
     // Define day range (UTC)
-    const startOfDay = `${date}T00:00:00.000Z`;
-    const endOfDay = `${date}T23:59:59.999Z`;
+    const startOfDay = new Date(`${date}T00:00:00.000Z`);
+    const endOfDay = new Date(`${date}T23:59:59.999Z`);
 
     // 1. Get Lessons
     let lessonQuery = supabase
@@ -85,14 +94,49 @@ export async function handleRequest(req: Request) {
     }
 
     // 3. Get Availability
-    const { data: availabilities, error: avError } = await supabase
+    // Fetch all potentially relevant recurring and one-time slots
+    const { data: allAvailabilities, error: avError } = await supabase
       .from('availability')
-      .select('instructor_id, start_time, end_time')
+      .select('instructor_id, start_time, end_time, recurrence_rule')
       .in('instructor_id', eligibleInstructorIds)
-      .gte('end_time', startOfDay) 
-      .lte('start_time', endOfDay);
+      .lte('start_time', endOfDay.toISOString()); // Get all slots that started on or before the target day
 
     if (avError) throw avError;
+
+    // Expand recurring slots
+    const finalAvailabilities: Availability[] = [];
+    (allAvailabilities as Availability[]).forEach(slot => {
+      // Handle one-time slots that fall on the day
+      if (!slot.recurrence_rule) {
+        if (new Date(slot.start_time) <= endOfDay && new Date(slot.end_time) >= startOfDay) {
+          finalAvailabilities.push(slot);
+        }
+      } 
+      // Handle weekly recurring slots
+      else if (slot.recurrence_rule === 'WEEKLY') {
+        let currentStart = new Date(slot.start_time);
+        
+        let safety = 0;
+        while (isBefore(currentStart, endOfDay) && safety < 500) { // Safety break
+          const slotDuration = new Date(slot.end_time).getTime() - new Date(slot.start_time).getTime();
+          const currentEnd = new Date(currentStart.getTime() + slotDuration);
+
+          // Check if this occurrence is on the target date
+          if (currentStart.toISOString().startsWith(date)) {
+             finalAvailabilities.push({
+               ...slot,
+               start_time: currentStart.toISOString(),
+               end_time: currentEnd.toISOString(),
+             });
+             break; // Found the occurrence for this date, move to next slot
+          }
+          
+          currentStart = addWeeks(currentStart, 1);
+          safety++;
+        }
+      }
+    });
+
 
     // 4. Get Bookings
     const { data: bookings, error: bkError } = await supabase
@@ -100,8 +144,8 @@ export async function handleRequest(req: Request) {
       .select('instructor_id, start_time, end_time')
       .in('instructor_id', eligibleInstructorIds)
       .neq('status', 'cancelled')
-      .gte('end_time', startOfDay)
-      .lte('start_time', endOfDay);
+      .gte('end_time', startOfDay.toISOString())
+      .lte('start_time', endOfDay.toISOString());
       
     if (bkError) throw bkError;
 
@@ -109,10 +153,10 @@ export async function handleRequest(req: Request) {
     const results = calculateSlots(
       lessons, 
       instructorLessons, 
-      availabilities || [], 
+      finalAvailabilities || [], 
       bookings || [], 
-      startOfDay, 
-      endOfDay
+      startOfDay.toISOString(), 
+      endOfDay.toISOString()
     );
 
     return new Response(JSON.stringify(results), {

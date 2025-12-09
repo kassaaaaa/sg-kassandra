@@ -31,6 +31,9 @@ serve(async (req) => {
       }
     );
 
+    // DEBUG: Log the token received by the function
+    console.log("Edge function received token:", token);
+
     // 1. Fetch Booking
     const { data: booking, error: bookingError } = await supabaseAdmin
       .from('bookings')
@@ -44,6 +47,10 @@ serve(async (req) => {
       `)
       .eq('secure_token', token)
       .single();
+
+    // DEBUG: Log the result of the database query
+    console.log("DB query result - data:", JSON.stringify(booking, null, 2));
+    console.log("DB query result - error:", JSON.stringify(bookingError, null, 2));
 
     if (bookingError || !booking) {
       throw new Error('Invalid or expired token');

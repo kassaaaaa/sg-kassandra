@@ -14,6 +14,8 @@ export default function BookingDetailsPage() {
   const params = useParams();
   const token = params?.token as string;
   
+  console.log("Client-side token from URL:", token);
+
   const [booking, setBooking] = useState<any>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
