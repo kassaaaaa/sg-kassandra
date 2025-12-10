@@ -1,4 +1,4 @@
-import ResolutionCenter from '@/components/dashboard/ResolutionCenter';
+import ResolutionCenter from "@/app/components/dashboard/ResolutionCenter";
 
 export default function ResolutionCenterPage() {
   return <ResolutionCenter />;
