@@ -1,0 +1,179 @@
+<story-context id=".bmad/bmm/workflows/4-implementation/story-context/template" v="1.0">
+  <metadata>
+    <epicId>3</epicId>
+    <storyId>3</storyId>
+    <title>Build Manager Resolution Center UI</title>
+    <status>drafted</status>
+    <generatedAt>2025-12-10</generatedAt>
+    <generator>BMAD Story Context Workflow</generator>
+    <sourceStoryPath>docs/sprint-artifacts/3-3-build-manager-resolution-center-ui.md</sourceStoryPath>
+  </metadata>
+
+  <context>
+    <paragraph>This story focuses on creating a dedicated UI for managers to efficiently resolve weather-related lesson conflicts. Currently, managers might see alerts on their main dashboard, but there isn't a centralized place to manage these issues comprehensively. This new Resolution Center aims to streamline the process, providing all necessary information and actions in one focused view.</paragraph>
+  </context>
+
+  <rationale>
+    <paragraph>The existing system lacks a focused workspace for managing weather-related lesson conflicts, leading to potential inefficiencies and delayed resolutions. By creating a dedicated Resolution Center, managers can quickly identify, review, and act on these conflicts, improving operational efficiency and ensuring a smoother experience for customers and instructors. This aligns with the overall goal of providing robust tools for managing lessons and unexpected events.</paragraph>
+  </rationale>
+
+  <story>
+    <asA>a Manager</asA>
+    <iWant>a dedicated 'Resolution Center' page</iWant>
+    <soThat>I can view and manage all lessons flagged for weather-related issues in a focused workspace.</soThat>
+    <tasks>
+- [ ] **Task 1: Create Resolution Center Page Route and Component (AC: #2)**
+  - [ ] Create a new route and page file at `app/(protected)/resolution-center/page.tsx`.
+  - [ ] Create the main `ResolutionCenter.tsx` component in `app/components/dashboard/`.
+- [ ] **Task 2: Implement Data Fetching for Conflicted Lessons (AC: #3, #4)**
+  - [ ] Extend the `useManagerDashboard` hook or create a new `useResolutionCenter` hook to fetch all bookings with a status indicating a weather conflict (e.g., 'pending_weather_review').
+  - [ ] Ensure the query fetches all necessary details, including lesson, customer, instructor, and the specific weather data that triggered the conflict.
+- [ ] **Task 3: Build the Conflict List UI (AC: #3, #4, #7)**
+  - [ ] In the `ResolutionCenter` component, map over the fetched data to render a list of `WeatherConflictCard` components (or a new, more detailed `ResolutionConflictItem` component).
+  - [ ] Ensure all details from AC #4 are displayed correctly for each item.
+- [ ] **Task 4: Implement Action Buttons and Modals (UI Shells) (AC: #5)**
+  - [ ] Add the "Auto-Rebook", "Manual Rebook", and "Cancel Lesson" buttons to each conflict item.
+  - [ ] Clicking "Manual Rebook" should open a modal containing a calendar view for selecting a new slot (placeholder logic).
+  - [ ] Clicking "Cancel Lesson" should open a confirmation modal.
+  - [ ] "Auto-Rebook" will trigger a backend function (logic to be implemented in a later story). For now, it can show a "Not Implemented" alert.
+- [ ] **Task 5: Connect Dashboard to Resolution Center (AC: #1)**
+  - [ ] Ensure the "Review Lessons" button on the `WeatherConflictCard` from Story 3.2 correctly navigates to the `/resolution-center` page.
+- [ ] **Task 6: Testing (AC: #1, #3, #4, #6, #7)**
+  - [ ] Write unit tests for the `ResolutionCenter` component and any new sub-components.
+  - [ ] Write an E2E test for the Resolution Center that:
+    - Mocks a weather conflict scenario.
+    - Verifies the `WeatherConflictCard` appears on the dashboard.
+    - Clicks the "Review Lessons" button and asserts the user is on the `/resolution-center` page.
+    - Asserts that the conflicted lesson is visible in the list.
+</tasks>
+  </story>
+
+  <acceptanceCriteria>
+### Core Functional Requirements
+
+1.  **Navigation:** A "Resolution Center" link shall be available in the manager's main navigation or accessible via the "Review Lessons" button on the `WeatherConflictCard` on the dashboard.
+2.  **Page Structure:** A new page must be created at `(protected)/resolution-center`.
+3.  **Conflict Listing:** The page must display a list of all lessons currently flagged with a weather-related conflict status.
+4.  **Conflict Details:** Each item in the list must clearly display:
+    - The affected lesson details (customer, instructor, time).
+    - The specific weather issue (e.g., "Wind speed too low: 5 knots").
+5.  **Resolution Actions:** Each conflict item must provide the user with clear action buttons: "Auto-Rebook", "Manual Rebook", and "Cancel Lesson".
+6.  **Responsive Design:** The layout must be responsive and accessible, adhering to the project's design system.
+7.  **UX Alignment:** The user journey for reviewing and actioning a conflict must align with the "Dedicated 'Resolution Center' Page" approach defined in the UX Design Specification (Section 3.4.3).
+</acceptanceCriteria>
+
+  <artifacts>
+    <docs>
+      <doc>
+        <path>docs/fase-3-solution/epics.md</path>
+        <title>Epic Breakdown</title>
+        <section>Story 3.3: Build Manager Resolution Center UI</section>
+        <snippet>As a Manager, I want a dedicated 'Resolution Center' page, so I can view and manage all lessons flagged for weather-related issues in a focused workspace.</snippet>
+      </doc>
+      <doc>
+        <path>docs/fase-2-plan/ux-design-specification.md</path>
+        <title>UX Design Specification</title>
+        <section>3.4.3. Manager - Review and Rebook a Lesson</section>
+        <snippet>This approach provides a focused workspace for the manager to handle weather-related conflicts, which is scalable and keeps the main dashboard clean.</snippet>
+      </doc>
+      <doc>
+        <path>docs/fase-2-plan/ux-design-specification.md</path>
+        <title>UX Design Specification</title>
+        <section>5.2.3. Weather Conflict Card (Manager)</section>
+        <snippet>To provide managers with a clear, actionable alert for weather-related lesson conflicts, enabling quick and informed resolution.</snippet>
+      </doc>
+      <doc>
+        <path>docs/fase-2-plan/PRD.md</path>
+        <title>Product Requirements Document</title>
+        <section>FR027</section>
+        <snippet>The system shall alert managers to lessons impacted by bad weather and propose rebooking solutions.</snippet>
+      </doc>
+      <doc>
+        <path>docs/fase-3-solution/architecture.md</path>
+        <title>Architecture Document</title>
+        <section>5. Complete Project Structure</section>
+        <snippet>app/(protected)/resolution-center/page.tsx, app/components/dashboard/, or app/components/resolution-center/</snippet>
+      </doc>
+    </docs>
+    <code>
+      <artifact>
+        <path>app/components/dashboard/WeatherConflictCard.tsx</path>
+        <kind>component</kind>
+        <symbol>WeatherConflictCard</symbol>
+        <reason>This component is the entry point to the Resolution Center and will be reused or adapted.</reason>
+      </artifact>
+      <artifact>
+        <path>app/lib/hooks/useManagerDashboard.ts</path>
+        <kind>hook</kind>
+        <symbol>useManagerDashboard</symbol>
+        <reason>This hook contains the data fetching logic for the manager dashboard. It will be extended or used as a pattern for the Resolution Center.</reason>
+      </artifact>
+      <artifact>
+        <path>tests/e2e/manager-dashboard.spec.ts</path>
+        <kind>test</kind>
+        <symbol>Manager Dashboard E2E Test</symbol>
+        <reason>This test provides a template for creating the new E2E test for the Resolution Center.</reason>
+      </artifact>
+    </code>
+    <dependencies>
+      <dependency>
+        <name>next</name>
+        <version>16.0.7</version>
+      </dependency>
+      <dependency>
+        <name>react</name>
+        <version>19.2.0</version>
+      </dependency>
+      <dependency>
+        <name>@supabase/supabase-js</name>
+        <version>^2.86.0</version>
+      </dependency>
+      <dependency>
+        <name>@tanstack/react-query</name>
+        <version>^5.90.12</version>
+      </dependency>
+      <dependency>
+        <name>tailwindcss</name>
+        <version>^4</version>
+      </dependency>
+      <dependency>
+        <name>shadcn/ui</name>
+        <version>0.8.0</version>
+      </dependency>
+      <dependency>
+        <name>vitest</name>
+        <version>^4.0.15</version>
+      </dependency>
+    </dependencies>
+  </artifacts>
+
+  <constraints>
+    <constraint>RLS Policies are Critical: Any new queries for the Resolution Center must be covered by policies granting managers school-wide access to `bookings`.</constraint>
+    <constraint>Data Fetching Pattern: The `useManagerDashboard` hook is the established pattern for fetching manager-specific data using TanStack Query.</constraint>
+    <constraint>Component Reusability: The `WeatherConflictCard` should be reused or adapted to maintain visual consistency.</constraint>
+    <constraint>E2E Test Stability: The new E2E test should follow the structure of the existing manager dashboard test.</constraint>
+  </constraints>
+  <interfaces>
+    <interface>
+      <name>useManagerDashboard</name>
+      <kind>hook</kind>
+      <signature>function useManagerDashboard(): { stats: ManagerDashboardStats, upcomingLessons: ManagerBooking[], isLoading: boolean, error: Error | null }</signature>
+      <path>app/lib/hooks/useManagerDashboard.ts</path>
+    </interface>
+  </interfaces>
+  <tests>
+    <standards>
+      <standard>Unit tests are written with Vitest and are co-located with the component.</standard>
+      <standard>E2E tests are written with Playwright and are located in the `tests/e2e` directory.</standard>
+      <standard>E2E tests should mock user sessions and data to ensure stability.</standard>
+    </standards>
+    <locations>
+      <location>`app/components/**/__tests__`</location>
+      <location>`tests/e2e`</location>
+    </locations>
+    <ideas>
+      <idea>Write a unit test for the `ResolutionCenter` component to verify it renders the list of conflicted lessons correctly.</idea>
+      <idea>Write an E2E test that mocks a weather conflict, verifies the `WeatherConflictCard` appears on the dashboard, navigates to the Resolution Center, and asserts that the conflicted lesson is visible.</idea>
+    </ideas>
+  </tests>
+</story-context>

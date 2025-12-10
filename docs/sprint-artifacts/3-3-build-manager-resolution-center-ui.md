@@ -1,6 +1,6 @@
 # Story 3.3: Build Manager Resolution Center UI
 
-Status: drafted
+Status: ready-for-dev
 
 ## Story
 
@@ -24,23 +24,23 @@ so I can view and manage all lessons flagged for weather-related issues in a foc
 
 ## Tasks / Subtasks
 
-- [ ] **Task 1: Create Resolution Center Page Route and Component**
+- [ ] **Task 1: Create Resolution Center Page Route and Component (AC: #2)**
   - [ ] Create a new route and page file at `app/(protected)/resolution-center/page.tsx`.
   - [ ] Create the main `ResolutionCenter.tsx` component in `app/components/dashboard/`.
-- [ ] **Task 2: Implement Data Fetching for Conflicted Lessons**
+- [ ] **Task 2: Implement Data Fetching for Conflicted Lessons (AC: #3, #4)**
   - [ ] Extend the `useManagerDashboard` hook or create a new `useResolutionCenter` hook to fetch all bookings with a status indicating a weather conflict (e.g., 'pending_weather_review').
   - [ ] Ensure the query fetches all necessary details, including lesson, customer, instructor, and the specific weather data that triggered the conflict.
-- [ ] **Task 3: Build the Conflict List UI**
+- [ ] **Task 3: Build the Conflict List UI (AC: #3, #4, #7)**
   - [ ] In the `ResolutionCenter` component, map over the fetched data to render a list of `WeatherConflictCard` components (or a new, more detailed `ResolutionConflictItem` component).
   - [ ] Ensure all details from AC #4 are displayed correctly for each item.
-- [ ] **Task 4: Implement Action Buttons and Modals (UI Shells)**
+- [ ] **Task 4: Implement Action Buttons and Modals (UI Shells) (AC: #5)**
   - [ ] Add the "Auto-Rebook", "Manual Rebook", and "Cancel Lesson" buttons to each conflict item.
   - [ ] Clicking "Manual Rebook" should open a modal containing a calendar view for selecting a new slot (placeholder logic).
   - [ ] Clicking "Cancel Lesson" should open a confirmation modal.
   - [ ] "Auto-Rebook" will trigger a backend function (logic to be implemented in a later story). For now, it can show a "Not Implemented" alert.
-- [ ] **Task 5: Connect Dashboard to Resolution Center**
+- [ ] **Task 5: Connect Dashboard to Resolution Center (AC: #1)**
   - [ ] Ensure the "Review Lessons" button on the `WeatherConflictCard` from Story 3.2 correctly navigates to the `/resolution-center` page.
-- [ ] **Task 6: Testing**
+- [ ] **Task 6: Testing (AC: #1, #3, #4, #6, #7)**
   - [ ] Write unit tests for the `ResolutionCenter` component and any new sub-components.
   - [ ] Write an E2E test for the Resolution Center that:
     - Mocks a weather conflict scenario.
@@ -79,7 +79,7 @@ so I can view and manage all lessons flagged for weather-related issues in a foc
 
 ### Context Reference
 
-{{context_reference}}
+- docs/sprint-artifacts/3-3-build-manager-resolution-center-ui.context.xml
 
 ### Agent Model Used
 
