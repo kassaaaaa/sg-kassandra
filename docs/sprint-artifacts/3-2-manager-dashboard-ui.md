@@ -1,6 +1,6 @@
 # Story 3.2: Manager Dashboard UI
 
-Status: drafted
+Status: ready-for-dev
 
 ## Story
 
@@ -84,7 +84,7 @@ so that I can stay on top of the school's activities.
 
 ### Context Reference
 
-<!-- Path(s) to story context XML will be added here by context workflow -->
+- docs/sprint-artifacts/3-2-manager-dashboard-ui.context.xml
 
 ### Agent Model Used
 
@@ -95,3 +95,7 @@ so that I can stay on top of the school's activities.
 ### Completion Notes List
 
 ### File List
+
+## Change Log
+
+<!-- Use this section to track changes to the story definition over time -->

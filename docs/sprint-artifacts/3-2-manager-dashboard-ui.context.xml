@@ -1,0 +1,104 @@
+<story-context id=".bmad/bmm/workflows/4-implementation/story-context/template" v="1.0">
+  <metadata>
+    <epicId>3</epicId>
+    <storyId>2</storyId>
+    <title>Manager Dashboard UI</title>
+    <status>drafted</status>
+    <generatedAt>2025-12-10</generatedAt>
+    <generator>BMAD Story Context Workflow</generator>
+    <sourceStoryPath>/Users/kassa/KI-programmering/kiteops/SG-Kassandra/docs/sprint-artifacts/3-2-manager-dashboard-ui.md</sourceStoryPath>
+  </metadata>
+
+  <story>
+    <asA>a Manager</asA>
+    <iWant>a dashboard with an operational overview and key alerts</iWant>
+    <soThat>I can stay on top of the school's activities</soThat>
+    <tasks>
+- [ ] **Task 1: Create Manager Dashboard Component &amp; Logic (AC: #1, #2)**
+  - [ ] Create `app/components/dashboard/ManagerDashboard.tsx`.
+  - [ ] Update `app/(protected)/dashboard/page.tsx` to conditionally render `ManagerDashboard` or `InstructorDashboard` based on user role from session.
+- [ ] **Task 2: Implement "Today's Snapshot" Widget (AC: #3)**
+  - [ ] Create a new `ManagerSnapshotWidget.tsx` or enhance the existing `SnapshotWidget.tsx` to fetch school-wide data.
+  - [ ] Implement Supabase queries to get school-wide lesson and instructor counts for the day.
+- [ ] **Task 3: Implement "Resolution Center" Alert Card (AC: #4)**
+  - [ ] Create `app/components/dashboard/WeatherConflictCard.tsx` as per the UX specification (Section 5.2.3).
+  - [ ] Implement logic to fetch data on weather-impacted lessons. The card should only render if there are conflicts.
+  - [ ] The "Review Lessons" button should link to the "Resolution Center" page (to be built in Story 3.3).
+- [ ] **Task 4: Implement "Upcoming Lessons" List (AC: #5)**
+  - [ ] Create a `ManagerUpcomingLessons.tsx` component to display a table of all upcoming lessons for the day.
+- [ ] **Task 5: Implement Manager Quick Actions (AC: #6)**
+  - [ ] Create a `ManagerQuickActions.tsx` component.
+  - [ ] Link buttons to their respective pages (e.g., `/calendar`, `/settings/instructors`).
+- [ ] **Task 6: Data Fetching with TanStack Query (AC: #8, #9)**
+  - [ ] Create a `useManagerDashboard` custom hook in `app/lib/hooks/`.
+  - [ ] Consolidate all data fetching for the manager dashboard within this hook using `useQuery`.
+- [ ] **Task 7: Testing**
+  - [ ] Write unit tests for all new `ManagerDashboard` sub-components.
+  - [ ] Write E2E tests for the manager dashboard to verify correct rendering, data display, and that all actions navigate correctly.
+</tasks>
+  </story>
+
+  <acceptanceCriteria>
+### Core Functional Requirements
+1.  **Dashboard Access:** The dashboard shall be accessible at `(protected)/dashboard` for authenticated users with the 'Manager' role.
+2.  **Conditional Rendering:** The page at `(protected)/dashboard` shall render the `ManagerDashboard` component if the user's role is 'Manager'.
+3.  **Operational Overview:** The dashboard must display "Today's Snapshot" with key metrics:
+    - Total Scheduled Lessons for today.
+    - Pending Bookings for today.
+    - Total Instructors Available today.
+4.  **Weather Conflict Alerts:** A prominent "Resolution Center" or `Weather Conflict Card` shall be displayed if any lessons are impacted by adverse weather conditions (FR023, FR027), as specified in the UX spec (Section 5.2.3).
+5.  **Upcoming Lessons:** A list of all upcoming lessons for the day shall be displayed.
+6.  **Quick Actions:** Provide quick action buttons/links for common manager tasks (e.g., "Add Booking", "View Full Calendar", "Manage Instructors").
+7.  **Responsive Layout:** The layout must match the `manager-dashboard.html` wireframe and be fully responsive.
+
+### Additional Quality Criteria
+8.  **Performance:** The dashboard must load in under 3 seconds (NFR01).
+9.  **Data Freshness:** Data should be kept fresh using TanStack Query.
+</acceptanceCriteria>
+
+  <artifacts>
+    <docs>
+      <doc path="docs/fase-2-plan/PRD.md" title="Product Requirements Document" section="Manager Journey" snippet="Managers shall have a dashboard with an operational overview, instructor availability summary, and rebooking alerts (FR023). The system shall alert managers to lessons impacted by bad weather (FR027)." />
+      <doc path="docs/fase-3-solution/architecture.md" title="Architecture Document" section="Implementation Patterns & Consistency Rules" snippet="Naming: kebab-case for API routes, snake_case for database objects, PascalCase for React components. Structure: Feature-based component organization and co-located test files." />
+      <doc path="docs/fase-2-plan/ux-design-specification.md" title="UX Design Specification" section="5.2.3. Weather Conflict Card (Manager)" snippet="Provides managers with a clear, actionable alert for weather-related lesson conflicts, enabling quick and informed resolution. Includes a prominent left border with a Warning color." />
+      <doc path="docs/fase-3-solution/epics.md" title="Epic Breakdown" section="Story 3.2: Manager Dashboard UI" snippet="As a Manager, I want a dashboard with an operational overview and key alerts, so I can stay on top of the school's activities." />
+      <doc path="docs/sprint-artifacts/tech-spec-epic-3.md" title="Epic 3 Technical Specification" section="Services and Modules" snippet="ManagerDashboard (UI) is responsible for displaying the operational overview and rebooking alerts, fetching data from /api/manager/dashboard." />
+    </docs>
+    <code>
+      <code path="app/(protected)/dashboard/page.tsx" kind="dispatcher" symbol="DashboardPage" lines="8-47" reason="This component acts as a dispatcher, routing users to the correct dashboard (Instructor or Manager) based on their role. This story will implement the Manager branch." />
+      <code path="app/components/dashboard/InstructorDashboard.tsx" kind="component" symbol="InstructorDashboard" lines="12-50" reason="Provides a clear pattern for the new ManagerDashboard component, including data fetching, loading/error states, and component composition." />
+      <code path="app/lib/hooks/useInstructorDashboard.ts" kind="hook" symbol="useInstructorDashboard" lines="37-70" reason="This custom hook is the template for the new useManagerDashboard hook. It shows the established pattern for using TanStack Query to fetch all necessary data for the dashboard view." />
+    </code>
+    <dependencies>
+      <dependency name="next" version="16.0.7" type="framework" />
+      <dependency name="react" version="19.2.0" type="library" />
+      <dependency name="supabase/ssr" version="0.8.0" type="library" />
+      <dependency name="tanstack/react-query" version="5.90.12" type="library" />
+      <dependency name="tailwindcss" version="4" type="styling" />
+      <dependency name="vitest" version="4.0.15" type="testing" />
+    </dependencies>
+  </artifacts>
+
+  <constraints>
+    <constraint type="pattern">The new `useManagerDashboard` hook should follow the existing structure of `useInstructorDashboard` for data fetching with TanStack Query.</constraint>
+    <constraint type="security">New or modified Row Level Security (RLS) policies are required to grant managers school-wide read access to `bookings`, `profiles`, and `availability` tables.</constraint>
+    <constraint type="layout">All new UI components must be responsive and adhere to the layout specified in the `manager-dashboard.html` wireframe.</constraint>
+  </constraints>
+  <interfaces>
+    <interface name="useManagerDashboard" kind="hook-signature" signature="function useManagerDashboard(): { stats, upcomingLessons, weatherConflicts, isLoading, error }" path="app/lib/hooks/useManagerDashboard.ts" />
+    <interface name="ManagerDashboard API" kind="REST-endpoint" signature="GET /api/manager/dashboard" path="app/api/manager/dashboard/route.ts" />
+  </interfaces>
+  <tests>
+    <standards>Unit tests should be co-located with the components they test inside a `__tests__` subdirectory. Tests should follow the arrange-act-assert pattern and use Vitest with React Testing Library.</standards>
+    <locations>
+      <location type="unit">`app/components/dashboard/__tests__/`</location>
+      <location type="e2e">`tests/e2e/`</location>
+    </locations>
+    <ideas>
+      <idea ac_id="1, 2">Write an E2E test to verify that a logged-in manager is correctly routed to and can see the ManagerDashboard component.</idea>
+      <idea ac_id="3">Write a unit test for the `ManagerSnapshotWidget` to ensure it correctly renders the props passed to it.</idea>
+      <idea ac_id="4">Write a unit test for the `WeatherConflictCard` to verify it only renders when there are conflicts.</idea>
+      <idea ac_id="6">Write an E2E test to confirm that the 'View Full Calendar' quick action button navigates to the `/calendar` page.</idea>
+    </ideas>
+  </tests>
+</story-context>
