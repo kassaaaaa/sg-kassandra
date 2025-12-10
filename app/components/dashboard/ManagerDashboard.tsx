@@ -47,6 +47,10 @@ export function ManagerDashboard() {
         </div>
 
         <div className="col-span-1 lg:col-span-2">
+            <WeatherWidget />
+        </div>
+
+        <div className="col-span-1 lg:col-span-4">
             {stats && <WeatherConflictCard conflictCount={stats.weatherConflictCount} />}
         </div>
       </div>
