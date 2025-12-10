@@ -52,7 +52,7 @@ development_status:
   2-4-implement-intelligent-scheduling-engine: done
   2-5-booking-confirmation-and-summary: done
   2-6-view-booking-via-secure-link: done
-  epic-2-retrospective: optional
+  epic-2-retrospective: completed
   epic-3: backlog
   3-1-instructor-dashboard-ui: backlog
   3-2-manager-dashboard-ui: backlog
