@@ -8,19 +8,31 @@ export interface DashboardStats {
   // availableHours: number; // To be implemented later if needed
 }
 
+// Represents the clean, transformed data shape used within the application
 export interface Booking {
   id: number;
   start_time: string;
   end_time: string;
   status: string;
   lesson: {
-    name: string; // Changed from title to name (table column)
-  };
+    name: string;
+  } | null; // Allow null for robustness
   profiles: { 
     full_name: string;
     email: string;
-  };
+  } | null; // Allow null for robustness
 }
+
+// Represents the raw data shape returned by the Supabase query
+interface RawBooking {
+  id: number;
+  start_time: string;
+  end_time: string;
+  status: string;
+  lesson: { name: string }[]; // Supabase returns this as an array
+  profiles: { full_name: string; email: string }[]; // Supabase returns this as an array
+}
+
 
 export function useInstructorDashboard(instructorId?: string) {
   const supabase = createClient();
@@ -63,7 +75,7 @@ export function useInstructorDashboard(instructorId?: string) {
   });
 
   // Query for Upcoming Lessons (Today and Tomorrow)
-  const { data: upcomingLessons, isLoading: lessonsLoading, error: lessonsError } = useQuery({
+  const { data: upcomingLessons, isLoading: lessonsLoading, error: lessonsError } = useQuery<RawBooking[], Error, Booking[]>({
     queryKey: ['upcoming-lessons', instructorId],
     queryFn: async () => {
       if (!instructorId) return [];
@@ -71,8 +83,6 @@ export function useInstructorDashboard(instructorId?: string) {
       const todayStart = startOfDay(new Date()).toISOString();
       const tomorrowEnd = endOfDay(addDays(new Date(), 1)).toISOString();
 
-      // Note: bookings -> lessons (foreign key lesson_id)
-      // bookings -> profiles (foreign key customer_id)
       const { data, error } = await supabase
         .from('bookings')
         .select(`
@@ -92,8 +102,14 @@ export function useInstructorDashboard(instructorId?: string) {
         console.error('Upcoming Lessons Query Error:', error);
         throw error;
       }
-      return data;
+      return data as RawBooking[];
     },
+    // Use the `select` option to transform the raw Supabase data into the desired shape
+    select: (data: RawBooking[]) => data.map(b => ({
+      ...b,
+      lesson: b.lesson?.[0] || null,
+      profiles: b.profiles?.[0] || null,
+    })),
     enabled: !!instructorId,
   });
 
@@ -101,6 +117,6 @@ export function useInstructorDashboard(instructorId?: string) {
     stats,
     upcomingLessons,
     isLoading: statsLoading || lessonsLoading,
-    error: lessonsError, // Expose error
+    error: lessonsError,
   };
 }
