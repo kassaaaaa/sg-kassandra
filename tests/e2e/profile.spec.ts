@@ -77,7 +77,7 @@ async function createTestUser(role: Role = 'instructor', retries = 5, delayMs = 
       
       await expect(page).toHaveURL(/.*\/dashboard/, { timeout: 15000 }); 
       await page.goto('/settings/profile'); 
-      await expect(page.locator('h3', { hasText: 'Instructor Profile' })).toBeVisible();
+      await expect(page.getByText('Instructor Profile', { exact: true })).toBeVisible();
     });
 
     test('should allow instructor to update profile and verify persistence (AC 1)', async ({ page }) => {

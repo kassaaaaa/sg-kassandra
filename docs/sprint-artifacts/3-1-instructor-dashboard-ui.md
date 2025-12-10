@@ -1,6 +1,6 @@
 # Story 3.1: Instructor Dashboard UI
 
-Status: ready-for-dev
+Status: review
 
 ## Story
 
@@ -35,33 +35,33 @@ so that I can quickly prepare for my day.
 
 ## Tasks / Subtasks
 
-- [ ] Create Dashboard Page and Layout (AC: #1, #6)
-  - [ ] Create `app/(protected)/dashboard/page.tsx`.
-  - [ ] Implement `DashboardLayout` (if not exists) or ensure `page.tsx` uses the main authenticated layout.
-  - [ ] Implement role checking (redirect if not instructor - though middleware should handle this, page should handle graceful degradation or specific manager view if shared path). *Note: Epic 3.2 is Manager Dashboard. If they share `/dashboard`, this page needs to render conditionally based on role.*
-- [ ] Implement "Today's Snapshot" Widget (AC: #2)
-  - [ ] Create `components/dashboard/SnapshotWidget.tsx`.
-  - [ ] Implement data fetching logic (Supabase query to count bookings for today).
-- [ ] Implement "Local Conditions" Widget (AC: #3)
-  - [ ] Create `components/dashboard/WeatherWidget.tsx`.
-  - [ ] Integrate with `weather-poller` edge function or `weather_cache` table via Supabase client.
-- [ ] Implement "Upcoming Lessons" Component (AC: #4)
-  - [ ] Create `components/dashboard/UpcomingLessons.tsx`.
-  - [ ] Implement Supabase query to fetch bookings for `instructor_id` where date is today or tomorrow, ordered by time.
-- [ ] Implement "Quick Actions" Component (AC: #5)
-  - [ ] Create `components/dashboard/QuickActions.tsx`.
-  - [ ] Link buttons to placeholder routes (or real routes if they exist from Epic 1/2).
-- [ ] Integrate Data Fetching with TanStack Query (AC: #7, #8)
-  - [ ] Create a custom hook `useInstructorDashboard` in `lib/hooks/useInstructorDashboard.ts` (or similar).
-  - [ ] Use `useQuery` to manage loading and error states.
-- [ ] Write Unit and Component Tests
-  - [ ] Test `SnapshotWidget` renders correct counts.
-  - [ ] Test `WeatherWidget` handles missing data gracefully.
-  - [ ] Test `UpcomingLessons` renders list correctly.
-- [ ] Write E2E Tests
-  - [ ] Verify Instructor can log in and see the dashboard.
-  - [ ] Verify all widgets are present.
-  - [ ] Verify responsiveness (mobile view).
+- [x] Create Dashboard Page and Layout (AC: #1, #6)
+  - [x] Create `app/(protected)/dashboard/page.tsx`.
+  - [x] Implement `DashboardLayout` (if not exists) or ensure `page.tsx` uses the main authenticated layout.
+  - [x] Implement role checking (redirect if not instructor - though middleware should handle this, page should handle graceful degradation or specific manager view if shared path). *Note: Epic 3.2 is Manager Dashboard. If they share `/dashboard`, this page needs to render conditionally based on role.*
+- [x] Implement "Today's Snapshot" Widget (AC: #2)
+  - [x] Create `components/dashboard/SnapshotWidget.tsx`.
+  - [x] Implement data fetching logic (Supabase query to count bookings for today).
+- [x] Implement "Local Conditions" Widget (AC: #3)
+  - [x] Create `components/dashboard/WeatherWidget.tsx`.
+  - [x] Integrate with `weather-poller` edge function or `weather_cache` table via Supabase client.
+- [x] Implement "Upcoming Lessons" Component (AC: #4)
+  - [x] Create `components/dashboard/UpcomingLessons.tsx`.
+  - [x] Implement Supabase query to fetch bookings for `instructor_id` where date is today or tomorrow, ordered by time.
+- [x] Implement "Quick Actions" Component (AC: #5)
+  - [x] Create `components/dashboard/QuickActions.tsx`.
+  - [x] Link buttons to placeholder routes (or real routes if they exist from Epic 1/2).
+- [x] Integrate Data Fetching with TanStack Query (AC: #7, #8)
+  - [x] Create a custom hook `useInstructorDashboard` in `lib/hooks/useInstructorDashboard.ts` (or similar).
+  - [x] Use `useQuery` to manage loading and error states.
+- [x] Write Unit and Component Tests
+  - [x] Test `SnapshotWidget` renders correct counts.
+  - [x] Test `WeatherWidget` handles missing data gracefully.
+  - [x] Test `UpcomingLessons` renders list correctly.
+- [x] Write E2E Tests
+  - [x] Verify Instructor can log in and see the dashboard.
+  - [x] Verify all widgets are present.
+  - [x] Verify responsiveness (mobile view).
 
 ## Dev Notes
 
@@ -91,6 +91,7 @@ so that I can quickly prepare for my day.
 ## Change Log
 
 - 2025-12-10: Story drafted by Bob (Scrum Master).
+- 2025-12-10: Implementation completed by Amelia (Dev). Added `full_name` and `email` to `profiles` table via migration to support dashboard needs. Updated `app/.env.local` to point to local Supabase instance for robust development and testing.
 
 ## Dev Agent Record
 
@@ -106,4 +107,30 @@ Gemini-2.5-Flash
 
 ### Completion Notes List
 
+- Implemented `InstructorDashboard` with sub-components: `SnapshotWidget`, `WeatherWidget`, `UpcomingLessons`, `QuickActions`.
+- Created `useInstructorDashboard` hook leveraging TanStack Query for efficient data fetching.
+- Added `app/app/(protected)/layout.tsx` to provide a common navigation shell for authenticated pages.
+- **Schema Changes:** Created migration `20251210120000_update_profiles_and_bookings_rls.sql` to:
+    - Add `full_name` and `email` columns to `profiles` table and updated trigger to populate them from `auth.users`.
+    - Enable RLS on `bookings` allowing Instructors to view their own bookings.
+    - Enable RLS on `profiles` allowing Instructors to view profiles of their students (via bookings join).
+- **Configuration:** Updated `app/.env.local` to use the local Supabase instance (`http://127.0.0.1:54321`) to ensure migrations and schema changes are reflected during development and testing.
+- Verified implementation with Unit Tests (`vitest`) and E2E Tests (`playwright`).
+
 ### File List
+
+- `app/app/(protected)/dashboard/page.tsx`
+- `app/app/(protected)/layout.tsx`
+- `app/components/dashboard/InstructorDashboard.tsx`
+- `app/components/dashboard/SnapshotWidget.tsx`
+- `app/components/dashboard/WeatherWidget.tsx`
+- `app/components/dashboard/UpcomingLessons.tsx`
+- `app/components/dashboard/QuickActions.tsx`
+- `app/lib/hooks/useInstructorDashboard.ts`
+- `app/__tests__/dashboard/SnapshotWidget.test.tsx`
+- `app/__tests__/dashboard/WeatherWidget.test.tsx`
+- `app/__tests__/dashboard/UpcomingLessons.test.tsx`
+- `tests/e2e/instructor-dashboard.spec.ts`
+- `supabase/migrations/20251210120000_update_profiles_and_bookings_rls.sql`
+- `supabase/migrations/20251210120500_reload_schema.sql`
+- `app/.env.local`

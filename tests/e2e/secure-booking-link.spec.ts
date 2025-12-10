@@ -49,9 +49,9 @@ test('secure booking link flow', async ({ page }) => {
                 start_time: `${dateStr}T10:00:00Z`,
                 status: 'confirmed',
                 instructor_name: 'Secure Instructor',
+                location: 'Test Beach',
                 lessons: {
                     name: 'Secure Link Test Lesson',
-                    location: 'Test Beach',
                     duration_minutes: 180
                 }
             }
