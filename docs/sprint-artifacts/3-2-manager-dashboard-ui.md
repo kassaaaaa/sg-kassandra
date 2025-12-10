@@ -1,6 +1,6 @@
 # Story 3.2: Manager Dashboard UI
 
-Status: ready-for-dev
+Status: review
 
 ## Story
 
@@ -28,27 +28,27 @@ so that I can stay on top of the school's activities.
 
 ## Tasks / Subtasks
 
-- [ ] **Task 1: Create Manager Dashboard Component & Logic (AC: #1, #2)**
-  - [ ] Create `app/components/dashboard/ManagerDashboard.tsx`.
-  - [ ] Update `app/(protected)/dashboard/page.tsx` to conditionally render `ManagerDashboard` or `InstructorDashboard` based on user role from session.
-- [ ] **Task 2: Implement "Today's Snapshot" Widget (AC: #3)**
-  - [ ] Create a new `ManagerSnapshotWidget.tsx` or enhance the existing `SnapshotWidget.tsx` to fetch school-wide data.
-  - [ ] Implement Supabase queries to get school-wide lesson and instructor counts for the day.
-- [ ] **Task 3: Implement "Resolution Center" Alert Card (AC: #4)**
-  - [ ] Create `app/components/dashboard/WeatherConflictCard.tsx` as per the UX specification (Section 5.2.3).
-  - [ ] Implement logic to fetch data on weather-impacted lessons. The card should only render if there are conflicts.
-  - [ ] The "Review Lessons" button should link to the "Resolution Center" page (to be built in Story 3.3).
-- [ ] **Task 4: Implement "Upcoming Lessons" List (AC: #5)**
-  - [ ] Create a `ManagerUpcomingLessons.tsx` component to display a table of all upcoming lessons for the day.
-- [ ] **Task 5: Implement Manager Quick Actions (AC: #6)**
-  - [ ] Create a `ManagerQuickActions.tsx` component.
-  - [ ] Link buttons to their respective pages (e.g., `/calendar`, `/settings/instructors`).
-- [ ] **Task 6: Data Fetching with TanStack Query (AC: #8, #9)**
-  - [ ] Create a `useManagerDashboard` custom hook in `app/lib/hooks/`.
-  - [ ] Consolidate all data fetching for the manager dashboard within this hook using `useQuery`.
-- [ ] **Task 7: Testing**
-  - [ ] Write unit tests for all new `ManagerDashboard` sub-components.
-  - [ ] Write E2E tests for the manager dashboard to verify correct rendering, data display, and that all actions navigate correctly.
+- [x] **Task 1: Create Manager Dashboard Component & Logic (AC: #1, #2)**
+  - [x] Create `app/components/dashboard/ManagerDashboard.tsx`.
+  - [x] Update `app/(protected)/dashboard/page.tsx` to conditionally render `ManagerDashboard` or `InstructorDashboard` based on user role from session.
+- [x] **Task 2: Implement "Today's Snapshot" Widget (AC: #3)**
+  - [x] Create a new `ManagerSnapshotWidget.tsx` or enhance the existing `SnapshotWidget.tsx` to fetch school-wide data.
+  - [x] Implement Supabase queries to get school-wide lesson and instructor counts for the day.
+- [x] **Task 3: Implement "Resolution Center" Alert Card (AC: #4)**
+  - [x] Create `app/components/dashboard/WeatherConflictCard.tsx` as per the UX specification (Section 5.2.3).
+  - [x] Implement logic to fetch data on weather-impacted lessons. The card should only render if there are conflicts.
+  - [x] The "Review Lessons" button should link to the "Resolution Center" page (to be built in Story 3.3).
+- [x] **Task 4: Implement "Upcoming Lessons" List (AC: #5)**
+  - [x] Create a `ManagerUpcomingLessons.tsx` component to display a table of all upcoming lessons for the day.
+- [x] **Task 5: Implement Manager Quick Actions (AC: #6)**
+  - [x] Create a `ManagerQuickActions.tsx` component.
+  - [x] Link buttons to their respective pages (e.g., `/calendar`, `/settings/instructors`).
+- [x] **Task 6: Data Fetching with TanStack Query (AC: #8, #9)**
+  - [x] Create a `useManagerDashboard` custom hook in `app/lib/hooks/`.
+  - [x] Consolidate all data fetching for the manager dashboard within this hook using `useQuery`.
+- [x] **Task 7: Testing**
+  - [x] Write unit tests for all new `ManagerDashboard` sub-components.
+  - [x] Write E2E tests for the manager dashboard to verify correct rendering, data display, and that all actions navigate correctly.
 
 ## Dev Notes
 
@@ -94,7 +94,30 @@ so that I can stay on top of the school's activities.
 
 ### Completion Notes List
 
+- Implemented Manager Dashboard with `ManagerDashboard`, `ManagerSnapshotWidget`, `WeatherConflictCard`, `ManagerUpcomingLessons`, `ManagerQuickActions`.
+- Created `useManagerDashboard` hook for data fetching using TanStack Query, including logic for school-wide stats and upcoming lessons.
+- Implemented responsive layout as per wireframe/mockup.
+- Added comprehensive unit tests for all components.
+- Added E2E test `tests/e2e/manager-dashboard.spec.ts`.
+- Validated implementation against all Acceptance Criteria.
+
 ### File List
+
+- app/components/dashboard/ManagerQuickActions.tsx
+- app/__tests__/dashboard/ManagerQuickActions.test.tsx
+- app/components/dashboard/ManagerQuickActions.tsx
+- app/__tests__/dashboard/ManagerQuickActions.test.tsx
+- app/components/dashboard/ManagerUpcomingLessons.tsx
+- app/__tests__/dashboard/ManagerUpcomingLessons.test.tsx
+- app/components/dashboard/WeatherConflictCard.tsx
+- app/__tests__/dashboard/WeatherConflictCard.test.tsx
+- app/components/dashboard/ManagerDashboard.tsx
+- app/components/dashboard/ManagerSnapshotWidget.tsx
+- app/lib/hooks/useManagerDashboard.ts
+- app/app/(protected)/dashboard/page.tsx
+- app/__tests__/dashboard/ManagerDashboard.test.tsx
+- app/__tests__/dashboard/ManagerSnapshotWidget.test.tsx
+- tests/e2e/manager-dashboard.spec.ts
 
 ## Change Log
 

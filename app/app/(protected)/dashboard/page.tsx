@@ -3,6 +3,7 @@
 import { useQuery } from '@tanstack/react-query';
 import { AuthService } from '@/lib/auth-service';
 import { InstructorDashboard } from '@/components/dashboard/InstructorDashboard';
+import { ManagerDashboard } from '@/components/dashboard/ManagerDashboard';
 import { Loader2 } from 'lucide-react';
 
 export default function DashboardPage() {
@@ -32,12 +33,7 @@ export default function DashboardPage() {
   }
 
   if (role === 'manager') {
-    return (
-      <div className="space-y-4">
-        <h1 className="text-3xl font-bold">Manager Dashboard</h1>
-        <p className="text-muted-foreground">Coming soon...</p>
-      </div>
-    );
+    return <ManagerDashboard />;
   }
 
   return (
