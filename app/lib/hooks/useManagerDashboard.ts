@@ -19,6 +19,10 @@ export interface ManagerBooking {
   instructor: { full_name: string } | null;
 }
 
+export interface ConflictedBooking extends ManagerBooking {
+  weather_data: Record<string, any> | null;
+}
+
 interface RawManagerBooking {
   id: number;
   start_time: string;
@@ -129,5 +133,48 @@ export function useManagerDashboard() {
     upcomingLessons,
     isLoading: statsLoading || lessonsLoading, 
     error: statsError || lessonsError 
+  };
+}
+
+export function useResolutionCenterData() {
+  const supabase = createClient();
+
+  const { data: conflictedBookings, isLoading, error } = useQuery({
+    queryKey: ['conflicted-bookings'],
+    queryFn: async (): Promise<ConflictedBooking[]> => {
+      const { data, error } = await supabase
+        .from('bookings')
+        .select(`
+          id,
+          start_time,
+          end_time,
+          status,
+          weather_data,
+          lesson:lessons(name),
+          customer:customer_id(full_name, email),
+          instructor:instructor_id(full_name)
+        `)
+        .eq('status', 'pending_weather_check')
+        .order('start_time', { ascending: true });
+
+      if (error) throw error;
+
+      return (data as any[]).map((b) => ({
+        id: b.id,
+        start_time: b.start_time,
+        end_time: b.end_time,
+        status: b.status,
+        weather_data: b.weather_data,
+        lesson: Array.isArray(b.lesson) ? b.lesson[0] : b.lesson,
+        customer: Array.isArray(b.customer) ? b.customer[0] : b.customer,
+        instructor: Array.isArray(b.instructor) ? b.instructor[0] : b.instructor,
+      }));
+    },
+  });
+
+  return {
+    conflictedBookings,
+    isLoading,
+    error,
   };
 }
