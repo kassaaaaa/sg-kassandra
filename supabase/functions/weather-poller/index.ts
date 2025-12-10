@@ -7,6 +7,13 @@ const OPENWEATHERMAP_API_KEY = Deno.env.get("OPENWEATHERMAP_API_KEY");
 const SCHOOL_LAT = Deno.env.get("SCHOOL_LAT") || "YOUR_LATITUDE";
 const SCHOOL_LON = Deno.env.get("SCHOOL_LON") || "YOUR_LONGITUDE";
 
+// Define CORS headers
+const corsHeaders = {
+  'Access-Control-Allow-Origin': '*', // Or specify your Vercel app's domain for better security
+  'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type',
+  'Access-Control-Allow-Methods': 'POST, GET, OPTIONS',
+};
+
 const WeatherResponseSchema = z.object({
   lat: z.number(),
   lon: z.number(),
@@ -47,6 +54,11 @@ async function fetchWeather(lat: string, lon: string) {
 }
 
 export async function handleRequest(req: Request, supabaseClient: any) {
+  // Handle CORS preflight request
+  if (req.method === 'OPTIONS') {
+    return new Response('ok', { headers: corsHeaders });
+  }
+
   // 1. Attempt to retrieve the most recent cache entry
   const { data: cachedData, error: cacheError } = await supabaseClient
     .from("weather_cache")
@@ -68,7 +80,7 @@ export async function handleRequest(req: Request, supabaseClient: any) {
     const ONE_HOUR_MS = 3600000;
     if (cacheAgeMs < ONE_HOUR_MS) {
       return new Response(JSON.stringify(cachedEntry.data), {
-        headers: { "Content-Type": "application/json", "X-Cache-Status": "hit" },
+        headers: { ...corsHeaders, "Content-Type": "application/json", "X-Cache-Status": "hit" },
       });
     }
   }
@@ -87,7 +99,7 @@ export async function handleRequest(req: Request, supabaseClient: any) {
     }
 
     return new Response(JSON.stringify(weatherData), {
-      headers: { "Content-Type": "application/json", "X-Cache-Status": "miss" },
+      headers: { ...corsHeaders, "Content-Type": "application/json", "X-Cache-Status": "miss" },
     });
   } catch (apiError: unknown) {
     const errorMessage = (apiError as Error).message;
@@ -97,14 +109,14 @@ export async function handleRequest(req: Request, supabaseClient: any) {
     if (cachedEntry) {
       console.log("API fetch failed. Returning stale cache as fallback.");
       return new Response(JSON.stringify(cachedEntry.data), {
-        headers: { "Content-Type": "application/json", "X-Cache-Status": "stale" },
+        headers: { ...corsHeaders, "Content-Type": "application/json", "X-Cache-Status": "stale" },
       });
     }
 
     // 5. API failed and there's no cache at all, return a server error
     return new Response(JSON.stringify({ error: "Failed to fetch weather data and no cache is available." }), {
       status: 500,
-      headers: { "Content-Type": "application/json" },
+      headers: { ...corsHeaders, "Content-Type": "application/json" },
     });
   }
 }
@@ -112,10 +124,21 @@ export async function handleRequest(req: Request, supabaseClient: any) {
 // Only run the server when the script is executed directly
 if (import.meta.main) {
   serve(async (req) => {
+    // This is for local testing via `supabase functions serve`
+    if (req.method === 'OPTIONS') {
+      return new Response('ok', { headers: corsHeaders });
+    }
+
     const supabaseClient = createClient(
       Deno.env.get("SUPABASE_URL") ?? "",
       Deno.env.get("SUPABASE_SERVICE_ROLE_KEY") ?? ""
     );
-    return handleRequest(req, supabaseClient);
+    
+    // The main logic is in handleRequest, so we call it and ensure CORS headers are on the final response.
+    const response = await handleRequest(req, supabaseClient);
+    for (const [key, value] of Object.entries(corsHeaders)) {
+      response.headers.set(key, value);
+    }
+    return response;
   });
 }
