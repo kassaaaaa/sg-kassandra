@@ -6,6 +6,10 @@ import { format } from 'date-fns';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger, DialogFooter, DialogClose } from '@/components/ui/dialog';
 import { Calendar } from '@/components/ui/calendar'; // Assuming calendar component exists
 
+interface ResolutionConflictItemProps {
+  booking: ConflictedBooking;
+}
+
 const ResolutionConflictItem: React.FC<ResolutionConflictItemProps> = ({ booking }) => {
   const { lesson, customer, instructor, start_time, weather_data } = booking;
   const [isCancelModalOpen, setCancelModalOpen] = useState(false);
