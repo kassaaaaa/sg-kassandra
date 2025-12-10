@@ -14,6 +14,10 @@ import {
 } from "@/components/ui/dialog";
 //import { Calendar } from '@/components/ui/calendar'; // Assuming calendar component exists
 
+interface ResolutionConflictItemProps {
+  booking: ConflictedBooking;
+}
+
 const ResolutionConflictItem: React.FC<ResolutionConflictItemProps> = ({
   booking,
 }) => {
