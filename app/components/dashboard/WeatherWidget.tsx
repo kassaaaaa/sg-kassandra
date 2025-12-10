@@ -66,7 +66,7 @@ export function WeatherWidget() {
         <div className="mt-4 space-y-1">
             <div className="flex items-center gap-2 text-sm">
                 <Wind className="h-4 w-4 text-muted-foreground" />
-                <span>{current?.wind_speed} m/s ({current?.wind_deg}°)</span>
+                <span>{current?.wind_speed} m/s {current?.wind_direction}</span>
             </div>
              {current?.wind_gust && (
                  <div className="text-xs text-muted-foreground ml-6">

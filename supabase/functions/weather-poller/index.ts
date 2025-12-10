@@ -39,6 +39,14 @@ const CurrentWeatherSchema = z.object({
   name: z.string().optional(),
 });
 
+// Helper function to convert degrees to compass direction
+function degreesToCompass(deg: number | undefined): string {
+  if (deg === undefined) return 'N/A';
+  const directions = ['N', 'NNE', 'NE', 'ENE', 'E', 'ESE', 'SE', 'SSE', 'S', 'SSW', 'SW', 'WSW', 'W', 'WNW', 'NW', 'NNW'];
+  const index = Math.round(deg / 22.5) % 16;
+  return directions[index];
+}
+
 // Updated fetchWeather function to use the free-tier endpoint
 async function fetchWeather(lat: string, lon: string) {
   const url = `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&units=metric&appid=${OPENWEATHERMAP_API_KEY}`;
@@ -100,6 +108,7 @@ export async function handleRequest(req: Request, supabaseClient: any) {
         wind_speed: rawWeatherData.wind?.speed,
         wind_deg: rawWeatherData.wind?.deg,
         wind_gust: rawWeatherData.wind?.gust,
+        wind_direction: degreesToCompass(rawWeatherData.wind?.deg), // Add the compass direction
         // Add other fields from the old structure if needed, with default values
         dt: rawWeatherData.dt,
         sunrise: 0, 
