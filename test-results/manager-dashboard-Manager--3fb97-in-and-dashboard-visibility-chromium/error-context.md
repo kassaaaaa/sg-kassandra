@@ -16,16 +16,27 @@
             - img [ref=e14]
             - generic [ref=e16]: Calendar
           - link "Settings" [ref=e17] [cursor=pointer]:
-            - /url: /settings
+            - /url: /settings/profile
             - img [ref=e18]
             - generic [ref=e21]: Settings
           - button "Logout" [ref=e22]:
             - img [ref=e23]
             - generic [ref=e26]: Logout
     - main [ref=e27]:
-      - generic [ref=e28]: Loading profile...
+      - generic [ref=e28]:
+        - heading "Error loading dashboard" [level=2] [ref=e29]
+        - paragraph [ref=e30]: "Missing queryFn: '[\"manager-dashboard-stats\"]'"
   - region "Notifications alt+T"
-  - button "Open Next.js Dev Tools" [ref=e34] [cursor=pointer]:
-    - img [ref=e35]
-  - alert [ref=e38]
+  - generic [ref=e35] [cursor=pointer]:
+    - button "Open Next.js Dev Tools" [ref=e36]:
+      - img [ref=e37]
+    - generic [ref=e40]:
+      - button "Open issues overlay" [ref=e41]:
+        - generic [ref=e42]:
+          - generic [ref=e43]: "0"
+          - generic [ref=e44]: "1"
+        - generic [ref=e45]: Issue
+      - button "Collapse issues badge" [ref=e46]:
+        - img [ref=e47]
+  - alert [ref=e49]
 ```
