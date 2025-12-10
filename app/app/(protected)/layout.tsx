@@ -28,7 +28,7 @@ export default function ProtectedLayout({
   const navItems = [
     { href: '/dashboard', label: 'Dashboard', icon: Home },
     { href: '/calendar', label: 'Calendar', icon: Calendar },
-    { href: '/settings', label: 'Settings', icon: Settings },
+    { href: '/settings/profile', label: 'Settings', icon: Settings },
   ];
 
   return (
