@@ -14,43 +14,43 @@ const corsHeaders = {
   'Access-Control-Allow-Methods': 'POST, GET, OPTIONS',
 };
 
-const WeatherResponseSchema = z.object({
-  lat: z.number(),
-  lon: z.number(),
-  timezone: z.string(),
-  timezone_offset: z.number(),
-  current: z.object({
-    dt: z.number(),
-    sunrise: z.number(),
-    sunset: z.number(),
+// New Zod schema for the /data/2.5/weather endpoint response
+const CurrentWeatherSchema = z.object({
+  coord: z.object({ lon: z.number(), lat: z.number() }),
+  weather: z.array(z.object({
+    id: z.number(),
+    main: z.string(),
+    description: z.string(),
+    icon: z.string(),
+  })),
+  main: z.object({
     temp: z.number(),
     feels_like: z.number(),
     pressure: z.number(),
     humidity: z.number(),
-    dew_point: z.number(),
-    uvi: z.number(),
-    clouds: z.number(),
-    visibility: z.number(),
-    wind_speed: z.number(),
-    wind_deg: z.number(),
-    wind_gust: z.number().optional(),
-    weather: z.array(z.object({
-      id: z.number(),
-      main: z.string(),
-      description: z.string(),
-      icon: z.string(),
-    })),
   }),
+  wind: z.object({
+    speed: z.number(),
+    deg: z.number(),
+    gust: z.number().optional(),
+  }).partial(),
+  clouds: z.object({ all: z.number() }).optional(),
+  dt: z.number(),
+  name: z.string().optional(),
 });
 
+// Updated fetchWeather function to use the free-tier endpoint
 async function fetchWeather(lat: string, lon: string) {
-  const url = `https://api.openweathermap.org/data/3.0/onecall?lat=${lat}&lon=${lon}&exclude=minutely,hourly,daily,alerts&units=metric&appid=${OPENWEATHERMAP_API_KEY}`;
+  const url = `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&units=metric&appid=${OPENWEATHERMAP_API_KEY}`;
   const response = await fetch(url);
+  const json = await response.json();
+
   if (!response.ok) {
-    throw new Error(`Failed to fetch weather data: ${response.statusText}`);
+    console.error("OpenWeather error:", json);
+    throw new Error(`Failed to fetch weather data: ${response.status} ${response.statusText}`);
   }
-  const data = await response.json();
-  return WeatherResponseSchema.parse(data);
+
+  return CurrentWeatherSchema.parse(json);
 }
 
 export async function handleRequest(req: Request, supabaseClient: any) {
@@ -87,18 +87,40 @@ export async function handleRequest(req: Request, supabaseClient: any) {
 
   // 3. Cache is stale or missing, so fetch from the external API
   try {
-    const weatherData = await fetchWeather(SCHOOL_LAT, SCHOOL_LON);
+    const rawWeatherData = await fetchWeather(SCHOOL_LAT, SCHOOL_LON);
 
-    // Insert into cache; await to ensure execution before runtime termination
+    // **Transform the data to match the structure the frontend expects**
+    const transformedData = {
+      current: {
+        temp: rawWeatherData.main.temp,
+        feels_like: rawWeatherData.main.feels_like,
+        pressure: rawWeatherData.main.pressure,
+        humidity: rawWeatherData.main.humidity,
+        weather: rawWeatherData.weather,
+        wind_speed: rawWeatherData.wind?.speed,
+        wind_deg: rawWeatherData.wind?.deg,
+        wind_gust: rawWeatherData.wind?.gust,
+        // Add other fields from the old structure if needed, with default values
+        dt: rawWeatherData.dt,
+        sunrise: 0, 
+        sunset: 0,
+        dew_point: 0,
+        uvi: 0,
+        clouds: rawWeatherData.clouds?.all,
+        visibility: 0,
+      }
+    };
+
+    // Insert transformed data into cache
     const { error: insertError } = await supabaseClient
       .from("weather_cache")
-      .insert({ location: "main_beach", data: weatherData });
+      .insert({ location: "main_beach", data: transformedData });
 
     if (insertError) {
       console.error("Error inserting into cache:", insertError);
     }
 
-    return new Response(JSON.stringify(weatherData), {
+    return new Response(JSON.stringify(transformedData), {
       headers: { ...corsHeaders, "Content-Type": "application/json", "X-Cache-Status": "miss" },
     });
   } catch (apiError: unknown) {
