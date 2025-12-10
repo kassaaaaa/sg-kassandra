@@ -43,16 +43,18 @@ export function ManagerDashboard() {
       </div>
 
       <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
+        {stats && stats.weatherConflictCount > 0 && (
+            <div className="col-span-full mb-4">
+                <WeatherConflictCard conflictCount={stats.weatherConflictCount} />
+            </div>
+        )}
+
         <div className="col-span-1 lg:col-span-2">
             {stats && <ManagerSnapshotWidget stats={stats} />}
         </div>
 
         <div className="col-span-1 lg:col-span-2">
             <WeatherWidget />
-        </div>
-
-        <div className="col-span-1 lg:col-span-4">
-            {stats && <WeatherConflictCard conflictCount={stats.weatherConflictCount} />}
         </div>
       </div>
 
