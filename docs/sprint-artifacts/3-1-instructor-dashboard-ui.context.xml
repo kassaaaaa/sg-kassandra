@@ -1,0 +1,180 @@
+<story-context id=".bmad/bmm/workflows/4-implementation/story-context/template" v="1.0">
+  <metadata>
+    <epicId>3</epicId>
+    <storyId>1</storyId>
+    <title>Instructor Dashboard UI</title>
+    <status>drafted</status>
+    <generatedAt>2025-12-10</generatedAt>
+    <generator>BMAD Story Context Workflow</generator>
+    <sourceStoryPath>docs/sprint-artifacts/3-1-instructor-dashboard-ui.md</sourceStoryPath>
+  </metadata>
+
+  <story>
+    <asA>an Instructor</asA>
+    <iWant>a dashboard that shows my upcoming lessons and current weather</iWant>
+    <soThat>I can quickly prepare for my day</soThat>
+    <tasks>
+      <task-group title="Create Dashboard Page and Layout (AC: #1, #6)">
+        <task>Create `app/(protected)/dashboard/page.tsx`.</task>
+        <task>Implement `DashboardLayout` (if not exists) or ensure `page.tsx` uses the main authenticated layout.</task>
+        <task>Implement role checking (redirect if not instructor - though middleware should handle this, page should handle graceful degradation or specific manager view if shared path). *Note: Epic 3.2 is Manager Dashboard. If they share `/dashboard`, this page needs to render conditionally based on role.*</task>
+      </task-group>
+      <task-group title="Implement 'Today's Snapshot' Widget (AC: #2)">
+        <task>Create `components/dashboard/SnapshotWidget.tsx`.</task>
+        <task>Implement data fetching logic (Supabase query to count bookings for today).</task>
+      </task-group>
+      <task-group title="Implement 'Local Conditions' Widget (AC: #3)">
+        <task>Create `components/dashboard/WeatherWidget.tsx`.</task>
+        <task>Integrate with `weather-poller` edge function or `weather_cache` table via Supabase client.</task>
+      </task-group>
+      <task-group title="Implement 'Upcoming Lessons' Component (AC: #4)">
+        <task>Create `components/dashboard/UpcomingLessons.tsx`.</task>
+        <task>Implement Supabase query to fetch bookings for `instructor_id` where date is today or tomorrow, ordered by time.</task>
+      </task-group>
+      <task-group title="Implement 'Quick Actions' Component (AC: #5)">
+        <task>Create `components/dashboard/QuickActions.tsx`.</task>
+        <task>Link buttons to placeholder routes (or real routes if they exist from Epic 1/2).</task>
+      </task-group>
+      <task-group title="Integrate Data Fetching with TanStack Query (AC: #7, #8)">
+        <task>Create a custom hook `useInstructorDashboard` in `lib/hooks/useInstructorDashboard.ts` (or similar).</task>
+        <task>Use `useQuery` to manage loading and error states.</task>
+      </task-group>
+      <task-group title="Write Unit and Component Tests">
+        <task>Test `SnapshotWidget` renders correct counts.</task>
+        <task>Test `WeatherWidget` handles missing data gracefully.</task>
+        <task>Test `UpcomingLessons` renders list correctly.</task>
+      </task-group>
+      <task-group title="Write E2E Tests">
+        <task>Verify Instructor can log in and see the dashboard.</task>
+        <task>Verify all widgets are present.</task>
+        <task>Verify responsiveness (mobile view).</task>
+      </task-group>
+    </tasks>
+  </story>
+
+  <acceptanceCriteria>
+    <criterion id="1" title="Dashboard Access">The dashboard shall be accessible at `(protected)/dashboard` for authenticated users with the 'Instructor' role.</criterion>
+    <criterion id="2" title="Lesson Summary (Snapshot)">
+      The dashboard shall display a "Today's Snapshot" widget summarizing:
+      - Total scheduled lessons for today.
+      - Pending bookings (count).
+      - Hours available (if applicable/calculated).
+    </criterion>
+    <criterion id="3" title="Weather Widget">A "Local Conditions" widget shall display current weather data (Temperature, Wind Speed, Direction, Condition Icon) fetched from the system's weather service (or cache).</criterion>
+    <criterion id="4" title="Upcoming Lessons List">
+      A list of "My Upcoming Lessons" for today and tomorrow shall be displayed, showing:
+      - Time
+      - Student Name
+      - Lesson Type
+      - Status (e.g., Confirmed, Pending)
+    </criterion>
+    <criterion id="5" title="Quick Actions">
+      The dashboard shall provide quick action buttons/links to:
+      - "View My Calendar"
+      - "Manage My Availability"
+      - "View My Students"
+      - "Update My Profile"
+    </criterion>
+    <criterion id="6" title="Responsive Layout">The layout shall match the `instructor-dashboard.html` wireframe and be fully responsive (stacking widgets on mobile).</criterion>
+    <criterion id="7" title="Performance">The dashboard data should load efficiently, adhering to NFR01 (&lt; 3 seconds).</criterion>
+    <criterion id="8" title="Data Freshness">Dashboard data should be kept fresh using TanStack Query (e.g., re-fetch on window focus).</criterion>
+  </acceptanceCriteria>
+
+  <artifacts>
+    <docs>
+      <doc>
+        <path>docs/fase-2-plan/PRD.md</path>
+        <title>Product Requirements Document</title>
+        <section>FR017</section>
+        <snippet>Instructors shall have a dashboard displaying a summary of today's and upcoming lessons, and current weather.</snippet>
+      </doc>
+      <doc>
+        <path>docs/fase-2-plan/PRD.md</path>
+        <title>Product Requirements Document</title>
+        <section>NFR01 (Performance)</section>
+        <snippet>All user-facing pages and dashboards shall load in under 3 seconds.</snippet>
+      </doc>
+      <doc>
+        <path>docs/fase-3-solution/architecture.md</path>
+        <title>Architecture Document</title>
+        <section>5. Complete Project Structure</section>
+        <snippet>`app/(protected)/dashboard/` - The main dashboards for each user role</snippet>
+      </doc>
+      <doc>
+        <path>docs/fase-3-solution/architecture.md</path>
+        <title>Architecture Document</title>
+        <section>10. Security &amp; Performance</section>
+        <snippet>Performance is addressed by ... TanStack Query on the frontend for intelligent data caching and reduction of API requests.</snippet>
+      </doc>
+      <doc>
+        <path>docs/fase-3-solution/epics.md</path>
+        <title>Epics</title>
+        <section>Story 3.1: Instructor Dashboard UI</section>
+        <snippet>As an Instructor, I want a dashboard that shows my upcoming lessons and current weather, so I can quickly prepare for my day.</snippet>
+      </doc>
+    </docs>
+    <code>
+      <artifact>
+        <path>app/lib/booking-service.ts</path>
+        <kind>service</kind>
+        <symbol>createBooking</symbol>
+        <reason>Relevant for understanding how bookings are created, but will need a new function to fetch instructor bookings.</reason>
+      </artifact>
+      <artifact>
+        <path>app/lib/supabase/client.ts</path>
+        <kind>utility</kind>
+        <symbol>createClient</symbol>
+        <reason>Standard Supabase client for browser-side data fetching.</reason>
+      </artifact>
+    </code>
+    <dependencies>
+      <dependency name="@supabase/ssr" />
+      <dependency name="@supabase/supabase-js" />
+      <dependency name="@tanstack/react-query" />
+      <dependency name="next" />
+      <dependency name="react" />
+      <dependency name="react-dom" />
+      <dependency name="zod" />
+      <dependency name="tailwindcss" />
+    </dependencies>
+  </artifacts>
+
+  <constraints>
+    <constraint>Use TanStack Query for server state management.</constraint>
+    <constraint>All date/time operations must handle time zones correctly, storing data in UTC.</constraint>
+  </constraints>
+  <interfaces>
+    <interface>
+      <name>Booking</name>
+      <kind>type</kind>
+      <signature>
+        type Booking = {
+          lesson_id: number;
+          lesson_name: string;
+          start_time: string;
+          customer_info: {
+            name: string;
+            email: string;
+            phone: string;
+          };
+        };
+      </signature>
+      <path>app/lib/booking-service.ts</path>
+    </interface>
+  </interfaces>
+  <tests>
+    <standards>A layered strategy of Unit, Integration, and End-to-End tests, with a focus on critical paths like scheduling and auth. Tests are written with `vitest`.</standards>
+    <locations>
+      <location>Unit/Integration: Co-located with the code they are testing in `__tests__` directories.</location>
+      <location>E2E: `tests/e2e` directory at the root of the project.</location>
+    </locations>
+    <ideas>
+      <idea>Unit test `SnapshotWidget` to ensure it renders correct counts.</idea>
+      <idea>Unit test `WeatherWidget` to ensure it handles missing data gracefully.</idea>
+      <idea>Unit test `UpcomingLessons` to ensure it renders the list correctly.</idea>
+      <idea>E2E test to verify an instructor can log in and see the dashboard.</idea>
+      <idea>E2E test to verify all widgets are present.</idea>
+      <idea>E2E test to verify responsiveness.</idea>
+    </ideas>
+  </tests>
+</story-context>

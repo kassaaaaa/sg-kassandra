@@ -1,6 +1,6 @@
 # Story 3.1: Instructor Dashboard UI
 
-Status: drafted
+Status: ready-for-dev
 
 ## Story
 
@@ -72,7 +72,7 @@ so that I can quickly prepare for my day.
 - **New Files Created:** `app/(auth)/booking/[token]/page.tsx`, `supabase/functions/get-booking-by-token`, `supabase/migrations/20251209140000_add_secure_token.sql`
 - **Security:** Established pattern for secure data access using Edge Functions and RLS. For the dashboard, RLS on `bookings` table should naturally restrict data to the logged-in instructor, so direct client queries might be sufficient and more performant than a dedicated Edge Function for simple reads.
 - **Testing:** E2E tests are critical. Follow the pattern in `tests/e2e/secure-booking-link.spec.ts` for dashboard E2E.
-- **Bug Watch:** Be careful with column references in Supabase queries (learnings from `location` column bug). Verify schema against `architecture.md` or actual DB.
+- **Bug Watch:** Be careful with column references in Supabase queries (learnings from `location` column bug). Verify schema against `architecture.md` or actual DB. [Source: docs/sprint-artifacts/2-6-view-booking-via-secure-link.md]
 
 ### Project Structure Notes
 
@@ -88,11 +88,15 @@ so that I can quickly prepare for my day.
 - **Architecture:** TanStack Query for state, Supabase Auth/RLS. [Source: docs/fase-3-solution/architecture.md]
 - **Epics:** Story 3.1 acceptance criteria. [Source: docs/fase-3-solution/epics.md]
 
+## Change Log
+
+- 2025-12-10: Story drafted by Bob (Scrum Master).
+
 ## Dev Agent Record
 
 ### Context Reference
 
-<!-- Path(s) to story context XML will be added here by context workflow -->
+- docs/sprint-artifacts/3-1-instructor-dashboard-ui.context.xml
 
 ### Agent Model Used
 
