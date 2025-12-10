@@ -34,7 +34,7 @@ export default function ProtectedLayout({
   return (
     <div className="min-h-screen flex flex-col bg-gray-50 dark:bg-gray-900">
       <header className="sticky top-0 z-40 w-full border-b bg-background">
-        <div className="container flex h-16 items-center justify-between py-4 px-4 sm:px-6 lg:px-8">
+        <div className="container mx-auto flex h-16 items-center justify-between py-4 px-4 sm:px-6 lg:px-8">
           <div className="flex items-center gap-2 font-bold text-xl text-primary">
             <span>KiteOps</span>
           </div>
