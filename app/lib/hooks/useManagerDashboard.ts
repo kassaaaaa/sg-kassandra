@@ -34,7 +34,59 @@ export function useManagerDashboard() {
 
   const { data: stats, isLoading: statsLoading, error: statsError } = useQuery({
     queryKey: ['manager-dashboard-stats'],
-    // ... (existing queryFn)
+    queryFn: async (): Promise<ManagerDashboardStats> => {
+      const todayStart = startOfDay(new Date()).toISOString();
+      const todayEnd = endOfDay(new Date()).toISOString();
+
+      // 1. Today's Lesson Count
+      const { count: todayLessonCount, error: todayError } = await supabase
+        .from('bookings')
+        .select('*', { count: 'exact', head: true })
+        .gte('start_time', todayStart)
+        .lte('start_time', todayEnd)
+        .neq('status', 'cancelled');
+
+      if (todayError) throw todayError;
+
+      // 2. Pending Booking Count
+      const { count: pendingBookingCount, error: pendingError } = await supabase
+        .from('bookings')
+        .select('*', { count: 'exact', head: true })
+        .eq('status', 'pending');
+
+      if (pendingError) throw pendingError;
+
+      // 3. Available Instructors Count (Unique instructors with slots today)
+      // Note: head: true with distinct is not directly supported in simple count
+      // We'll fetch instructor_ids and count unique in JS for now or use a raw query if performance needed.
+      // For now, simpler approach: fetch availability slots overlapping today.
+      const { data: availabilityData, error: availabilityError } = await supabase
+        .from('availability')
+        .select('instructor_id')
+        .gte('end_time', todayStart)
+        .lte('start_time', todayEnd);
+
+      if (availabilityError) throw availabilityError;
+      
+      const uniqueInstructors = new Set(availabilityData.map(a => a.instructor_id));
+      const availableInstructorsCount = uniqueInstructors.size;
+
+      // 4. Weather Conflict Count
+      // Checking for 'pending_weather_check' status or similar indicators
+      const { count: weatherConflictCount, error: conflictError } = await supabase
+        .from('bookings')
+        .select('*', { count: 'exact', head: true })
+        .eq('status', 'pending_weather_check');
+
+      if (conflictError) throw conflictError;
+
+      return {
+        todayLessonCount: todayLessonCount || 0,
+        pendingBookingCount: pendingBookingCount || 0,
+        availableInstructorsCount: availableInstructorsCount || 0,
+        weatherConflictCount: weatherConflictCount || 0,
+      };
+    },
   });
 
   const { data: upcomingLessons, isLoading: lessonsLoading, error: lessonsError } = useQuery({
