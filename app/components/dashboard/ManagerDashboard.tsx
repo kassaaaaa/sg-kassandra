@@ -5,6 +5,7 @@ import { ManagerSnapshotWidget } from './ManagerSnapshotWidget';
 import { WeatherConflictCard } from './WeatherConflictCard';
 import { ManagerUpcomingLessons } from './ManagerUpcomingLessons';
 import { ManagerQuickActions } from './ManagerQuickActions';
+import { WeatherWidget } from './WeatherWidget';
 import { Loader2 } from 'lucide-react';
 
 export function ManagerDashboard() {
