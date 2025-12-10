@@ -65,7 +65,7 @@ export default function ProtectedLayout({
           </nav>
         </div>
       </header>
-      <main className="flex-1 container py-6">
+      <main className="flex-1 container mx-auto py-6 px-4 sm:px-6 lg:px-8">
         {children}
       </main>
     </div>
