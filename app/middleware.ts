@@ -76,6 +76,5 @@ export async function middleware(req: NextRequest) {
 export const config = {
   matcher: [
     '/dashboard/:path*', // Protect all paths under /dashboard
-    '/resolution-center/:path*', // Protect all paths under /resolution-center
   ],
 }
