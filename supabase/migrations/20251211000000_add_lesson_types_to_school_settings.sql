@@ -1,8 +1,16 @@
--- Migration: Add lesson_types column to school_settings table (if not exists)
--- Description: Adds a JSONB column to store configurable lesson types for the school.
+-- Migration: Create school_settings table and add lesson_types
+-- Description: Creates a singleton settings table and adds a JSONB column to store configurable lesson types.
 -- Date: 2025-12-11
 
--- Check if column exists first to be idempotent-ish (though distinct migrations are better, this is safe)
+-- Create table if not exists
+CREATE TABLE IF NOT EXISTS "school_settings" (
+    id SERIAL PRIMARY KEY,
+    lesson_types JSONB DEFAULT '["Kite", "Wing", "Surf"]'::jsonb,
+    created_at TIMESTAMPTZ DEFAULT NOW(),
+    updated_at TIMESTAMPTZ DEFAULT NOW()
+);
+
+-- Check if lesson_types column exists (in case table existed but column didn't - defensive coding)
 DO $$
 BEGIN
     IF NOT EXISTS (
@@ -15,14 +23,12 @@ BEGIN
     END IF;
 END $$;
 
--- Update RLS if needed?
--- Managers should be able to update this (FR022).
--- Existing RLS might cover it, or we need a new policy.
--- Assuming "manager" role can update "school_settings".
-
--- Verify RLS for school_settings
 -- Enable RLS
 ALTER TABLE "school_settings" ENABLE ROW LEVEL SECURITY;
+
+-- Drop existing policies to be safe (idempotency)
+DROP POLICY IF EXISTS "Allow read access for authenticated users" ON "school_settings";
+DROP POLICY IF EXISTS "Allow update access for managers" ON "school_settings";
 
 -- Allow read for authenticated users (instructors need to see lesson types too)
 CREATE POLICY "Allow read access for authenticated users" ON "school_settings"
