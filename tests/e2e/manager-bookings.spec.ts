@@ -188,12 +188,8 @@ test.describe('Manager Booking Management', () => {
     await expect(page.getByRole('dialog')).not.toBeVisible();
     await expect(page.getByText('Booking created successfully')).toBeVisible();
 
-    // Visual Verification: Check if it appears (our mock handler updates the array, query invalidates, fetches new array)
-    // Note: The mock date is 2025-12-25. Calendar must be on that view. 
-    // If the default view is "Month" (current month), we might need to navigate.
-    // Assuming Calendar defaults to current date (Dec 2025 per prompt context? No, prompt date is Dec 11, 2025).
-    // So 2025-12-25 is in the current month view.
-    // We look for text 'New E2E Booking' or 'Kite Beginner' on that day.
+    // Visual Verification
+    await expect(page.getByText('New E2E Booking')).toBeVisible();
     
     // 2. Edit Booking
     // Find the booking we just created (or the default one)
@@ -210,6 +206,9 @@ test.describe('Manager Booking Management', () => {
     await expect(page.getByRole('dialog')).not.toBeVisible();
     await expect(page.getByText('Booking updated successfully')).toBeVisible();
 
+    // Visual Verification
+    await expect(page.getByText('Updated Note E2E')).toBeVisible();
+
     // 3. Cancel Booking
     // Re-open the booking
     await bookingEl.click();
@@ -222,16 +221,11 @@ test.describe('Manager Booking Management', () => {
     await expect(page.getByText('Are you sure you want to cancel this booking?')).toBeVisible();
     
     // Confirm
-    await page.click('button:has-text("Yes, Cancel Booking")');
+    await page.click('button:has-text("Yes, Cancel")');
     
     await expect(page.getByText('Booking cancelled successfully')).toBeVisible();
     
     // Visual Verification: Booking should disappear
-    // Since we mocked the GET to filter out cancelled, it should be gone.
-    // However, if we only had one booking, it might be empty now.
-    // We expect the specific booking element to detach.
-    // Or at least reduce count.
-    // Let's verify 'Updated Note E2E' is NOT visible anymore.
     await expect(page.getByText('Updated Note E2E')).not.toBeVisible();
   });
 });

@@ -90,7 +90,26 @@ describe('ManagerBookingForm', () => {
       });
   });
 
-  it('updates end time when start time changes (logic test)', async () => {
-      // Logic verified by integration flows above
+  it('updates end time automatically based on lesson duration', async () => {
+      const user = userEvent.setup();
+      render(<ManagerBookingForm onSubmit={mockSubmit} />);
+
+      // Select Lesson (60 mins)
+      const lessonTrigger = screen.getAllByRole('combobox', { name: 'Lesson Type' })[0];
+      await user.click(lessonTrigger);
+      const lessonOption = await screen.findByRole('option', { name: /Kite Beginner/i });
+      await user.click(lessonOption);
+
+      // Fill Start Time
+      const startTimeInputs = screen.getAllByLabelText('Start');
+      await user.type(startTimeInputs[0], '10:00');
+
+      // Check End Time
+      const endTimeInputs = screen.getAllByLabelText('End');
+      const endTimeInput = endTimeInputs[0] as HTMLInputElement;
+      
+      await waitFor(() => {
+          expect(endTimeInput.value).toBe('11:00');
+      });
   });
 });

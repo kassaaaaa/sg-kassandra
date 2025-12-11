@@ -7,8 +7,12 @@ export function useBookingMutations() {
 
   const createBooking = useMutation({
     mutationFn: createManagerBooking,
-    onSuccess: () => {
-      toast.success('Booking created successfully');
+    onSuccess: (data: any) => {
+      if (data?.warning) {
+        toast.warning(data.warning);
+      } else {
+        toast.success('Booking created successfully');
+      }
       queryClient.invalidateQueries({ queryKey: ['manager-calendar'] });
       queryClient.invalidateQueries({ queryKey: ['dashboard-stats'] });
     },
@@ -19,8 +23,12 @@ export function useBookingMutations() {
 
   const updateBooking = useMutation({
     mutationFn: updateManagerBooking,
-    onSuccess: () => {
-      toast.success('Booking updated successfully');
+    onSuccess: (data: any) => {
+      if (data?.warning) {
+        toast.warning(data.warning);
+      } else {
+        toast.success('Booking updated successfully');
+      }
       queryClient.invalidateQueries({ queryKey: ['manager-calendar'] });
       queryClient.invalidateQueries({ queryKey: ['dashboard-stats'] });
     },

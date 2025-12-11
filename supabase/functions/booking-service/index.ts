@@ -1,5 +1,5 @@
 import { serve } from 'https://deno.land/std@0.177.0/http/server.ts';
-import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.44.2';
+import { createClient, SupabaseClient } from 'https://esm.sh/@supabase/supabase-js@2.44.2';
 import { corsHeaders } from '../_shared/cors.ts';
 import { z } from 'https://deno.land/x/zod@v3.23.4/mod.ts';
 
@@ -15,37 +15,64 @@ const createSchema = z.object({
 
 const updateSchema = z.object({
   id: z.number(),
-  customer_id: z.string().uuid().optional(), // Allow changing customer
+  customer_id: z.string().uuid().optional(),
   instructor_id: z.string().uuid().nullable().optional(),
   start_time: z.string().datetime().optional(),
   end_time: z.string().datetime().optional(),
   location: z.string().optional(),
   manager_notes: z.string().optional(),
   status: z.string().optional(),
-  lesson_id: z.number().optional(), // Allow changing lesson type
+  lesson_id: z.number().optional(),
 });
 
 const deleteSchema = z.object({
   id: z.number(),
 });
 
-export const bookingServiceHandler = async (req: Request) => {
+// Helper: Check for conflicts
+export const checkForConflicts = async (client: any, instructorId: string, startTime: string, endTime: string, excludeId?: number) => {
+    let query = client
+        .from('bookings')
+        .select('id')
+        .eq('instructor_id', instructorId)
+        .neq('status', 'cancelled')
+        .or(`and(start_time.lt.${endTime},end_time.gt.${startTime})`);
+
+    if (excludeId) {
+        query = query.neq('id', excludeId);
+    }
+
+    const { data: conflicts, error } = await query;
+    if (error) throw error;
+    return conflicts && conflicts.length > 0;
+};
+
+// Helper: Send Notification
+export const sendNotification = async (client: any, type: 'CREATED' | 'UPDATED' | 'CANCELLED', booking: any) => {
+    try {
+        await client.functions.invoke('notification-service', {
+            body: {
+                type: 'BOOKING_' + type,
+                payload: {
+                    booking_id: booking.id,
+                    customer_id: booking.customer_id,
+                    instructor_id: booking.instructor_id,
+                    start_time: booking.start_time
+                }
+            }
+        });
+    } catch (e) {
+        console.error('Failed to trigger notification:', e);
+    }
+};
+
+// Core Logic
+export const bookingServiceCore = async (req: Request, supabaseClient: any) => {
   if (req.method === 'OPTIONS') {
     return new Response('ok', { headers: corsHeaders });
   }
 
   try {
-    const authHeader = req.headers.get('Authorization');
-    if (!authHeader) {
-      throw new Error('Missing Authorization header');
-    }
-
-    const supabaseClient = createClient(
-      Deno.env.get('SUPABASE_URL') ?? '',
-      Deno.env.get('SUPABASE_ANON_KEY') ?? '',
-      { global: { headers: { Authorization: authHeader } } }
-    );
-
     // Verify Manager Role
     const { data: { user }, error: userError } = await supabaseClient.auth.getUser();
     if (userError || !user) throw new Error('Unauthorized');
@@ -65,46 +92,17 @@ export const bookingServiceHandler = async (req: Request) => {
 
     const url = new URL(req.url);
 
-    // Helper: Check for conflicts
-    const checkForConflicts = async (client: any, instructorId: string, startTime: string, endTime: string, excludeId?: number) => {
-        let query = client
-            .from('bookings')
-            .select('id')
-            .eq('instructor_id', instructorId)
-            .neq('status', 'cancelled')
-            .or(`and(start_time.lt.${endTime},end_time.gt.${startTime})`);
-
-        if (excludeId) {
-            query = query.neq('id', excludeId);
-        }
-
-        const { data: conflicts, error } = await query;
-        if (error) throw error;
-        return conflicts && conflicts.length > 0;
-    };
-
-    // Helper: Send Notification Stub
-    const sendNotification = async (type: 'CREATED' | 'UPDATED' | 'CANCELLED', booking: any) => {
-        // Mock Notification Service Integration
-        // In a real implementation, this would call the NotificationService API or insert into a queue.
-        console.log(`[NotificationService Mock] Trigger: Booking ${type}`, {
-            booking_id: booking.id,
-            customer_id: booking.customer_id,
-            instructor_id: booking.instructor_id,
-            start_time: booking.start_time,
-            type: type
-        });
-    };
-
     if (req.method === 'POST') {
         const body = await req.json();
         const data = createSchema.parse(body);
 
         // Conflict Detection
+        let warning = null;
         if (data.instructor_id) {
              const hasConflict = await checkForConflicts(supabaseClient, data.instructor_id, data.start_time, data.end_time);
              if (hasConflict) {
-                 console.warn(`Manager override: Double booking created for instructor ${data.instructor_id} at ${data.start_time}`);
+                 warning = `Manager override: Double booking created for instructor ${data.instructor_id} at ${data.start_time}`;
+                 console.warn(warning);
              }
         }
 
@@ -122,9 +120,9 @@ export const bookingServiceHandler = async (req: Request) => {
         
         if (error) throw error;
         
-        await sendNotification('CREATED', booking);
+        await sendNotification(supabaseClient, 'CREATED', booking);
 
-        return new Response(JSON.stringify(booking), {
+        return new Response(JSON.stringify({ ...booking, warning }), {
             headers: { ...corsHeaders, 'Content-Type': 'application/json' },
             status: 201
         });
@@ -151,6 +149,7 @@ export const bookingServiceHandler = async (req: Request) => {
         const effectiveEndTime = data.end_time || currentBooking.end_time;
 
         // Check conflicts if we have an instructor (might be null if unassigned)
+        let warning = null;
         if (effectiveInstructorId) {
              const hasConflict = await checkForConflicts(
                  supabaseClient, 
@@ -161,7 +160,8 @@ export const bookingServiceHandler = async (req: Request) => {
              );
              
              if (hasConflict) {
-                 console.warn(`Manager override: Double booking update for instructor ${effectiveInstructorId} at ${effectiveStartTime}`);
+                 warning = `Manager override: Double booking update for instructor ${effectiveInstructorId} at ${effectiveStartTime}`;
+                 console.warn(warning);
              }
         }
         
@@ -174,9 +174,9 @@ export const bookingServiceHandler = async (req: Request) => {
 
          if (error) throw error;
          
-         await sendNotification('UPDATED', booking);
+         await sendNotification(supabaseClient, 'UPDATED', booking);
 
-         return new Response(JSON.stringify(booking), {
+         return new Response(JSON.stringify({ ...booking, warning }), {
             headers: { ...corsHeaders, 'Content-Type': 'application/json' },
             status: 200
         });
@@ -210,7 +210,7 @@ export const bookingServiceHandler = async (req: Request) => {
 
         if (error) throw error;
         
-         await sendNotification('CANCELLED', booking);
+         await sendNotification(supabaseClient, 'CANCELLED', booking);
 
         return new Response(JSON.stringify({ success: true, booking }), {
             headers: { ...corsHeaders, 'Content-Type': 'application/json' },
@@ -233,6 +233,25 @@ export const bookingServiceHandler = async (req: Request) => {
       status: 400,
     });
   }
+};
+
+export const bookingServiceHandler = async (req: Request) => {
+    if (req.method === 'OPTIONS') {
+        return new Response('ok', { headers: corsHeaders });
+    }
+
+    const authHeader = req.headers.get('Authorization');
+    if (!authHeader) {
+        return new Response(JSON.stringify({ error: 'Missing Authorization header' }), { status: 400, headers: corsHeaders });
+    }
+
+    const supabaseClient = createClient(
+        Deno.env.get('SUPABASE_URL') ?? '',
+        Deno.env.get('SUPABASE_ANON_KEY') ?? '',
+        { global: { headers: { Authorization: authHeader } } }
+    );
+    
+    return await bookingServiceCore(req, supabaseClient);
 };
 
 serve(bookingServiceHandler);
