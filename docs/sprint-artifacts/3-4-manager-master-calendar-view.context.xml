@@ -1,0 +1,141 @@
+<story-context id=".bmad/bmm/workflows/4-implementation/story-context/template" v="1.0">
+  <metadata>
+    <epicId>3</epicId>
+    <storyId>4</storyId>
+    <title>Manager Master Calendar View</title>
+    <status>drafted</status>
+    <generatedAt>2025-12-11</generatedAt>
+    <generator>BMAD Story Context Workflow</generator>
+    <sourceStoryPath>docs/sprint-artifacts/3-4-manager-master-calendar-view.md</sourceStoryPath>
+  </metadata>
+
+  <story>
+    <asA>a Manager</asA>
+    <iWant>to view a master calendar of all school activities</iWant>
+    <soThat>I have a complete overview of schedules.</soThat>
+    <tasks>
+- [ ] **Task 1: Create Manager Calendar Page and Component (AC: #1)**
+    - [ ] Create a new route and page file at `app/(protected)/calendar/page.tsx`.
+    - [ ] Create a new `ManagerCalendar.tsx` component in `app/components/calendar/`.
+    - [ ] Adapt the existing `AvailabilityCalendar` component to serve as the base for the `ManagerCalendar`, ensuring it is read-only.
+
+- [ ] **Task 2: Implement Data Fetching for Master Schedule (AC: #1)**
+    - [ ] Extend the `useManagerDashboard` hook or create a new `useManagerCalendar` hook to fetch all bookings from the `/edge/manager/calendar` endpoint using TanStack Query.
+    - [ ] The hook must manage state for the date range and any active filters.
+
+- [ ] **Task 3: Implement Filtering UI (AC: #2, #3)**
+    - [ ] Add dropdown filters for "Instructors" and "Lesson Types" to the `ManagerCalendar` component.
+    - [ ] The filter controls should be populated with data fetched from the backend.
+    - [ ] Applying a filter should trigger a refetch of the calendar data with the appropriate query parameters.
+
+- [ ] **Task 4: Testing (AC: #1, #2, #3)**
+    - [ ] Write unit tests for the `ManagerCalendar` component, mocking the data fetching hook.
+    - [ ] Write an E2E test for the Manager Calendar that:
+        - Navigates to the `/calendar` page.
+        - Verifies that bookings are displayed.
+        - Tests the instructor and lesson type filters and asserts the view updates correctly.
+    </tasks>
+  </story>
+
+  <acceptanceCriteria>
+1.  **Master Calendar Display:** When a logged-in manager navigates to the "Calendar" page, a calendar interface shall be displayed showing all bookings and instructor availability for the entire school. [Source: tech-spec-epic-3.md, FR024.a]
+2.  **Filtering by Instructor:** The calendar view must include a mechanism (e.g., a dropdown or multi-select) to filter the displayed bookings by one or more instructors. [Source: tech-spec-epic-3.md, FR024.b]
+3.  **Filtering by Lesson Type:** The calendar view must include a mechanism to filter the displayed bookings by lesson type. [Source: tech-spec-epic-3.md, FR024.c]
+  </acceptanceCriteria>
+
+  <artifacts>
+    <docs>
+      <doc>
+        <path>docs/sprint-artifacts/tech-spec-epic-3.md</path>
+        <title>Epic Technical Specification: Manager Oversight & Administration</title>
+        <section>FR024 - Master Calendar View</section>
+        <snippet>Managers can view a master calendar with filtering options for instructors and lesson types.</snippet>
+      </doc>
+      <doc>
+        <path>docs/sprint-artifacts/tech-spec-epic-3.md</path>
+        <title>Epic Technical Specification: Manager Oversight & Administration</title>
+        <section>APIs and Interfaces</section>
+        <snippet>GET /edge/manager/calendar - Retrieve master calendar data with filters. Query Params: instructor_id?, lesson_type?, start_date?, end_date?</snippet>
+      </doc>
+    </docs>
+    <code>
+      <artifact>
+        <path>app/components/calendar/AvailabilityCalendar.tsx</path>
+        <kind>component</kind>
+        <symbol>AvailabilityCalendar</symbol>
+        <reason>This is the base component to be adapted for the ManagerCalendar. It provides the weekly grid layout and logic for displaying time-based slots.</reason>
+      </artifact>
+      <artifact>
+        <path>app/lib/booking-service.ts</path>
+        <kind>service</kind>
+        <symbol> booking-service</symbol>
+        <reason>Likely contains the core functions for fetching booking data from Supabase, which will be needed for the master calendar view.</reason>
+      </artifact>
+      <artifact>
+        <path>app/lib/hooks/useManagerDashboard.ts</path>
+        <kind>hook</kind>
+        <symbol>useManagerDashboard</symbol>
+        <reason>This hook is the established pattern for fetching manager-specific data using TanStack Query. A new `useManagerCalendar` hook should be created following this pattern.</reason>
+      </artifact>
+      <artifact>
+        <path>tests/e2e/manager-dashboard.spec.ts</path>
+        <kind>test</kind>
+        <symbol>Manager Dashboard E2E Tests</symbol>
+        <reason>This file provides the structural template for the new E2E tests that need to be created for the Manager Master Calendar feature.</reason>
+      </artifact>
+    </code>
+    <dependencies>
+      <dependency name="@hookform/resolvers" version="^5.2.2" />
+      <dependency name="@radix-ui/react-checkbox" version="^1.3.3" />
+      <dependency name="@radix-ui/react-dialog" version="^1.1.15" />
+      <dependency name="@radix-ui/react-label" version="^2.1.8" />
+      <dependency name="@radix-ui/react-select" version="^2.2.6" />
+      <dependency name="@radix-ui/react-slot" version="^1.2.4" />
+      <dependency name="@supabase/ssr" version="^0.8.0" />
+      <dependency name="@supabase/supabase-js" version="^2.86.0" />
+      <dependency name="@tanstack/react-query" version="^5.90.12" />
+      <dependency name="class-variance-authority" version="^0.7.1" />
+      <dependency name="clsx" version="^2.1.1" />
+      <dependency name="date-fns" version="^4.1.0" />
+      <dependency name="lucide-react" version="^0.555.0" />
+      <dependency name="next" version="16.0.7" />
+      <dependency name="next-themes" version="^0.4.6" />
+      <dependency name="react" version="19.2.0" />
+      <dependency name="react-day-picker" version="^9.12.0" />
+      <dependency name="react-dom" version="19.2.0" />
+      <dependency name="react-hook-form" version="^7.68.0" />
+      <dependency name="sonner" version="^2.0.7" />
+      <dependency name="tailwind-merge" version="^3.4.0" />
+      <dependency name="zod" version="^4.1.13" />
+    </dependencies>
+  </artifacts>
+
+  <constraints>
+    <constraint>RLS Policies: Any new Supabase queries for the master calendar must be covered by Row Level Security policies that grant managers read-access to all `bookings`, `profiles`, and `lessons` across the school.</constraint>
+    <constraint>Data Fetching Pattern: Data fetching must use a dedicated hook (e.g., `useManagerCalendar`) with TanStack Query, following the pattern set by `useManagerDashboard`.</constraint>
+    <constraint>E2E Test Structure: New E2E tests must follow the structure established in `tests/e2e/manager-dashboard.spec.ts`.</constraint>
+    <constraint>Project Structure (Routes): The new page route must be located at `app/(protected)/calendar/page.tsx`.</constraint>
+    <constraint>Project Structure (Components): New calendar-related components must be placed in `app/components/calendar/`.</constraint>
+    <constraint>Project Structure (Hooks): New data fetching hooks must be placed in `app/lib/hooks/`.</constraint>
+  </constraints>
+  <interfaces>
+    <interface>
+      <name>Get Master Calendar Data</name>
+      <kind>REST</kind>
+      <signature>GET /edge/manager/calendar?instructor_id=&lt;id&gt;&amp;lesson_type=&lt;type&gt;&amp;start_date=&lt;date&gt;&amp;end_date=&lt;date&gt;</signature>
+      <path>Supabase Edge Function</path>
+    </interface>
+  </interfaces>
+  <tests>
+    <standards>The project utilizes Vitest for unit testing and Playwright for End-to-End (E2E) testing. Unit tests for components are typically co-located within the component's directory or a `__tests__` subdirectory. E2E tests are located in the `tests/e2e` directory and should follow the structure of existing tests like `manager-dashboard.spec.ts`.</standards>
+    <locations>
+      <location type="unit">app/components/calendar/__tests__/ManagerCalendar.test.tsx</location>
+      <location type="e2e">tests/e2e/manager-master-calendar.spec.ts</location>
+    </locations>
+    <ideas>
+      <idea for="AC #1">Write a unit test for the `ManagerCalendar` component that mocks the `useManagerCalendar` data fetching hook and verifies that the calendar grid renders correctly with the provided booking data.</idea>
+      <idea for="AC #2, #3">Write a unit test to verify that the filter UI elements (dropdowns for instructors and lesson types) are rendered and can be interacted with.</idea>
+      <idea for="AC #1, #2, #3">Create an E2E test that navigates to the `/calendar` page as a manager, confirms that booking events are visible on the calendar, interacts with the instructor and lesson type filters, and asserts that the displayed bookings are updated correctly based on the filter selection.</idea>
+    </ideas>
+  </tests>
+</story-context>

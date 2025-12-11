@@ -1,6 +1,6 @@
 # Story 3.4: Manager Master Calendar View
 
-Status: drafted
+Status: ready-for-dev
 
 ## Story
 
@@ -10,22 +10,18 @@ so that I have a complete overview of schedules.
 
 ## Acceptance Criteria
 
-1.  **Master Calendar Display:** When a logged-in manager navigates to the "Calendar" page, a calendar interface shall be displayed showing all bookings for the entire school.
-2.  **Filtering by Instructor:** The calendar view must include a mechanism (e.g., a dropdown or multi-select) to filter the displayed bookings by one or more instructors.
-3.  **Filtering by Lesson Type:** The calendar view must include a mechanism to filter the displayed bookings by lesson type.
-4.  **Multiple Views:** The calendar must support switching between month, week, and day views.
-5.  **Data Source:** The calendar shall fetch its data from the `/edge/manager/calendar` endpoint, passing the appropriate filters as query parameters.
-6.  **Read-Only Data:** The initial implementation should present the booking data as read-only. Manual booking management (add, edit, cancel) is handled in a subsequent story (3.5).
-7.  **UX Alignment:** The calendar component should be based on the `Availability Calendar` component from Epic 1, adapted for manager use as per the technical notes in `epics.md`.
+1.  **Master Calendar Display:** When a logged-in manager navigates to the "Calendar" page, a calendar interface shall be displayed showing all bookings and instructor availability for the entire school. [Source: tech-spec-epic-3.md, FR024.a]
+2.  **Filtering by Instructor:** The calendar view must include a mechanism (e.g., a dropdown or multi-select) to filter the displayed bookings by one or more instructors. [Source: tech-spec-epic-3.md, FR024.b]
+3.  **Filtering by Lesson Type:** The calendar view must include a mechanism to filter the displayed bookings by lesson type. [Source: tech-spec-epic-3.md, FR024.c]
 
 ## Tasks / Subtasks
 
-- [ ] **Task 1: Create Manager Calendar Page and Component (AC: #1, #7)**
+- [ ] **Task 1: Create Manager Calendar Page and Component (AC: #1)**
     - [ ] Create a new route and page file at `app/(protected)/calendar/page.tsx`.
     - [ ] Create a new `ManagerCalendar.tsx` component in `app/components/calendar/`.
-    - [ ] Adapt the existing `AvailabilityCalendar` component to serve as the base for the `ManagerCalendar`, removing instructor-specific editing features.
+    - [ ] Adapt the existing `AvailabilityCalendar` component to serve as the base for the `ManagerCalendar`, ensuring it is read-only.
 
-- [ ] **Task 2: Implement Data Fetching for Master Schedule (AC: #5)**
+- [ ] **Task 2: Implement Data Fetching for Master Schedule (AC: #1)**
     - [ ] Extend the `useManagerDashboard` hook or create a new `useManagerCalendar` hook to fetch all bookings from the `/edge/manager/calendar` endpoint using TanStack Query.
     - [ ] The hook must manage state for the date range and any active filters.
 
@@ -34,17 +30,12 @@ so that I have a complete overview of schedules.
     - [ ] The filter controls should be populated with data fetched from the backend.
     - [ ] Applying a filter should trigger a refetch of the calendar data with the appropriate query parameters.
 
-- [ ] **Task 4: Implement Calendar Views (AC: #4)**
-    - [ ] Ensure the view switcher (Month, Week, Day) is present and functional.
-    - [ ] The calendar display should re-render correctly when the view is changed.
-
-- [ ] **Task 5: Testing (AC: #1, #2, #3, #4)**
+- [ ] **Task 4: Testing (AC: #1, #2, #3)**
     - [ ] Write unit tests for the `ManagerCalendar` component, mocking the data fetching hook.
     - [ ] Write an E2E test for the Manager Calendar that:
         - Navigates to the `/calendar` page.
         - Verifies that bookings are displayed.
         - Tests the instructor and lesson type filters and asserts the view updates correctly.
-        - Tests the view switcher (month, week, day).
 
 ## Dev Notes
 
@@ -68,9 +59,8 @@ so that I have a complete overview of schedules.
 
 ### References
 
-- **Epics:** Story 3.4 `Manager Master Calendar View` [Source: docs/fase-3-solution/epics.md]
-- **Tech Spec:** Epic 3 - `ManagerCalendar (UI)` component and `GET /edge/manager/calendar` API. [Source: docs/sprint-artifacts/tech-spec-epic-3.md]
-- **UX Design Spec:** Section 5.2.2 `Availability Calendar (Instructor)` to be used as a base. [Source: docs/fase-2-plan/ux-design-specification.md]
+- **Epics:** Story 3.4 `Manager Master Calendar View` [Source: docs/fase-3-solution/epics.md, Story 3.4]
+- **Tech Spec:** Master Calendar View (FR024) [Source: docs/sprint-artifacts/tech-spec-epic-3.md, Section: FR024]
 - **Architecture:** General guidance on Next.js App Router, Supabase client usage, and TanStack Query. [Source: docs/fase-3-solution/architecture.md]
 
 ## Dev Agent Record
@@ -92,3 +82,4 @@ so that I have a complete overview of schedules.
 ## Change Log
 
 - 2025-12-11: Initial draft created from epic.
+- 2025-12-11: Aligned ACs and tasks with Tech Spec FR024, removing scope creep and improving citations.
