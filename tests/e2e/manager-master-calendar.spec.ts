@@ -74,5 +74,30 @@ test.describe('Manager Master Calendar', () => {
     // Verify filter options
     await expect(page.getByText('Instructors', { exact: true })).toBeVisible();
     await expect(page.getByText('Lesson Types', { exact: true })).toBeVisible();
+
+    // Select an instructor filter (assuming some data exists or UI handles empty states gracefully)
+    // For a robust test, we would ideally seed data. Since we rely on existing dev data or empty states:
+    // We check that clicking a checkbox updates the URL or triggers a UI change.
+    
+    // Check 'Instructors' label presence implies list is rendered.
+    // Let's try to click a checkbox if one exists, or verify empty state message.
+    const checkboxes = page.locator('input[type="checkbox"]');
+    const count = await checkboxes.count();
+    
+    if (count > 0) {
+        // Select first instructor
+        await checkboxes.first().click();
+        // Assert some loading state or data refresh happened?
+        // Since we mock nothing here, we rely on the component behavior.
+        // We can check if the filter badge/clear button appears
+        await expect(page.getByRole('button', { name: 'Clear' })).toBeVisible();
+        
+        // Clear filters
+        await page.click('button:has-text("Clear")');
+        await expect(page.getByRole('button', { name: 'Clear' })).not.toBeVisible();
+    } else {
+        // If no data, verify "No instructors found" message
+        await expect(page.getByText('No instructors found')).toBeVisible();
+    }
   });
 });
