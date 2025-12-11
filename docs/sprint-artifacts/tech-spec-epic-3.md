@@ -253,3 +253,8 @@ The testing strategy for Epic 3 will adhere to the layered approach (Unit, Integ
     *   Correct application of manager overrides to the scheduling engine (FR026).
     *   Secure access control for all manager functionalities.
     *   Proper logging of manager actions and status updates (FR037, FR038, FR039).
+
+### Post-Review Follow-ups
+
+- [ ] [Low] Consider moving lesson type filtering to backend for performance (AC #3) [Ref: Story 3.4]
+- [ ] [Low] Make calendar start/end hours configurable in school_settings (AC #1) [Ref: Story 3.4]

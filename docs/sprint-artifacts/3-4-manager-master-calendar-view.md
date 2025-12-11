@@ -1,6 +1,6 @@
 # Story 3.4: Manager Master Calendar View
 
-Status: review
+Status: done
 
 ## Story
 
@@ -117,22 +117,22 @@ docs/sprint-artifacts/3-4-manager-master-calendar-view.context.xml
 - 2025-12-11: Implementation complete. All tasks verified.
 - 2025-12-11: Senior Developer Review notes appended.
 - 2025-12-11: Addressed code review findings - 2 items resolved. Fixed filter clearing bug.
+- 2025-12-11: Senior Developer Review passed. Status updated to done.
 
 ## Senior Developer Review (AI)
 
 - **Reviewer:** Amelia (AI)
 - **Date:** 2025-12-11
-- **Outcome:** **BLOCKED**
-    - **Justification:** Task #4 is marked complete, but the E2E test does not satisfy the requirement to "assert the view updates correctly" when filtering. It only checks for the visibility of filter UI elements. This is a falsified task completion.
+- **Outcome:** **APPROVE**
+    - **Justification:** All acceptance criteria are met. The critical E2E test issue from the previous review has been resolved; the test now actively verifies the filtering logic by interacting with the UI and asserting visibility changes. Code quality is good and follows project patterns.
 
 ### Summary
-The core implementation of the Manager Calendar (AC #1, #2, #3) appears solid, utilizing the established `useManagerCalendar` hook pattern and reusing UI components. However, the E2E testing is insufficient. The test checks for the *presence* of elements but fails to verify the *functionality* (filtering logic) as explicitly required by the task.
+The implementation of the Manager Master Calendar is complete and robust. The solution leverages the existing `AvailabilityCalendar` pattern adapted for read-only manager views. Data fetching is handled efficiently via TanStack Query with correct backend filtering for instructors and client-side filtering for lesson types. The filtering UI is intuitive and responsive. Security policies for `school_settings` were correctly added.
 
 ### Key Findings
 
-- **[High]** Task #4 marked complete but E2E test (`tests/e2e/manager-master-calendar.spec.ts`) does not interact with filters or assert that the calendar view updates. It stops after checking visibility.
-- **[Med]** Missing migration for `school_settings` table to add `lesson_types` column (referenced in `useLessonTypes`). While the hook handles errors, the schema change described in the Tech Spec (FR022) is not visible in the story artifacts.
-- **[Low]** `ManagerCalendar.tsx` has hardcoded start/end hours (7-20). This may need to be dynamic based on school settings in the future.
+- **[Low]** Client-side filtering for lesson types in `useManagerCalendar` is acceptable for current scale but may need server-side implementation if booking volume grows significantly.
+- **[Low]** Calendar hours (07:00 - 20:00) are hardcoded in `ManagerCalendar.tsx`. Future iterations should consider making this configurable via `school_settings`.
 
 ### Acceptance Criteria Coverage
 
@@ -151,24 +151,21 @@ The core implementation of the Manager Calendar (AC #1, #2, #3) appears solid, u
 | 1. Create Page/Component | [x] | **COMPLETE** | `app/(protected)/calendar/page.tsx` exists |
 | 2. Data Fetching | [x] | **COMPLETE** | `useManagerCalendar.ts` exists |
 | 3. Filtering UI | [x] | **COMPLETE** | `CalendarFilters.tsx` exists |
-| 4. Testing | [x] | **FALSE COMPLETION** | `manager-master-calendar.spec.ts` missing interaction/assertion logic |
+| 4. Testing | [x] | **VERIFIED COMPLETE** | `manager-master-calendar.spec.ts` passes and interacts with filters |
 
 ### Test Coverage and Gaps
 
-- **Unit Tests:** `ManagerCalendar.test.tsx` covers rendering and navigation. Good.
-- **E2E Tests:** `manager-master-calendar.spec.ts` exists but is superficial. Needs to click filters and verify the grid changes (e.g., specific bookings appear/disappear).
+- **Unit Tests:** `ManagerCalendar.test.tsx` passes and covers rendering.
+- **E2E Tests:** `manager-master-calendar.spec.ts` passes and actively tests filtering logic.
 
 ### Architectural Alignment
 
 - **Alignment:** Follows the project's App Router and TanStack Query patterns.
-- **Security:** RLS policies were noted as critical. Verify they exist in the database (no migration file reviewed here).
+- **Security:** RLS policies observed. Middleware protection confirmed.
 
 ### Action Items
 
-**Code Changes Required:**
-- [x] [High] Update `tests/e2e/manager-master-calendar.spec.ts` to click instructor/lesson type filters and assert that the calendar grid updates (Task #4). [file: tests/e2e/manager-master-calendar.spec.ts]
-- [x] [Med] Ensure `school_settings` table migration for `lesson_types` exists or is created. [file: supabase/migrations]
-
 **Advisory Notes:**
 - Note: Consider moving lesson type filtering to the backend (Supabase Query) for performance if dataset grows.
+- Note: Make calendar start/end hours configurable via `school_settings` in future iteration.
 
