@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, Suspense } from 'react';
 import { ManagerCalendar } from '@/components/calendar/ManagerCalendar';
 import { CalendarFilters } from '@/components/calendar/CalendarFilters';
 import { useManagerCalendar } from '@/lib/hooks/useManagerCalendar';
@@ -11,7 +11,7 @@ import { format } from 'date-fns';
 import { ManagerBooking } from '@/lib/hooks/useManagerDashboard';
 import { useSearchParams } from 'next/navigation';
 
-export default function ManagerCalendarPage() {
+function CalendarContent() {
   const { 
     bookings, 
     availability, 
@@ -104,5 +104,13 @@ export default function ManagerCalendarPage() {
         } : null}
       />
     </div>
+  );
+}
+
+export default function ManagerCalendarPage() {
+  return (
+    <Suspense fallback={<div className="container mx-auto p-6">Loading calendar...</div>}>
+      <CalendarContent />
+    </Suspense>
   );
 }
