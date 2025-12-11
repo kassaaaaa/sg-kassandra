@@ -162,6 +162,9 @@ export function useResolutionCenterData() {
         .from('bookings')
         .select(`
           id,
+          lesson_id,
+          customer_id,
+          instructor_id,
           start_time,
           end_time,
           status,
@@ -177,6 +180,9 @@ export function useResolutionCenterData() {
 
       return (data as any[]).map((b) => ({
         id: b.id,
+        lesson_id: b.lesson_id,
+        customer_id: b.customer_id,
+        instructor_id: b.instructor_id,
         start_time: b.start_time,
         end_time: b.end_time,
         status: b.status,
