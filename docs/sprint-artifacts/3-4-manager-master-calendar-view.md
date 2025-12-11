@@ -1,6 +1,6 @@
 # Story 3.4: Manager Master Calendar View
 
-Status: in-progress
+Status: review
 
 ## Story
 
@@ -42,8 +42,8 @@ so that I have a complete overview of schedules.
   
   ### Review Follow-ups (AI)
   
-  - [ ] [AI-Review][High] Update `tests/e2e/manager-master-calendar.spec.ts` to click instructor/lesson type filters and assert that the calendar grid updates (AC #2, #3)
-  - [ ] [AI-Review][Med] Ensure `school_settings` table migration for `lesson_types` exists or is created (AC #1)
+  - [x] [AI-Review][High] Update `tests/e2e/manager-master-calendar.spec.ts` to click instructor/lesson type filters and assert that the calendar grid updates (AC #2, #3)
+  - [x] [AI-Review][Med] Ensure `school_settings` table migration for `lesson_types` exists or is created (AC #1)
   
   ## Dev Notes
 ### Learnings from Previous Story
@@ -93,10 +93,13 @@ docs/sprint-artifacts/3-4-manager-master-calendar-view.context.xml
 - Added `useSchoolData` hook to fetch instructors and lesson types (with fallback).
 - Updated middleware to protect `/calendar` route for managers.
 - Added comprehensive Unit and E2E tests covering ACs.
+- ✅ Resolved review finding [High]: Updated E2E tests to verify filter functionality.
+- ✅ Resolved review finding [Med]: Verified migration for `school_settings` exists.
+- Fixed a bug in `page.tsx` preventing filters from clearing correctly (race condition).
 
 ### File List
 
-- `app/app/(protected)/calendar/page.tsx`
+- `app/(protected)/calendar/page.tsx`
 - `app/components/calendar/ManagerCalendar.tsx`
 - `app/components/calendar/CalendarFilters.tsx`
 - `app/components/calendar/__tests__/ManagerCalendar.test.tsx`
@@ -105,6 +108,7 @@ docs/sprint-artifacts/3-4-manager-master-calendar-view.context.xml
 - `app/lib/availability-service.ts`
 - `app/middleware.ts`
 - `tests/e2e/manager-master-calendar.spec.ts`
+- `supabase/migrations/20251211000000_add_lesson_types_to_school_settings.sql`
 
 ## Change Log
 
@@ -112,6 +116,7 @@ docs/sprint-artifacts/3-4-manager-master-calendar-view.context.xml
 - 2025-12-11: Aligned ACs and tasks with Tech Spec FR024, removing scope creep and improving citations.
 - 2025-12-11: Implementation complete. All tasks verified.
 - 2025-12-11: Senior Developer Review notes appended.
+- 2025-12-11: Addressed code review findings - 2 items resolved. Fixed filter clearing bug.
 
 ## Senior Developer Review (AI)
 
@@ -161,8 +166,8 @@ The core implementation of the Manager Calendar (AC #1, #2, #3) appears solid, u
 ### Action Items
 
 **Code Changes Required:**
-- [ ] [High] Update `tests/e2e/manager-master-calendar.spec.ts` to click instructor/lesson type filters and assert that the calendar grid updates (Task #4). [file: tests/e2e/manager-master-calendar.spec.ts]
-- [ ] [Med] Ensure `school_settings` table migration for `lesson_types` exists or is created. [file: supabase/migrations]
+- [x] [High] Update `tests/e2e/manager-master-calendar.spec.ts` to click instructor/lesson type filters and assert that the calendar grid updates (Task #4). [file: tests/e2e/manager-master-calendar.spec.ts]
+- [x] [Med] Ensure `school_settings` table migration for `lesson_types` exists or is created. [file: supabase/migrations]
 
 **Advisory Notes:**
 - Note: Consider moving lesson type filtering to the backend (Supabase Query) for performance if dataset grows.

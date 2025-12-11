@@ -36,8 +36,8 @@ export default function ManagerCalendarPage() {
         lessonTypes={lessonTypes}
         selectedInstructors={filters.instructorIds}
         selectedLessonTypes={filters.lessonTypes}
-        onInstructorChange={(ids) => setFilters({ ...filters, instructorIds: ids })}
-        onLessonTypeChange={(types) => setFilters({ ...filters, lessonTypes: types })}
+        onInstructorChange={(ids) => setFilters(prev => ({ ...prev, instructorIds: ids }))}
+        onLessonTypeChange={(types) => setFilters(prev => ({ ...prev, lessonTypes: types }))}
       />
 
       <ManagerCalendar 
