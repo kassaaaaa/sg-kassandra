@@ -11,12 +11,16 @@ export interface ManagerDashboardStats {
 
 export interface ManagerBooking {
   id: number;
+  lesson_id: number;
   start_time: string;
   end_time: string;
   status: string;
   lesson: { name: string } | null;
+  customer_id: string;
   customer: { full_name: string; email: string } | null;
+  instructor_id: string | null;
   instructor: { full_name: string } | null;
+  manager_notes?: string;
 }
 
 export interface ConflictedBooking extends ManagerBooking {
@@ -25,9 +29,13 @@ export interface ConflictedBooking extends ManagerBooking {
 
 interface RawManagerBooking {
   id: number;
+  lesson_id: number;
+  customer_id: string;
+  instructor_id: string | null;
   start_time: string;
   end_time: string;
   status: string;
+  manager_notes?: string;
   lesson: { name: string } | { name: string }[] | null;
   customer: { full_name: string; email: string } | { full_name: string; email: string }[] | null;
   instructor: { full_name: string } | { full_name: string }[] | null;
@@ -103,9 +111,13 @@ export function useManagerDashboard() {
         .from('bookings')
         .select(`
           id,
+          lesson_id,
+          customer_id,
+          instructor_id,
           start_time,
           end_time,
           status,
+          manager_notes,
           lesson:lessons(name),
           customer:customer_id(full_name, email),
           instructor:instructor_id(full_name)
@@ -118,9 +130,13 @@ export function useManagerDashboard() {
 
       return (data as any[]).map((b) => ({
         id: b.id,
+        lesson_id: b.lesson_id,
+        customer_id: b.customer_id,
+        instructor_id: b.instructor_id,
         start_time: b.start_time,
         end_time: b.end_time,
         status: b.status,
+        manager_notes: b.manager_notes,
         lesson: Array.isArray(b.lesson) ? b.lesson[0] : b.lesson,
         customer: Array.isArray(b.customer) ? b.customer[0] : b.customer,
         instructor: Array.isArray(b.instructor) ? b.instructor[0] : b.instructor,

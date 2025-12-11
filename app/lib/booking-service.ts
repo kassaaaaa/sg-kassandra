@@ -1,4 +1,5 @@
 import { createBrowserClient } from '@supabase/ssr';
+import { createClient } from '@/lib/supabase/client';
 
 export type Booking = {
   lesson_id: number;
@@ -78,5 +79,46 @@ export async function getBookingByToken(token: string) {
     throw new Error(error.message || "Unknown Edge Function Error");
   }
 
+  return data;
+}
+
+export interface ManagerBookingPayload {
+  id?: number;
+  customer_id?: string;
+  instructor_id?: string | null;
+  lesson_id?: number;
+  start_time?: string;
+  end_time?: string;
+  manager_notes?: string;
+  status?: string;
+}
+
+export async function createManagerBooking(bookingData: ManagerBookingPayload) {
+  const supabase = createClient();
+  const { data, error } = await supabase.functions.invoke('booking-service', {
+    method: 'POST',
+    body: JSON.stringify(bookingData),
+  });
+  if (error) throw error;
+  return data;
+}
+
+export async function updateManagerBooking(bookingData: ManagerBookingPayload) {
+  const supabase = createClient();
+  const { data, error } = await supabase.functions.invoke('booking-service', {
+    method: 'PUT',
+    body: JSON.stringify(bookingData),
+  });
+  if (error) throw error;
+  return data;
+}
+
+export async function cancelManagerBooking(id: number) {
+  const supabase = createClient();
+  const { data, error } = await supabase.functions.invoke('booking-service', {
+    method: 'DELETE',
+    body: JSON.stringify({ id }),
+  });
+  if (error) throw error;
   return data;
 }

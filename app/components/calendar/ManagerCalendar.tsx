@@ -1,9 +1,9 @@
 'use client';
 
-import React, { useState } from 'react';
+import React from 'react';
 import { addDays, startOfWeek, endOfWeek, format, subWeeks, addWeeks, isSameDay } from 'date-fns';
 import { Button } from '@/components/ui/button';
-import { ChevronLeft, ChevronRight } from 'lucide-react';
+import { ChevronLeft, ChevronRight, Plus } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { Availability } from '@/lib/availability-service';
 import { ManagerBooking } from '@/lib/hooks/useManagerDashboard';
@@ -14,9 +14,19 @@ interface ManagerCalendarProps {
   isLoading?: boolean;
   currentDate: Date;
   onDateChange: (date: Date) => void;
+  onAddBooking: (date: Date, timeStr: string) => void;
+  onEditBooking: (booking: ManagerBooking) => void;
 }
 
-export function ManagerCalendar({ bookings, availability, isLoading, currentDate, onDateChange }: ManagerCalendarProps) {
+export function ManagerCalendar({ 
+  bookings, 
+  availability, 
+  isLoading, 
+  currentDate, 
+  onDateChange,
+  onAddBooking,
+  onEditBooking
+}: ManagerCalendarProps) {
   const startDate = startOfWeek(currentDate, { weekStartsOn: 1 }); // Monday start
   const endDate = endOfWeek(currentDate, { weekStartsOn: 1 });
 
@@ -62,6 +72,10 @@ export function ManagerCalendar({ bookings, availability, isLoading, currentDate
           {format(startDate, 'MMMM yyyy')}
         </h2>
         <div className="flex items-center space-x-2">
+            <Button variant="outline" size="sm" onClick={() => onAddBooking(new Date(), '09:00')}>
+                <Plus className="h-4 w-4 mr-2" />
+                Add Booking
+            </Button>
           <Button variant="outline" size="icon" onClick={prevWeek}>
             <ChevronLeft className="h-4 w-4" />
           </Button>
@@ -106,11 +120,13 @@ export function ManagerCalendar({ bookings, availability, isLoading, currentDate
           {/* Days Columns */}
           {days.map((d) => (
             <div key={d.toString()} className="relative divide-y border-r">
-                {/* Background Grid Lines */}
+                {/* Background Grid Lines (Clickable for Add) */}
                 {hours.map((hour) => (
                   <div 
                     key={hour} 
-                    className="h-12 border-b border-dashed border-gray-100"
+                    className="h-12 border-b border-dashed border-gray-100 hover:bg-gray-50 cursor-pointer transition-colors"
+                    onClick={() => onAddBooking(d, `${hour.toString().padStart(2, '0')}:00`)}
+                    title={`Click to add booking at ${hour}:00`}
                   >
                   </div>
                 ))}
@@ -153,11 +169,15 @@ export function ManagerCalendar({ bookings, availability, isLoading, currentDate
                         <div
                             key={`booking-${booking.id}`}
                             className={cn(
-                                "absolute left-1 right-1 rounded border p-1 text-xs shadow-sm overflow-hidden z-10 hover:z-20 hover:shadow-md transition-all",
+                                "absolute left-1 right-1 rounded border p-1 text-xs shadow-sm overflow-hidden z-10 hover:z-20 hover:shadow-md transition-all cursor-pointer",
                                 bgClass
                             )}
                             style={style}
                             title={`${booking.lesson?.name || 'Lesson'} - ${booking.instructor?.full_name || 'No Instructor'} (${booking.status})`}
+                            onClick={(e) => {
+                                e.stopPropagation();
+                                onEditBooking(booking);
+                            }}
                         >
                             <div className="font-semibold truncate">{booking.lesson?.name || 'Lesson'}</div>
                             <div className="text-[10px] truncate">{booking.instructor?.full_name || 'Unassigned'}</div>

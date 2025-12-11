@@ -1,10 +1,15 @@
 'use client';
 
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { ManagerCalendar } from '@/components/calendar/ManagerCalendar';
 import { CalendarFilters } from '@/components/calendar/CalendarFilters';
 import { useManagerCalendar } from '@/lib/hooks/useManagerCalendar';
 import { useInstructors, useLessonTypes } from '@/lib/hooks/useSchoolData';
+import { AddBookingModal } from '@/components/bookings/AddBookingModal';
+import { EditBookingModal } from '@/components/bookings/EditBookingModal';
+import { format } from 'date-fns';
+import { ManagerBooking } from '@/lib/hooks/useManagerDashboard';
+import { useSearchParams } from 'next/navigation';
 
 export default function ManagerCalendarPage() {
   const { 
@@ -17,8 +22,36 @@ export default function ManagerCalendarPage() {
     setFilters
   } = useManagerCalendar();
 
+  const searchParams = useSearchParams();
+  const action = searchParams.get('action');
+
   const { data: instructors = [] } = useInstructors();
   const { data: lessonTypes = [] } = useLessonTypes();
+
+  const [isAddOpen, setIsAddOpen] = useState(false);
+  const [addDefaults, setAddDefaults] = useState<{date: string, time: string} | null>(null);
+
+  const [isEditOpen, setIsEditOpen] = useState(false);
+  const [selectedBooking, setSelectedBooking] = useState<ManagerBooking | null>(null);
+
+  useEffect(() => {
+    if (action === 'new') {
+        setIsAddOpen(true);
+    }
+  }, [action]);
+
+  const handleAddBooking = (date: Date, timeStr: string) => {
+    setAddDefaults({
+        date: format(date, 'yyyy-MM-dd'),
+        time: timeStr
+    });
+    setIsAddOpen(true);
+  };
+
+  const handleEditBooking = (booking: ManagerBooking) => {
+    setSelectedBooking(booking);
+    setIsEditOpen(true);
+  };
 
   return (
     <div className="container mx-auto p-6 space-y-6">
@@ -46,6 +79,29 @@ export default function ManagerCalendarPage() {
         isLoading={isLoading}
         currentDate={currentDate}
         onDateChange={setCurrentDate}
+        onAddBooking={handleAddBooking}
+        onEditBooking={handleEditBooking}
+      />
+
+      <AddBookingModal
+        isOpen={isAddOpen}
+        onClose={() => setIsAddOpen(false)}
+        defaultDate={addDefaults?.date}
+        defaultTime={addDefaults?.time}
+      />
+
+      <EditBookingModal
+        isOpen={isEditOpen}
+        onClose={() => setIsEditOpen(false)}
+        booking={selectedBooking ? {
+            id: selectedBooking.id,
+            customer_id: selectedBooking.customer_id || '',
+            instructor_id: selectedBooking.instructor_id,
+            lesson_id: selectedBooking.lesson_id,
+            start_time: selectedBooking.start_time,
+            end_time: selectedBooking.end_time,
+            manager_notes: selectedBooking.manager_notes,
+        } : null}
       />
     </div>
   );

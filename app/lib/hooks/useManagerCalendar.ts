@@ -28,52 +28,54 @@ export function useManagerCalendar() {
         .from('bookings')
         .select(`
           id,
+          lesson_id,
+          customer_id,
+          instructor_id,
           start_time,
           end_time,
           status,
+          manager_notes,
           lesson:lessons(name),
           customer:customer_id(full_name, email),
           instructor:instructor_id(full_name)
         `)
         .gte('start_time', startDate.toISOString())
-        .lte('end_time', endDate.toISOString()) // Overlapping check usually checks start < end AND end > start, but for simple fetching of "bookings in this week", checking start time range is often enough if bookings aren't multi-day.
-        // Actually, precise overlap: start < viewEnd AND end > viewStart.
-        // But for simplicity/indexing: start_time >= viewStart AND start_time <= viewEnd (starts in view)
-        // OR end_time >= viewStart AND end_time <= viewEnd (ends in view)
-        // OR start <= viewStart AND end >= viewEnd (spans view)
-        // Let's stick to start_time check for now as most lessons are short.
-        
+        .lte('end_time', endDate.toISOString())
+
       if (filters.instructorIds.length > 0) {
         query = query.in('instructor_id', filters.instructorIds);
       }
 
-      // Lesson type filter: `bookings` doesn't have `lesson_type` column directly usually?
-      // `bookings` -> `lessons` table -> `name`? Or `bookings` has `lesson_id`.
-      // The `lessons` table probably has the type or name.
-      // Filter by lesson type implies joining or filtering on joined relation.
-      // Supabase supports filtering on joined tables: `!inner` to enforce filter.
       if (filters.lessonTypes.length > 0) {
-        // Assuming 'lessons' table has a 'name' or 'type' column that matches our filter.
-        // The filter UI (Task 3) will populate this.
-        // Let's assume the filter values match lesson names for now.
-        query = query.not('lesson', 'is', null); // Ensure lesson exists
-        // Filter on the joined resource:
-        // .eq('lessons.name', ...) -- syntax is tricky with arrays.
-        // Simplest: Fetch all in range, filter in JS.
-        // Or usage: .in('lesson.name', filters.lessonTypes) if possible.
-        // Supabase JS syntax for deep filtering:
-        // .filter('lesson.name', 'in', `(${filters.lessonTypes.join(',')})`)
-        // But let's just do JS filtering for lesson types to be safe and robust against complex query syntax issues for now.
+        query = query.not('lesson', 'is', null);
       }
 
       const { data, error } = await query;
       if (error) throw error;
 
-      let result = (data as any[]).map((b) => ({
+      interface DBBooking {
+        id: number;
+        start_time: string;
+        end_time: string;
+        status: string;
+        manager_notes?: string;
+        lesson: any;
+        customer: any;
+        instructor: any;
+        lesson_id: number;
+        customer_id: string;
+        instructor_id: string | null;
+      }
+
+      let result = (data as unknown as DBBooking[]).map((b) => ({
         id: b.id,
+        lesson_id: b.lesson_id,
+        customer_id: b.customer_id,
+        instructor_id: b.instructor_id,
         start_time: b.start_time,
         end_time: b.end_time,
         status: b.status,
+        manager_notes: b.manager_notes,
         lesson: Array.isArray(b.lesson) ? b.lesson[0] : b.lesson,
         customer: Array.isArray(b.customer) ? b.customer[0] : b.customer,
         instructor: Array.isArray(b.instructor) ? b.instructor[0] : b.instructor,

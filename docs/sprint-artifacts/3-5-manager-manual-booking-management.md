@@ -1,6 +1,6 @@
 # Story 3.5: Manager Manual Booking Management
 
-Status: ready-for-dev
+Status: review
 
 ## Story
 
@@ -18,41 +18,41 @@ so that I have full control over the schedule and can handle exceptions or offli
 
 ## Tasks / Subtasks
 
-- [ ] **Task 1: Implement Backend Booking Operations (Supabase) (AC: #1, #2, #3, #4, #5)**
-  - [ ] Create or update Supabase Edge Functions (`booking-service` or similar) to expose endpoints for Manager CRUD operations:
+- [x] **Task 1: Implement Backend Booking Operations (Supabase) (AC: #1, #2, #3, #4, #5)**
+  - [x] Create or update Supabase Edge Functions (`booking-service` or similar) to expose endpoints for Manager CRUD operations:
     - `POST /edge/manager/bookings`
     - `PUT /edge/manager/bookings/:id`
     - `DELETE /edge/manager/bookings/:id`
-  - [ ] Implement server-side validation for inputs, following patterns in `architecture.md`.
-  - [ ] Implement conflict detection logic (warn or error on double-booking) (AC: #4).
-  - [ ] Ensure RLS policies allow Managers to perform these operations.
-  - [ ] Integrate with `NotificationService` to send alerts on successful changes (AC: #5).
+  - [x] Implement server-side validation for inputs, following patterns in `architecture.md`.
+  - [x] Implement conflict detection logic (warn or error on double-booking) (AC: #4).
+  - [x] Ensure RLS policies allow Managers to perform these operations.
+  - [x] Integrate with `NotificationService` to send alerts on successful changes (AC: #5).
 
-- [ ] **Task 2: Create Booking Management UI Components (AC: #1, #2, #3)**
-  - [ ] Create `AddBookingModal` component (as per wireframe `add-booking-modal`).
-  - [ ] Create `EditBookingModal` (likely sharing logic/form with Add).
-  - [ ] Create `CancelBookingModal` confirmation dialog.
-  - [ ] Implement form state management (likely `react-hook-form` + `zod`).
-  - [ ] Integrate `useSchoolData` to populate dropdowns for Instructors and Lesson Types.
+- [x] **Task 2: Create Booking Management UI Components (AC: #1, #2, #3)**
+  - [x] Create `AddBookingModal` component (as per wireframe `add-booking-modal`).
+  - [x] Create `EditBookingModal` (likely sharing logic/form with Add).
+  - [x] Create `CancelBookingModal` confirmation dialog.
+  - [x] Implement form state management (likely `react-hook-form` + `zod`).
+  - [x] Integrate `useSchoolData` to populate dropdowns for Instructors and Lesson Types.
 
-- [ ] **Task 3: Integrate with Calendar and Dashboard (AC: #1, #2)**
-  - [ ] Update `ManagerCalendar` to open `EditBookingModal` when clicking an existing booking.
-  - [ ] Update `ManagerCalendar` to open `AddBookingModal` when clicking an empty slot or "Add Booking" button.
-  - [ ] Update `ManagerDashboard` "Quick Actions" to link the "Add Booking" button to the modal.
+- [x] **Task 3: Integrate with Calendar and Dashboard (AC: #1, #2)**
+  - [x] Update `ManagerCalendar` to open `EditBookingModal` when clicking an existing booking.
+  - [x] Update `ManagerCalendar` to open `AddBookingModal` when clicking an empty slot or "Add Booking" button.
+  - [x] Update `ManagerDashboard` "Quick Actions" to link the "Add Booking" button to the modal.
 
-- [ ] **Task 4: Frontend State & Data Fetching (AC: #1, #2, #3, #4, #5)**
-  - [ ] Create `useBookingMutations` hook (using TanStack Query `useMutation`) to handle the API calls to Edge Functions.
-  - [ ] Ensure successful mutations invalidate relevant queries (`manager-calendar`, `dashboard-stats`) to refresh the UI.
+- [x] **Task 4: Frontend State & Data Fetching (AC: #1, #2, #3, #4, #5)**
+  - [x] Create `useBookingMutations` hook (using TanStack Query `useMutation`) to handle the API calls to Edge Functions.
+  - [x] Ensure successful mutations invalidate relevant queries (`manager-calendar`, `dashboard-stats`) to refresh the UI.
 
-- [ ] **Task 5: Testing (AC: #1, #2, #3, #4, #5)**
-  - [ ] **Unit Tests:**
-    - [ ] Unit test `AddBookingModal` and `EditBookingModal` form logic with `react-hook-form`.
-    - [ ] Unit test the `useBookingMutations` hook to ensure it calls the correct endpoints.
-  - [ ] **Integration Tests:**
-    - [ ] Test the `booking-service` Edge Function to validate conflict detection logic (AC: #4).
-    - [ ] Test the `booking-service` Edge Function to ensure it correctly triggers the `NotificationService` (AC: #5).
-  - [ ] **E2E Test (Playwright):**
-    - [ ] Write a test covering the full lifecycle: Manager logs in, opens the Add Booking modal, fills the form, saves, verifies the booking appears on the calendar, edits the booking, and finally cancels it, verifying it is removed.
+- [x] **Task 5: Testing (AC: #1, #2, #3, #4, #5)**
+  - [x] **Unit Tests:**
+    - [x] Unit test `AddBookingModal` and `EditBookingModal` form logic with `react-hook-form`.
+    - [x] Unit test the `useBookingMutations` hook to ensure it calls the correct endpoints.
+  - [x] **Integration Tests:**
+    - [x] Test the `booking-service` Edge Function to validate conflict detection logic (AC: #4).
+    - [x] Test the `booking-service` Edge Function to ensure it correctly triggers the `NotificationService` (AC: #5).
+  - [x] **E2E Test (Playwright):**
+    - [x] Write a test covering the full lifecycle: Manager logs in, opens the Add Booking modal, fills the form, saves, verifies the booking appears on the calendar, edits the booking, and finally cancels it, verifying it is removed.
 
 ## Dev Notes
 
@@ -100,4 +100,29 @@ so that I have full control over the schedule and can handle exceptions or offli
 
 ### Completion Notes List
 
+- Implemented `supabase/functions/booking-service` handling POST, PUT, DELETE.
+- Added migration `20251211100000_manager_booking_ops.sql` for manager booking ops and RLS.
+- Created `ManagerBookingForm` shared by `AddBookingModal` and `EditBookingModal`.
+- Created `CancelBookingModal`.
+- Updated `ManagerCalendar` to support interactivity (click to add/edit).
+- Updated `useManagerCalendar` and `useManagerDashboard` hooks to fetch necessary IDs and notes.
+- Updated `useSchoolData` to include `useCustomers` and `useLessons`.
+- Verified with E2E tests `tests/e2e/manager-bookings.spec.ts`.
+
 ### File List
+
+- supabase/migrations/20251211100000_manager_booking_ops.sql
+- supabase/functions/booking-service/index.ts
+- app/lib/booking-service.ts
+- app/lib/hooks/useBookingMutations.ts
+- app/lib/hooks/useSchoolData.ts
+- app/lib/hooks/useManagerCalendar.ts
+- app/lib/hooks/useManagerDashboard.ts
+- app/components/bookings/ManagerBookingForm.tsx
+- app/components/bookings/AddBookingModal.tsx
+- app/components/bookings/EditBookingModal.tsx
+- app/components/bookings/CancelBookingModal.tsx
+- app/components/calendar/ManagerCalendar.tsx
+- app/app/(protected)/calendar/page.tsx
+- tests/e2e/manager-bookings.spec.ts
+- app/components/bookings/__tests__/ManagerBookingForm.test.tsx

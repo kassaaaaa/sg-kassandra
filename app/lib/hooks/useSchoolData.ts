@@ -6,6 +6,34 @@ export interface Instructor {
   full_name: string;
 }
 
+export interface Customer {
+  id: string;
+  full_name: string;
+}
+
+export interface Lesson {
+  id: number;
+  name: string;
+  duration_minutes: number;
+}
+
+export function useLessons() {
+  const supabase = createClient();
+  return useQuery({
+    queryKey: ['lessons'],
+    queryFn: async (): Promise<Lesson[]> => {
+      const { data, error } = await supabase
+        .from('lessons')
+        .select('id, name, duration_minutes')
+        .eq('active', true)
+        .order('name');
+      
+      if (error) throw error;
+      return data as Lesson[];
+    },
+  });
+}
+
 export function useInstructors() {
   const supabase = createClient();
   return useQuery({
@@ -19,6 +47,23 @@ export function useInstructors() {
       
       if (error) throw error;
       return data as Instructor[];
+    },
+  });
+}
+
+export function useCustomers() {
+  const supabase = createClient();
+  return useQuery({
+    queryKey: ['customers'],
+    queryFn: async (): Promise<Customer[]> => {
+      const { data, error } = await supabase
+        .from('profiles')
+        .select('id, full_name')
+        .eq('role', 'customer')
+        .order('full_name');
+      
+      if (error) throw error;
+      return data as Customer[];
     },
   });
 }
