@@ -20,10 +20,10 @@ import { Loader2 } from 'lucide-react';
 import { useEffect } from 'react';
 
 const formSchema = z.object({
-  customer_id: z.string({ required_error: 'Customer is required' }).min(1, 'Customer is required'),
+  customer_id: z.string().min(1, { message: 'Customer is required' }),
   instructor_id: z.string().optional(),
-  lesson_id: z.string({ required_error: 'Lesson type is required' }).min(1, 'Lesson type is required'),
-  date: z.string({ required_error: 'Date is required' }).min(1, 'Date is required'),
+  lesson_id: z.string().min(1, { message: 'Lesson type is required' }),
+  date: z.string().min(1, { message: 'Date is required' }),
   start_time: z.string({ required_error: 'Start time is required' }).min(1, 'Start time is required'),
   end_time: z.string({ required_error: 'End time is required' }).min(1, 'End time is required'),
   manager_notes: z.string().optional(),
