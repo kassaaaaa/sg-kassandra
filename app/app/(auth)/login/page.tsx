@@ -1,14 +1,14 @@
-'use client';
+"use client";
 
-import { useState } from 'react';
-import { useForm } from 'react-hook-form';
-import { zodResolver } from '@hookform/resolvers/zod';
-import * as z from 'zod';
-import { useRouter } from 'next/navigation';
-import { toast } from 'sonner';
-import Link from 'next/link';
+import { useState } from "react";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import * as z from "zod";
+import { useRouter } from "next/navigation";
+import { toast } from "sonner";
+import Link from "next/link";
 
-import { Button } from '@/components/ui/button';
+import { Button } from "@/components/ui/button";
 import {
   Form,
   FormControl,
@@ -16,17 +16,24 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from '@/components/ui/form';
-import { Input } from '@/components/ui/input';
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
-import { AuthService } from '@/lib/auth-service';
+} from "@/components/ui/form";
+import { Input } from "@/components/ui/input";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import { AuthService } from "@/lib/auth-service";
 
 const formSchema = z.object({
   email: z.string().email({
-    message: 'Please enter a valid email address.',
+    message: "Please enter a valid email address.",
   }),
   password: z.string().min(1, {
-    message: 'Password is required.',
+    message: "Password is required.",
   }),
 });
 
@@ -37,8 +44,8 @@ export default function LoginPage() {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      email: '',
-      password: '',
+      email: "",
+      password: "",
     },
   });
 
@@ -46,21 +53,24 @@ export default function LoginPage() {
     setIsLoading(true);
     try {
       await AuthService.login(values.email, values.password);
-      
+
       // Fetch user role for redirection
       const role = await AuthService.getUserRole();
-      
+
       // Currently both roles redirect to /dashboard, but this allows for future split
-      if (role === 'instructor' || role === 'manager') {
-        router.push('/dashboard');
+      if (role === "instructor" || role === "manager") {
+        router.push("/dashboard");
       } else {
         // Fallback if role is missing or unexpected
-        router.push('/dashboard');
+        router.push("/dashboard");
       }
-      
-      toast.success('Logged in successfully.');
+
+      toast.success("Logged in successfully.");
     } catch (error) {
-      const errorMessage = error instanceof Error ? error.message : 'Invalid login credentials. Please try again.';
+      const errorMessage =
+        error instanceof Error
+          ? error.message
+          : "Invalid login credentials. Please try again.";
       toast.error(errorMessage);
     } finally {
       setIsLoading(false);
@@ -71,7 +81,9 @@ export default function LoginPage() {
     <div className="flex min-h-screen items-center justify-center bg-gray-50 p-4">
       <Card className="w-full max-w-md">
         <CardHeader>
-          <CardTitle className="text-2xl font-bold text-center">Welcome Back</CardTitle>
+          <CardTitle className="text-2xl font-bold text-center">
+            KiteOps
+          </CardTitle>
           <CardDescription className="text-center">
             Enter your credentials to access your account.
           </CardDescription>
@@ -99,22 +111,29 @@ export default function LoginPage() {
                   <FormItem>
                     <FormLabel>Password</FormLabel>
                     <FormControl>
-                      <Input type="password" placeholder="********" {...field} />
+                      <Input
+                        type="password"
+                        placeholder="********"
+                        {...field}
+                      />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
                 )}
               />
               <Button type="submit" className="w-full" disabled={isLoading}>
-                {isLoading ? 'Logging in...' : 'Log In'}
+                {isLoading ? "Logging in..." : "Log In"}
               </Button>
             </form>
           </Form>
         </CardContent>
         <CardFooter className="flex justify-center">
           <p className="text-sm text-gray-600">
-            Don&apos;t have an account?{' '}
-            <Link href="/signup" className="font-medium text-blue-600 hover:underline">
+            Don&apos;t have an account?{" "}
+            <Link
+              href="/signup"
+              className="font-medium text-blue-600 hover:underline"
+            >
               Sign up
             </Link>
           </p>
