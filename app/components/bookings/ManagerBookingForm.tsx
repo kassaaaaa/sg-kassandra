@@ -24,8 +24,8 @@ const formSchema = z.object({
   instructor_id: z.string().optional(),
   lesson_id: z.string().min(1, { message: 'Lesson type is required' }),
   date: z.string().min(1, { message: 'Date is required' }),
-  start_time: z.string({ required_error: 'Start time is required' }).min(1, 'Start time is required'),
-  end_time: z.string({ required_error: 'End time is required' }).min(1, 'End time is required'),
+  start_time: z.string().min(1, { message: 'Start time is required' }),
+  end_time: z.string().min(1, { message: 'End time is required' }),
   manager_notes: z.string().optional(),
 });
 
