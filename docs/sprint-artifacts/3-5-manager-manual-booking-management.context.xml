@@ -1,0 +1,236 @@
+<story-context id=".bmad/bmm/workflows/4-implementation/story-context/template" v="1.0">
+  <metadata>
+    <epicId>3</epicId>
+    <storyId>5</storyId>
+    <title>Manager Manual Booking Management</title>
+    <status>drafted</status>
+    <generatedAt>2025-12-11</generatedAt>
+    <generator>BMAD Story Context Workflow</generator>
+    <sourceStoryPath>docs/sprint-artifacts/3-5-manager-manual-booking-management.md</sourceStoryPath>
+  </metadata>
+
+  <story>
+    <asA>a Manager</asA>
+    <iWant>to manually add, edit, or cancel any booking</iWant>
+    <soThat>I have full control over the schedule and can handle exceptions or offline bookings</soThat>
+    <tasks>
+- [ ] **Task 1: Implement Backend Booking Operations (Supabase) (AC: #1, #2, #3, #4, #5)**
+  - [ ] Create or update Supabase Edge Functions (`booking-service` or similar) to expose endpoints for Manager CRUD operations:
+    - `POST /edge/manager/bookings`
+    - `PUT /edge/manager/bookings/:id`
+    - `DELETE /edge/manager/bookings/:id`
+  - [ ] Implement server-side validation for inputs, following patterns in `architecture.md`.
+  - [ ] Implement conflict detection logic (warn or error on double-booking) (AC: #4).
+  - [ ] Ensure RLS policies allow Managers to perform these operations.
+  - [ ] Integrate with `NotificationService` to send alerts on successful changes (AC: #5).
+
+- [ ] **Task 2: Create Booking Management UI Components (AC: #1, #2, #3)**
+  - [ ] Create `AddBookingModal` component (as per wireframe `add-booking-modal`).
+  - [ ] Create `EditBookingModal` (likely sharing logic/form with Add).
+  - [ ] Create `CancelBookingModal` confirmation dialog.
+  - [ ] Implement form state management (likely `react-hook-form` + `zod`).
+  - [ ] Integrate `useSchoolData` to populate dropdowns for Instructors and Lesson Types.
+
+- [ ] **Task 3: Integrate with Calendar and Dashboard (AC: #1, #2)**
+  - [ ] Update `ManagerCalendar` to open `EditBookingModal` when clicking an existing booking.
+  - [ ] Update `ManagerCalendar` to open `AddBookingModal` when clicking an empty slot or "Add Booking" button.
+  - [ ] Update `ManagerDashboard` "Quick Actions" to link the "Add Booking" button to the modal.
+
+- [ ] **Task 4: Frontend State & Data Fetching (AC: #1, #2, #3, #4, #5)**
+  - [ ] Create `useBookingMutations` hook (using TanStack Query `useMutation`) to handle the API calls to Edge Functions.
+  - [ ] Ensure successful mutations invalidate relevant queries (`manager-calendar`, `dashboard-stats`) to refresh the UI.
+
+- [ ] **Task 5: Testing (AC: #1, #2, #3, #4, #5)**
+  - [ ] **Unit Tests:**
+    - [ ] Unit test `AddBookingModal` and `EditBookingModal` form logic with `react-hook-form`.
+    - [ ] Unit test the `useBookingMutations` hook to ensure it calls the correct endpoints.
+  - [ ] **Integration Tests:**
+    - [ ] Test the `booking-service` Edge Function to validate conflict detection logic (AC: #4).
+    - [ ] Test the `booking-service` Edge Function to ensure it correctly triggers the `NotificationService` (AC: #5).
+  - [ ] **E2E Test (Playwright):**
+    - [ ] Write a test covering the full lifecycle: Manager logs in, opens the Add Booking modal, fills the form, saves, verifies the booking appears on the calendar, edits the booking, and finally cancels it, verifying it is removed.
+    </tasks>
+  </story>
+
+  <acceptanceCriteria>
+1.  **Manual Booking Creation:** The system shall allow a Manager to manually create a new booking by specifying the customer, instructor, lesson type, date, and time. This bypasses the automated scheduling engine's suggestions. [Source: tech-spec-epic-3.md, FR025.a, FR026.a]
+2.  **Booking Modification:** The system shall allow a Manager to edit an existing booking, including changing the time, location, or assigned instructor (reassignment). [Source: tech-spec-epic-3.md, FR025.b, FR026.d]
+3.  **Booking Cancellation:** The system shall allow a Manager to cancel any existing booking, requiring a confirmation step. [Source: tech-spec-epic-3.md, FR025.c]
+4.  **Instructor Override:** When manually creating or editing a booking, the Manager must be able to assign *any* instructor, effectively overriding automated load-balancing rules, though conflicts (double-booking) should still trigger a warning or prevention. [Source: tech-spec-epic-3.md, FR026]
+5.  **Notification Triggers:** Any manual creation, modification, or cancellation of a booking must trigger the appropriate email/SMS notifications to the affected Customer and Instructor. [Source: tech-spec-epic-3.md, FR025.e]
+  </acceptanceCriteria>
+
+  <artifacts>
+    <docs>
+      <doc>
+        <path>docs/fase-3-solution/epics.md</path>
+        <title>Epic Breakdown</title>
+        <section>Epic 3: Manager and Instructor Dashboards</section>
+        <snippet>Goal: Provide managers and instructors with the tools they need to manage daily operations, including dashboards, master calendars, and the ability to manage bookings and users.</snippet>
+      </doc>
+      <doc>
+        <path>docs/fase-3-solution/epics.md</path>
+        <title>Epic Breakdown</title>
+        <section>Story 3.5: Manager Manual Booking Management</section>
+        <snippet>As a Manager, I want to manually add, edit, or cancel any booking, so I have full control over the schedule.</snippet>
+      </doc>
+      <doc>
+        <path>docs/sprint-artifacts/tech-spec-epic-3.md</path>
+        <title>Epic Technical Specification: Manager Oversight & Administration</title>
+        <section>APIs and Interfaces</section>
+        <snippet>
+          POST /edge/manager/bookings - Create a new booking (manual by manager)
+          PUT /edge/manager/bookings/:id - Update an existing booking (manual by manager, including reassignment)
+          DELETE /edge/manager/bookings/:id - Cancel a booking
+        </snippet>
+      </doc>
+      <doc>
+        <path>docs/sprint-artifacts/tech-spec-epic-3.md</path>
+        <title>Epic Technical Specification: Manager Oversight & Administration</title>
+        <section>Workflows and Sequencing: Manager Manual Booking/Reassignment</section>
+        <snippet>
+          1. Manager accesses the Master Calendar or Booking List.
+          2. Manager initiates 'Add Booking' or 'Edit Booking' action.
+          3. Frontend invokes PUT /edge/manager/bookings/:id (for edit) or POST /edge/manager/bookings (for new).
+          4. Edge Function updates bookings table.
+        </snippet>
+      </doc>
+      <doc>
+        <path>docs/fase-3-solution/architecture.md</path>
+        <title>Architecture</title>
+        <section>N/A</section>
+        <snippet>This document was not found during context assembly, but is referenced in dev notes. It should contain general architectural guidance.</snippet>
+      </doc>
+      <doc>
+        <path>docs/wireframes/manager-dashboard.html</path>
+        <title>Manager Dashboard Wireframe</title>
+        <section>add-booking-modal</section>
+        <snippet>Reference for the structure and fields of the 'add-booking-modal'.</snippet>
+      </doc>
+    </docs>
+    <code>
+      <artifact>
+        <path>app/components/calendar/ManagerCalendar.tsx</path>
+        <kind>Component</kind>
+        <symbol>ManagerCalendar</symbol>
+        <reason>Main UI component to be modified to trigger the new booking/editing modals.</reason>
+      </artifact>
+      <artifact>
+        <path>app/lib/hooks/useManagerCalendar.ts</path>
+        <kind>Hook</kind>
+        <symbol>useManagerCalendar</symbol>
+        <reason>Existing hook for fetching calendar data; may need to be referenced or adapted.</reason>
+      </artifact>
+      <artifact>
+        <path>app/lib/hooks/useSchoolData.ts</path>
+        <kind>Hook</kind>
+        <symbol>useInstructors, useLessonTypes</symbol>
+        <reason>To be reused for populating instructor and lesson type dropdowns in the new modals.</reason>
+      </artifact>
+      <artifact>
+        <path>app/lib/booking-service.ts</path>
+        <kind>Service</kind>
+        <symbol>booking-service</symbol>
+        <reason>Client-side service that will be updated to include functions for calling the new manager booking endpoints.</reason>
+      </artifact>
+      <artifact>
+        <path>supabase/functions/booking-service/</path>
+        <kind>Edge Function</kind>
+        <symbol>booking-service</symbol>
+        <reason>Backend service to be created or updated with the core logic for manual booking management.</reason>
+      </artifact>
+    </code>
+    <dependencies>
+      <dependency ecosystem="npm">
+        <package>next</package>
+        <version>16.0.7</version>
+      </dependency>
+      <dependency ecosystem="npm">
+        <package>react</package>
+        <version>19.2.0</version>
+      </dependency>
+      <dependency ecosystem="npm">
+        <package>@supabase/supabase-js</package>
+        <version>^2.86.0</version>
+      </dependency>
+      <dependency ecosystem="npm">
+        <package>@tanstack/react-query</package>
+        <version>^5.90.12</version>
+      </dependency>
+      <dependency ecosystem="npm">
+        <package>react-hook-form</package>
+        <version>^7.68.0</version>
+      </dependency>
+      <dependency ecosystem="npm">
+        <package>zod</package>
+        <version>^4.1.13</version>
+      </dependency>
+      <dependency ecosystem="npm">
+        <package>vitest</package>
+        <version>^4.0.15</version>
+        <scope>devDependencies</scope>
+      </dependency>
+    </dependencies>
+  </artifacts>
+
+  <constraints>
+    <constraint>Backend logic in Edge Functions must adhere to the layered Error Handling and Structured Logging patterns defined in `architecture.md`.</constraint>
+    <constraint>All date/time operations must be handled in the school's local time zone and stored in UTC.</constraint>
+    <constraint>The UI for the `add-booking-modal` should follow the structure and fields specified in the `manager-dashboard.html` wireframe.</constraint>
+    <constraint>Backend logic should be implemented in the `supabase/functions/booking-service/` Edge Function.</constraint>
+    <constraint>Even with manual overrides, the system must warn about or prevent instructor double-bookings.</constraint>
+    <constraint>Manual booking changes must trigger notifications to affected users, reusing the existing notification infrastructure.</constraint>
+  </constraints>
+  <interfaces>
+    <interface>
+      <name>/edge/manager/bookings</name>
+      <kind>REST Endpoint</kind>
+      <signature>POST /edge/manager/bookings</signature>
+      <path>supabase/functions/booking-service/</path>
+    </interface>
+    <interface>
+      <name>/edge/manager/bookings/:id</name>
+      <kind>REST Endpoint</kind>
+      <signature>PUT /edge/manager/bookings/:id</signature>
+      <path>supabase/functions/booking-service/</path>
+    </interface>
+    <interface>
+      <name>/edge/manager/bookings/:id</name>
+      <kind>REST Endpoint</kind>
+      <signature>DELETE /edge/manager/bookings/:id</signature>
+      <path>supabase/functions/booking-service/</path>
+    </interface>
+    <interface>
+      <name>useInstructors</name>
+      <kind>Hook</kind>
+      <signature>useInstructors(): UseQueryResult&lt;Instructor[], Error&gt;</signature>
+      <path>app/lib/hooks/useSchoolData.ts</path>
+    </interface>
+    <interface>
+      <name>useLessonTypes</name>
+      <kind>Hook</kind>
+      <signature>useLessonTypes(): UseQueryResult&lt;string[], Error&gt;</signature>
+      <path>app/lib/hooks/useSchoolData.ts</path>
+    </interface>
+  </interfaces>
+  <tests>
+    <standards>
+      The project follows a layered testing strategy:
+      - **Unit Tests:** Use Vitest and React Testing Library. Tests are co-located with the source files (e.g., in `__tests__` subdirectories).
+      - **Integration Tests:** Use Vitest. Located in `tests/integration`.
+      - **E2E Tests:** Use Playwright. Located in `tests/e2e`.
+    </standards>
+    <locations>
+      - **Unit Tests:** `app/components/bookings/__tests__/`, `app/lib/hooks/__tests__/`
+      - **Integration Tests:** `supabase/functions/booking-service/__tests__/`
+      - **E2E Tests:** `tests/e2e/`
+    </locations>
+    <ideas>
+      - **Unit Test:** Test `AddBookingModal` and `EditBookingModal` form logic with `react-hook-form`.
+      - **Unit Test:** Test the `useBookingMutations` hook to ensure it calls the correct endpoints.
+      - **Integration Test:** Test the `booking-service` Edge Function to validate conflict detection logic (AC: #4).
+      - **Integration Test:** Test the `booking-service` Edge Function to ensure it correctly triggers the `NotificationService` (AC: #5).
+      - **E2E Test (Playwright):** Write a test covering the full lifecycle: Manager logs in, opens the Add Booking modal, fills the form, saves, verifies the booking appears on the calendar, edits the booking, and finally cancels it, verifying it is removed.
+    </ideas>
+  </tests>
+</story-context>
