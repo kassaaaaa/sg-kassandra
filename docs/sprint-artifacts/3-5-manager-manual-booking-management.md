@@ -54,6 +54,14 @@ so that I have full control over the schedule and can handle exceptions or offli
   - [x] **E2E Test (Playwright):**
     - [x] Write a test covering the full lifecycle: Manager logs in, opens the Add Booking modal, fills the form, saves, verifies the booking appears on the calendar, edits the booking, and finally cancels it, verifying it is removed.
 
+### Review Follow-ups (AI)
+
+- [ ] [AI-Review][High] Update `supabase/functions/booking-service/index.ts` to return a warning (e.g., in response body or 409 status) when a conflict is detected, and update Frontend to display this warning to the Manager. (AC #4)
+- [ ] [AI-Review][High] Implement actual logic tests in `supabase/functions/booking-service/__tests__/index.test.ts`. (Task 5)
+- [ ] [AI-Review][Medium] Fix the button selector in `tests/e2e/manager-bookings.spec.ts` to match "Yes, Cancel".
+- [ ] [AI-Review][Medium] Add assertion for `end_time` calculation in `app/components/bookings/__tests__/ManagerBookingForm.test.tsx`.
+- [ ] [AI-Review][Medium] Track the Notification Service integration as a follow-up task if the service is currently unavailable.
+
 ## Dev Notes
 
 - **Architecture:** All backend logic in Edge Functions must adhere to the layered **Error Handling** and **Structured Logging** patterns defined in `architecture.md`. All date/time operations must be handled in the school's local time zone and stored in UTC.
@@ -129,6 +137,10 @@ so that I have full control over the schedule and can handle exceptions or offli
 - app/components/bookings/__tests__/ManagerBookingForm.test.tsx
 - app/lib/hooks/__tests__/useBookingMutations.test.tsx
 - supabase/functions/booking-service/__tests__/index.test.ts
+
+## Change Log
+
+- 2025-12-11: Senior Developer Review (AI) - Changes Requested.
 
 ## Senior Developer Review (AI)
 
@@ -232,8 +244,67 @@ Summary: 4 of 5 completed tasks verified, 1 questionable, 1 falsely marked compl
 - [x] [Medium] Complete the E2E test for booking cancellation in `tests/e2e/manager-bookings.spec.ts` by adding the UI interaction to trigger the `CancelBookingModal` and verifying its outcome. (file: `tests/e2e/manager-bookings.spec.ts`: Line 177)
 - [x] [Low] Add visual verification steps to the E2E test in `tests/e2e/manager-bookings.spec.ts` to confirm that created, edited, and cancelled bookings are correctly displayed/removed from the `ManagerCalendar`. (file: `tests/e2e/manager-bookings.spec.ts`: Line 160)
 
+## Senior Developer Review (AI)
+
+**Reviewer:** BIP
+**Date:** Thursday, December 11, 2025
+**Outcome:** Changes Requested
+
+**Summary:**
+The implementation covers the core functionality for Manager Manual Booking Management, including the UI components and basic backend operations. However, the solution fails to provide critical feedback to the user regarding scheduling conflicts (AC #4), merely logging them on the server. Furthermore, the claim of "100% pass" for tests is contradicted by the finding that the backend integration tests are empty stubs, and the E2E test contains a selector mismatch that would cause failure.
+
+**Key Findings:**
+
+*   **HIGH Severity:**
+    *   **AC 4 Violation - Conflict Warning Hidden:** The `booking-service` detects conflicts but only logs `console.warn` on the server. The Manager receives a successful response (200/201) and is unaware of the double-booking. The AC requires a "warning or prevention", which implies user-facing feedback. (file: `supabase/functions/booking-service/index.ts`)
+    *   **Task 5 - Integration Tests are Stubs:** The file `supabase/functions/booking-service/__tests__/index.test.ts` exists but contains only placeholder code and explicitly states it does not test conflict logic or RLS due to mocking complexity. This contradicts the completion notes.
+    *   **Task 5 - E2E Test Failure:** `tests/e2e/manager-bookings.spec.ts` attempts to click a button with text "Yes, Cancel Booking", but the component `CancelBookingModal.tsx` renders "Yes, Cancel". This test will fail in a real run.
+
+*   **MEDIUM Severity:**
+    *   **AC 5 / Task 1 - Notification Stub:** Notifications are implemented as console logs. While acceptable if the service is missing, the requirement "must trigger" suggests a more robust integration or clear tracking of this technical debt.
+    *   **Task 5 - Unit Test Gaps:** `ManagerBookingForm.test.tsx` fails to assert that `end_time` is correctly auto-calculated when `start_time` changes, leaving business logic unverified.
+
+**Acceptance Criteria Coverage:**
+
+*   **AC 1 (Manual Booking Creation):** IMPLEMENTED. Evidence: `AddBookingModal`, `booking-service` POST.
+*   **AC 2 (Booking Modification):** IMPLEMENTED. Evidence: `EditBookingModal`, `booking-service` PUT.
+*   **AC 3 (Booking Cancellation):** IMPLEMENTED. Evidence: `CancelBookingModal`, `booking-service` DELETE.
+*   **AC 4 (Instructor Override):** PARTIAL. Backend logic exists but fails to warn the user.
+*   **AC 5 (Notification Triggers):** PARTIAL. Stubbed with console logs.
+
+Summary: 3 of 5 acceptance criteria fully implemented, 2 partially implemented.
+
+**Task Completion Validation:**
+
+*   **Task 1: Implement Backend Booking Operations:** VERIFIED COMPLETE (Code exists).
+*   **Task 2: Create Booking Management UI Components:** VERIFIED COMPLETE.
+*   **Task 3: Integrate with Calendar and Dashboard:** VERIFIED COMPLETE.
+*   **Task 4: Frontend State & Data Fetching:** VERIFIED COMPLETE.
+*   **Task 5: Testing:** FALSELY MARKED COMPLETE. Integration tests are stubs; E2E has bugs; Unit tests miss logic.
+
+**Test Coverage and Gaps:**
+
+*   **Unit Tests:** `ManagerBookingForm` needs logic verification for time calculation.
+*   **Integration Tests:** `booking-service` needs real tests for conflict detection and RLS.
+*   **E2E Tests:** `manager-bookings.spec.ts` needs selector fix.
+
+**Architectural Alignment:**
+
+*   **Architecture:** Backend structure (Edge Functions) aligns.
+*   **Patterns:** Uses `zod`, `react-hook-form`, `TanStack Query` as per patterns.
+
+**Security Notes:**
+*   RLS and Role checks are implemented in `booking-service`.
+
+**Action Items:**
+
+**Code Changes Required:**
+- [ ] [High] Update `supabase/functions/booking-service/index.ts` to return a warning (e.g., in response body or 409 status) when a conflict is detected, and update Frontend to display this warning to the Manager. (AC #4)
+- [ ] [Medium] Fix the button selector in `tests/e2e/manager-bookings.spec.ts` to match "Yes, Cancel".
+
+**Test Changes Required:**
+- [ ] [High] Implement actual logic tests in `supabase/functions/booking-service/__tests__/index.test.ts`. If global fetch mocking is too hard, refactor the handler to accept an injected client or use a dedicated mocking library. (Task 5)
+- [ ] [Medium] Add assertion for `end_time` calculation in `app/components/bookings/__tests__/ManagerBookingForm.test.tsx`.
+
 **Advisory Notes:**
-- Note: Review the current conflict handling for `POST /edge/manager/bookings` in `supabase/functions/booking-service/index.ts`. If PRD FR008 implies hard prevention, consider changing the current "log and override" behavior to a hard block. (file: `supabase/functions/booking-service/index.ts`: Line 88)
-- Note: Consider optimizing `useManagerCalendar`'s lesson type filtering by implementing database-side filtering in the Supabase query if feasible, for improved performance with large datasets. (file: `app/lib/hooks/useManagerCalendar.ts`: Line 61-63, 89-91)
-- Note: For `useManagerDashboard`, explore consolidating multiple Supabase queries into a single Edge Function RPC for potential performance gains on the dashboard. (file: `app/lib/hooks/useManagerDashboard.ts`: Lines 45-78)
-- Note: Improve type safety for `data.lesson_types` in `useLessonTypes` (e.g., using Zod validation or more specific TypeScript types) to avoid the `any` cast. (file: `app/lib/hooks/useSchoolData.ts`: Line 96)
+- Note: Track the Notification Service integration as a follow-up task if the service is currently unavailable.

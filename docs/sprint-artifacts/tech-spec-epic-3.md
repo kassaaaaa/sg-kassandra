@@ -258,3 +258,5 @@ The testing strategy for Epic 3 will adhere to the layered approach (Unit, Integ
 
 - [ ] [Low] Consider moving lesson type filtering to backend for performance (AC #3) [Ref: Story 3.4]
 - [ ] [Low] Make calendar start/end hours configurable in school_settings (AC #1) [Ref: Story 3.4]
+- [ ] [High] Ensure `booking-service` returns user-facing warnings for scheduling conflicts. (AC #4) [Ref: Story 3.5]
+- [ ] [Medium] Ensure Notification Service integration is robust once the service is available. (AC #5) [Ref: Story 3.5]
