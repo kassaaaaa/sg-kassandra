@@ -47,6 +47,7 @@ export function EditBookingModal({ isOpen, onClose, booking }: EditBookingModalP
 
     const updateData = {
       id: booking.id,
+      customer_id: values.customer_id,
       instructor_id: values.instructor_id === 'unassigned' ? null : values.instructor_id,
       start_time: startDateTime.toISOString(),
       end_time: endDateTime.toISOString(),

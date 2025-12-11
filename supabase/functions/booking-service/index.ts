@@ -15,6 +15,7 @@ const createSchema = z.object({
 
 const updateSchema = z.object({
   id: z.number(),
+  customer_id: z.string().uuid().optional(), // Allow changing customer
   instructor_id: z.string().uuid().nullable().optional(),
   start_time: z.string().datetime().optional(),
   end_time: z.string().datetime().optional(),
@@ -28,7 +29,7 @@ const deleteSchema = z.object({
   id: z.number(),
 });
 
-serve(async (req) => {
+export const bookingServiceHandler = async (req: Request) => {
   if (req.method === 'OPTIONS') {
     return new Response('ok', { headers: corsHeaders });
   }
@@ -64,23 +65,46 @@ serve(async (req) => {
 
     const url = new URL(req.url);
 
+    // Helper: Check for conflicts
+    const checkForConflicts = async (client: any, instructorId: string, startTime: string, endTime: string, excludeId?: number) => {
+        let query = client
+            .from('bookings')
+            .select('id')
+            .eq('instructor_id', instructorId)
+            .neq('status', 'cancelled')
+            .or(`and(start_time.lt.${endTime},end_time.gt.${startTime})`);
+
+        if (excludeId) {
+            query = query.neq('id', excludeId);
+        }
+
+        const { data: conflicts, error } = await query;
+        if (error) throw error;
+        return conflicts && conflicts.length > 0;
+    };
+
+    // Helper: Send Notification Stub
+    const sendNotification = async (type: 'CREATED' | 'UPDATED' | 'CANCELLED', booking: any) => {
+        // Mock Notification Service Integration
+        // In a real implementation, this would call the NotificationService API or insert into a queue.
+        console.log(`[NotificationService Mock] Trigger: Booking ${type}`, {
+            booking_id: booking.id,
+            customer_id: booking.customer_id,
+            instructor_id: booking.instructor_id,
+            start_time: booking.start_time,
+            type: type
+        });
+    };
+
     if (req.method === 'POST') {
         const body = await req.json();
         const data = createSchema.parse(body);
 
-        // Conflict Detection (Simple overlap check)
+        // Conflict Detection
         if (data.instructor_id) {
-             const { data: conflicts, error: conflictError } = await supabaseClient
-                .from('bookings')
-                .select('id')
-                .eq('instructor_id', data.instructor_id)
-                .neq('status', 'cancelled')
-                .or(`and(start_time.lt.${data.end_time},end_time.gt.${data.start_time})`);
-            
-             if (conflictError) throw conflictError;
-             if (conflicts && conflicts.length > 0) {
-                 console.log(`Manager override: Double booking created for instructor ${data.instructor_id} at ${data.start_time}`);
-                 // Note: We allow the insert to proceed (Override), but we logged it.
+             const hasConflict = await checkForConflicts(supabaseClient, data.instructor_id, data.start_time, data.end_time);
+             if (hasConflict) {
+                 console.warn(`Manager override: Double booking created for instructor ${data.instructor_id} at ${data.start_time}`);
              }
         }
 
@@ -98,7 +122,7 @@ serve(async (req) => {
         
         if (error) throw error;
         
-        console.log(`Notification trigger: Booking ${booking.id} created by manager`);
+        await sendNotification('CREATED', booking);
 
         return new Response(JSON.stringify(booking), {
             headers: { ...corsHeaders, 'Content-Type': 'application/json' },
@@ -110,12 +134,34 @@ serve(async (req) => {
         const body = await req.json();
         const data = updateSchema.parse(body);
         
-        // If updating time or instructor, check conflicts again?
-        if (data.instructor_id || (data.start_time && data.end_time)) {
-            // Fetch current booking to get missing fields if needed for check
-            // For now, simpler to just warn if instructor_id is provided
-             if (data.instructor_id) {
-                 // Check conflicts... (Simplified for brevity, assuming similar logic as POST)
+        // Fetch current booking for conflict check context
+        const { data: currentBooking, error: fetchError } = await supabaseClient
+            .from('bookings')
+            .select('*')
+            .eq('id', data.id)
+            .single();
+            
+        if (fetchError || !currentBooking) {
+            throw new Error('Booking not found');
+        }
+
+        // Determine effective values
+        const effectiveInstructorId = data.instructor_id === undefined ? currentBooking.instructor_id : data.instructor_id;
+        const effectiveStartTime = data.start_time || currentBooking.start_time;
+        const effectiveEndTime = data.end_time || currentBooking.end_time;
+
+        // Check conflicts if we have an instructor (might be null if unassigned)
+        if (effectiveInstructorId) {
+             const hasConflict = await checkForConflicts(
+                 supabaseClient, 
+                 effectiveInstructorId, 
+                 effectiveStartTime, 
+                 effectiveEndTime, 
+                 data.id
+             );
+             
+             if (hasConflict) {
+                 console.warn(`Manager override: Double booking update for instructor ${effectiveInstructorId} at ${effectiveStartTime}`);
              }
         }
         
@@ -128,7 +174,7 @@ serve(async (req) => {
 
          if (error) throw error;
          
-         console.log(`Notification trigger: Booking ${booking.id} updated by manager`);
+         await sendNotification('UPDATED', booking);
 
          return new Response(JSON.stringify(booking), {
             headers: { ...corsHeaders, 'Content-Type': 'application/json' },
@@ -164,7 +210,7 @@ serve(async (req) => {
 
         if (error) throw error;
         
-         console.log(`Notification trigger: Booking ${booking.id} cancelled by manager`);
+         await sendNotification('CANCELLED', booking);
 
         return new Response(JSON.stringify({ success: true, booking }), {
             headers: { ...corsHeaders, 'Content-Type': 'application/json' },
@@ -187,4 +233,6 @@ serve(async (req) => {
       status: 400,
     });
   }
-});
+};
+
+serve(bookingServiceHandler);

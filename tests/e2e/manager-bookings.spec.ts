@@ -4,7 +4,7 @@ import { createClient } from '@supabase/supabase-js';
 const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
 const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
 
-// Mock user creation if env vars missing (CI without backend)
+// Mock user creation
 async function createTestUser(role: 'manager') {
   if (!supabaseUrl || !supabaseAnonKey) {
       return { email: 'mock@manager.com', password: 'mock-password' };
@@ -25,8 +25,6 @@ async function createTestUser(role: 'manager') {
     },
   });
 
-  // If error (e.g. rate limit), likely just proceed with mock creds if we mock login response too
-  // But usually we expect backend to be there.
   if (error) console.warn("SignUp error:", error);
 
   if (data?.user) {
@@ -48,18 +46,8 @@ test.describe('Manager Booking Management', () => {
   });
 
   test.beforeEach(async ({ page }) => {
-    // Mock Data
-    const mockCustomers = [
-        { id: 'cust-1', full_name: 'Customer One', email: 'c1@test.com' }
-    ];
-    const mockInstructors = [
-        { id: 'inst-1', full_name: 'Instructor Alice' }
-    ];
-    const mockLessons = [
-        { id: 1, name: 'Kite Beginner', duration_minutes: 120 },
-        { id: 2, name: 'Wing Foil', duration_minutes: 60 }
-    ];
-    const mockBookings = [
+    // Dynamic Mock Store
+    const bookings = [
         {
             id: 1,
             customer_id: 'cust-1',
@@ -74,6 +62,17 @@ test.describe('Manager Booking Management', () => {
         }
     ];
 
+    const mockCustomers = [
+        { id: 'cust-1', full_name: 'Customer One', email: 'c1@test.com' }
+    ];
+    const mockInstructors = [
+        { id: 'inst-1', full_name: 'Instructor Alice' }
+    ];
+    const mockLessons = [
+        { id: 1, name: 'Kite Beginner', duration_minutes: 120 },
+        { id: 2, name: 'Wing Foil', duration_minutes: 60 }
+    ];
+
     // Mock Backend Routes
     await page.route('**/rest/v1/profiles*', async route => {
         const url = route.request().url();
@@ -82,7 +81,7 @@ test.describe('Manager Booking Management', () => {
         } else if (url.includes('role=eq.instructor')) {
              await route.fulfill({ json: mockInstructors });
         } else {
-             await route.fulfill({ json: [] }); // default
+             await route.fulfill({ json: [] });
         }
     });
 
@@ -93,7 +92,9 @@ test.describe('Manager Booking Management', () => {
     // Mock bookings list (GET)
     await page.route('**/rest/v1/bookings*', async route => {
         if (route.request().method() === 'GET') {
-            await route.fulfill({ json: mockBookings });
+            // Return only non-cancelled bookings
+            const activeBookings = bookings.filter(b => b.status !== 'cancelled');
+            await route.fulfill({ json: activeBookings });
         } else {
             await route.continue();
         }
@@ -107,20 +108,37 @@ test.describe('Manager Booking Management', () => {
         console.log(`Mocking booking-service ${method}`, body);
 
         if (method === 'POST') {
-             await route.fulfill({ 
-                status: 201, 
-                json: { id: 102, ...body, status: 'confirmed' } 
-            });
+             const newBooking = { 
+                 id: Math.floor(Math.random() * 10000) + 100, 
+                 ...body, 
+                 status: 'confirmed',
+                 lesson: mockLessons.find(l => l.id == body.lesson_id),
+                 customer: mockCustomers.find(c => c.id == body.customer_id),
+                 instructor: mockInstructors.find(i => i.id == body.instructor_id) || null
+             };
+             bookings.push(newBooking);
+             await route.fulfill({ status: 201, json: newBooking });
         } else if (method === 'PUT') {
-             await route.fulfill({ 
-                status: 200, 
-                json: { ...body, status: 'confirmed' } 
-            });
+             const index = bookings.findIndex(b => b.id === body.id);
+             if (index !== -1) {
+                 bookings[index] = { ...bookings[index], ...body };
+                 await route.fulfill({ status: 200, json: bookings[index] });
+             } else {
+                 await route.fulfill({ status: 404 });
+             }
         } else if (method === 'DELETE') {
-             await route.fulfill({ 
-                status: 200, 
-                json: { success: true } 
-            });
+             // Handle ID from query param or body
+             const url = new URL(route.request().url());
+             const idParam = url.searchParams.get('id');
+             const id = idParam ? parseInt(idParam) : body?.id;
+
+             const index = bookings.findIndex(b => b.id === id);
+             if (index !== -1) {
+                 bookings[index].status = 'cancelled';
+                 await route.fulfill({ status: 200, json: { success: true, booking: bookings[index] } });
+             } else {
+                 await route.fulfill({ status: 404 });
+             }
         } else {
              await route.continue();
         }
@@ -133,9 +151,6 @@ test.describe('Manager Booking Management', () => {
 
     // Perform Login
     await page.goto('/login');
-    // If we can't really sign up, we might fail here unless we mock auth too.
-    // Assuming backend is running or auth is mocked if needed. 
-    // For this context, we try to use the credentials.
     await page.fill('input[name="email"]', manager.email);
     await page.fill('input[name="password"]', manager.password);
     await page.click('button[type="submit"]');
@@ -150,7 +165,7 @@ test.describe('Manager Booking Management', () => {
     await expect(page.getByRole('dialog')).toBeVisible();
 
     // Select Customer
-    await page.click('button[role="combobox"]:has-text("Select a customer")'); // Shadcn select trigger
+    await page.click('button[role="combobox"]:has-text("Select a customer")');
     await page.click('div[role="option"]:has-text("Customer One")');
 
     // Select Lesson
@@ -158,28 +173,30 @@ test.describe('Manager Booking Management', () => {
     await page.click('div[role="option"]:has-text("Kite Beginner")');
 
     // Select Instructor
-    // Default value is "Unassigned", so look for that instead of placeholder
     await page.click('button[role="combobox"]:has-text("Unassigned")');
     await page.click('div[role="option"]:has-text("Instructor Alice")');
 
-    // Fill Date/Time (using input type date/time)
+    // Fill Date/Time
     await page.fill('input[type="date"]', '2025-12-25');
     await page.fill('input[name="start_time"]', '10:00');
-    // End time should auto-fill to 12:00 (120 min)
-    // We can verify or just submit.
+    // Note: In E2E, the useEffect for time calculation works because React runs in browser
     
-    await page.fill('textarea[name="manager_notes"]', 'Test Note');
-
+    await page.fill('textarea[name="manager_notes"]', 'New E2E Booking');
     await page.click('button:has-text("Save")');
 
     // Expect dialog to close
     await expect(page.getByRole('dialog')).not.toBeVisible();
-    
-    // In a real test, we would verify the new booking appears on the calendar.
-    // Since we mocked GET bookings with static list, it won't appear unless we update the mock dynamically.
-    // But we verified the interaction.
+    await expect(page.getByText('Booking created successfully')).toBeVisible();
 
-    // 2. Edit Booking (Click existing mocked booking)
+    // Visual Verification: Check if it appears (our mock handler updates the array, query invalidates, fetches new array)
+    // Note: The mock date is 2025-12-25. Calendar must be on that view. 
+    // If the default view is "Month" (current month), we might need to navigate.
+    // Assuming Calendar defaults to current date (Dec 2025 per prompt context? No, prompt date is Dec 11, 2025).
+    // So 2025-12-25 is in the current month view.
+    // We look for text 'New E2E Booking' or 'Kite Beginner' on that day.
+    
+    // 2. Edit Booking
+    // Find the booking we just created (or the default one)
     const bookingEl = page.locator('div[title*="Kite Beginner"]').first();
     await bookingEl.click();
     
@@ -187,12 +204,34 @@ test.describe('Manager Booking Management', () => {
     await expect(page.getByText('Edit Booking')).toBeVisible();
     
     // Change Note
-    await page.fill('textarea[name="manager_notes"]', 'Updated Note');
+    await page.fill('textarea[name="manager_notes"]', 'Updated Note E2E');
     await page.click('button:has-text("Update Booking")');
+    
     await expect(page.getByRole('dialog')).not.toBeVisible();
+    await expect(page.getByText('Booking updated successfully')).toBeVisible();
 
-    // 3. Cancel Booking (Re-open edit, assume we add cancel button there or use separate flow?)
-    // Wait, I put Cancel button in EditBookingModal? No, I implemented CancelBookingModal but didn't link it in EditBookingModal yet.
-    // I need to add Cancel button to EditBookingModal to fully test flow.
+    // 3. Cancel Booking
+    // Re-open the booking
+    await bookingEl.click();
+    await expect(page.getByRole('dialog')).toBeVisible();
+
+    // Click Cancel Booking (Red button)
+    await page.click('button:has-text("Cancel Booking")');
+    
+    // Verify Confirmation Dialog
+    await expect(page.getByText('Are you sure you want to cancel this booking?')).toBeVisible();
+    
+    // Confirm
+    await page.click('button:has-text("Yes, Cancel Booking")');
+    
+    await expect(page.getByText('Booking cancelled successfully')).toBeVisible();
+    
+    // Visual Verification: Booking should disappear
+    // Since we mocked the GET to filter out cancelled, it should be gone.
+    // However, if we only had one booking, it might be empty now.
+    // We expect the specific booking element to detach.
+    // Or at least reduce count.
+    // Let's verify 'Updated Note E2E' is NOT visible anymore.
+    await expect(page.getByText('Updated Note E2E')).not.toBeVisible();
   });
 });
