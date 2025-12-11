@@ -68,6 +68,68 @@ export const AvailabilityService = {
     return expanded;
   },
 
+  async getBatchAvailability(instructorIds: string[] | null, startDate: Date, endDate: Date): Promise<Availability[]> {
+    const supabase = createClient();
+    
+    let query = supabase
+      .from('availability')
+      .select('*')
+      .lte('start_time', endDate.toISOString());
+
+    if (instructorIds && instructorIds.length > 0) {
+      query = query.in('instructor_id', instructorIds);
+    }
+
+    const { data, error } = await query;
+
+    if (error) throw new Error(error.message);
+
+    const allSlots = data as Availability[];
+    
+    // Filter one-time slots that fall within the requested range
+    const oneTime = allSlots.filter(s => 
+        !s.recurrence_rule && 
+        s.start_time >= startDate.toISOString() && 
+        s.end_time <= endDate.toISOString()
+    );
+
+    // Filter recurring slots
+    const recurring = allSlots.filter(s => !!s.recurrence_rule);
+
+    const expanded: Availability[] = [...oneTime];
+
+    // Expand recurring slots
+    if (recurring.length > 0) {
+      recurring.forEach(slot => {
+        if (slot.recurrence_rule === 'WEEKLY' || slot.recurrence_rule === 'FREQ=WEEKLY') {
+          let currentStart = new Date(slot.start_time);
+          let currentEnd = new Date(slot.end_time);
+          
+          // Safety break
+          let safety = 0;
+          while (isBefore(currentStart, endDate) && safety < 1000) {
+            safety++;
+            
+            // Check if this instance falls within the requested window
+            if (currentStart < endDate && currentEnd > startDate) {
+                expanded.push({
+                    ...slot,
+                    start_time: currentStart.toISOString(),
+                    end_time: currentEnd.toISOString(),
+                });
+            }
+            
+            // Advance one week
+            currentStart = addWeeks(currentStart, 1);
+            currentEnd = addWeeks(currentEnd, 1);
+          }
+        }
+      });
+    }
+
+    return expanded;
+  },
+
   async createAvailability(data: { instructor_id: string; start_time: Date; end_time: Date; recurrence_rule?: string | null }): Promise<void> {
     const supabase = createClient();
 

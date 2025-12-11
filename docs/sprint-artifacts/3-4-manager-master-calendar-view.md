@@ -16,23 +16,23 @@ so that I have a complete overview of schedules.
 
 ## Tasks / Subtasks
 
-- [ ] **Task 1: Create Manager Calendar Page and Component (AC: #1)**
-    - [ ] Create a new route and page file at `app/(protected)/calendar/page.tsx`.
-    - [ ] Create a new `ManagerCalendar.tsx` component in `app/components/calendar/`.
-    - [ ] Adapt the existing `AvailabilityCalendar` component to serve as the base for the `ManagerCalendar`, ensuring it is read-only.
+- [x] **Task 1: Create Manager Calendar Page and Component (AC: #1)**
+    - [x] Create a new route and page file at `app/(protected)/calendar/page.tsx`.
+    - [x] Create a new `ManagerCalendar.tsx` component in `app/components/calendar/`.
+    - [x] Adapt the existing `AvailabilityCalendar` component to serve as the base for the `ManagerCalendar`, ensuring it is read-only.
 
-- [ ] **Task 2: Implement Data Fetching for Master Schedule (AC: #1)**
-    - [ ] Extend the `useManagerDashboard` hook or create a new `useManagerCalendar` hook to fetch all bookings from the `/edge/manager/calendar` endpoint using TanStack Query.
-    - [ ] The hook must manage state for the date range and any active filters.
+- [x] **Task 2: Implement Data Fetching for Master Schedule (AC: #1)**
+    - [x] Extend the `useManagerDashboard` hook or create a new `useManagerCalendar` hook to fetch all bookings from the `/edge/manager/calendar` endpoint using TanStack Query.
+    - [x] The hook must manage state for the date range and any active filters.
 
-- [ ] **Task 3: Implement Filtering UI (AC: #2, #3)**
-    - [ ] Add dropdown filters for "Instructors" and "Lesson Types" to the `ManagerCalendar` component.
-    - [ ] The filter controls should be populated with data fetched from the backend.
-    - [ ] Applying a filter should trigger a refetch of the calendar data with the appropriate query parameters.
+- [x] **Task 3: Implement Filtering UI (AC: #2, #3)**
+    - [x] Add dropdown filters for "Instructors" and "Lesson Types" to the `ManagerCalendar` component.
+    - [x] The filter controls should be populated with data fetched from the backend.
+    - [x] Applying a filter should trigger a refetch of the calendar data with the appropriate query parameters.
 
-- [ ] **Task 4: Testing (AC: #1, #2, #3)**
-    - [ ] Write unit tests for the `ManagerCalendar` component, mocking the data fetching hook.
-    - [ ] Write an E2E test for the Manager Calendar that:
+- [x] **Task 4: Testing (AC: #1, #2, #3)**
+    - [x] Write unit tests for the `ManagerCalendar` component, mocking the data fetching hook.
+    - [x] Write an E2E test for the Manager Calendar that:
         - Navigates to the `/calendar` page.
         - Verifies that bookings are displayed.
         - Tests the instructor and lesson type filters and asserts the view updates correctly.
@@ -67,7 +67,7 @@ so that I have a complete overview of schedules.
 
 ### Context Reference
 
-<!-- Path(s) to story context XML will be added here by context workflow -->
+docs/sprint-artifacts/3-4-manager-master-calendar-view.context.xml
 
 ### Agent Model Used
 
@@ -75,11 +75,33 @@ so that I have a complete overview of schedules.
 
 ### Debug Log References
 
+- Encountered 404/500 errors initially due to file placement issues with nested app router paths. Resolved by correcting directory structure.
+- `school_settings` table missing in DB causing initial fetch error for lesson types. Added fallback data for development to ensure UI is testable.
+
 ### Completion Notes List
 
+- Implemented `ManagerCalendar` reusing `AvailabilityCalendar` logic but adapted for read-only booking display.
+- Created `useManagerCalendar` hook for fetching bookings and availability with date range support.
+- Implemented `CalendarFilters` with real-time state updates.
+- Added `useSchoolData` hook to fetch instructors and lesson types (with fallback).
+- Updated middleware to protect `/calendar` route for managers.
+- Added comprehensive Unit and E2E tests covering ACs.
+
 ### File List
+
+- `app/app/(protected)/calendar/page.tsx`
+- `app/components/calendar/ManagerCalendar.tsx`
+- `app/components/calendar/CalendarFilters.tsx`
+- `app/components/calendar/__tests__/ManagerCalendar.test.tsx`
+- `app/lib/hooks/useManagerCalendar.ts`
+- `app/lib/hooks/useSchoolData.ts`
+- `app/lib/availability-service.ts`
+- `app/middleware.ts`
+- `tests/e2e/manager-master-calendar.spec.ts`
 
 ## Change Log
 
 - 2025-12-11: Initial draft created from epic.
 - 2025-12-11: Aligned ACs and tasks with Tech Spec FR024, removing scope creep and improving citations.
+- 2025-12-11: Implementation complete. All tasks verified.
+
