@@ -1,0 +1,199 @@
+<story-context id="{bmad_folder}/bmm/workflows/4-implementation/story-context/template" v="1.0">
+  <metadata>
+    <epicId>3</epicId>
+    <storyId>3-6</storyId>
+    <title>Manager School Settings Configuration</title>
+    <status>drafted</status>
+    <generatedAt>2025-12-12</generatedAt>
+    <generator>BMAD Story Context Workflow</generator>
+    <sourceStoryPath>docs/sprint-artifacts/3-6-manager-school-settings-configuration.md</sourceStoryPath>
+  </metadata>
+
+  <story>
+    <asA>a Manager</asA>
+    <iWant>to configure school-wide settings</iWant>
+    <soThat>I can customize the platform to our school's needs</soThat>
+    <tasks>
+    <task id="frontend" description="Frontend (Next.js)">
+      <subtask>Create the settings page component at `app/(protected)/settings/page.tsx`.</subtask>
+      <subtask>Build the UI using `shadcn/ui` components, strictly following the layout, styling, and interactions shown in `docs/wireframes/manager-dashboard.html`. This includes all modals for adding/editing lesson types and uploading the logo.</subtask>
+      <subtask>Use `React Hook Form` with `Zod` for comprehensive validation of all form inputs on the page.</subtask>
+      <subtask>Utilize `TanStack Query` to fetch the initial settings data from the `GET /edge/manager/settings` endpoint and to manage the mutation state when saving changes.</subtask>
+    </task>
+    <task id="backend" description="Backend (Supabase)">
+        <subtask id="api" description="API Endpoints">
+            <subtask>Implement the `GET /edge/manager/settings` Supabase Edge Function to retrieve all data from the `school_settings` table for the logged-in manager's school.</subtask>
+            <subtask>Implement the `PUT /edge/manager/settings` Supabase Edge Function to handle updates. This function must perform server-side validation of the incoming data (especially for weather parameters) before updating the `school_settings` table.</subtask>
+        </subtask>
+        <subtask id="database" description="Database">
+            <subtask>Ensure the `school_settings` table schema in a new migration file matches the `tech-spec-epic-3.md` (including `weather_api_thresholds`, `lesson_types`, `school_logo_url`, etc.).</subtask>
+        </subtask>
+        <subtask id="storage" description="Storage">
+            <subtask>Use Supabase Storage for handling school logo uploads. The `PUT` Edge Function will receive the uploaded file URL and update the `school_logo_url` field in the `school_settings` table.</subtask>
+        </subtask>
+        <subtask id="security" description="Security">
+            <subtask>Update Row Level Security (RLS) policies to ensure only users with the 'Manager' role can read from or write to the `school_settings` table and its corresponding API endpoints.</subtask>
+        </subtask>
+    </task>
+    <task id="reusability" description="Component Reusability">
+      <subtask>The various modals defined in the wireframe (e.g., `add-lesson-type-modal`, `upload-logo-modal`, `deactivate-lesson-type-modal`) should be created as reusable React components.</subtask>
+    </task>
+</tasks>
+  </story>
+
+  <acceptanceCriteria>
+  <criterion id="AC1" description="Page Accessibility &amp; Layout">
+    <condition>A dedicated 'Settings' page is accessible to logged-in Managers via the main navigation.</condition>
+    <condition>The layout and components of the settings page must be visually and functionally consistent with the 'Settings' view in the wireframe. [Source: docs/wireframes/manager-dashboard.html]</condition>
+  </criterion>
+  <criterion id="AC2" description="Weather Parameter Configuration (FR022, FR031, FR035)">
+    <condition>Managers can define and save scheduling weather rules, including minimum/maximum wind speed, preferred wind directions, and whether precipitation is allowed.</condition>
+    <condition>The system provides clear validation warnings if a manager attempts to save illogical settings (e.g., minimum wind speed higher than maximum wind speed).</condition>
+    <condition>The 'Intelligent Scheduling Engine' correctly uses these configured parameters when making decisions.</condition>
+  </criterion>
+  <criterion id="AC3" description="Lesson Types Management (FR022)">
+    <condition>Managers can add new lesson types, specifying their name, description, default duration, and price, using the 'Add New Lesson Type' modal from the wireframe.</condition>
+    <condition>Managers can edit existing lesson types using the 'Edit Lesson Type' modal.</condition>
+    <condition>Managers can activate or deactivate lesson types. Deactivated lesson types cannot be booked but are not removed from existing bookings.</condition>
+  </criterion>
+  <criterion id="AC4" description="Branding Configuration (FR022)">
+    <condition>Managers can upload a school logo using the 'Upload School Logo' modal.</condition>
+    <condition>The uploaded logo is displayed in designated areas of the application, such as the dashboard header.</condition>
+  </criterion>
+  <criterion id="AC5" description="Data Persistence">
+    <condition>All configuration changes are persisted to the `school_settings` table in the Supabase database.</condition>
+    <condition>Data is fetched and updated using the designated Edge Function APIs (`GET` and `PUT /edge/manager/settings`).</condition>
+  </criterion>
+</acceptanceCriteria>
+
+  <artifacts>
+    <docs>
+        <doc>
+            <path>docs/fase-2-plan/PRD.md</path>
+            <title>Product Requirements Document</title>
+            <section>Functional Requirements</section>
+            <snippet>FR022: Managers shall be able to configure school-wide settings, including weather parameters, lesson types, and the school logo.</snippet>
+        </doc>
+        <doc>
+            <path>docs/sprint-artifacts/tech-spec-epic-3.md</path>
+            <title>Epic Technical Specification: Epic 3</title>
+            <section>APIs and Interfaces</section>
+            <snippet>GET /edge/manager/settings - Retrieve school settings. PUT /edge/manager/settings - Update school settings.</snippet>
+        </doc>
+        <doc>
+            <path>docs/wireframes/manager-dashboard.html</path>
+            <title>Manager Dashboard Wireframe</title>
+            <section>Settings View</section>
+            <snippet>The settings page contains sections for Organization Details, Weather Parameters, Lesson Types Management, and Branding.</snippet>
+        </doc>
+    </docs>
+    <code>
+    <artifact>
+        <path>app/lib/hooks/useSchoolData.ts</path>
+        <kind>Hook</kind>
+        <symbol>useSchoolData</symbol>
+        <lines>76-84</lines>
+        <reason>This hook already fetches data from the 'school_settings' table. It should be reused or extended to provide the data needed for the settings page.</reason>
+    </artifact>
+    <artifact>
+        <path>supabase/migrations/20251211000000_add_lesson_types_to_school_settings.sql</path>
+        <kind>Database Migration</kind>
+        <symbol>school_settings table</symbol>
+        <lines>6-53</lines>
+        <reason>This file defines the schema and RLS policies for the 'school_settings' table. It's the source of truth for the data model.</reason>
+    </artifact>
+    <artifact>
+        <path>app/(protected)/settings/page.tsx</path>
+        <kind>Page</kind>
+        <symbol>SettingsPage</symbol>
+        <lines></lines>
+        <reason>This file will be the main entry point for the School Settings UI, as specified in the Dev Notes.</reason>
+    </artifact>
+    <artifact>
+        <path>app/lib/settings-service.ts</path>
+        <kind>Service</kind>
+        <symbol>getSchoolSettings, updateSchoolSettings</symbol>
+        <lines></lines>
+        <reason>This new file will contain the client-side functions for interacting with the settings Edge Functions.</reason>
+    </artifact>
+</code>
+    <dependencies>
+    <dependency name="@hookform/resolvers" version="^5.2.2" type="production" />
+    <dependency name="@radix-ui/react-checkbox" version="^1.3.3" type="production" />
+    <dependency name="@radix-ui/react-dialog" version="^1.1.15" type="production" />
+    <dependency name="@radix-ui/react-label" version="^2.1.8" type="production" />
+    <dependency name="@radix-ui/react-select" version="^2.2.6" type="production" />
+    <dependency name="@radix-ui/react-slot" version="^1.2.4" type="production" />
+    <dependency name="@supabase/ssr" version="^0.8.0" type="production" />
+    <dependency name="@supabase/supabase-js" version="^2.86.0" type="production" />
+    <dependency name="@tanstack/react-query" version="^5.90.12" type="production" />
+    <dependency name="class-variance-authority" version="^0.7.1" type="production" />
+    <dependency name="clsx" version="^2.1.1" type="production" />
+    <dependency name="date-fns" version="^4.1.0" type="production" />
+    <dependency name="lucide-react" version="^0.555.0" type="production" />
+    <dependency name="next" version="16.0.7" type="production" />
+    <dependency name="next-themes" version="^0.4.6" type="production" />
+    <dependency name="react" version="19.2.0" type="production" />
+    <dependency name="react-day-picker" version="^9.12.0" type="production" />
+    <dependency name="react-dom" version="19.2.0" type="production" />
+    <dependency name="react-hook-form" version="^7.68.0" type="production" />
+    <dependency name="sonner" version="^2.0.7" type="production" />
+    <dependency name="tailwind-merge" version="^3.4.0" type="production" />
+    <dependency name="zod" version="^4.1.13" type="production" />
+    <dependency name="@tailwindcss/postcss" version="^4" type="development" />
+    <dependency name="@testing-library/dom" version="^10.4.1" type="development" />
+    <dependency name="@testing-library/jest-dom" version="^6.9.1" type="development" />
+    <dependency name="@testing-library/react" version="^16.3.0" type="development" />
+    <dependency name="@types/json5" version="^0.0.29" type="development" />
+    <dependency name="@types/node" version="^20" type="development" />
+    <dependency name="@types/react" version="^19" type="development" />
+    <dependency name="@types/react-dom" version="^19" type="development" />
+    <dependency name="@vitejs/plugin-react" version="^5.1.1" type="development" />
+    <dependency name="dotenv" version="^16.6.1" type="development" />
+    <dependency name="eslint" version="^9" type="development" />
+    <dependency name="eslint-config-next" version="16.0.7" type="development" />
+    <dependency name="jsdom" version="^27.2.0" type="development" />
+    <dependency name="tailwindcss" version="^4" type="development" />
+    <dependency name="tw-animate-css" version="^1.4.0" type="development" />
+    <dependency name="typescript" version="^5" type="development" />
+    <dependency name="vitest" version="^4.0.15" type="development" />
+</dependencies>
+  </artifacts>
+
+  <constraints>
+    <constraint>All backend logic for settings management must be encapsulated within Supabase Edge Functions.</constraint>
+    <constraint>All date/time operations must be handled in the school's local time zone and stored in UTC.</constraint>
+    <constraint>New UI components must follow the project's existing design system built with shadcn/ui.</constraint>
+    <constraint>The useSchoolData hook should be reused or extended for data fetching.</constraint>
+    <constraint>Utilize TanStack Query for server state management (fetching and mutations).</constraint>
+    <constraint>Use React Hook Form with Zod for all form validation.</constraint>
+</constraints>
+  <interfaces>
+    <interface>
+        <name>Get School Settings</name>
+        <kind>REST Endpoint</kind>
+        <signature>GET /edge/manager/settings</signature>
+        <path>supabase/functions/manager-settings/index.ts</path>
+    </interface>
+    <interface>
+        <name>Update School Settings</name>
+        <kind>REST Endpoint</kind>
+        <signature>PUT /edge/manager/settings</signature>
+        <path>supabase/functions/manager-settings/index.ts</path>
+    </interface>
+</interfaces>
+  <tests>
+    <standards>The project uses a layered testing strategy. Unit tests are written with Vitest and React Testing Library for UI components and business logic in Edge Functions. Integration tests verify interactions between the frontend and backend, including data fetching and RLS policies. End-to-end tests are written with Playwright to simulate full user workflows.</standards>
+    <locations>
+        <location type="Unit/Integration">app/__tests__/</location>
+        <location type="E2E">tests/e2e/</location>
+    </locations>
+    <ideas>
+        <idea for="AC2">Unit test the server-side validation in the `PUT /edge/manager/settings` Edge Function, ensuring it rejects illogical weather parameter configurations.</idea>
+        <idea for="AC1">Write unit tests for the settings page form components to ensure they correctly handle user input, state changes, and validation.</idea>
+        <idea for="AC3">Create an E2E test using Playwright that simulates a manager adding, editing, and then deactivating a lesson type, verifying the UI updates correctly at each step.</idea>
+        <idea for="AC4">Develop an E2E test for the school logo upload, confirming the image is successfully uploaded to Supabase Storage and the new URL is saved and displayed.</idea>
+        <idea for="AC5">Write an integration test to verify that the settings page correctly fetches initial data from the `GET /edge/manager/settings` endpoint and that submitting the form persists data via the `PUT` endpoint.</idea>
+    </ideas>
+</tests>
+</story-context>
