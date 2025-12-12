@@ -27,9 +27,9 @@ const formSchema = z.object({
   new_customer_email: z.string().email('Invalid email').optional().or(z.literal('')),
   new_customer_phone: z.string().optional(),
   new_customer_skill_level: z.string().optional(),
-  new_customer_age: z.coerce.number().optional(),
+  new_customer_age: z.union([z.string(), z.number()]).transform((v) => (v === "" ? undefined : Number(v))).optional(),
   new_customer_gender: z.string().optional(),
-  new_customer_experience: z.coerce.number().optional(),
+  new_customer_experience: z.union([z.string(), z.number()]).transform((v) => (v === "" ? undefined : Number(v))).optional(),
 
   instructor_id: z.string().optional(),
   lesson_id: z.string().min(1, { message: 'Lesson type is required' }),
