@@ -21,6 +21,7 @@ export interface ManagerBooking {
   instructor_id: string | null;
   instructor: { full_name: string } | null;
   manager_notes?: string;
+  location?: string;
 }
 
 export interface ConflictedBooking extends ManagerBooking {
@@ -117,6 +118,7 @@ export function useManagerDashboard() {
           start_time,
           end_time,
           status,
+          location,
           manager_notes,
           lesson:lessons(name),
           customer:customer_id(full_name, email),
@@ -137,6 +139,7 @@ export function useManagerDashboard() {
         end_time: b.end_time,
         status: b.status,
         manager_notes: b.manager_notes,
+        location: b.location,
         lesson: Array.isArray(b.lesson) ? b.lesson[0] : b.lesson,
         customer: Array.isArray(b.customer) ? b.customer[0] : b.customer,
         instructor: Array.isArray(b.instructor) ? b.instructor[0] : b.instructor,
