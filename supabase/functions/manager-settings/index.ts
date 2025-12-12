@@ -3,7 +3,7 @@ import { corsHeaders } from '../_shared/cors.ts'
 
 console.log("Hello from manager-settings!")
 
-Deno.serve(async (req) => {
+const handler = async (req: Request) => {
   if (req.method === 'OPTIONS') {
     return new Response('ok', { headers: corsHeaders })
   }
@@ -77,9 +77,9 @@ Deno.serve(async (req) => {
     return new Response('Method not allowed', { status: 405, headers: corsHeaders })
 
   } catch (error) {
-    return new Response(JSON.stringify({ error: error.message }), {
+    const errorMessage = error instanceof Error ? error.message : 'An unknown error occurred';
+    return new Response(JSON.stringify({ error: errorMessage }), {
       status: 400,
       headers: { ...corsHeaders, 'Content-Type': 'application/json' },
     })
-  }
-})
+};
