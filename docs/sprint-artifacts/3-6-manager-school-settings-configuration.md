@@ -4,7 +4,7 @@ story_id: 3-6
 title: Manager School Settings Configuration
 description: As a Manager, I want to configure school-wide settings, so I can customize the platform to our school's needs.
 author: BIP
-status: review
+status: changes-requested
 prerequisites:
   - story_1-6
 functional_requirements:
@@ -178,3 +178,84 @@ As a Manager, I want to configure school-wide settings, so I can customize the p
 ### Change Log
 - 2025-12-12: Initial draft generated.
 - 2025-12-12: Auto-improved by Scrum Master Agent based on validation report. Addressed 3 critical, 6 major, and 2 minor issues.
+- 2025-12-12: Senior Developer Review completed. Status updated to 'changes-requested'.
+
+### Senior Developer Review (AI)
+
+- **Reviewer:** Amelia (Developer Agent)
+- **Date:** 2025-12-12
+- **Outcome:** <span style="color:orange;">**Changes Requested**</span>
+- **Justification:** The core functionality is implemented correctly and all acceptance criteria are met. However, several testing tasks were marked as complete but their corresponding test files or specific test cases are missing. This represents a critical gap in quality assurance for a settings-related feature.
+
+---
+
+#### Summary
+
+The implementation correctly establishes the settings page, forms, and backend services required by the story. All acceptance criteria related to UI, business logic, and data persistence have been successfully met. The code is well-structured and follows project conventions.
+
+The review is marked as **"Changes Requested"** due to significant gaps in the testing strategy. Specifically, critical RLS security tests, Edge Function unit tests, and an E2E test for logo uploads were not found, despite being marked as complete in the task list. These must be implemented to ensure the feature is robust and secure.
+
+---
+
+#### Key Findings
+
+| Severity | Finding                                                                                                 | Location                                       | Details                                                                                                                              |
+| :------- | :------------------------------------------------------------------------------------------------------ | :--------------------------------------------- | :----------------------------------------------------------------------------------------------------------------------------------- |
+| **High** | **Task falsely marked complete: Missing RLS tests.**                                                    | `Task: Testing Strategy`                       | The task to write specific tests for RLS policies on the `school_settings` table was checked, but no such tests were found in the repo. |
+| Medium   | **Task falsely marked complete: Missing Edge Function unit tests.**                                     | `Task: Testing Strategy`                       | The task to unit test the `PUT /edge/manager/settings` function was checked, but no Deno/server-side unit test file was provided.       |
+| Medium   | **Task falsely marked complete: Missing E2E test for logo upload.**                                     | `Task: Testing Strategy`                       | The task to create an E2E test for logo uploads was checked, but it is not present in `tests/e2e/manager-settings.spec.ts`.             |
+| Low      | **UX Suggestion: Wind direction input is not robust.**                                                  | `app/components/settings/WeatherParamsForm.tsx`| The form uses a plain text input for wind directions. A multi-select checklist or tag input would reduce user error.               |
+
+---
+
+#### Acceptance Criteria Coverage
+
+| AC# | Description                        | Status       | Evidence (File:Symbol or File:line)                                                                                                                                                                                                 |
+| :-- | :--------------------------------- | :----------- | :---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| 1   | Page Accessibility & Layout        | ✅ Implemented | `app/(protected)/settings/page.tsx` exists. `SettingsView.tsx` and its sub-components match the wireframe structure.                                                                                                                   |
+| 2   | Weather Parameter Configuration    | ✅ Implemented | `WeatherParamsForm.tsx` (using Zod) and `manager-settings/index.ts` (server-side) both provide validation. The form correctly mutates data via the `useUpdateSchoolSettings` hook.                                                    |
+| 3   | Lesson Types Management            | ✅ Implemented | `LessonTypesList.tsx` uses `AddLessonTypeModal.tsx` and `EditLessonTypeModal.tsx` to manage lesson types. Activation is handled via a checkbox, all backed by the `useUpdateSchoolSettings` hook.                                      |
+| 4   | Branding Configuration             | ✅ Implemented | `BrandingForm.tsx` provides a file upload input that calls the `uploadSchoolLogo` service. The logo is displayed on the page.                                                                                                       |
+| 5   | Data Persistence                   | ✅ Implemented | The `manager-settings` Edge Function updates the `school_settings` table as shown in `supabase/functions/manager-settings/index.ts`. The client-side services in `settings-service.ts` correctly invoke this function.              |
+
+**Summary: 5 of 5 acceptance criteria fully implemented.**
+
+---
+
+#### Task Completion Validation
+
+| Task                                                     | Marked As | Verified As        | Evidence / Notes                                                                                                                              |
+| :------------------------------------------------------- | :-------- | :----------------- | :-------------------------------------------------------------------------------------------------------------------------------------------- |
+| Create settings page component                           | `[x]`     | ✅ Verified Complete | `app/(protected)/settings/page.tsx` exists.                                                                                                   |
+| Build UI using `shadcn/ui`                               | `[x]`     | ✅ Verified Complete | `SettingsView.tsx` and sub-components use `Card`, `Button`, `Input` etc. from the UI library.                                                 |
+| Use `React Hook Form` with `Zod`                         | `[x]`     | ✅ Verified Complete | `WeatherParamsForm.tsx` and modal forms correctly use `useForm` and `zodResolver`.                                                            |
+| Utilize `TanStack Query`                                 | `[x]`     | ✅ Verified Complete | `useSchoolSettings.ts` correctly implements `useQuery` and `useMutation`.                                                                       |
+| Implement `GET /edge/manager/settings`                   | `[x]`     | ✅ Verified Complete | `supabase/functions/manager-settings/index.ts` handles the GET method.                                                                        |
+| Implement `PUT /edge/manager/settings`                   | `[x]`     | ✅ Verified Complete | `supabase/functions/manager-settings/index.ts` handles the PUT method with validation.                                                        |
+| Ensure `school_settings` schema is correct               | `[x]`     | ✅ Verified Complete | `supabase/migrations/20251212100000_update_school_settings.sql` aligns with the tech spec.                                                    |
+| Use Supabase Storage for logo uploads                    | `[x]`     | ✅ Verified Complete | `settings-service.ts` and the migration file confirm usage of Supabase Storage.                                                               |
+| Update RLS policies                                      | `[x]`     | ✅ Verified Complete | The migration file includes RLS policies for the storage bucket. The Edge Function validates the user's auth status.                            |
+| Create reusable modals                                   | `[x]`     | ✅ Verified Complete | `AddLessonTypeModal.tsx` and `EditLessonTypeModal.tsx` are reusable.                                                                          |
+| **Unit test the `PUT` Edge Function**                    | `[x]`     | 🚨 **NOT DONE**    | **No server-side unit test file was found for the Edge Function.**                                                                            |
+| Test individual form components                          | `[x]`     | ✅ Verified Complete | `app/__tests__/settings/WeatherParamsForm.test.tsx` provides good coverage for the weather form.                                                |
+| Integration test for `GET` data fetch                    | `[x]`     | 🟠 Partial         | No specific integration test file, but this is implicitly covered by the E2E test.                                                            |
+| Integration test for `PUT` data persistence              | `[x]`     | 🟠 Partial         | No specific integration test file, but this is implicitly covered by the E2E test.                                                            |
+| **Write specific tests for RLS policies**                | `[x]`     | 🚨 **NOT DONE**    | **No tests for RLS on `school_settings` were found.**                                                                                         |
+| E2E test for full manager workflow                       | `[x]`     | ✅ Verified Complete | `tests/e2e/manager-settings.spec.ts` successfully covers this workflow.                                                                       |
+| **E2E test for logo upload**                             | `[x]`     | 🚨 **NOT DONE**    | **The logo upload feature is not covered in the E2E tests.**                                                                                  |
+| E2E test for lesson type management                      | `[x]`     | ✅ Verified Complete | `tests/e2e/manager-settings.spec.ts` successfully covers adding and deactivating a lesson type.                                               |
+
+**Summary: 3 of the 8 testing tasks were falsely marked as complete.**
+
+---
+
+#### Action Items
+
+**Code Changes Required:**
+- [ ] **[High]** Implement RLS tests for the `school_settings` table to ensure non-managers cannot read or write settings data. [Ref: `Task: Testing Strategy`]
+- [ ] **[Medium]** Create a unit test file for the `manager-settings` Edge Function to validate its server-side logic, particularly the weather parameter validation. [Ref: `Task: Testing Strategy`]
+- [ ] **[Medium]** Add an E2E test case to `tests/e2e/manager-settings.spec.ts` that covers the school logo upload workflow. [Ref: `Task: Testing Strategy`]
+
+**Advisory Notes:**
+- **Note:** The integration tests for data fetching and persistence were covered by E2E tests. While acceptable, consider adding focused integration tests in the future to isolate frontend-backend communication without a full UI test run.
+- **Note:** Consider replacing the text input for "Preferred Wind Directions" with a more user-friendly component like a series of checkboxes or a tag input to prevent formatting errors.
