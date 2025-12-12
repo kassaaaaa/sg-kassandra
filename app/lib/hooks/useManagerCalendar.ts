@@ -60,6 +60,7 @@ export function useManagerCalendar() {
         end_time: string;
         status: string;
         manager_notes?: string;
+        location?: string;
         lesson: any;
         customer: any;
         instructor: any;

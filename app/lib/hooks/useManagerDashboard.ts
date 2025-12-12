@@ -46,8 +46,18 @@ interface RawManagerBooking {
   end_time: string;
   status: string;
   manager_notes?: string;
+  location?: string;
   lesson: { name: string } | { name: string }[] | null;
-  customer: { full_name: string; email: string } | { full_name: string; email: string }[] | null;
+  customer: { 
+    full_name: string; 
+    email: string;
+    phone?: string;
+    skill_level?: string;
+    age?: number;
+    gender?: string;
+    experience_hours?: number;
+    additional_notes?: string;
+  } | any[] | null;
   instructor: { full_name: string } | { full_name: string }[] | null;
 }
 
