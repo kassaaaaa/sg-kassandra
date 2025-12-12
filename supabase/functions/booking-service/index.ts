@@ -104,6 +104,7 @@ export const bookingServiceCore = async (req: Request, supabaseClient: any) => {
 
     if (req.method === 'POST') {
         const body = await req.json();
+        console.log("POST Body:", JSON.stringify(body));
         const data = createSchema.parse(body);
 
         let finalCustomerId = data.customer_id;
@@ -299,9 +300,14 @@ export const bookingServiceCore = async (req: Request, supabaseClient: any) => {
         status: 400,
       });
     }
-    return new Response(JSON.stringify({ error: error instanceof Error ? error.message : 'Unknown error' }), {
+    const msg = error instanceof Error ? error.message : 'Unknown error';
+    // If it's a known logic error we threw, we might want 400, but for now let's use 500 for general errors to verify.
+    // Actually, "Missing SUPABASE_SERVICE_ROLE_KEY" is a server config error (500).
+    // "Customer ID required" is a client error (400).
+    // Let's keep it simple: 500 for everything else to see if it changes the status code in your browser.
+    return new Response(JSON.stringify({ error: msg }), {
       headers: { ...corsHeaders, 'Content-Type': 'application/json' },
-      status: 400,
+      status: 500,
     });
   }
 };
