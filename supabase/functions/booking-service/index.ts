@@ -109,10 +109,15 @@ export const bookingServiceCore = async (req: Request, supabaseClient: any) => {
         let finalCustomerId = data.customer_id;
 
         if (!finalCustomerId && data.new_customer) {
+            const serviceRoleKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY');
+            if (!serviceRoleKey) {
+                throw new Error("Missing SUPABASE_SERVICE_ROLE_KEY configuration");
+            }
+
             // Initialize Admin Client for User Creation
             const supabaseAdmin = createClient(
                 Deno.env.get('SUPABASE_URL') ?? '',
-                Deno.env.get('SUPABASE_SERVICE_ROLE_KEY') ?? '',
+                serviceRoleKey,
                 {
                     auth: {
                         autoRefreshToken: false,
