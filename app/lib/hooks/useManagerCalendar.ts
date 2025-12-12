@@ -37,7 +37,7 @@ export function useManagerCalendar() {
           location,
           manager_notes,
           lesson:lessons(name),
-          customer:customer_id(full_name, email, phone, skill_level, age, gender, experience_hours, additional_notes),
+          customer:customer_id(full_name, email, customer_details(phone, skill_level)),
           instructor:instructor_id(full_name)
         `)
         .gte('start_time', startDate.toISOString())

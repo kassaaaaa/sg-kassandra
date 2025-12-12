@@ -69,12 +69,12 @@ export function LessonDetailsModal({ isOpen, onClose, booking, onEdit, onCancel 
                 <h3 className="text-md font-semibold mb-2 border-b pb-1">Student Information</h3>
                 <DetailRow label="Name" value={booking.customer?.full_name || 'N/A'} />
                 <DetailRow label="Email" value={booking.customer?.email || 'N/A'} />
-                <DetailRow label="Phone" value={booking.customer?.phone || 'N/A'} />
-                <DetailRow label="Skill Level" value={booking.customer?.skill_level || 'N/A'} />
-                <DetailRow label="Age" value={booking.customer?.age || 'N/A'} />
-                <DetailRow label="Gender" value={booking.customer?.gender || 'N/A'} />
-                <DetailRow label="Experience" value={booking.customer?.experience_hours ? `${booking.customer.experience_hours} hours` : 'N/A'} />
-                <DetailRow label="Notes" value={booking.customer?.additional_notes || 'None'} />
+                <DetailRow label="Phone" value={booking.customer?.customer_details?.phone || 'N/A'} />
+                <DetailRow label="Skill Level" value={booking.customer?.customer_details?.skill_level || 'N/A'} />
+                <DetailRow label="Age" value={booking.customer?.customer_details?.age || 'N/A'} />
+                <DetailRow label="Gender" value={booking.customer?.customer_details?.gender || 'N/A'} />
+                <DetailRow label="Experience" value={booking.customer?.customer_details?.experience_hours ? `${booking.customer.customer_details.experience_hours} hours` : 'N/A'} />
+                <DetailRow label="Notes" value={booking.customer?.customer_details?.additional_notes || 'None'} />
             </div>
              <div>
                 <h3 className="text-md font-semibold mb-2 border-b pb-1">Manager Notes</h3>
