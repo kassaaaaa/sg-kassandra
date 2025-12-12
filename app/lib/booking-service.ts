@@ -26,18 +26,19 @@ export async function createBooking(booking: Booking) {
     // Check if the response body contains a specific error message
     // The supabase.functions.invoke might wrap the error, so we try to extract useful info
     try {
+      if (typeof error === 'object' && error !== null && 'context' in error) {
+         const errorBody = await (error as any).context.json();
+         if (errorBody && errorBody.error) {
+             const msg = typeof errorBody.error === 'string' ? errorBody.error : JSON.stringify(errorBody.error);
+             throw new Error(msg);
+         }
+      }
+
       if (error instanceof Error) {
          throw new Error(error.message);
       }
-      const errorBody = typeof error === 'object' && error !== null && 'context' in error 
-        ? await (error as any).context.json() 
-        : error;
-        
-       if (errorBody && errorBody.error) {
-           throw new Error(JSON.stringify(errorBody.error));
-       }
     } catch (e) {
-        // Fallback if JSON parsing fails
+        if (e instanceof Error && e.message !== "Unknown Edge Function Error") throw e;
         throw new Error(error.message || "Unknown Edge Function Error");
     }
     throw new Error(error.message || "Unknown Edge Function Error");

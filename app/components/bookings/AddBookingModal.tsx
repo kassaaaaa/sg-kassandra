@@ -35,9 +35,9 @@ export function AddBookingModal({ isOpen, onClose, defaultDate, defaultTime, def
           email: values.new_customer_email!,
           phone: values.new_customer_phone,
           skill_level: values.new_customer_skill_level,
-          age: values.new_customer_age ? parseInt(values.new_customer_age) || undefined : undefined,
+          age: values.new_customer_age && !isNaN(Number(values.new_customer_age)) ? Number(values.new_customer_age) : undefined,
           gender: values.new_customer_gender,
-          experience_hours: values.new_customer_experience ? parseInt(values.new_customer_experience) || undefined : undefined,
+          experience_hours: values.new_customer_experience && !isNaN(Number(values.new_customer_experience)) ? Number(values.new_customer_experience) : undefined,
       } : undefined
     };
 
