@@ -17,7 +17,16 @@ export interface ManagerBooking {
   status: string;
   lesson: { name: string } | null;
   customer_id: string;
-  customer: { full_name: string; email: string } | null;
+  customer: { 
+    full_name: string; 
+    email: string;
+    phone?: string;
+    skill_level?: string;
+    age?: number;
+    gender?: string;
+    experience_hours?: number;
+    additional_notes?: string;
+  } | null;
   instructor_id: string | null;
   instructor: { full_name: string } | null;
   manager_notes?: string;
@@ -121,7 +130,7 @@ export function useManagerDashboard() {
           location,
           manager_notes,
           lesson:lessons(name),
-          customer:customer_id(full_name, email),
+          customer:customer_id(full_name, email, phone, skill_level, age, gender, experience_hours, additional_notes),
           instructor:instructor_id(full_name)
         `)
         .gte('start_time', todayStart)
@@ -173,7 +182,7 @@ export function useResolutionCenterData() {
           status,
           weather_data,
           lesson:lessons(name),
-          customer:customer_id(full_name, email),
+          customer:customer_id(full_name, email, phone, skill_level, age, gender, experience_hours, additional_notes),
           instructor:instructor_id(full_name)
         `)
         .eq('status', 'pending_weather_check')
