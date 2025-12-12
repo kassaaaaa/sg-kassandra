@@ -15,7 +15,7 @@ interface ManagerCalendarProps {
   currentDate: Date;
   onDateChange: (date: Date) => void;
   onAddBooking: (date: Date, timeStr: string) => void;
-  onEditBooking: (booking: ManagerBooking) => void;
+  onViewDetails: (booking: ManagerBooking) => void;
 }
 
 export function ManagerCalendar({ 
@@ -25,7 +25,7 @@ export function ManagerCalendar({
   currentDate, 
   onDateChange,
   onAddBooking,
-  onEditBooking
+  onViewDetails
 }: ManagerCalendarProps) {
   const startDate = startOfWeek(currentDate, { weekStartsOn: 1 }); // Monday start
   const endDate = endOfWeek(currentDate, { weekStartsOn: 1 });
@@ -176,7 +176,7 @@ export function ManagerCalendar({
                             title={`${booking.lesson?.name || 'Lesson'} - ${booking.instructor?.full_name || 'No Instructor'} (${booking.status})`}
                             onClick={(e) => {
                                 e.stopPropagation();
-                                onEditBooking(booking);
+                                onViewDetails(booking);
                             }}
                         >
                             <div className="font-semibold truncate">{booking.lesson?.name || 'Lesson'}</div>

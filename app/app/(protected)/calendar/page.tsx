@@ -7,6 +7,8 @@ import { useManagerCalendar } from '@/lib/hooks/useManagerCalendar';
 import { useInstructors, useLessonTypes } from '@/lib/hooks/useSchoolData';
 import { AddBookingModal } from '@/components/bookings/AddBookingModal';
 import { EditBookingModal } from '@/components/bookings/EditBookingModal';
+import { LessonDetailsModal } from '@/components/bookings/LessonDetailsModal';
+import { CancelBookingModal } from '@/components/bookings/CancelBookingModal';
 import { format } from 'date-fns';
 import { ManagerBooking } from '@/lib/hooks/useManagerDashboard';
 import { useSearchParams } from 'next/navigation';
@@ -28,10 +30,13 @@ function CalendarContent() {
   const { data: instructors = [] } = useInstructors();
   const { data: lessonTypes = [] } = useLessonTypes();
 
+  // State for all modals
   const [isAddOpen, setIsAddOpen] = useState(false);
   const [addDefaults, setAddDefaults] = useState<{date: string, time: string} | null>(null);
-
+  
+  const [isDetailsOpen, setIsDetailsOpen] = useState(false);
   const [isEditOpen, setIsEditOpen] = useState(false);
+  const [isCancelOpen, setIsCancelOpen] = useState(false);
   const [selectedBooking, setSelectedBooking] = useState<ManagerBooking | null>(null);
 
   useEffect(() => {
@@ -40,6 +45,7 @@ function CalendarContent() {
     }
   }, [action]);
 
+  // ADD FLOW
   const handleAddBooking = (date: Date, timeStr: string) => {
     setAddDefaults({
         date: format(date, 'yyyy-MM-dd'),
@@ -48,9 +54,22 @@ function CalendarContent() {
     setIsAddOpen(true);
   };
 
+  // DETAILS FLOW
+  const handleViewDetails = (booking: ManagerBooking) => {
+    setSelectedBooking(booking);
+    setIsDetailsOpen(true);
+  };
+
+  // EDIT FLOW
   const handleEditBooking = (booking: ManagerBooking) => {
     setSelectedBooking(booking);
     setIsEditOpen(true);
+  };
+  
+  // CANCEL FLOW
+  const handleCancelBooking = (booking: ManagerBooking) => {
+    setSelectedBooking(booking);
+    setIsCancelOpen(true);
   };
 
   return (
@@ -80,14 +99,23 @@ function CalendarContent() {
         currentDate={currentDate}
         onDateChange={setCurrentDate}
         onAddBooking={handleAddBooking}
-        onEditBooking={handleEditBooking}
+        onViewDetails={handleViewDetails} // Changed from onEditBooking
       />
 
+      {/* --- Modals --- */}
       <AddBookingModal
         isOpen={isAddOpen}
         onClose={() => setIsAddOpen(false)}
         defaultDate={addDefaults?.date}
         defaultTime={addDefaults?.time}
+      />
+
+      <LessonDetailsModal
+        isOpen={isDetailsOpen}
+        onClose={() => setIsDetailsOpen(false)}
+        booking={selectedBooking}
+        onEdit={handleEditBooking}
+        onCancel={handleCancelBooking}
       />
 
       <EditBookingModal
@@ -102,6 +130,12 @@ function CalendarContent() {
             end_time: selectedBooking.end_time,
             manager_notes: selectedBooking.manager_notes,
         } : null}
+      />
+
+      <CancelBookingModal
+        isOpen={isCancelOpen}
+        onClose={() => setIsCancelOpen(false)}
+        bookingId={selectedBooking?.id || null}
       />
     </div>
   );
