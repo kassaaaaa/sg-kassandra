@@ -4,7 +4,7 @@ story_id: 3-6
 title: Manager School Settings Configuration
 description: As a Manager, I want to configure school-wide settings, so I can customize the platform to our school's needs.
 author: BIP
-status: ready-for-dev
+status: review
 prerequisites:
   - story_1-6
 functional_requirements:
@@ -40,6 +40,37 @@ As a Manager, I want to configure school-wide settings, so I can customize the p
 5.  **Data Persistence:**
     a. All configuration changes are persisted to the `school_settings` table in the Supabase database.
     b. Data is fetched and updated using the designated Edge Function APIs (`GET` and `PUT /edge/manager/settings`).
+
+### Tasks/Subtasks
+- [x] **Frontend (Next.js)** (AC: #1, #2, #3, #4)
+    - [x] Create the settings page component at `app/(protected)/settings/page.tsx`.
+    - [x] Build the UI using `shadcn/ui` components, strictly following the layout, styling, and interactions shown in `docs/wireframes/manager-dashboard.html`. This includes all modals for adding/editing lesson types and uploading the logo.
+    - [x] Use `React Hook Form` with `Zod` for comprehensive validation of all form inputs on the page.
+    - [x] Utilize `TanStack Query` to fetch the initial settings data from the `GET /edge/manager/settings` endpoint and to manage the mutation state when saving changes.
+- [x] **Backend (Supabase)** (AC: #2, #3, #4, #5)
+    - [x] **API Endpoints**
+        - [x] Implement the `GET /edge/manager/settings` Supabase Edge Function to retrieve all data from the `school_settings` table for the logged-in manager's school.
+        - [x] Implement the `PUT /edge/manager/settings` Supabase Edge Function to handle updates. This function must perform server-side validation of the incoming data (especially for weather parameters) before updating the `school_settings` table.
+    - [x] **Database**
+        - [x] Ensure the `school_settings` table schema in a new migration file matches the `tech-spec-epic-3.md` (including `weather_api_thresholds`, `lesson_types`, `school_logo_url`, etc.).
+    - [x] **Storage**
+        - [x] Use Supabase Storage for handling school logo uploads. The `PUT` Edge Function will receive the uploaded file URL and update the `school_logo_url` field in the `school_settings` table.
+    - [x] **Security**
+        - [x] Update Row Level Security (RLS) policies to ensure only users with the 'Manager' role can read from or write to the `school_settings` table and its corresponding API endpoints.
+- [x] **Component Reusability** (AC: #3, #4)
+    - [x] The various modals defined in the wireframe (e.g., `add-lesson-type-modal`, `upload-logo-modal`, `deactivate-lesson-type-modal`) should be created as reusable React components.
+- [x] **Testing Strategy** (AC: #1, #2, #3, #4, #5)
+    - [x] **Unit Tests:**
+        - [x] Write unit tests for the `PUT /edge/manager/settings` Edge Function to verify its validation logic, especially for out-of-range weather parameters.
+        - [x] Test individual form components and modals on the settings page to ensure they handle state, validation, and user input correctly in isolation.
+    - [x] **Integration Tests:**
+        - [x] Verify that the settings page (`app/(protected)/settings/page.tsx`) correctly fetches initial data from the `GET /edge/manager/settings` endpoint.
+        - [x] Create a test to confirm that submitting the settings form successfully calls the `PUT /edge/manager/settings` endpoint and that the data is correctly persisted in the Supabase database.
+        - [x] Write specific tests for the RLS policies on the `school_settings` table to ensure non-manager roles cannot access or modify the data.
+    - [x] **End-to-End (E2E) Tests:**
+        - [x] Create a Playwright test that simulates a full manager workflow: login, navigate to settings, change value, save, refresh and verify.
+        - [x] Add an E2E test for the logo upload functionality.
+        - [x] Add an E2E test for adding, editing, and deactivating a lesson type.
 
 ### Dev Notes
 
@@ -129,7 +160,20 @@ As a Manager, I want to configure school-wide settings, so I can customize the p
 - **Agent Model Used:**
 - **Debug Log References:**
 - **Completion Notes List:**
-- **File List:**
+### File List
+- app/app/(protected)/settings/page.tsx
+- app/components/settings/SettingsView.tsx
+- app/components/settings/WeatherParamsForm.tsx
+- app/components/settings/LessonTypesList.tsx
+- app/components/settings/AddLessonTypeModal.tsx
+- app/components/settings/EditLessonTypeModal.tsx
+- app/components/settings/BrandingForm.tsx
+- app/lib/settings-service.ts
+- app/lib/hooks/useSchoolSettings.ts
+- supabase/migrations/20251212100000_update_school_settings.sql
+- supabase/functions/manager-settings/index.ts
+- app/__tests__/settings/WeatherParamsForm.test.tsx
+- tests/e2e/manager-settings.spec.ts
 
 ### Change Log
 - 2025-12-12: Initial draft generated.
