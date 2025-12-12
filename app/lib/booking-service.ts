@@ -91,6 +91,15 @@ export interface ManagerBookingPayload {
   end_time?: string;
   manager_notes?: string;
   status?: string;
+  new_customer?: {
+    full_name: string;
+    email: string;
+    phone?: string;
+    skill_level?: string;
+    age?: number;
+    gender?: string;
+    experience_hours?: number;
+  };
 }
 
 export async function createManagerBooking(bookingData: ManagerBookingPayload) {

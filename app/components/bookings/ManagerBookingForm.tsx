@@ -21,12 +21,39 @@ import { useEffect } from 'react';
 
 const formSchema = z.object({
   customer_id: z.string().min(1, { message: 'Customer is required' }),
+  
+  // New Customer Fields
+  new_customer_name: z.string().optional(),
+  new_customer_email: z.string().email('Invalid email').optional().or(z.literal('')),
+  new_customer_phone: z.string().optional(),
+  new_customer_skill_level: z.string().optional(),
+  new_customer_age: z.coerce.number().optional(),
+  new_customer_gender: z.string().optional(),
+  new_customer_experience: z.coerce.number().optional(),
+
   instructor_id: z.string().optional(),
   lesson_id: z.string().min(1, { message: 'Lesson type is required' }),
   date: z.string().min(1, { message: 'Date is required' }),
   start_time: z.string().min(1, { message: 'Start time is required' }),
   end_time: z.string().min(1, { message: 'End time is required' }),
   manager_notes: z.string().optional(),
+}).superRefine((data, ctx) => {
+  if (data.customer_id === 'new') {
+    if (!data.new_customer_name) {
+      ctx.addIssue({
+        code: z.ZodIssueCode.custom,
+        message: "Name is required for new customer",
+        path: ["new_customer_name"],
+      });
+    }
+    if (!data.new_customer_email) {
+      ctx.addIssue({
+        code: z.ZodIssueCode.custom,
+        message: "Email is required for new customer",
+        path: ["new_customer_email"],
+      });
+    }
+  }
 });
 
 export type ManagerBookingFormValues = z.infer<typeof formSchema>;
@@ -53,9 +80,17 @@ export function ManagerBookingForm({ defaultValues, onSubmit, isLoading, submitL
         start_time: '',
         end_time: '',
         manager_notes: '',
+        new_customer_name: '',
+        new_customer_email: '',
+        new_customer_phone: '',
+        new_customer_skill_level: '',
+        new_customer_gender: '',
         ...defaultValues
     },
   });
+
+  const watchCustomerId = form.watch('customer_id');
+  const isNewCustomer = watchCustomerId === 'new';
 
   // Auto-calculate end time if lesson changes
   const watchLessonId = form.watch('lesson_id');
@@ -92,6 +127,7 @@ export function ManagerBookingForm({ defaultValues, onSubmit, isLoading, submitL
                   </SelectTrigger>
                 </FormControl>
                 <SelectContent>
+                  <SelectItem value="new" className="font-semibold text-primary">+ New Customer</SelectItem>
                   {customers?.map((customer) => (
                     <SelectItem key={customer.id} value={customer.id}>
                       {customer.full_name}
@@ -103,6 +139,104 @@ export function ManagerBookingForm({ defaultValues, onSubmit, isLoading, submitL
             </FormItem>
           )}
         />
+
+        {isNewCustomer && (
+          <div className="p-4 border rounded-md bg-muted/20 space-y-4">
+            <h4 className="text-sm font-semibold">New Customer Details</h4>
+            <div className="grid grid-cols-2 gap-4">
+              <FormField
+                control={form.control}
+                name="new_customer_name"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Full Name *</FormLabel>
+                    <FormControl><Input {...field} /></FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name="new_customer_email"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Email *</FormLabel>
+                    <FormControl><Input {...field} /></FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+            </div>
+            <div className="grid grid-cols-2 gap-4">
+               <FormField
+                control={form.control}
+                name="new_customer_phone"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Phone</FormLabel>
+                    <FormControl><Input {...field} /></FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name="new_customer_skill_level"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Skill Level</FormLabel>
+                    <Select onValueChange={field.onChange} value={field.value}>
+                        <FormControl>
+                        <SelectTrigger><SelectValue placeholder="Select level" /></SelectTrigger>
+                        </FormControl>
+                        <SelectContent>
+                            <SelectItem value="beginner">Beginner</SelectItem>
+                            <SelectItem value="intermediate">Intermediate</SelectItem>
+                            <SelectItem value="advanced">Advanced</SelectItem>
+                        </SelectContent>
+                    </Select>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+            </div>
+             <div className="grid grid-cols-3 gap-4">
+               <FormField
+                control={form.control}
+                name="new_customer_age"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Age</FormLabel>
+                    <FormControl><Input type="number" {...field} /></FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name="new_customer_gender"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Gender</FormLabel>
+                    <FormControl><Input {...field} /></FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+               <FormField
+                control={form.control}
+                name="new_customer_experience"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Exp (hrs)</FormLabel>
+                    <FormControl><Input type="number" {...field} /></FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+            </div>
+          </div>
+        )}
 
         <div className="grid grid-cols-2 gap-4">
             <FormField

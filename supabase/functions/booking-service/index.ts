@@ -4,13 +4,23 @@ import { corsHeaders } from '../_shared/cors.ts';
 import { z } from 'https://deno.land/x/zod@v3.23.4/mod.ts';
 
 const createSchema = z.object({
-  customer_id: z.string().uuid(),
+  customer_id: z.string().uuid().optional(),
   instructor_id: z.string().uuid().nullable().optional(),
   lesson_id: z.number(),
   start_time: z.string().datetime(),
   end_time: z.string().datetime(),
   location: z.string().optional(),
   manager_notes: z.string().optional(),
+  new_customer: z.object({
+    full_name: z.string(),
+    email: z.string().email(),
+    phone: z.string().optional(),
+    skill_level: z.string().optional(),
+    age: z.number().optional(),
+    gender: z.string().optional(),
+    experience_hours: z.number().optional(),
+    additional_notes: z.string().optional() // Assuming we want this too
+  }).optional()
 });
 
 const updateSchema = z.object({
@@ -96,6 +106,56 @@ export const bookingServiceCore = async (req: Request, supabaseClient: any) => {
         const body = await req.json();
         const data = createSchema.parse(body);
 
+        let finalCustomerId = data.customer_id;
+
+        if (!finalCustomerId && data.new_customer) {
+            // Initialize Admin Client for User Creation
+            const supabaseAdmin = createClient(
+                Deno.env.get('SUPABASE_URL') ?? '',
+                Deno.env.get('SUPABASE_SERVICE_ROLE_KEY') ?? '',
+                {
+                    auth: {
+                        autoRefreshToken: false,
+                        persistSession: false
+                    }
+                }
+            );
+
+            // Create Auth User
+            const { data: authData, error: authError } = await supabaseAdmin.auth.admin.createUser({
+                email: data.new_customer.email,
+                email_confirm: true,
+                user_metadata: { full_name: data.new_customer.full_name }
+            });
+
+            if (authError) throw authError;
+            if (!authData.user) throw new Error("Failed to create user");
+
+            finalCustomerId = authData.user.id;
+
+            // Ensure Profile exists and has correct role
+            await supabaseAdmin.from('profiles').upsert({
+                id: finalCustomerId,
+                role: 'customer'
+            });
+
+            // Insert Customer Details
+            const { error: detailsError } = await supabaseAdmin.from('customer_details').insert({
+                user_id: finalCustomerId,
+                phone: data.new_customer.phone,
+                skill_level: data.new_customer.skill_level,
+                age: data.new_customer.age,
+                gender: data.new_customer.gender,
+                experience_hours: data.new_customer.experience_hours,
+                additional_notes: data.new_customer.additional_notes
+            });
+
+            if (detailsError) throw detailsError;
+
+        } else if (!finalCustomerId) {
+             throw new Error("Customer ID or New Customer details required");
+        }
+
         // Conflict Detection
         let warning = null;
         if (data.instructor_id) {
@@ -111,7 +171,13 @@ export const bookingServiceCore = async (req: Request, supabaseClient: any) => {
         const { data: booking, error } = await supabaseClient
             .from('bookings')
             .insert({ 
-                ...data, 
+                customer_id: finalCustomerId,
+                instructor_id: data.instructor_id,
+                lesson_id: data.lesson_id,
+                start_time: data.start_time,
+                end_time: data.end_time,
+                location: data.location,
+                manager_notes: data.manager_notes,
                 status: 'confirmed',
                 booking_reference: bookingReference
             })

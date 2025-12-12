@@ -21,13 +21,24 @@ export function AddBookingModal({ isOpen, onClose, defaultDate, defaultTime, def
     const startDateTime = new Date(`${values.date}T${values.start_time}:00`);
     const endDateTime = new Date(`${values.date}T${values.end_time}:00`);
 
+    const isNewCustomer = values.customer_id === 'new';
+
     const bookingData = {
-      customer_id: values.customer_id,
+      customer_id: isNewCustomer ? undefined : values.customer_id,
       instructor_id: values.instructor_id === 'unassigned' ? null : values.instructor_id,
       lesson_id: parseInt(values.lesson_id),
       start_time: startDateTime.toISOString(),
       end_time: endDateTime.toISOString(),
       manager_notes: values.manager_notes,
+      new_customer: isNewCustomer ? {
+          full_name: values.new_customer_name!,
+          email: values.new_customer_email!,
+          phone: values.new_customer_phone,
+          skill_level: values.new_customer_skill_level,
+          age: values.new_customer_age,
+          gender: values.new_customer_gender,
+          experience_hours: values.new_customer_experience,
+      } : undefined
     };
 
     createBooking.mutate(bookingData, {
