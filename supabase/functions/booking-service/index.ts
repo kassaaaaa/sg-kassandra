@@ -131,7 +131,10 @@ export const bookingServiceCore = async (req: Request, supabaseClient: any) => {
             const { data: authData, error: authError } = await supabaseAdmin.auth.admin.createUser({
                 email: data.new_customer.email,
                 email_confirm: true,
-                user_metadata: { full_name: data.new_customer.full_name }
+                user_metadata: { 
+                    full_name: data.new_customer.full_name,
+                    role: 'customer'
+                }
             });
 
             if (authError) throw authError;
