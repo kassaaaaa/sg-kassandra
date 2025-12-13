@@ -46,8 +46,11 @@ export const AuthService = {
     const { data: { user } } = await supabase.auth.getUser();
 
     if (!user) {
+      console.log('AuthService: No user found.');
       return null;
     }
+
+    console.log('AuthService: User found:', user);
 
     const { data, error } = await supabase
       .from('profiles')
@@ -56,9 +59,11 @@ export const AuthService = {
       .single();
 
     if (error) {
-      console.error('Error fetching user role:', error);
+      console.error('AuthService: Error fetching user role:', error);
       return null;
     }
+
+    console.log('AuthService: Role data from profiles:', data);
 
     return data?.role as UserRole;
   },
