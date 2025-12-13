@@ -181,7 +181,7 @@ export function AddCustomerModal({ children, open, onOpenChange }: AddCustomerMo
                     <FormItem>
                         <FormLabel>Age</FormLabel>
                         <FormControl>
-                        <Input type="number" {...field} />
+                        <Input type="number" {...field} value={field.value === undefined ? '' : String(field.value)} />
                         </FormControl>
                         <FormMessage />
                     </FormItem>
@@ -216,7 +216,7 @@ export function AddCustomerModal({ children, open, onOpenChange }: AddCustomerMo
                     <FormItem>
                         <FormLabel>Weight (kg)</FormLabel>
                         <FormControl>
-                        <Input type="number" {...field} />
+                        <Input type="number" {...field} value={field.value === undefined ? '' : String(field.value)} />
                         </FormControl>
                         <FormMessage />
                     </FormItem>
@@ -231,7 +231,7 @@ export function AddCustomerModal({ children, open, onOpenChange }: AddCustomerMo
                 <FormItem>
                   <FormLabel>Experience (Hours)</FormLabel>
                   <FormControl>
-                    <Input type="number" {...field} />
+                    <Input type="number" {...field} value={field.value === undefined ? '' : String(field.value)} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>

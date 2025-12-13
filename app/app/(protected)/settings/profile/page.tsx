@@ -98,9 +98,8 @@ export default function ProfileSettingsPage() {
         ? values.certifications.split(',').map((s) => s.trim()).filter(Boolean)
         : [];
 
-      await ProfileService.updateProfile(user.id, {
+      await ProfileService.updateUser(user.id, {
         certifications: certificationsArray,
-        lesson_types: null, // No longer managed here
       });
     },
     onSuccess: () => {
