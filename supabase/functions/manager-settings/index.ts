@@ -1,9 +1,9 @@
-import { createClient } from 'jsr:@supabase/supabase-js@2'
+import { createClient } from '@supabase/supabase-js'
 import { corsHeaders } from '../_shared/cors.ts'
 
 console.log("Hello from manager-settings!")
 
-const handler = async (req: Request) => {
+export const handler = async (req: Request) => {
   if (req.method === 'OPTIONS') {
     return new Response('ok', { headers: corsHeaders })
   }
@@ -81,5 +81,6 @@ const handler = async (req: Request) => {
     return new Response(JSON.stringify({ error: errorMessage }), {
       status: 400,
       headers: { ...corsHeaders, 'Content-Type': 'application/json' },
-    })
+    });
+  }
 };

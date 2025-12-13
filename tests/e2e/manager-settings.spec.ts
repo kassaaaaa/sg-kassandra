@@ -104,4 +104,31 @@ test.describe('Manager Settings', () => {
     // Check label changes to Inactive
     await expect(row.getByText('Inactive')).toBeVisible();
   });
+
+  test('Upload school logo', async ({ page }) => {
+    await expect(page.getByText('Branding')).toBeVisible();
+
+    // Create a dummy file to upload
+    const fileContent = 'dummy content';
+    const fileName = 'test-logo.png';
+    const mimeType = 'image/png';
+
+    // Set the file input
+    await page.getByLabel('School Logo').setInputFiles({
+      name: fileName,
+      mimeType: mimeType,
+      buffer: Buffer.from(fileContent),
+    });
+
+    // Click the upload button
+    await page.click('button:has-text("Upload Logo")');
+
+    // Check for success toast
+    await expect(page.getByText('School logo uploaded successfully')).toBeVisible();
+
+    // Optional: Verify the image is now displayed
+    // This requires knowing the structure of the rendered image.
+    // For example:
+    await expect(page.locator('img[alt="School Logo"]')).toHaveAttribute('src', /.*\.png/);
+  });
 });
