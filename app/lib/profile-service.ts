@@ -41,12 +41,17 @@ export const ProfileService = {
     if (role) queryParams.append('role', role);
     if (search) queryParams.append('search', search);
 
+    console.log('ProfileService.getUsers: Fetching with role:', role, 'and search:', search);
     const { data, error } = await supabase.functions.invoke(`user-service/users?${queryParams.toString()}`, {
       method: 'GET',
     });
 
-    if (error) throw new Error(error.message);
+    if (error) {
+      console.error('ProfileService.getUsers: Error invoking user-service:', error);
+      throw new Error(error.message);
+    }
     
+    console.log('ProfileService.getUsers: Received data from user-service:', data);
     // Transform data to match UserProfile interface
     return data.map((user: any) => {
         const base = {
