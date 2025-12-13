@@ -85,7 +85,6 @@ async function userServiceCore(req: Request) {
         role,
         full_name,
         email,
-        phone,
         created_at,
         customer_details (*),
         instructor_details (*)
@@ -156,7 +155,7 @@ async function userServiceCore(req: Request) {
       // Update profile with role and name
       const { error: profileUpdateError } = await supabaseAdmin
         .from('profiles')
-        .update({ role: role, full_name: parsedData.name, phone: parsedData.phone })
+        .update({ role: role, full_name: parsedData.name })
         .eq('id', authUser.user.id);
 
       if (profileUpdateError) throw profileUpdateError;
@@ -231,7 +230,6 @@ async function userServiceCore(req: Request) {
         const profileUpdates: any = {};
         if (parsedData.name) profileUpdates.full_name = parsedData.name;
         if (parsedData.email) profileUpdates.email = parsedData.email;
-        if (parsedData.phone) profileUpdates.phone = parsedData.phone;
 
         if (Object.keys(profileUpdates).length > 0) {
              const { error: profileUpdateError } = await supabase
