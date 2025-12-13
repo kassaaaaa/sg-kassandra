@@ -49,28 +49,40 @@ export const ProfileService = {
       throw new Error(error.message);
     }
     // Transform data to match UserProfile interface
-    return data.map((user: any) => {
+    return data.data.map((user: any) => { // Access data.data here
         const base = {
             id: user.id,
             name: user.full_name,
             email: user.email,
-            phone: user.phone,
-            role: user.role,
-            created_at: user.created_at
+            created_at: user.created_at,
         };
 
         if (user.role === 'customer') {
+            const customerDetails = user.customer_details?.[0];
             return {
                 ...base,
-                ...user.customer_details?.[0] // Assuming 1:1 relation returns array
+                role: 'customer',
+                phone: customerDetails?.phone,
+                skill_level: customerDetails?.skill_level,
+                age: customerDetails?.age,
+                gender: customerDetails?.gender,
+                weight: customerDetails?.weight,
+                emergency_contact: customerDetails?.emergency_contact,
+                notes: customerDetails?.notes,
+                experience_hours: customerDetails?.experience_hours,
             } as CustomerProfile;
         } else if (user.role === 'instructor') {
-             return {
+            const instructorDetails = user.instructor_details?.[0];
+            return {
                 ...base,
-                ...user.instructor_details?.[0]
+                role: 'instructor',
+                phone: instructorDetails?.phone,
+                certifications: instructorDetails?.certifications || [],
+                status: instructorDetails?.status || 'active',
             } as InstructorProfile;
         }
-        return base;
+        // Fallback for roles that are neither customer nor instructor, or incomplete data
+        return base as UserProfile;
     });
   },
 
