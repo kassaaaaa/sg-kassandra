@@ -33,14 +33,21 @@ async function userServiceCore(req: Request) {
   }
 
   try {
-    const supabase = createClient(
+    // Supabase client for user's JWT (for authentication and manager role verification)
+    const supabaseUser = createClient(
       Deno.env.get('SUPABASE_URL') ?? '',
       Deno.env.get('SUPABASE_ANON_KEY') ?? '',
       { global: { headers: { Authorization: req.headers.get('Authorization')! } } }
     );
 
+    // Supabase client with service_role_key (for bypassing RLS after manager verification)
+    const supabaseAdmin = createClient(
+      Deno.env.get('SUPABASE_URL') ?? '',
+      Deno.env.get('SUPABASE_SERVICE_ROLE_KEY') ?? ''
+    );
+
     // Verify user is authenticated
-    const { data: { user }, error: authError } = await supabase.auth.getUser();
+    const { data: { user }, error: authError } = await supabaseUser.auth.getUser();
     if (authError || !user) {
       console.error('Auth error:', authError);
       return new Response(JSON.stringify({ error: 'Unauthorized' }), {
@@ -50,7 +57,7 @@ async function userServiceCore(req: Request) {
     }
 
     // Verify user is a manager
-    const { data: profile, error: profileError } = await supabase
+    const { data: profile, error: profileError } = await supabaseUser
       .from('profiles')
       .select('role')
       .eq('id', user.id)
@@ -80,7 +87,7 @@ async function userServiceCore(req: Request) {
       const roleFilter = searchParams.get('role'); // 'customer' or 'instructor'
       const searchQuery = searchParams.get('search');
 
-      let query = supabase.from('profiles').select(`
+      let query = supabaseAdmin.from('profiles').select(`
         id,
         role,
         full_name,
@@ -131,12 +138,6 @@ async function userServiceCore(req: Request) {
       }
       
       const parsedData = validation.data;
-
-      // Use service role key to create user in auth.users
-      const supabaseAdmin = createClient(
-        Deno.env.get('SUPABASE_URL') ?? '',
-        Deno.env.get('SUPABASE_SERVICE_ROLE_KEY') ?? ''
-      );
 
       // Create auth user (dummy password for now, or send invite)
       const { data: authUser, error: createError } = await supabaseAdmin.auth.admin.createUser({
@@ -197,7 +198,7 @@ async function userServiceCore(req: Request) {
         const role = body.role; // Needs to be passed or fetched? Ideally fetched.
         
         // Fetch current role to know which schema to validate against and table to update
-        const { data: currentProfile, error: fetchError } = await supabase
+        const { data: currentProfile, error: fetchError } = await supabaseAdmin
             .from('profiles')
             .select('role')
             .eq('id', userId)
@@ -232,7 +233,7 @@ async function userServiceCore(req: Request) {
         if (parsedData.email) profileUpdates.email = parsedData.email;
 
         if (Object.keys(profileUpdates).length > 0) {
-             const { error: profileUpdateError } = await supabase
+             const { error: profileUpdateError } = await supabaseAdmin
                 .from('profiles')
                 .update(profileUpdates)
                 .eq('id', userId);
@@ -251,7 +252,7 @@ async function userServiceCore(req: Request) {
             if (parsedData.experience_hours !== undefined) customerUpdates.experience_hours = parsedData.experience_hours;
             
             if (Object.keys(customerUpdates).length > 0) {
-                 const { error: detailsError } = await supabase
+                 const { error: detailsError } = await supabaseAdmin
                     .from('customer_details')
                     .update(customerUpdates)
                     .eq('user_id', userId);
@@ -264,7 +265,7 @@ async function userServiceCore(req: Request) {
              if (parsedData.status !== undefined) instructorUpdates.status = parsedData.status;
 
              if (Object.keys(instructorUpdates).length > 0) {
-                 const { error: detailsError } = await supabase
+                 const { error: detailsError } = await supabaseAdmin
                     .from('instructor_details')
                     .update(instructorUpdates)
                     .eq('user_id', userId);
@@ -282,11 +283,6 @@ async function userServiceCore(req: Request) {
         // Use service role to delete from auth.users which cascades? 
         // Or just soft delete? Requirement says "Delete instructor profile".
         // Let's use service role to delete from auth.users to be thorough.
-
-        const supabaseAdmin = createClient(
-            Deno.env.get('SUPABASE_URL') ?? '',
-            Deno.env.get('SUPABASE_SERVICE_ROLE_KEY') ?? ''
-        );
 
         const { error } = await supabaseAdmin.auth.admin.deleteUser(userId!);
 
