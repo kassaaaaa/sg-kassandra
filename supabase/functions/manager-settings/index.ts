@@ -4,33 +4,49 @@ import { corsHeaders } from '../_shared/cors.ts'
 console.log("Hello from manager-settings!")
 
 export const handler = async (req: Request) => {
+  console.log(`[manager-settings] Request received: ${req.method}`);
+
   if (req.method === 'OPTIONS') {
+    console.log('[manager-settings] Handling OPTIONS');
     return new Response('ok', { headers: corsHeaders })
   }
 
   try {
+    console.log('[manager-settings] Creating Supabase client');
     const supabase = createClient(
       Deno.env.get('SUPABASE_URL') ?? '',
       Deno.env.get('SUPABASE_ANON_KEY') ?? '',
       { global: { headers: { Authorization: req.headers.get('Authorization')! } } }
     )
 
+    console.log('[manager-settings] Verifying user...');
     // Check auth/role - although RLS handles it at DB level, we might want early exit
     const { data: { user }, error: authError } = await supabase.auth.getUser()
+    
+    if (authError) {
+        console.error('[manager-settings] Auth error:', authError);
+    }
+    
     if (authError || !user) {
+      console.log('[manager-settings] Unauthorized');
       return new Response(JSON.stringify({ error: 'Unauthorized' }), { status: 401, headers: corsHeaders })
     }
 
+    console.log(`[manager-settings] User verified: ${user.id}`);
+
     if (req.method === 'GET') {
+      console.log('[manager-settings] Processing GET request');
       const { data, error } = await supabase
         .from('school_settings')
         .select('*')
         .maybeSingle(); // Use maybeSingle to handle empty table gracefully if RLS permits but empty
 
-      if (error) throw error;
+      if (error) {
+          console.error('[manager-settings] DB Select Error:', error);
+          throw error;
+      }
       
-      // If empty, return default structure (or handle in client)
-      // Migration inserted a row, so it should exist.
+      console.log('[manager-settings] GET success, returning data');
       
       return new Response(JSON.stringify(data), {
         headers: { ...corsHeaders, 'Content-Type': 'application/json' },
@@ -78,9 +94,12 @@ export const handler = async (req: Request) => {
 
   } catch (error) {
     const errorMessage = error instanceof Error ? error.message : 'An unknown error occurred';
+    console.error('[manager-settings] Unexpected Error:', errorMessage);
     return new Response(JSON.stringify({ error: errorMessage }), {
       status: 400,
       headers: { ...corsHeaders, 'Content-Type': 'application/json' },
     });
   }
 };
+
+Deno.serve(handler);
