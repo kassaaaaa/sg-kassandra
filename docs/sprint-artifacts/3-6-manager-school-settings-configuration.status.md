@@ -8,10 +8,10 @@ To resolve this, please ensure that your `app/.env.test` file (located relative 
 
 ```
 NEXT_PUBLIC_SUPABASE_URL=http://127.0.0.1:54321
-SUPABASE_SERVICE_ROLE_KEY=sb_secret_N7UND0UgjKTVK-Uodkm0Hg_xSvEMPvz
+SUPABASE_SERVICE_ROLE_KEY=xx
 ```
 
-Please replace `sb_secret_N7UND0UgjKTVK-Uodkm0Hg_xSvEMPvz` with the actual `Secret key` from your `supabase start` output if it has changed, although it is typically stable.
+Please replace `xx` with the actual `Secret key` from your `supabase start` output if it has changed, although it is typically stable.
 
 Once you have updated `app/.env.test`, I can re-attempt to run the RLS tests.
 
