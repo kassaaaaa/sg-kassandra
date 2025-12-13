@@ -1,0 +1,244 @@
+<story-context id=".bmad/bmm/workflows/4-implementation/story-context/template" v="1.0">
+  <metadata>
+    <epicId>3</epicId>
+    <storyId>7</storyId>
+    <title>Customer and Instructor Management</title>
+    <status>drafted</status>
+    <generatedAt>Saturday, December 13, 2025</generatedAt>
+    <generator>BMAD Story Context Workflow</generator>
+    <sourceStoryPath>/Users/kassa/KI-programmering/kiteops/SG-Kassandra/docs/sprint-artifacts/3-7-customer-and-instructor-management.md</sourceStoryPath>
+  </metadata>
+
+  <story>
+    <asA>Manager</asA>
+    <iWant>view, search, filter, and manage profiles of all customers and instructors</iWant>
+    <soThat>I can efficiently handle administrative tasks</soThat>
+    <tasks>
+    <task>- [ ] **Frontend (Next.js)**</task>
+    <task>    - [ ] **Customer Management UI** (AC: #1, #2)</task>
+    <task>        - [ ] Create `app/(protected)/customers/page.tsx` for the customer list.</task>
+    <task>        - [ ] Implement customer list table with search and display of relevant customer details.</task>
+    <task>        - [ ] Create `app/components/customers/AddCustomerModal.tsx` for adding new customers.</task>
+    <task>        - [ ] Create `app/components/customers/EditCustomerModal.tsx` for editing customer profiles.</task>
+    <task>        - [ ] Create `app/components/customers/CustomerDetailsModal.tsx` for viewing customer details.</task>
+    <task>        - [ ] Integrate modals and forms with `React Hook Form` and `Zod` for validation.</task>
+    <task>        - [ ] Use `TanStack Query` for fetching and mutating customer data.</task>
+    <task>        - [ ] Ensure UI is responsive and matches wireframes (`docs/wireframes/manager-dashboard.html`).</task>
+    <task>    - [ ] **Instructor Management UI** (AC: #3, #4)</task>
+    <task>        - [ ] Create `app/(protected)/instructors/page.tsx` for the instructor list.</task>
+    <task>        - [ ] Implement instructor list table with search and display of relevant instructor details.</task>
+    <task>        - [ ] Create `app/components/instructors/AddInstructorModal.tsx` for adding new instructors.</task>
+    <task>        - [ ] Create `app/components/instructors/EditInstructorModal.tsx` for editing instructor profiles.</task>
+    <task>        - [ ] Create `app/components/instructors/DeleteInstructorModal.tsx` for deleting instructor profiles.</task>
+    <task>        - [ ] Integrate modals and forms with `React Hook Form` and `Zod` for validation.</task>
+    <task>        - [ ] Use `TanStack Query` for fetching and mutating instructor data.</task>
+    <task>        - [ ] Ensure UI is responsive and matches wireframes (`docs/wireframes/manager-dashboard.html`).</task>
+    <task>- [ ] **Backend (Supabase Edge Functions & Database)** (AC: #5)</task>
+    <task>    - [ ] **API Endpoints (`ProfileService`)**</task>
+    <task>        - [ ] Implement `GET /edge/manager/users` Edge Function to list customers and instructors, with filtering by role and search query.</task>
+    <task>        - [ ] Implement `PUT /edge/manager/users/:id` Edge Function to update customer/instructor profiles.</task>
+    <task>        - [ ] Implement `POST /edge/manager/users` Edge Function to create new customer/instructor profiles.</task>
+    <task>        - [ ] Implement `DELETE /edge/manager/users/:id` Edge Function to delete instructor profiles.</task>
+    <task>    - [ ] **Database Schema**</task>
+    <task>        - [ ] Verify `profiles`, `customer_details`, `instructor_details` tables support required fields (skill level, certifications, etc.). Add migrations if necessary.</task>
+    <task>    - [ ] **Security (RLS)**</task>
+    <task>        - [ ] Update RLS policies to ensure only managers can perform CRUD operations on `customer_details` and `instructor_details` tables, and related `profiles` data.</task>
+    <task>- [ ] **Testing Strategy**</task>
+    <task>    - [ ] **Unit Tests:**</task>
+    <task>        - [ ] Write unit tests for `ProfileService` Edge Functions (GET, PUT, POST, DELETE) to verify business logic and validation.</task>
+    <task>        - [ ] Test individual UI components (e.g., `AddCustomerModal`, `AddInstructorModal`) for isolated behavior, state, and validation.</task>
+    <task>    - [ ] **Integration Tests:**</task>
+    <task>        - [ ] Verify frontend components correctly fetch and update data via `ProfileService` Edge Functions.</task>
+    <task>        - [ ] Create tests to confirm RLS policies correctly restrict/permit access to customer/instructor data for different roles.</task>
+    <task>    - [ ] **End-to-End (E2E) Tests:**</task>
+    <task>        - [ ] Create Playwright tests for manager workflows: login, navigate to customer list, search, view details, edit customer, add new customer.</task>
+    <task>        - [ ] Create Playwright tests for manager workflows: login, navigate to instructor list, search, view details, edit instructor, add new instructor, delete instructor.</task>
+    </tasks>
+  </story>
+
+  <acceptanceCriteria>
+    <criterion id="1">**Customer List View (FR028):**</criterion>
+    <criterion id="1a">Managers can access a dedicated "Customers" page from the main navigation (e.g., "People" -> "Customers").</criterion>
+    <criterion id="1b">The page displays a comprehensive list of all registered customers in a table format, including name, email, phone number, skill level, and total lessons.</criterion>
+    <criterion id="1c">Managers can search for customers by name or email using a search input field.</criterion>
+    <criterion id="1d">Managers can filter the customer list (implicitly covered by search for now).</criterion>
+    <criterion id="1e">The layout and components align with the "View Customers" section in `docs/wireframes/manager-dashboard.html`.</criterion>
+    <criterion id="2">**Customer Profile Management (FR028):**</criterion>
+    <criterion id="2a">From the customer list, managers can view detailed customer profiles by clicking an action (e.g., "View details" or "Edit").</criterion>
+    <criterion id="2b">The customer detail view (modal or dedicated page) displays comprehensive information such as age, gender, skill level, experience hours, and additional notes.</criterion>
+    <criterion id="2c">Managers can edit customer profile information, and changes are persisted.</criterion>
+    <criterion id="2d">Managers can add new customer profiles through a dedicated "Add New Customer" modal.</criterion>
+    <criterion id="2e">The UI for viewing and editing customer profiles adheres to the wireframes (e.g., `customer-details-modal`, `edit-customer-modal` in `docs/wireframes/manager-dashboard.html`).</criterion>
+    <criterion id="3">**Instructor List View (FR028):**</criterion>
+    <criterion id="3a">Managers can access a dedicated "Instructors" page from the main navigation (e.g., "People" -> "Instructors").</criterion>
+    <criterion id="3b">The page displays a comprehensive list of all registered instructors in a table format, including name, email, phone number, skill level taught, and status.</criterion>
+    <criterion id="3c">Managers can search for instructors by name or email.</criterion>
+    <criterion id="3d">Managers can filter the instructor list (implicitly covered by search for now).</criterion>
+    <criterion id="3e">The layout and components align with the "Manage Instructors" section in `docs/wireframes/manager-dashboard.html`.</criterion>
+    <criterion id="4">**Instructor Profile Management (FR028):**</criterion>
+    <criterion id="4a">From the instructor list, managers can view detailed instructor profiles and edit their information (e.g., certifications, lesson types they can teach).</criterion>
+    <criterion id="4b">Managers can add new instructor profiles through a dedicated "Add New Instructor" modal.</criterion>
+    <criterion id="4c">Changes to instructor profiles are persisted.</criterion>
+    <criterion id="4d">Managers can delete an instructor profile (requires confirmation via a modal).</criterion>
+    <criterion id="4e">The UI for viewing and editing instructor profiles adheres to the wireframes (e.g., `add-instructor-modal`, `delete-instructor-modal` in `docs/wireframes/manager-dashboard.html`).</criterion>
+    <criterion id="5">**Data Persistence & API Integration:**</criterion>
+    <criterion id="5a">Customer and instructor data is fetched and updated via Supabase Edge Functions (`GET /edge/manager/users`, `PUT /edge/manager/users/:id`).</criterion>
+    <criterion id="5b">Profile updates (for both customers and instructors) are persisted to the `profiles` table and relevant detail tables (`customer_details`, `instructor_details`).</criterion>
+    <criterion id="5c">Row Level Security (RLS) policies ensure that only authorized managers can access and modify customer and instructor data.</criterion>
+  </acceptanceCriteria>
+
+  <artifacts>
+    <docs>
+      <artifact path="docs/fase-2-plan/PRD.md" kind="product-requirements" reason="Overall product goals, background context, and definition of FR028.">
+        <![CDATA[
+# IBE160 Product Requirements Document (PRD)
+
+## Goals and Background Context
+
+### Goals
+*   Reduce manual scheduling and coordination.
+*   Increase instructor utilization.
+*   Enable customers to book a lesson in under 3 minutes.
+*   Allow instructors to manage their availability and view their schedule with no more than 2 clicks.
+*   Provide managers with a clear overview of the day's schedule and resource allocation in a single dashboard view.
+
+### Background Context
+Kite schools operate in a dynamic environment where weather conditions are unpredictable. The current process of managing bookings, scheduling instructors, and communicating with students is often manual, fragmented, and inefficient. This leads to operational overhead, scheduling conflicts, and a suboptimal experience for both customers and staff.
+
+KiteOps will be a centralized platform that provides a simple and intuitive way for customers to book lessons, for instructors to manage their availability, and for managers to have a comprehensive overview of all school operations. Its key differentiator is an **intelligent, rule-based automation engine** designed to handle the complexities of weather-dependent scheduling, significantly reducing manual overhead and optimizing resource utilization, which is a common pain point in the industry.
+
+## Functional Requirements
+*   **FR028 - Customer and Instructor Management:** Managers can view, search, and filter a list of all customers and instructors, and manage their profiles.
+        ]]>
+      </artifact>
+      <artifact path="docs/fase-2-plan/manager-dashboard-ui-prompt.md" kind="ui-design-prompt" reason="Detailed UI specifications for customer and instructor management sections within the manager dashboard.">
+        <![CDATA[
+# AI Prompt: KiteOps Manager Dashboard UI Mockup
+
+## 3. Dashboard Components (Cards)
+
+### Customers View
+- **Page Heading:** "View Customers"
+- **Search Bar:** Input field with placeholder "Search by name or email..."
+- **"Add New Customer" Button:** Primary button.
+- **Customer List Table:**
+    - Columns: Customer Name, Email, Phone Number, Skill Level, Total Lessons, Actions.
+    - Actions: View details, Send message, Edit customer.
+
+### Instructors View
+- **Page Heading:** "Manage Instructors"
+- **Search Bar:** Input field with placeholder "Search by name..."
+- **"Add New Instructor" Button:** Primary button.
+- **Instructor List Table:**
+    - Columns: Instructor Name, Email, Contact Number, Skill Level, Status, Actions.
+    - Actions: Edit, Delete.
+        ]]>
+      </artifact>
+      <artifact path="docs/fase-3-solution/epics.md" kind="epic-definition" reason="Description of Epic 3, providing higher-level context for the story.">
+        <![CDATA[
+### Epic 3: Core Management & Operations
+**Description:** This epic focuses on empowering school managers with the tools to efficiently oversee and manage daily operations. It includes comprehensive dashboards, customer and instructor management, school settings, and a robust lesson scheduling system. The primary goal is to centralize administrative tasks and provide managers with real-time insights and control over the school's activities.
+
+**Functional Requirements Addressed:** FR017, FR022, FR023, FR024, FR025, FR026, FR027, FR028, FR029, FR031, FR035, FR036, FR037, FR038, FR039.
+        ]]>
+      </artifact>
+      <artifact path="docs/wireframes/manager-dashboard.html" kind="wireframe" reason="Visual design and layout for the manager dashboard, including customer and instructor management sections. Directly referenced in acceptance criteria."/>
+    </docs>
+<code>
+      <artifact path="app/lib/auth-service.ts" kind="service" symbol="UserRole, getUserRole" reason="User role management and profile interaction" line-hints="L3, L42-L65"/>
+      <artifact path="app/lib/hooks/useInstructorDashboard.ts" kind="hook" reason="Interacts with profiles data (instructor and customer profiles), and defines relevant interfaces for dashboard statistics and bookings." line-hints="L5-L9 (DashboardStats), L12-L23 (Booking), L36-L120 (useInstructorDashboard), L54 (instructor_id filter), L79 (instructor_id filter), L91 (profiles select)"/>
+      <artifact path="app/lib/hooks/useSchoolData.ts" kind="hook" reason="Provides hooks to fetch school-related data, specifically `useInstructors` and `useCustomers` which interact with the `profiles` table and filter by user roles." line-hints="L4-L7 (Instructor interface), L9-L12 (Customer interface), L37-L51 (useInstructors hook), L54-L68 (useCustomers hook)"/>
+      <artifact path="app/lib/profile-service.ts" kind="service" symbol="InstructorProfile, ProfileService" reason="Client-side profile service definitions, including methods for fetching and updating instructor details." line-hints="L3-L6 (InstructorProfile), L8-L40 (ProfileService object), L9-L23 (getProfile method), L25-L39 (updateProfile method)"/>
+      <artifact path="supabase/functions/booking-service/index.ts" kind="edge-function" reason="Handles booking operations, includes a critical manager role check for authorization and logic for creating new customer profiles in the `profiles` and `customer_details` tables." line-hints="L90-L101 (Manager Role Check), L149-L152 (profiles table upsert), L155-L164 (customer_details table insert)"/>
+      <artifact path="supabase/migrations/20251204000000_initial_schema.sql" kind="database-migration" reason="Defines the core database schema for `profiles`, `instructor_details`, and `customer_details` tables, along with enabling Row Level Security (RLS) and setting up initial deny-all policies." line-hints="L2-L6 (profiles table), L9-L13 (instructor_details table), L16-L20 (customer_details table), L58-L64 (Enable RLS), L67-L73 (Default Deny Policies)"/>
+    </code>
+    <dependencies>
+      <dependency ecosystem="Node.js" package="@playwright/test" type="dev" version="^1.40.1"/>
+      <dependency ecosystem="Node.js" package="dotenv" type="dev" version="^16.4.5"/>
+      <dependency ecosystem="Node.js" package="@hookform/resolvers" type="prod" version="^5.2.2"/>
+      <dependency ecosystem="Node.js" package="@radix-ui/react-checkbox" type="prod" version="^1.3.3"/>
+      <dependency ecosystem="Node.js" package="@radix-ui/react-dialog" type="prod" version="^1.1.15"/>
+      <dependency ecosystem="Node.js" package="@radix-ui/react-label" type="prod" version="^2.1.8"/>
+      <dependency ecosystem="Node.js" package="@radix-ui/react-select" type="prod" version="^2.2.6"/>
+      <dependency ecosystem="Node.js" package="@radix-ui/react-slot" type="prod" version="^1.2.4"/>
+      <dependency ecosystem="Node.js" package="@supabase/ssr" type="prod" version="^0.8.0"/>
+      <dependency ecosystem="Node.js" package="@supabase/supabase-js" type="prod" version="^2.86.0"/>
+      <dependency ecosystem="Node.js" package="@tanstack/react-query" type="prod" version="^5.90.12"/>
+      <dependency ecosystem="Node.js" package="class-variance-authority" type="prod" version="^0.7.1"/>
+      <dependency ecosystem="Node.js" package="clsx" type="prod" version="^2.1.1"/>
+      <dependency ecosystem="Node.js" package="date-fns" type="prod" version="^4.1.0"/>
+      <dependency ecosystem="Node.js" package="lucide-react" type="prod" version="^0.555.0"/>
+      <dependency ecosystem="Node.js" package="next" type="prod" version="16.0.7"/>
+      <dependency ecosystem="Node.js" package="next-themes" type="prod" version="^0.4.6"/>
+      <dependency ecosystem="Node.js" package="react" type="prod" version="19.2.0"/>
+      <dependency ecosystem="Node.js" package="react-day-picker" type="prod" version="^9.12.0"/>
+      <dependency ecosystem="Node.js" package="react-dom" type="prod" version="19.2.0"/>
+      <dependency ecosystem="Node.js" package="react-hook-form" type="prod" version="^7.68.0"/>
+      <dependency ecosystem="Node.js" package="sonner" type="prod" version="^2.0.7"/>
+      <dependency ecosystem="Node.js" package="tailwind-merge" type="prod" version="^3.4.0"/>
+      <dependency ecosystem="Node.js" package="zod" type="prod" version="^4.1.13"/>
+      <dependency ecosystem="Node.js" package="@tailwindcss/postcss" type="dev" version="^4"/>
+      <dependency ecosystem="Node.js" package="@testing-library/dom" type="dev" version="^10.4.1"/>
+      <dependency ecosystem="Node.js" package="@testing-library/jest-dom" type="dev" version="^6.9.1"/>
+      <dependency ecosystem="Node.js" package="@testing-library/react" type="dev" version="^16.3.0"/>
+      <dependency ecosystem="Node.js" package="@types/json5" type="dev" version="^0.0.29"/>
+      <dependency ecosystem="Node.js" package="@types/node" type="dev" version="^20"/>
+      <dependency ecosystem="Node.js" package="@types/react" type="dev" version="^19"/>
+      <dependency ecosystem="Node.js" package="@types/react-dom" type="dev" version="^19"/>
+      <dependency ecosystem="Node.js" package="@vitejs/plugin-react" type="dev" version="^5.1.1"/>
+      <dependency ecosystem="Node.js" package="dotenv" type="dev" version="^16.6.1"/>
+      <dependency ecosystem="Node.js" package="eslint" type="dev" version="^9"/>
+      <dependency ecosystem="Node.js" package="eslint-config-next" type="dev" version="16.0.7"/>
+      <dependency ecosystem="Node.js" package="jsdom" type="dev" version="^27.2.0"/>
+      <dependency ecosystem="Node.js" package="tailwindcss" type="dev" version="^4"/>
+      <dependency ecosystem="Node.js" package="tw-animate-css" type="dev" version="^1.4.0"/>
+      <dependency ecosystem="Node.js" package="typescript" type="dev" version="^5"/>
+      <dependency ecosystem="Node.js" package="vitest" type="dev" version="^4.0.15"/>
+      <dependency ecosystem="Python" package="ijson" type="prod" version=">=3.2.3"/>
+      <dependency ecosystem="Python" package="filelock" type="prod" version=">=3.12.0"/>
+      <dependency ecosystem="Python" package="watchfiles" type="prod" version=">=0.21"/>
+    </dependencies></dependencies>
+  </artifacts>
+
+  <constraints>
+    <constraint>All backend logic for user management must be encapsulated within Supabase Edge Functions.</constraint>
+    <constraint>New UI components must follow the project's existing design system built with `shadcn/ui`.</constraint>
+    <constraint>Use `React Hook Form` with `Zod` for client-side form validation.</constraint>
+    <constraint>Use `TanStack Query` for efficient server state management.</constraint>
+    <constraint>RLS policies must ensure only authorized managers can perform CRUD operations on `customer_details` and `instructor_details` tables, and related `profiles` data.</constraint>
+    <constraint>Existing `useSchoolData` hook can be reused/extended.</constraint>
+    <constraint>Review existing modals (`AddBookingModal`, `EditBookingModal`, `CancelBookingModal`) and `ManagerBookingForm` for patterns before creating new modals.</constraint>
+  </constraints>
+  <interfaces>
+    <interface name="ProfileService (Client-side)" kind="TypeScript interface" path="app/lib/profile-service.ts" signature="getProfile(userId: string): Promise<InstructorProfile | null>; updateProfile(userId: string, profile: InstructorProfile): Promise<void>;"/>
+    <interface name="GET /edge/manager/users" kind="REST endpoint" signature="List customers and instructors, with filtering by role and search query."/>
+    <interface name="PUT /edge/manager/users/:id" kind="REST endpoint" signature="Update customer/instructor profiles."/>
+    <interface name="POST /edge/manager/users" kind="REST endpoint" signature="Create new customer/instructor profiles."/>
+    <interface name="DELETE /edge/manager/users/:id" kind="REST endpoint" signature="Delete instructor profiles."/>
+    <interface name="profiles table" kind="Database table" path="supabase/migrations/20251204000000_initial_schema.sql" signature="id: uuid, role: text, created_at: timestamptz"/>
+    <interface name="instructor_details table" kind="Database table" path="supabase/migrations/20251204000000_initial_schema.sql" signature="user_id: uuid, certifications: text[], lesson_types: text[], updated_at: timestamptz"/>
+    <interface name="customer_details table" kind="Database table" path="supabase/migrations/20251204000000_initial_schema.sql" signature="user_id: uuid, phone: text, skill_level: text, updated_at: timestamptz"/>
+  </interfaces>
+<standards>Unit tests for Edge Functions and UI components. Integration tests for frontend-backend interaction and RLS policies. End-to-End tests using Playwright for manager workflows. Frameworks: Vitest (unit), Playwright (E2E). Use TanStack Query for data fetching/mutations.</standards>
+    <locations>
+      <location>app/__tests__/</location>
+      <location>supabase/functions/*/tests/</location>
+      <location>tests/e2e/</location>
+      <location>tests/integration/</location>
+      <location>tests/unit/</location>
+    </locations>
+    <ideas>
+      <idea criterionId="5">Unit tests for ProfileService Edge Functions (GET, PUT, POST, DELETE).</idea>
+      <idea criterionId="2d">Unit test AddCustomerModal for adding new customers.</idea>
+      <idea criterionId="2c">Unit test EditCustomerModal for editing customer profiles.</idea>
+      <idea criterionId="2a">Unit test CustomerDetailsModal for viewing customer details.</idea>
+      <idea criterionId="4b">Unit test AddInstructorModal for adding new instructors.</idea>
+      <idea criterionId="4a">Unit test EditInstructorModal for editing instructor profiles.</idea>
+      <idea criterionId="4d">Unit test DeleteInstructorModal for deleting instructor profiles.</idea>
+      <idea criterionId="5">Integration tests: Frontend components correctly fetch and update data via ProfileService Edge Functions.</idea>
+      <idea criterionId="5c">Integration tests: RLS policies correctly restrict/permit access to customer/instructor data.</idea>
+      <idea criterionId="1,2">E2E Playwright tests: Manager login, navigate to customer list, search, view details, edit customer, add new customer.</idea>
+      <idea criterionId="3,4">E2E Playwright tests: Manager login, navigate to instructor list, search, view details, edit instructor, add new instructor, delete instructor.</idea>
+    </ideas>
+  </tests>
+</story-context>
