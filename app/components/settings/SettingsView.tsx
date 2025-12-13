@@ -1,19 +1,24 @@
 'use client';
 
-import { useSchoolSettings } from '@/lib/hooks/useSchoolSettings';
+import { useSchoolSettings, useLessonsQuery } from '@/lib/hooks/useSchoolSettings';
 import { WeatherParamsForm } from './WeatherParamsForm';
 import { LessonTypesList } from './LessonTypesList';
 import { BrandingForm } from './BrandingForm';
 
 export function SettingsView() {
-  const { data: settings, isLoading, error } = useSchoolSettings();
+  const { data: settings, isLoading: isSettingsLoading, error: settingsError } = useSchoolSettings();
+  const { data: lessons, isLoading: isLessonsLoading, error: lessonsError } = useLessonsQuery();
 
-  if (isLoading) {
+  if (isSettingsLoading || isLessonsLoading) {
     return <div className="p-8">Loading settings...</div>;
   }
 
-  if (error) {
-    return <div className="p-8 text-red-500">Error loading settings: {error.message}</div>;
+  if (settingsError) {
+    return <div className="p-8 text-red-500">Error loading settings: {settingsError.message}</div>;
+  }
+
+  if (lessonsError) {
+    return <div className="p-8 text-red-500">Error loading lessons: {lessonsError.message}</div>;
   }
 
   return (
@@ -27,7 +32,7 @@ export function SettingsView() {
 
       <div className="grid gap-6">
         <WeatherParamsForm initialData={settings?.weather_api_thresholds} />
-        <LessonTypesList lessonTypes={settings?.lesson_types} />
+        <LessonTypesList lessonTypes={lessons} />
         <BrandingForm initialLogoUrl={settings?.school_logo_url} />
       </div>
     </div>

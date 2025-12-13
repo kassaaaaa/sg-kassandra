@@ -65,4 +65,29 @@ export const LessonService = {
       }
     }
   },
+
+  async createLesson(lesson: Omit<Lesson, 'id'>): Promise<Lesson> {
+    const supabase = createClient();
+    const { data, error } = await supabase
+      .from('lessons')
+      .insert(lesson)
+      .select()
+      .single();
+
+    if (error) throw new Error(error.message);
+    return data;
+  },
+
+  async updateLesson(id: number, updates: Partial<Lesson>): Promise<Lesson> {
+    const supabase = createClient();
+    const { data, error } = await supabase
+      .from('lessons')
+      .update(updates)
+      .eq('id', id)
+      .select()
+      .single();
+
+    if (error) throw new Error(error.message);
+    return data;
+  },
 };

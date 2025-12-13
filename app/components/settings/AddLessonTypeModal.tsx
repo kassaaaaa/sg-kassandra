@@ -7,18 +7,18 @@ import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, Di
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
-import { LessonType } from '@/lib/settings-service';
+import { Lesson } from '@/lib/lesson-service';
 import { useState } from 'react';
 
 const lessonTypeSchema = z.object({
   name: z.string().min(2, 'Name must be at least 2 characters'),
-  description: z.string().optional(),
-  default_duration_minutes: z.coerce.number().min(15, 'Duration must be at least 15 minutes'),
+  description: z.string().optional().nullable(), // Allow null
+  duration_minutes: z.coerce.number().min(15, 'Duration must be at least 15 minutes'),
   price: z.coerce.number().min(0, 'Price must be non-negative'),
 });
 
 interface AddLessonTypeModalProps {
-  onAdd: (data: Omit<LessonType, 'id' | 'active'>) => void;
+  onAdd: (data: Omit<Lesson, 'id' | 'active'>) => void;
   open?: boolean;
   onOpenChange?: (open: boolean) => void;
 }
@@ -30,17 +30,20 @@ export function AddLessonTypeModal({ onAdd, open, onOpenChange }: AddLessonTypeM
   const setShow = isControlled ? onOpenChange : setInternalOpen;
 
   const form = useForm<z.infer<typeof lessonTypeSchema>>({
-    resolver: zodResolver(lessonTypeSchema) as any, // Cast to avoid TS complexity with z.coerce and Resolver types
+    resolver: zodResolver(lessonTypeSchema) as any,
     defaultValues: {
       name: '',
       description: '',
-      default_duration_minutes: 60,
+      duration_minutes: 60,
       price: 0,
     },
   });
 
   function onSubmit(values: z.infer<typeof lessonTypeSchema>) {
-    onAdd(values);
+    onAdd({
+      ...values,
+      description: values.description || null,
+    });
     form.reset();
     if (setShow) setShow(false);
   }
@@ -79,7 +82,7 @@ export function AddLessonTypeModal({ onAdd, open, onOpenChange }: AddLessonTypeM
                 <FormItem>
                   <FormLabel>Description</FormLabel>
                   <FormControl>
-                    <Input placeholder="Short description" {...field} />
+                    <Input placeholder="Short description" {...field} value={field.value || ''} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -88,7 +91,7 @@ export function AddLessonTypeModal({ onAdd, open, onOpenChange }: AddLessonTypeM
             <div className="grid grid-cols-2 gap-4">
               <FormField
                 control={form.control}
-                name="default_duration_minutes"
+                name="duration_minutes"
                 render={({ field }) => (
                   <FormItem>
                     <FormLabel>Duration (min)</FormLabel>

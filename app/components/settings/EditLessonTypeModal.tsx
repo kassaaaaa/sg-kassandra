@@ -7,19 +7,19 @@ import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } f
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
-import { LessonType } from '@/lib/settings-service';
+import { Lesson } from '@/lib/lesson-service';
 import { useEffect } from 'react';
 
 const lessonTypeSchema = z.object({
   name: z.string().min(2, 'Name must be at least 2 characters'),
-  description: z.string().optional(),
-  default_duration_minutes: z.coerce.number().min(15, 'Duration must be at least 15 minutes'),
+  description: z.string().optional().nullable(),
+  duration_minutes: z.coerce.number().min(15, 'Duration must be at least 15 minutes'),
   price: z.coerce.number().min(0, 'Price must be non-negative'),
 });
 
 interface EditLessonTypeModalProps {
-  lessonType: LessonType | null;
-  onSave: (id: string, data: Partial<LessonType>) => void;
+  lessonType: Lesson | null;
+  onSave: (id: number, data: Partial<Lesson>) => void;
   open: boolean;
   onOpenChange: (open: boolean) => void;
 }
@@ -30,7 +30,7 @@ export function EditLessonTypeModal({ lessonType, onSave, open, onOpenChange }: 
     defaultValues: {
       name: '',
       description: '',
-      default_duration_minutes: 60,
+      duration_minutes: 60,
       price: 0,
     },
   });
@@ -40,7 +40,7 @@ export function EditLessonTypeModal({ lessonType, onSave, open, onOpenChange }: 
       form.reset({
         name: lessonType.name,
         description: lessonType.description || '',
-        default_duration_minutes: lessonType.default_duration_minutes,
+        duration_minutes: lessonType.duration_minutes,
         price: lessonType.price,
       });
     }
@@ -48,7 +48,10 @@ export function EditLessonTypeModal({ lessonType, onSave, open, onOpenChange }: 
 
   function onSubmit(values: z.infer<typeof lessonTypeSchema>) {
     if (lessonType) {
-      onSave(lessonType.id, values);
+      onSave(lessonType.id, {
+        ...values,
+        description: values.description || null,
+      });
       onOpenChange(false);
     }
   }
@@ -84,7 +87,7 @@ export function EditLessonTypeModal({ lessonType, onSave, open, onOpenChange }: 
                 <FormItem>
                   <FormLabel>Description</FormLabel>
                   <FormControl>
-                    <Input {...field} />
+                    <Input {...field} value={field.value || ''} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -93,7 +96,7 @@ export function EditLessonTypeModal({ lessonType, onSave, open, onOpenChange }: 
             <div className="grid grid-cols-2 gap-4">
               <FormField
                 control={form.control}
-                name="default_duration_minutes"
+                name="duration_minutes"
                 render={({ field }) => (
                   <FormItem>
                     <FormLabel>Duration (min)</FormLabel>

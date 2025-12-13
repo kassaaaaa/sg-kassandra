@@ -73,27 +73,20 @@ export function useLessonTypes() {
   return useQuery({
     queryKey: ['lesson-types'],
     queryFn: async (): Promise<string[]> => {
-      // Fetch from school_settings
+      // Fetch unique lesson names from active lessons
       const { data, error } = await supabase
-        .from('school_settings')
-        .select('lesson_types')
-        .single();
+        .from('lessons')
+        .select('name')
+        .eq('active', true)
+        .order('name');
       
       if (error) {
-        // Fallback or error?
-        console.error('Error fetching school settings:', error);
-        return ['Kite', 'Wing', 'Surf']; // Fallback for dev/demo
+        console.error('Error fetching lesson types:', error);
+        return [];
       }
 
-      // lesson_types is JSONB. Assuming it's an array of strings or objects.
-      // Tech spec says: lesson_types: JSONB (configurable list)
-      // Let's assume array of strings or array of objects with name.
-      // We'll cast safely.
-      const types = data.lesson_types;
-      if (Array.isArray(types)) {
-          return types.map((t: any) => typeof t === 'string' ? t : t.name);
-      }
-      return [];
+      // Return unique names (though names should probably be unique anyway)
+      return Array.from(new Set(data.map((l: any) => l.name)));
     },
   });
 }

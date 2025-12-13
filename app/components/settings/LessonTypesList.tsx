@@ -3,46 +3,36 @@
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Checkbox } from '@/components/ui/checkbox';
-import { LessonType } from '@/lib/settings-service';
-import { useUpdateSchoolSettings } from '@/lib/hooks/useSchoolSettings';
+import { Lesson } from '@/lib/lesson-service';
+import { useCreateLesson, useUpdateLesson } from '@/lib/hooks/useSchoolSettings';
 import { AddLessonTypeModal } from './AddLessonTypeModal';
 import { EditLessonTypeModal } from './EditLessonTypeModal';
 import { useState } from 'react';
-import { Pencil, Trash2 } from 'lucide-react'; // Assuming lucide-react is available as per dependencies
+import { Pencil } from 'lucide-react';
 
 interface LessonTypesListProps {
-  lessonTypes?: LessonType[];
+  lessonTypes?: Lesson[];
 }
 
 export function LessonTypesList({ lessonTypes = [] }: LessonTypesListProps) {
-  const updateSettings = useUpdateSchoolSettings();
-  const [editingType, setEditingType] = useState<LessonType | null>(null);
+  const createLesson = useCreateLesson();
+  const updateLesson = useUpdateLesson();
+  const [editingType, setEditingType] = useState<Lesson | null>(null);
 
-  const handleAdd = (data: Omit<LessonType, 'id' | 'active'>) => {
-    const newType: LessonType = {
+  const handleAdd = (data: Omit<Lesson, 'id' | 'active'>) => {
+    createLesson.mutate({
       ...data,
-      id: crypto.randomUUID(),
       active: true,
-    };
-    const newTypes = [...lessonTypes, newType];
-    updateSettings.mutate({ lesson_types: newTypes });
+    });
   };
 
-  const handleEdit = (id: string, data: Partial<LessonType>) => {
-    const newTypes = lessonTypes.map(t => t.id === id ? { ...t, ...data } : t);
-    updateSettings.mutate({ lesson_types: newTypes });
+  const handleEdit = (id: number, data: Partial<Lesson>) => {
+    updateLesson.mutate({ id, updates: data });
   };
 
-  const handleToggleActive = (id: string, currentActive: boolean) => {
-    const newTypes = lessonTypes.map(t => t.id === id ? { ...t, active: !currentActive } : t);
-    updateSettings.mutate({ lesson_types: newTypes });
+  const handleToggleActive = (id: number, currentActive: boolean) => {
+    updateLesson.mutate({ id, updates: { active: !currentActive } });
   };
-
-  // Optional: Deletion? AC 3.c says "Deactivated lesson types cannot be booked". It doesn't explicitly say "Delete".
-  // But usually "Delete" is good if it was a mistake. 
-  // AC 3.c says "Deactivated lesson types... are not removed from existing bookings".
-  // I will just support Deactivate. But I can add Delete if no bookings exist?
-  // I'll stick to Activate/Deactivate as per AC.
 
   return (
     <Card>
@@ -67,7 +57,7 @@ export function LessonTypesList({ lessonTypes = [] }: LessonTypesListProps) {
                 </div>
                 <div className="text-sm text-muted-foreground">{type.description}</div>
                 <div className="text-sm text-muted-foreground mt-1">
-                  {type.default_duration_minutes} min • ${type.price}
+                  {type.duration_minutes} min • ${type.price}
                 </div>
               </div>
               <div className="flex items-center gap-2">
