@@ -6,6 +6,7 @@ import { Home, Calendar, Settings, LogOut, User } from 'lucide-react';
 import { AuthService } from '@/lib/auth-service';
 import { useRouter } from 'next/navigation';
 import { toast } from 'sonner';
+import { useQuery } from '@tanstack/react-query';
 
 export default function ProtectedLayout({
   children,
@@ -14,6 +15,11 @@ export default function ProtectedLayout({
 }) {
   const pathname = usePathname();
   const router = useRouter();
+
+  const { data: userRole, isLoading: isLoadingRole } = useQuery({
+    queryKey: ['userRole'],
+    queryFn: () => AuthService.getUserRole(),
+  });
 
   const handleLogout = async () => {
     try {
@@ -25,11 +31,17 @@ export default function ProtectedLayout({
     }
   };
 
+  const settingsHref = userRole === 'manager' ? '/settings' : '/settings/profile';
+
   const navItems = [
     { href: '/dashboard', label: 'Dashboard', icon: Home },
     { href: '/calendar', label: 'Calendar', icon: Calendar },
-    { href: '/settings/profile', label: 'Settings', icon: Settings },
+    { href: settingsHref, label: 'Settings', icon: Settings },
   ];
+
+  if (isLoadingRole) {
+    return <div className="min-h-screen flex items-center justify-center">Loading user role...</div>;
+  }
 
   return (
     <div className="min-h-screen flex flex-col bg-gray-50 dark:bg-gray-900">
