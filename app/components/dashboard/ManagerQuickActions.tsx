@@ -23,9 +23,15 @@ export function ManagerQuickActions() {
           </Link>
         </Button>
         <Button asChild variant="outline" className="w-full justify-start">
-          <Link href="/settings/instructors">
+          <Link href="/instructors">
             <Users className="mr-2 h-4 w-4" />
             Manage Instructors
+          </Link>
+        </Button>
+        <Button asChild variant="outline" className="w-full justify-start">
+          <Link href="/customers">
+            <Users className="mr-2 h-4 w-4" />
+            Manage Customers
           </Link>
         </Button>
       </CardContent>
