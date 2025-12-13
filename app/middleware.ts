@@ -50,7 +50,7 @@ export async function middleware(req: NextRequest) {
   // Define protected routes and allowed roles
   const protectedRoutes: Record<string, string[]> = {
     '/dashboard': ['instructor', 'manager'], // Both instructor and manager can access dashboard
-    '/calendar': ['manager'],
+    '/calendar': ['instructor', 'manager'],
   }
 
   // Check if the current path is a protected route
