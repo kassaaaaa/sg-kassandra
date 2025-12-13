@@ -23,12 +23,16 @@ export interface SchoolSettings {
 }
 
 export async function getSchoolSettings(): Promise<SchoolSettings> {
+  console.log('Fetching settings...');
   const supabase = createClient();
   const { data, error } = await supabase.functions.invoke('manager-settings', {
     method: 'GET',
   });
 
+  console.log('Settings fetch result:', { data, error });
+
   if (error) {
+    console.error('Settings fetch error:', error);
     throw new Error('Failed to fetch school settings: ' + error.message);
   }
 
