@@ -1,1 +1,0 @@
-ALTER TABLE public.customer_details DROP COLUMN phone;
