@@ -20,8 +20,8 @@ export interface ManagerBooking {
   customer: {
     full_name: string;
     email: string;
+    phone?: string; // Phone is now directly on customer (profile)
     customer_details: {
-        phone?: string;
         skill_level?: string;
         age?: number;
         gender?: string;
@@ -53,8 +53,8 @@ interface RawManagerBooking {
   customer: {
     full_name: string;
     email: string;
+    phone?: string; // Phone is now directly on customer (profile)
     customer_details: {
-        phone?: string;
         skill_level?: string;
         age?: number;
         gender?: string;
@@ -144,7 +144,7 @@ export function useManagerDashboard() {
           location,
           manager_notes,
           lesson:lessons(name),
-          customer:customer_id(full_name, email, customer_details(phone, skill_level)),
+          customer:customer_id(full_name, email, phone, customer_details(skill_level)),
           instructor:instructor_id(full_name)
         `)
         .gte('start_time', todayStart)
@@ -196,7 +196,7 @@ export function useResolutionCenterData() {
           status,
           weather_data,
           lesson:lessons(name),
-          customer:customer_id(full_name, email, customer_details(phone, skill_level)),
+          customer:customer_id(full_name, email, phone, customer_details(skill_level)),
           instructor:instructor_id(full_name)
         `)
         .eq('status', 'pending_weather_check')
