@@ -54,6 +54,7 @@ export const ProfileService = {
             id: user.id,
             name: user.full_name,
             email: user.email,
+            phone: user.phone, // Phone is now directly on the base profile
             created_at: user.created_at,
         };
 
@@ -62,7 +63,6 @@ export const ProfileService = {
             return {
                 ...base,
                 role: 'customer',
-                phone: customerDetails?.phone,
                 skill_level: customerDetails?.skill_level,
                 age: customerDetails?.age,
                 gender: customerDetails?.gender,
@@ -76,7 +76,6 @@ export const ProfileService = {
             return {
                 ...base,
                 role: 'instructor',
-                phone: instructorDetails?.phone,
                 certifications: instructorDetails?.certifications || [],
                 status: instructorDetails?.status || 'active',
             } as InstructorProfile;
