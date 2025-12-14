@@ -19,6 +19,7 @@ interface CustomerDetailsModalProps {
 }
 
 export function CustomerDetailsModal({ children, customer }: CustomerDetailsModalProps) {
+  console.log('CustomerDetailsModal: customer prop received:', customer);
   return (
     <Dialog>
       <DialogTrigger asChild>{children}</DialogTrigger>
