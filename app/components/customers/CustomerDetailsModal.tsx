@@ -57,7 +57,7 @@ export function CustomerDetailsModal({ children, customer }: CustomerDetailsModa
             </div>
           </div>
           
-           <div className="grid grid-cols-3 gap-4">
+           <div className="grid grid-cols-2 gap-4">
              <div>
               <h4 className="text-sm font-medium text-muted-foreground">Age</h4>
               <p className="text-sm">{customer.age || '-'}</p>
@@ -66,6 +66,11 @@ export function CustomerDetailsModal({ children, customer }: CustomerDetailsModa
               <h4 className="text-sm font-medium text-muted-foreground">Gender</h4>
               <p className="text-sm capitalize">{customer.gender || '-'}</p>
             </div>
+          </div>
+
+          <div>
+              <h4 className="text-sm font-medium text-muted-foreground">Experience</h4>
+              <p className="text-sm">{customer.experience_hours ? `${customer.experience_hours} hours` : '0 hours'}</p>
           </div>
 
           <div>

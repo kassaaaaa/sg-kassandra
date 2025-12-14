@@ -250,7 +250,7 @@ async function userServiceCore(req: Request) {
             if (parsedData.gender !== undefined) customerUpdates.gender = parsedData.gender;
             if (parsedData.weight !== undefined) customerUpdates.weight = parsedData.weight;
             if (parsedData.emergency_contact !== undefined) customerUpdates.emergency_contact = parsedData.emergency_contact;
-            if (parsedData.notes !== undefined) customerUpdates.additional_notes = parsedData.notes;
+            if (parsedData.additional_notes !== undefined) customerUpdates.additional_notes = parsedData.additional_notes;
             if (parsedData.experience_hours !== undefined) customerUpdates.experience_hours = parsedData.experience_hours;
             
             if (Object.keys(customerUpdates).length > 0) {
