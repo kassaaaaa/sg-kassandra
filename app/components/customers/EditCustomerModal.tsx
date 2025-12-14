@@ -42,8 +42,6 @@ const formSchema = z.object({
   skill_level: z.string().optional(),
   age: z.coerce.number().optional(),
   gender: z.string().optional(),
-  weight: z.coerce.number().optional(),
-  emergency_contact: z.string().optional(),
   notes: z.string().optional(),
   experience_hours: z.coerce.number().optional(),
 });
@@ -74,8 +72,6 @@ export function EditCustomerModal({ children, customer, open, onOpenChange }: Ed
       skill_level: customer.skill_level || 'beginner',
       age: customer.age,
       gender: customer.gender,
-      weight: customer.weight,
-      emergency_contact: customer.emergency_contact || '',
       notes: customer.notes || '',
       experience_hours: customer.experience_hours,
     },
@@ -91,8 +87,6 @@ export function EditCustomerModal({ children, customer, open, onOpenChange }: Ed
             skill_level: customer.skill_level || 'beginner',
             age: customer.age,
             gender: customer.gender,
-            weight: customer.weight,
-            emergency_contact: customer.emergency_contact || '',
             notes: customer.notes || '',
             experience_hours: customer.experience_hours,
         });
@@ -232,48 +226,8 @@ export function EditCustomerModal({ children, customer, open, onOpenChange }: Ed
                     </FormItem>
                     )}
                 />
-                <FormField
-                    control={form.control}
-                    name="weight"
-                    render={({ field }) => (
-                    <FormItem>
-                        <FormLabel>Weight (kg)</FormLabel>
-                        <FormControl>
-                        <Input type="number" {...field} />
-                        </FormControl>
-                        <FormMessage />
-                    </FormItem>
-                    )}
-                />
+
             </div>
-
-            <FormField
-              control={form.control}
-              name="experience_hours"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Experience (Hours)</FormLabel>
-                  <FormControl>
-                    <Input type="number" {...field} />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-
-            <FormField
-                control={form.control}
-                name="emergency_contact"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Emergency Contact</FormLabel>
-                    <FormControl>
-                      <Input placeholder="Name and Phone" {...field} />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
 
             <FormField
               control={form.control}
