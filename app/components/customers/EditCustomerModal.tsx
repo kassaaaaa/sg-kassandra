@@ -182,7 +182,6 @@ export function EditCustomerModal({ children, customer, open, onOpenChange }: Ed
                         <SelectItem value="beginner">Beginner</SelectItem>
                         <SelectItem value="intermediate">Intermediate</SelectItem>
                         <SelectItem value="advanced">Advanced</SelectItem>
-                        <SelectItem value="expert">Expert</SelectItem>
                       </SelectContent>
                     </Select>
                     <FormMessage />
