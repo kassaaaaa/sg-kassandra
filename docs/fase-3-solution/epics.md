@@ -397,213 +397,91 @@ As a Manager, I want to view and manage all customer and instructor profiles, so
 **Prerequisites:** Story 1.6
 **Technical Notes:** Create list and detail views for both customers and instructors.
 
-### Story 3.8: Handle No-Show and Early Lesson Termination
-As an Instructor or Manager, I want to mark a booking as a 'Customer No-Show' or end a lesson prematurely, so that the system's records are accurate.
+### Story 3.8: Instructor Calendar View
+As an Instructor, I want to view my schedule on an interactive calendar, so that I can easily see my commitments.
 
 **Acceptance Criteria:**
-**Given** an active or past lesson
-**When** an instructor or manager marks it as 'Customer No-Show'
-**Then** the `bookings` table status is updated accordingly and a log is created (FR038).
-**When** an instructor ends a lesson early
-**Then** they can log the actual duration and a reason, which is saved with the booking record (FR039).
+**Given** a logged-in instructor on their "Calendar" page
+**When** they view the calendar
+**Then** it displays their scheduled lessons and availability slots.
+**And** the calendar provides month, week, day, and agenda views.
+**And** the layout is responsive and matches the `instructor-calendar.html` mockup.
 
-**Prerequisites:** Story 3.1, 3.2
-**Technical Notes:** Add status fields and a `notes` column to the `bookings` table to accommodate this.
+**Prerequisites:** Story 1.6
+**Technical Notes:** Implement using the custom `Availability Calendar` component. This story focuses on the view and interaction.
 
-## Epic 4: Notifications, System Resilience, and Edge Cases
+---
+## Scope Change Notice (As of 2025-12-14)
+The following features have been moved out of the current MVP to streamline development:
+- **Epic 4 (Notifications, System Resilience, and Edge Cases):** The entire epic, including notifications, API fallbacks, and advanced monitoring, is deferred.
+- **Original Story 3.8 (Handle No-Show and Early Lesson Termination):** This functionality is also deferred.
 
-**Goal:** Implement the system-wide notification framework, enhance system robustness with fallbacks and logging, and handle critical operational edge cases.
+---
 
-### Story 4.1: Core Notification Service
-As a Developer, I want to create a centralized service for sending email and SMS notifications, so that all system communications are handled consistently.
+## Deferred Stories (Post-MVP)
 
-**Acceptance Criteria:**
-**Given** a need to send a notification
-**When** the notification service is called with a recipient, message, and type (email/SMS)
-**Then** it uses the appropriate provider (Resend for email, Twilio for SMS) to send the message.
-**And** the service is implemented as a Supabase Edge Function.
+For clarity, the following stories have been explicitly moved to the backlog for consideration after the initial MVP release:
 
-**Prerequisites:** Story 1.2
-**Technical Notes:** The service should be designed to be called from other Edge Functions or database triggers. API keys must be stored as secrets.
-
-### Story 4.2: Booking Status Notifications
-As a User (Customer, Instructor, Manager), I want to receive timely notifications about my bookings, so that I am always up-to-date.
-
-**Acceptance Criteria:**
-**Given** a booking is created, changed, or cancelled
-**When** the booking status is updated in the database
-**Then** a database trigger or function calls the notification service to send an email and SMS to all relevant parties (FR006).
-**And** the notification content is relevant to the status change (e.g., "Booking Confirmed", "Lesson Rescheduled").
-
-**Prerequisites:** Story 4.1
-**Technical Notes:** Use Supabase database functions (`plpgsql`) to trigger notifications on table updates.
-
-### Story 4.3: Automated Lesson Reminders
-As a Customer or Instructor, I want to receive a reminder before my lesson, so that I don't forget.
-
-**Acceptance Criteria:**
-**Given** a lesson is scheduled to occur in 24 hours
-**When** the scheduled job runs
-**Then** the notification service is called to send a reminder email and SMS to the customer and instructor (FR007).
-
-**Prerequisites:** Story 4.1
-**Technical Notes:** Use `pg_cron` on Supabase to schedule a job that runs periodically (e.g., every hour) to check for upcoming lessons and trigger reminders.
-
-### Story 4.4: Weather API Fallback Mechanism
-As a Developer, I want to implement a fallback for the weather API, so that the system remains operational even if the primary provider is down.
-
-**Acceptance Criteria:**
-**Given** the primary weather API (OpenWeatherMap) is unavailable
-**When** the `weather-poller` function is invoked
-**Then** it attempts to fetch data from a secondary provider or returns the most recent cached data if it's within a reasonable timeframe (FR030).
-**And** an alert is logged for the system administrator.
-
-**Prerequisites:** Story 2.1
-**Technical Notes:** This enhances the `weather-poller` Edge Function. The choice of secondary API can be a placeholder for now if not defined.
-
-### Story 4.5: Notification Logging and Monitoring
-As a Manager, I want a log of all outgoing notifications, so that I can verify that communications were sent and monitor their status.
-
-**Acceptance Criteria:**
-**Given** a notification is sent by the notification service
-**When** the message is dispatched
-**Then** a new entry is created in a `notifications_log` table, including the recipient, message content, type, and delivery status from the provider (FR032).
-**And** managers can view this log in a dedicated section of the admin dashboard.
-
-**Prerequisites:** Story 4.1
-**Technical Notes:** The notification service function needs to be updated to write to the log table.
-
-### Story 4.6: Manager Confirmation for Automated Rebooking
-As a Manager, I want to have the final say on all automated rebookings, so that I maintain control over the schedule.
-
-**Acceptance Criteria:**
-**Given** the system has proposed a rebooking solution due to weather
-**When** the manager is in the "Resolution Center"
-**Then** they must click a final "Confirm and Notify Users" button after choosing a rebooking option.
-**And** no notifications are sent to customers or instructors until this final confirmation is given (FR036).
-
-**Prerequisites:** Story 3.3
-**Technical Notes:** This workflow is part of the "Resolution Center" UI. The front-end will orchestrate the two-step confirmation process, only calling the final notification trigger after manager approval.
+-   **Story 3.8:** Handle No-Show and Early Lesson Termination
+-   **Story 4.1:** Core Notification Service
+-   **Story 4.2:** Booking Status Notifications
+-   **Story 4.3:** Automated Lesson Reminders
+-   **Story 4.4:** Weather API Fallback Mechanism
+-   **Story 4.5:** Notification Logging and Monitoring
+-   **Story 4.6:** Manager Confirmation for Automated Rebooking
 
 ---
 
 ## FR Coverage Matrix
 
-
-
 This matrix provides a detailed mapping of each Functional Requirement (FR) to the specific user story that implements it, ensuring all requirements are covered.
 
+| FR # | Requirement Summary | Epic | Story |
+| :--- | :--- | :--- | :--- |
+| FR001 | Role-based access control | 1 | 1.6 |
+| FR002 | User registration with email verification | 1 | 1.4 |
+| FR003 | User login | 1 | 1.5 |
+| FR004 | Integrate with weather API | 2 | 2.1 |
+| FR005 | Intelligent scheduling engine logic | 2 | 2.4 |
+| FR009 | Guest booking process | 2 | 2.3 |
+| FR010 | Filter available lessons | 2 | 2.2 |
+| FR011 | Show booking summary before confirmation | 2 | 2.5 |
+| FR012 | Display and accept policies before booking | 2 | 2.3 |
+| FR013 | Confirmation screen with booking reference | 2 | 2.5 |
+| FR014 | Manage rebooking proposals via email link | 2 | 2.6 |
+| FR015 | View lessons via secure link | 2 | 2.6 |
+| FR016 | Instructor profile management | 1 | 1.7 |
+| FR017 | Instructor dashboard | 3 | 3.1 |
+| FR018 | Instructor interactive calendar | 3 | 3.8 |
+| FR019 | Instructor availability management | 1 | 1.8 |
+| FR020 | Instructors create new lessons | 1 | 1.8 |
+| FR021 | Instructors rebook or cancel lessons | 1 | 1.8 |
+| FR022 | Manager school settings configuration | 3 | 3.6 |
+| FR023 | Manager dashboard and alerts | 3 | 3.2 |
+| FR024 | Manager master calendar view | 3 | 3.4 |
+| FR025 | Manager manual booking management | 3 | 3.5 |
+| FR026 | Manager manual instructor assignment | 3 | 3.5 |
+| FR027 | Manager weather alerts and proposals | 3 | 3.2 |
+| FR028 | Manager customer/instructor list management | 3 | 3.7 |
+| FR031 | Manager configuration of scheduling logic | 3 | 3.6 |
+| FR033 | CAPTCHA on guest booking form | 2 | 2.8 |
+| FR034 | Single-use, expiring rebooking links | 2 | 2.6 |
+| FR035 | Validation/warnings on manager settings | 3 | 3.6 |
+| FR040 | Support multi-session bookings | 2 | 2.7 |
 
-
-| FR #  | Requirement Summary                               | Epic | Story |
-
-| :---- | :------------------------------------------------ | :--- | :---- |
-
-| FR001 | Role-based access control                         | 1    | 1.6   |
-
-| FR002 | User registration with email verification         | 1    | 1.4   |
-
-| FR003 | User login                                        | 1    | 1.5   |
-
-| FR004 | Integrate with weather API                        | 2    | 2.1   |
-
-| FR005 | Intelligent scheduling engine logic               | 2    | 2.4   |
-
-| FR006 | Email and SMS notifications                       | 4    | 4.2   |
-
-| FR007 | Automatic lesson reminders                        | 4    | 4.3   |
-
-| FR008 | Prevent instructor schedule overlap               | 1    | 1.8   |
-
-| FR009 | Guest booking process                             | 2    | 2.3   |
-
-| FR010 | Filter available lessons                          | 2    | 2.2   |
-
-| FR011 | Show booking summary before confirmation          | 2    | 2.5   |
-
-| FR012 | Display and accept policies before booking        | 2    | 2.3   |
-
-| FR013 | Confirmation screen with booking reference        | 2    | 2.5   |
-
-| FR014 | Manage rebooking proposals via email link         | 2    | 2.6   |
-
-| FR015 | View lessons via secure link                      | 2    | 2.6   |
-
-| FR016 | Instructor profile management                     | 1    | 1.7   |
-
-| FR017 | Instructor dashboard                              | 3    | 3.1   |
-
-| FR018 | Instructor interactive calendar                   | 1    | 1.8   |
-
-| FR019 | Instructor availability management                | 1    | 1.8   |
-
-| FR020 | Instructors create new lessons                    | 1    | 1.8   |
-
-| FR021 | Instructors rebook or cancel lessons              | 1    | 1.8   |
-
-| FR022 | Manager school settings configuration           | 3    | 3.6   |
-
-| FR023 | Manager dashboard and alerts                      | 3    | 3.2   |
-
-| FR024 | Manager master calendar view                      | 3    | 3.4   |
-
-| FR025 | Manager manual booking management               | 3    | 3.5   |
-
-| FR026 | Manager manual instructor assignment              | 3    | 3.5   |
-
-| FR027 | Manager weather alerts and proposals            | 3    | 3.2   |
-
-| FR028 | Manager customer/instructor list management     | 3    | 3.7   |
-
-| FR029 | Manager direct/broadcast messaging              | 4    | 4.1   |
-
-| FR030 | Weather API fallback mechanism                    | 4    | 4.4   |
-
-| FR031 | Manager configuration of scheduling logic         | 3    | 3.6   |
-
-| FR032 | Log all outgoing notifications                    | 4    | 4.5   |
-
-| FR033 | CAPTCHA on guest booking form                     | 2    | 2.8   |
-
-| FR034 | Single-use, expiring rebooking links              | 2    | 2.6   |
-
-| FR035 | Validation/warnings on manager settings           | 3    | 3.6   |
-
-| FR036 | Manager final confirmation for rebookings         | 4    | 4.6   |
-
-| FR037 | Mark 'Instructor No-Show'                         | 3    | 3.8   |
-
-| FR038 | Mark 'Customer No-Show'                           | 3    | 3.8   |
-
-| FR039 | Log premature lesson endings                      | 3    | 3.8   |
-
-| FR040 | Support multi-session bookings                    | 2    | 2.7   |
-
-
+**Deferred FRs (Moved out of MVP):** FR006, FR007, FR008, FR029, FR030, FR032, FR036, FR037, FR038, FR039.
 
 ---
-
-
 
 ## Summary
 
-
-
-The project has been broken down into 4 epics and 30 user stories. This breakdown covers all functional requirements outlined in the PRD and incorporates key decisions from the architecture and UX design specifications. The epic and story structure is designed to deliver incremental value, starting with a foundational application and culminating in a feature-rich platform for customers, instructors, and managers.
-
-
+The project has been broken down into 3 epics and 24 user stories. This breakdown covers all functional requirements for the MVP as outlined in the PRD and incorporates key decisions from the architecture and UX design specifications. The epic and story structure is designed to deliver incremental value, starting with a foundational application and culminating in a feature-rich platform for customers, instructors, and managers.
 
 This `epics.md` document now serves as the primary blueprint for Phase 4 (Implementation).
 
-
-
 ---
 
-
-
 _For implementation: Use the `create-story` workflow to generate individual story implementation plans from this epic breakdown._
-
-
 
 _This document will be updated after UX Design and Architecture workflows to incorporate interaction details and technical decisions._
 

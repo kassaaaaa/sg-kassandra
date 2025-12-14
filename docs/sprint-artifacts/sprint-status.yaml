@@ -1,4 +1,4 @@
-# generated: 2025-12-02
+# generated: 2025-12-14
 # project: ibe160
 # project_key: IBE-160
 # tracking_system: file-system
@@ -28,7 +28,7 @@
 # - SM typically drafts next story ONLY after previous one is 'done' to incorporate learnings
 # - Dev moves story to 'review', dev reviews, then Dev moves to 'done'
 
-generated: 2025-12-02
+generated: 2025-12-14
 project: ibe160
 project_key: IBE-160
 tracking_system: file-system
@@ -49,9 +49,11 @@ development_status:
   2-1-integrate-weather-api: done
   2-2-lesson-search-and-filtering-ui: done
   2-3-guest-booking-flow: done
-  2-4-implement-intelligent-scheduling-engine: done
+  2-4-initial-scheduling-engine: done
   2-5-booking-confirmation-and-summary: done
   2-6-view-booking-via-secure-link: done
+  2-7-support-for-multi-session-bookings: done
+  2-8-implement-captcha-on-booking-form: done
   epic-2-retrospective: completed
   epic-3: contexted
   3-1-instructor-dashboard-ui: done
@@ -61,13 +63,5 @@ development_status:
   3-5-manager-manual-booking-management: done
   3-6-manager-school-settings-configuration: done
   3-7-customer-and-instructor-management: done
-  3-8-handle-no-show-and-early-lesson-termination: backlog
+  3-8-instructor-calendar-view: backlog
   epic-3-retrospective: optional
-  epic-4: backlog
-  4-1-core-notification-service: backlog
-  4-2-booking-status-notifications: backlog
-  4-3-automated-lesson-reminders: backlog
-  4-4-weather-api-fallback-mechanism: backlog
-  4-5-notification-logging-and-monitoring: backlog
-  4-6-manager-confirmation-for-automated-rebooking: backlog
-  epic-4-retrospective: optional
