@@ -85,7 +85,7 @@ export function CustomerDetailsModal({ children, customer }: CustomerDetailsModa
            <div>
               <h4 className="text-sm font-medium text-muted-foreground">Notes</h4>
               <p className="text-sm text-muted-foreground whitespace-pre-wrap">
-                  {customer.notes || 'No additional notes.'}
+                  {customer.additional_notes || 'No additional notes.'}
               </p>
           </div>
 
