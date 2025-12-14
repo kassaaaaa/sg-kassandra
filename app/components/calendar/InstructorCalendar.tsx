@@ -12,12 +12,14 @@ import { useInstructorCalendar } from '@/lib/hooks/useInstructorCalendar';
 import { AddAvailabilityDialog } from '@/components/calendar/AddAvailabilityDialog';
 import { createClient } from '@/lib/supabase/client';
 import { LessonDetailsModal } from '@/components/bookings/LessonDetailsModal';
+import { BlockTimeDialog } from '@/components/calendar/BlockTimeDialog';
 import { ManagerBooking } from '@/lib/hooks/useManagerDashboard';
 
 export function InstructorCalendar() {
   const calendarRef = useRef<FullCalendar>(null);
   const { events, isLoading, setDateRange } = useInstructorCalendar();
   const [isAddAvailabilityOpen, setIsAddAvailabilityOpen] = useState(false);
+  const [isBlockTimeOpen, setIsBlockTimeOpen] = useState(false);
   const [isLessonDetailsOpen, setIsLessonDetailsOpen] = useState(false);
   const [selectedEvent, setSelectedEvent] = useState<ManagerBooking | null>(null);
   const [userId, setUserId] = useState<string>('');
@@ -50,7 +52,7 @@ export function InstructorCalendar() {
             <Button onClick={() => setIsAddAvailabilityOpen(true)}>
                <Plus className="mr-2 h-4 w-4" /> Add Availability
             </Button>
-            <Button variant="outline" disabled title="Not implemented yet">
+            <Button variant="outline" onClick={() => setIsBlockTimeOpen(true)}>
                <Ban className="mr-2 h-4 w-4" /> Block Time
             </Button>
          </div>
@@ -84,6 +86,11 @@ export function InstructorCalendar() {
             instructorId={userId}
          />
        )}
+
+       <BlockTimeDialog
+            open={isBlockTimeOpen}
+            onOpenChange={setIsBlockTimeOpen}
+        />
 
        <LessonDetailsModal
           isOpen={isLessonDetailsOpen}

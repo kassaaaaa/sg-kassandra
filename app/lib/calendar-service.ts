@@ -32,7 +32,8 @@ export const CalendarService = {
         end: new Date(slot.end_time),
         type: 'availability',
         display: 'background', // Show as background color
-        backgroundColor: '#e5e7eb', // gray-200
+        backgroundColor: '#ECFDF5',
+        borderColor: '#10B981',
         extendedProps: { ...slot },
       });
     });
@@ -56,8 +57,8 @@ export const CalendarService = {
     if (error) throw new Error(error.message);
 
     bookings?.forEach((booking: any) => {
-       let color = '#3b82f6'; // blue-500 default
-       if (booking.status === 'confirmed') color = '#22c55e'; // green-500
+       let color = '#FBBF24'; // Pending
+       if (booking.status === 'confirmed') color = '#4A90E2'; // Confirmed
        if (booking.status === 'cancelled') color = '#ef4444'; // red-500
 
       events.push({
