@@ -7,7 +7,6 @@ export function QuickActions() {
   const actions = [
     { label: 'View My Calendar', href: '/calendar', icon: Calendar, variant: 'outline' },
     { label: 'Manage Availability', href: '/calendar', icon: Clock, variant: 'outline' },
-    { label: 'View My Students', href: '/students', icon: Users, variant: 'outline' },
     { label: 'Update Profile', href: '/settings/profile', icon: User, variant: 'outline' },
   ];
 
