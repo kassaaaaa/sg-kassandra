@@ -1,0 +1,173 @@
+<story-context id="{bmad_folder}/bmm/workflows/4-implementation/story-context/template" v="1.0">
+  <metadata>
+    <epicId>{{epic_id}}</epicId>
+    <storyId>{{story_id}}</storyId>
+    <title>{{story_title}}</title>
+    <status>{{story_status}}</status>
+    <generatedAt>{{date}}</generatedAt>
+    <generator>BMAD Story Context Workflow</generator>
+    <sourceStoryPath>{{story_path}}</sourceStoryPath>
+  </metadata>
+
+  <story>
+    <asA>a Manager, I want to view a master calendar of all school activities.
+As an Instructor, I want to view my personal schedule and manage my availability.</asA>
+    <iWant>to efficiently manage my time and commitments from a single "Calendar" page.</iWant>
+    <soThat></soThat>
+    <tasks>
+- [ ] **Task 1: Refactor Calendar Page for Role-Based Views** (AC: #1, #2)
+    - [ ] Modify the main page component at `app/app/(protected)/calendar/page.tsx` to fetch the current user's role.
+    - [ ] Implement logic to dynamically render the `ManagerCalendar` component if the role is "manager".
+    - [ ] Implement logic to render a new `InstructorCalendar` component if the role is "instructor".
+- [ ] **Task 2: Create Instructor Calendar Component** (AC: #2, #3, #7)
+    - [ ] Create a new component `app/components/calendar/InstructorCalendar.tsx`.
+    - [ ] This component will contain the calendar header with controls for view switching, navigation, and buttons for "+ Add availability" and "Block time".
+    - [ ] Integrate a calendar library (e.g., `@fullcalendar/react`) configured for the four required views.
+- [ ] **Task 3: Implement Instructor Data Fetching** (AC: #3)
+    - [ ] Create a new hook `useInstructorCalendar` in `app/lib/hooks/` to fetch and manage data for the instructor's calendar.
+    - [ ] The hook should call a new service function `getInstructorCalendarData(userId, startDate, endDate)` that fetches the instructor's specific bookings and availability.
+- [ ] **Task 4: Render Instructor Events on Calendar** (AC: #3, #5)
+    - [ ] In the `InstructorCalendar` component, use the data from the hook to create an array of events for the calendar library.
+    - [ ] Implement the logic to apply the correct color-coding to each event based on its type (lesson, availability, etc.) as defined in the UX spec.
+- [ ] **Task 5: Implement Instructor Event Interactivity** (AC: #6)
+    - [ ] Add an `onClick` handler to the calendar events.
+    - [ ] When a lesson event is clicked, display a `LessonDetailsModal` with the relevant information.
+    - [ ] Ensure the "+ Add availability" and "Block time" buttons trigger the correct modals from Story 1.8.
+- [ ] **Task 6: Testing** (AC: #1, #2, #7)
+    - [ ] Write unit tests for the `useInstructorCalendar` hook and the event mapping logic.
+    - [ ] Write E2E tests using Playwright to verify the correct calendar view appears for each role.
+    - [ ] Add E2E tests to simulate an instructor logging in, navigating to the calendar, viewing their schedule, and opening the availability modals.
+    </tasks>
+  </story>
+
+  <acceptanceCriteria>
+1.  **Given** a logged-in user with the **Manager** role navigates to the "Calendar" page, **then** the existing master calendar view with all its functionalities must be displayed.
+2.  **Given** a logged-in user with the **Instructor** role navigates to the "Calendar" page, **then** a personal calendar view is displayed.
+3.  **Given** an instructor is on their calendar page, **then** the calendar must display all their scheduled lessons (confirmed/pending) and their defined availability slots.
+4.  **Given** an instructor is viewing their calendar, **then** they must be able to switch between "Month", "Week", "Day", and "Agenda" views.
+5.  **Given** an instructor is viewing their calendar, **then** all events must be color-coded according to the UX Design Specification. [Source: `docs/fase-2-plan/ux-design-specification.md`#5.2.2]
+6.  **Given** an instructor is viewing their calendar, **when** they click on a lesson event, **then** a modal must appear displaying lesson details.
+7.  **Given** an instructor is on their calendar page, **then** the "+ Add availability" and "Block time" buttons must be present and trigger the modals from Story 1.8.
+  </acceptanceCriteria>
+
+  <artifacts>
+    <docs>
+      <doc>
+        <path>docs/fase-2-plan/PRD.md</path>
+        <title>IBE160 Product Requirements Document (PRD)</title>
+        <section>Functional Requirements</section>
+        <snippet>FR018: Instructors shall be able to view and manage their schedule on an interactive calendar with month, week, day, and agenda views.</snippet>
+      </doc>
+      <doc>
+        <path>docs/fase-2-plan/ux-design-specification.md</path>
+        <title>UX Design Specification</title>
+        <section>5.2.2. Availability Calendar (Instructor)</section>
+        <snippet>A two-part layout featuring a persistent left sidebar for navigation and user info, and a main content area for the calendar. The header contains calendar title, navigation controls (Today, next/prev week), view switcher (Month, Week, Day), and primary actions ("+ Add availability", "Block time").</snippet>
+      </doc>
+      <doc>
+        <path>docs/sprint-artifacts/tech-spec-epic-3-2.md</path>
+        <title>Epic 3: Manager and Instructor Dashboards</title>
+        <section>4.1. Services &amp; Modules (Frontend)</section>
+        <snippet>Instructor Calendar: Display the logged-in instructor's schedule (lessons and availability). Provide multiple views (month, week, day, agenda).</snippet>
+      </doc>
+      <doc>
+        <path>docs/fase-3-solution/epics.md</path>
+        <title>ibe160 - Epic Breakdown</title>
+        <section>Story 3.8: Instructor Calendar View</section>
+        <snippet>As an Instructor, I want to view my schedule on an interactive calendar, so that I can easily see my commitments.</snippet>
+      </doc>
+      <doc>
+        <path>docs/wireframes/instructor-dashboard.html</path>
+        <title>Instructor Mockup</title>
+        <section>Calendar View</section>
+        <snippet>HTML mockup of the instructor calendar view, showing the layout, controls, and event color-coding.</snippet>
+      </doc>
+    </docs>
+    <code>
+      <artifact>
+        <path>app/app/(protected)/calendar/page.tsx</path>
+        <kind>page</kind>
+        <symbol>CalendarPage</symbol>
+        <reason>Main page component for the calendar. Will need to be refactored to handle role-based rendering of ManagerCalendar or the new InstructorCalendar.</reason>
+      </artifact>
+      <artifact>
+        <path>app/components/calendar/ManagerCalendar.tsx</path>
+        <kind>component</kind>
+        <symbol>ManagerCalendar</symbol>
+        <reason>Existing component for the manager's master calendar view. Can be used as a reference for the new InstructorCalendar component.</reason>
+      </artifact>
+      <artifact>
+        <path>app/lib/hooks/useUser.ts</path>
+        <kind>hook</kind>
+        <symbol>useUser</symbol>
+        <reason>Provides the current user's session and profile information, which will be needed to determine the user's role.</reason>
+      </artifact>
+      <artifact>
+        <path>app/lib/booking-service.ts</path>
+        <kind>service</kind>
+        <symbol>getBookingsForUser</symbol>
+        <reason>Existing service for fetching bookings. A new function will be needed to fetch instructor-specific calendar data (lessons and availability).</reason>
+      </artifact>
+      <artifact>
+        <path>app/components/calendar/AddAvailabilityDialog.tsx</path>
+        <kind>component</kind>
+        <symbol>AddAvailabilityDialog</symbol>
+        <reason>Existing modal for adding availability, which needs to be triggered from the new instructor calendar view.</reason>
+      </artifact>
+    </code>
+    <dependencies>
+      <dependency>
+        <name>@fullcalendar/react</name>
+        <version>^6.1.10</version>
+        <reason>Recommended library for building the interactive calendar view.</reason>
+      </dependency>
+      <dependency>
+        <name>@tanstack/react-query</name>
+        <version>^5.90.12</version>
+        <reason>Used for all server-side data fetching and state management.</reason>
+      </dependency>
+      <dependency>
+        <name>react-hook-form</name>
+        <version>^7.68.0</version>
+        <reason>Used for managing forms, particularly for adding availability and blocking time.</reason>
+      </dependency>
+      <dependency>
+        <name>zod</name>
+        <version>3.23.8</version>
+        <reason>Used for schema validation with react-hook-form.</reason>
+      </dependency>
+      <dependency>
+        <name>date-fns</name>
+        <version>^4.1.0</version>
+        <reason>Used for all date and time manipulations.</reason>
+      </dependency>
+    </dependencies>
+  </artifacts>
+  <constraints>
+    <constraint>The implementation should be based on a robust library like `@fullcalendar/react` as a foundation.</constraint>
+    <constraint>Data fetching must be performed using TanStack Query for efficient state management and caching.</constraint>
+    <constraint>All Supabase queries must be subject to RLS policies, ensuring instructors can only see their own data.</constraint>
+    <constraint>All date and time operations must handle UTC storage and conversion to the school's local time zone.</constraint>
+  </constraints>
+  <interfaces>
+      <interface>
+        <name>getInstructorCalendarData</name>
+        <kind>function</kind>
+        <signature>getInstructorCalendarData(userId: string, startDate: Date, endDate: Date): Promise&lt;CalendarEvent[]&gt;</signature>
+        <path>app/lib/calendar-service.ts (new)</path>
+      </interface>
+  </interfaces>
+  <tests>
+    <standards>Unit tests should be written for hooks and data transformation logic. E2E tests should be written with Playwright to verify UI behavior and user flows.</standards>
+    <locations>
+      <location>app/lib/hooks/__tests__/</location>
+      <location>tests/e2e/</location>
+    </locations>
+    <ideas>
+      <idea for="AC#1, AC#2">Write an E2E test to verify that the correct calendar view (Manager or Instructor) is displayed based on the user's role.</idea>
+      <idea for="AC#3">Write a unit test for the `useInstructorCalendar` hook to ensure it fetches and processes data correctly.</idea>
+      <idea for="AC#5">Write a unit test for the event color-coding logic.</idea>
+      <idea for="AC#7">Write an E2E test to simulate an instructor logging in, navigating to the calendar, and triggering the 'Add availability' and 'Block time' modals.</idea>
+    </ideas>
+  </tests>
+</story-context>
