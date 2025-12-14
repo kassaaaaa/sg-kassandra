@@ -1,5 +1,6 @@
 import { createClient } from '@/lib/supabase/client';
 import { Availability, AvailabilityService } from './availability-service';
+import { parseISO } from 'date-fns';
 
 export interface CalendarEvent {
   id: string;
@@ -28,8 +29,8 @@ export const CalendarService = {
       events.push({
         id: `avail-${slot.id}`,
         title: 'Available',
-        start: new Date(slot.start_time),
-        end: new Date(slot.end_time),
+        start: parseISO(slot.start_time),
+        end: parseISO(slot.end_time),
         type: 'availability',
         display: 'background', // Show as background color
         backgroundColor: '#ECFDF5',
@@ -64,8 +65,8 @@ export const CalendarService = {
       events.push({
         id: `booking-${booking.id}`,
         title: `${booking.lesson?.name || 'Lesson'} - ${booking.customer?.full_name || 'Student'}`,
-        start: new Date(booking.start_time),
-        end: new Date(booking.end_time),
+        start: parseISO(booking.start_time),
+        end: parseISO(booking.end_time),
         type: 'lesson',
         status: booking.status,
         backgroundColor: color,
