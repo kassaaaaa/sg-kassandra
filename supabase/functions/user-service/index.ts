@@ -14,7 +14,7 @@ const CustomerProfileSchema = z.object({
   gender: z.string().optional(),
   weight: z.number().optional(),
   emergency_contact: z.string().optional(),
-  notes: z.string().optional(),
+  additional_notes: z.string().optional(),
   experience_hours: z.number().optional()
 });
 
@@ -250,7 +250,7 @@ async function userServiceCore(req: Request) {
             if (parsedData.gender !== undefined) customerUpdates.gender = parsedData.gender;
             if (parsedData.weight !== undefined) customerUpdates.weight = parsedData.weight;
             if (parsedData.emergency_contact !== undefined) customerUpdates.emergency_contact = parsedData.emergency_contact;
-            if (parsedData.notes !== undefined) customerUpdates.notes = parsedData.notes;
+            if (parsedData.notes !== undefined) customerUpdates.additional_notes = parsedData.notes;
             if (parsedData.experience_hours !== undefined) customerUpdates.experience_hours = parsedData.experience_hours;
             
             if (Object.keys(customerUpdates).length > 0) {

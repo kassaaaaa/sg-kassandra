@@ -42,7 +42,8 @@ const formSchema = z.object({
   skill_level: z.string().optional(),
   age: z.coerce.number().optional(),
   gender: z.string().optional(),
-  notes: z.string().optional(),
+  emergency_contact: z.string().optional(),
+  additional_notes: z.string().optional(),
   experience_hours: z.coerce.number().optional(),
 });
 
@@ -72,7 +73,7 @@ export function EditCustomerModal({ children, customer, open, onOpenChange }: Ed
       skill_level: customer.skill_level || 'beginner',
       age: customer.age,
       gender: customer.gender,
-      notes: customer.notes || '',
+      additional_notes: customer.additional_notes || '',
       experience_hours: customer.experience_hours,
     },
   });
@@ -87,7 +88,7 @@ export function EditCustomerModal({ children, customer, open, onOpenChange }: Ed
             skill_level: customer.skill_level || 'beginner',
             age: customer.age,
             gender: customer.gender,
-            notes: customer.notes || '',
+            additional_notes: customer.additional_notes || '',
             experience_hours: customer.experience_hours,
         });
     }
@@ -231,7 +232,7 @@ export function EditCustomerModal({ children, customer, open, onOpenChange }: Ed
 
             <FormField
               control={form.control}
-              name="notes"
+              name="additional_notes"
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>Notes</FormLabel>
