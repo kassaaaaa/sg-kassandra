@@ -1,11 +1,12 @@
 import { useQuery } from '@tanstack/react-query';
-import { CalendarService, CalendarEvent } from '@/lib/calendar-service';
+import { CalendarService } from '@/lib/calendar-service';
 import { useUserRole } from '@/lib/hooks/useUserRole';
 import { createClient } from '@/lib/supabase/client';
 import { useState, useEffect } from 'react';
+import { endOfWeek, startOfWeek } from 'date-fns';
 
 export function useInstructorCalendar() {
-  const [dateRange, setDateRange] = useState<{ start: Date; end: Date } | null>(null);
+  const [currentDate, setCurrentDate] = useState(new Date());
   const { data: role } = useUserRole();
   const [userId, setUserId] = useState<string | null>(null);
 
@@ -18,20 +19,25 @@ export function useInstructorCalendar() {
     fetchUser();
   }, []);
 
-  const { data: events, isLoading, error, refetch } = useQuery({
-    queryKey: ['instructor-calendar', userId, dateRange?.start.toISOString(), dateRange?.end.toISOString()],
+  const startDate = startOfWeek(currentDate, { weekStartsOn: 1 });
+  const endDate = endOfWeek(currentDate, { weekStartsOn: 1 });
+
+  const { data, isLoading, error, refetch } = useQuery({
+    queryKey: ['instructor-calendar', userId, startDate.toISOString(), endDate.toISOString()],
     queryFn: async () => {
-        if (!userId || !dateRange) return [];
-        return CalendarService.getInstructorCalendarData(userId, dateRange.start, dateRange.end);
+        if (!userId) return { bookings: [], availability: [] };
+        return CalendarService.getInstructorCalendarData(userId, startDate, endDate);
     },
-    enabled: !!userId && !!dateRange && role === 'instructor',
+    enabled: !!userId && role === 'instructor',
   });
 
   return {
-    events: events || [],
+    bookings: data?.bookings || [],
+    availability: data?.availability || [],
     isLoading,
     error,
-    setDateRange,
+    currentDate,
+    setCurrentDate,
     refetch
   };
 }
