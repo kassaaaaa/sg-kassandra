@@ -54,7 +54,6 @@ export function InstructorCalendar() {
     if (calendarRef.current) {
       const api = calendarRef.current.getApi();
       setCalendarApi(api);
-      setTitle(api.getCurrentData().viewTitle);
     }
   }, []);
 
