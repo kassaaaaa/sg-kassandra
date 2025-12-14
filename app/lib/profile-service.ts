@@ -13,7 +13,7 @@ export type CustomerProfile = {
   gender?: string;
   weight?: number;
   emergency_contact?: string;
-  notes?: string;
+  additional_notes?: string;
   experience_hours?: number;
   created_at?: string;
 };
