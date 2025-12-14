@@ -66,23 +66,9 @@ export function CustomerDetailsModal({ children, customer }: CustomerDetailsModa
               <h4 className="text-sm font-medium text-muted-foreground">Gender</h4>
               <p className="text-sm capitalize">{customer.gender || '-'}</p>
             </div>
-             <div>
-              <h4 className="text-sm font-medium text-muted-foreground">Weight</h4>
-              <p className="text-sm">{customer.weight ? `${customer.weight} kg` : '-'}</p>
-            </div>
           </div>
 
           <div>
-              <h4 className="text-sm font-medium text-muted-foreground">Experience</h4>
-              <p className="text-sm">{customer.experience_hours ? `${customer.experience_hours} hours` : '0 hours'}</p>
-          </div>
-
-           <div>
-              <h4 className="text-sm font-medium text-muted-foreground">Emergency Contact</h4>
-              <p className="text-sm">{customer.emergency_contact || '-'}</p>
-          </div>
-
-           <div>
               <h4 className="text-sm font-medium text-muted-foreground">Notes</h4>
               <p className="text-sm text-muted-foreground whitespace-pre-wrap">
                   {customer.additional_notes || 'No additional notes.'}

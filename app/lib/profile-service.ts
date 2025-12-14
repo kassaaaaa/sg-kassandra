@@ -68,7 +68,7 @@ export const ProfileService = {
                 gender: customerDetails?.gender,
                 weight: customerDetails?.weight,
                 emergency_contact: customerDetails?.emergency_contact,
-                notes: customerDetails?.notes,
+                additional_notes: customerDetails?.additional_notes,
                 experience_hours: customerDetails?.experience_hours,
             } as CustomerProfile;
         } else if (user.role === 'instructor') {
