@@ -69,7 +69,7 @@ export function LessonDetailsModal({ isOpen, onClose, booking, onEdit, onCancel 
                 <h3 className="text-md font-semibold mb-2 border-b pb-1">Student Information</h3>
                 <DetailRow label="Name" value={booking.customer?.full_name || 'N/A'} />
                 <DetailRow label="Email" value={booking.customer?.email || 'N/A'} />
-                <DetailRow label="Phone" value={booking.customer?.customer_details?.phone || 'N/A'} />
+                <DetailRow label="Phone" value={booking.customer?.phone || 'N/A'} />
                 <DetailRow label="Skill Level" value={booking.customer?.customer_details?.skill_level || 'N/A'} />
                 <DetailRow label="Age" value={booking.customer?.customer_details?.age || 'N/A'} />
                 <DetailRow label="Gender" value={booking.customer?.customer_details?.gender || 'N/A'} />
