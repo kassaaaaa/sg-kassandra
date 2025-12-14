@@ -1,0 +1,124 @@
+# Page snapshot
+
+```yaml
+- generic [active]:
+  - generic:
+    - banner:
+      - generic:
+        - generic:
+          - generic: KiteOps
+        - navigation:
+          - link:
+            - /url: /dashboard
+            - img
+            - generic: Dashboard
+          - link:
+            - /url: /calendar
+            - img
+            - generic: Calendar
+          - link:
+            - /url: /customers
+            - img
+            - generic: Customers
+          - link:
+            - /url: /instructors
+            - img
+            - generic: Instructors
+          - link:
+            - /url: /settings
+            - img
+            - generic: Settings
+          - button:
+            - img
+            - generic: Logout
+    - main:
+      - generic:
+        - generic:
+          - heading [level=1]: Customers
+          - button [expanded]:
+            - img
+            - text: Add Customer
+        - generic:
+          - generic:
+            - generic: View Customers
+          - generic:
+            - generic:
+              - generic:
+                - img
+                - textbox:
+                  - /placeholder: Search by name or email...
+            - generic:
+              - generic:
+                - table:
+                  - rowgroup:
+                    - row:
+                      - columnheader: Name
+                      - columnheader: Email
+                      - columnheader: Phone
+                      - columnheader: Skill Level
+                      - columnheader: Actions
+                  - rowgroup:
+                    - row:
+                      - cell: No results.
+  - region "Notifications alt+T"
+  - button "Open Next.js Dev Tools" [ref=e6] [cursor=pointer]:
+    - img [ref=e7]
+  - alert
+  - dialog "Add New Customer" [ref=e11]:
+    - generic [ref=e12]:
+      - heading "Add New Customer" [level=2] [ref=e13]
+      - paragraph [ref=e14]: Create a new customer profile. They will receive an email to verify their account.
+    - generic [ref=e15]:
+      - generic [ref=e16]:
+        - generic [ref=e17]:
+          - generic [ref=e18]: Full Name
+          - textbox "Full Name" [ref=e19]:
+            - /placeholder: John Doe
+            - text: Test Cust 1765725442294
+        - generic [ref=e20]:
+          - generic [ref=e21]: Email
+          - textbox "Email" [ref=e22]:
+            - /placeholder: john@example.com
+            - text: cust-1765725442297@test.com
+      - generic [ref=e23]:
+        - generic [ref=e24]:
+          - generic [ref=e25]: Phone (Optional)
+          - textbox "Phone (Optional)" [ref=e26]:
+            - /placeholder: +1 234 567 890
+        - generic [ref=e27]:
+          - generic [ref=e28]: Skill Level
+          - combobox "Skill Level" [ref=e29]:
+            - generic: Beginner
+            - img
+          - combobox [ref=e30]
+      - generic [ref=e31]:
+        - generic [ref=e32]:
+          - generic [ref=e33]: Age
+          - spinbutton "Age" [ref=e34]
+        - generic [ref=e35]:
+          - generic [ref=e36]: Gender
+          - combobox "Gender" [ref=e37]:
+            - generic: Select
+            - img
+          - combobox [ref=e38]
+        - generic [ref=e39]:
+          - generic [ref=e40]: Weight (kg)
+          - spinbutton "Weight (kg)" [ref=e41]
+      - generic [ref=e42]:
+        - generic [ref=e43]: Experience (Hours)
+        - spinbutton "Experience (Hours)" [ref=e44]
+      - generic [ref=e45]:
+        - generic [ref=e46]: Emergency Contact
+        - textbox "Emergency Contact" [ref=e47]:
+          - /placeholder: Name and Phone
+      - generic [ref=e48]:
+        - generic [ref=e49]: Notes
+        - textbox "Notes" [ref=e50]:
+          - /placeholder: Any medical conditions or special requests?
+      - generic [ref=e51]:
+        - button "Cancel" [ref=e52]
+        - button "Create Customer" [ref=e53]
+    - button "Close" [ref=e54]:
+      - img
+      - generic [ref=e55]: Close
+```

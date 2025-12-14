@@ -5,6 +5,7 @@ import path from 'path';
 export default defineConfig({
   plugins: [react()],
   test: {
+    globals: true, // Enable global APIs like expect, describe, it
     environment: 'jsdom',
     setupFiles: ['./vitest.setup.ts'],
     include: ['**/*.{test,spec}.?(c|m)[jt]s?(x)'],

@@ -2,7 +2,7 @@
 
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { Home, Calendar, Settings, LogOut, User } from 'lucide-react';
+import { Home, Calendar, Settings, LogOut, User, Users, GraduationCap } from 'lucide-react';
 import { AuthService } from '@/lib/auth-service';
 import { useRouter } from 'next/navigation';
 import { toast } from 'sonner';
@@ -36,6 +36,10 @@ export default function ProtectedLayout({
   const navItems = [
     { href: '/dashboard', label: 'Dashboard', icon: Home },
     { href: '/calendar', label: 'Calendar', icon: Calendar },
+    ...(userRole === 'manager' ? [
+        { href: '/customers', label: 'Customers', icon: Users },
+        { href: '/instructors', label: 'Instructors', icon: GraduationCap },
+    ] : []),
     { href: settingsHref, label: 'Settings', icon: Settings },
   ];
 
