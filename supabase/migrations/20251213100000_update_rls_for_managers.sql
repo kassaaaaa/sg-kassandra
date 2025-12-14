@@ -1,3 +1,0 @@
--- This file previously contained RLS policies that caused infinite recursion.
--- Manager access control is now handled by the user-service Edge Function
--- using a service role client after role verification.
