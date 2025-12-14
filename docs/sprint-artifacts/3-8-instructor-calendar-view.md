@@ -1,6 +1,6 @@
 # Story 3.8: Unified Calendar View (Manager/Instructor)
 
-Status: ready for review
+Status: changes requested
 
 ## Story
 
@@ -122,31 +122,32 @@ so that I can efficiently manage my time and commitments from a single "Calendar
 - 2025-12-14: Implemented story tasks and passed E2E tests.
 - 2025-12-14: Senior Developer Review notes appended; status set to Changes Requested.
 - 2025-12-14: Addressed all review feedback. Status set to Ready for Review.
+- 2025-12-14: Second Senior Developer Review notes appended; status set to Changes Requested.
 
 ---
 ## Senior Developer Review (AI)
 
 - **Reviewer:** BIP
 - **Date:** 2025-12-14
-- **Outcome:** Approved
+- **Outcome:** Changes Requested
 
 ### Summary
-All requested changes have been implemented correctly. The event color-coding now matches the UX specification, and the missing unit tests for the new hook and service have been added and are passing. The "Block time" button is now interactive, triggering a placeholder modal, which is an acceptable solution until the full feature is specified. The implementation is clean and follows project conventions.
+The story is well-implemented and functionally complete, satisfying all acceptance criteria. The codebase is clean, and the addition of unit and E2E tests provides good coverage. A single low-severity deviation from the technical specification was noted regarding date handling, which should be corrected for consistency.
 
 ### Key Findings (by severity)
-- All previous findings have been addressed.
+- **[Low]** The technical specification mandates the use of `date-fns` for all date/time manipulations, but `new Date()` is used directly in `calendar-service.ts` and elsewhere. This should be refactored to use `date-fns` to ensure consistent timezone handling and prevent potential bugs.
 
 ### Acceptance Criteria Coverage
 
 | AC# | Description | Status | Evidence |
 | :-- | :--- | :--- | :--- |
-| 1 | Manager sees master calendar | **IMPLEMENTED** | `app/app/(protected)/calendar/page.tsx:88` |
-| 2 | Instructor sees personal calendar | **IMPLEMENTED** | `app/app/(protected)/calendar/page.tsx:92` |
-| 3 | Instructor calendar displays lessons and availability | **IMPLEMENTED** | `app/lib/calendar-service.ts:16-65` |
-| 4 | Instructor can switch views | **IMPLEMENTED** | `app/components/calendar/InstructorCalendar.tsx:64` |
-| 5 | Events are color-coded per UX Spec | **IMPLEMENTED** | `app/lib/calendar-service.ts:56-58` |
-| 6 | Clicking a lesson opens a details modal | **IMPLEMENTED** | `app/components/calendar/InstructorCalendar.tsx:49` |
-| 7 | "+ Add availability" and "Block time" buttons present | **IMPLEMENTED** | `app/components/calendar/InstructorCalendar.tsx:55` |
+| 1 | Manager sees master calendar | **IMPLEMENTED** | `app/app/(protected)/calendar/page.tsx:90` |
+| 2 | Instructor sees personal calendar | **IMPLEMENTED** | `app/app/(protected)/calendar/page.tsx:94` |
+| 3 | Instructor calendar displays lessons and availability | **IMPLEMENTED** | `app/lib/calendar-service.ts:17-79` |
+| 4 | Instructor can switch views | **IMPLEMENTED** | `app/components/calendar/InstructorCalendar.tsx:68` |
+| 5 | Events are color-coded per UX Spec | **IMPLEMENTED** | `app/lib/calendar-service.ts:27, 56-58` |
+| 6 | Clicking a lesson opens a details modal | **IMPLEMENTED** | `app/components/calendar/InstructorCalendar.tsx:42-49` |
+| 7 | "+ Add availability" and "Block time" buttons present | **IMPLEMENTED** | `app/components/calendar/InstructorCalendar.tsx:53-58` |
 
 **Summary: 7 of 7 acceptance criteria fully implemented.**
 
@@ -154,11 +155,16 @@ All requested changes have been implemented correctly. The event color-coding no
 
 | Task | Marked As | Verified As | Evidence/Notes |
 | :--- | :--- | :--- | :--- |
-| **1: Refactor Calendar Page** | **[x]** | **VERIFIED COMPLETE** | `app/app/(protected)/calendar/page.tsx` uses `useUserRole` hook correctly. |
-| **2: Create Instructor Calendar** | **[x]** | **VERIFIED COMPLETE** | `app/components/calendar/InstructorCalendar.tsx` is created and functional. |
-| **3: Implement Data Fetching** | **[x]** | **VERIFIED COMPLETE** | `useInstructorCalendar` hook and `CalendarService` are implemented and fetch data. |
-| **4. Render Instructor Events** | **[x]** | **VERIFIED COMPLETE** | Event rendering and color-coding are now correct per UX spec. |
-| **5: Implement Event Interactivity** | **[x]** | **VERIFIED COMPLETE** | All required modals are functional (with "Block Time" as a placeholder). |
-| **6: Testing** | **[x]** | **VERIFIED COMPLETE** | E2E and required unit tests are present and passing. |
+| **1: Refactor Calendar Page** | **[x]** | **VERIFIED COMPLETE** | `calendar/page.tsx` correctly uses `useUserRole` for conditional rendering. |
+| **2: Create Instructor Calendar** | **[x]** | **VERIFIED COMPLETE** | `InstructorCalendar.tsx` exists and is correctly configured. |
+| **3: Implement Data Fetching** | **[x]** | **VERIFIED COMPLETE** | `useInstructorCalendar` hook and `CalendarService` are implemented. |
+| **4. Render Instructor Events** | **[x]** | **VERIFIED COMPLETE** | Event rendering and color-coding match specifications. |
+| **5: Implement Event Interactivity** | **[x]** | **VERIFIED COMPLETE** | All required modals and dialogs are triggered correctly. |
+| **6: Testing** | **[x]** | **VERIFIED COMPLETE** | E2E and unit tests (`calendar-views.spec.ts`, `useInstructorCalendar.test.tsx`, `calendar-service.test.ts`) are present. |
 
-**Summary: All 6 tasks fully verified.**
+**Summary: All 6 main tasks and 4 follow-up tasks are verified complete.**
+
+### Action Items
+
+**Code Changes Required:**
+- [ ] [Low] Refactor date handling in `app/lib/calendar-service.ts` and `app/components/calendar/InstructorCalendar.tsx` to use `date-fns` instead of native `Date` objects for all date creation and manipulation, as per the project's technical specification.
