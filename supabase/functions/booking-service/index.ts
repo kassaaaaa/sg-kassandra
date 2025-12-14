@@ -151,7 +151,6 @@ export const bookingServiceCore = async (req: Request, supabaseClient: any) => {
             // Insert Customer Details
             const { error: detailsError } = await supabaseAdmin.from('customer_details').insert({
                 user_id: finalCustomerId,
-                phone: data.new_customer.phone,
                 skill_level: data.new_customer.skill_level,
                 age: data.new_customer.age,
                 gender: data.new_customer.gender,
