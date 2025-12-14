@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect, Suspense } from 'react';
 import { ManagerCalendar } from '@/components/calendar/ManagerCalendar';
+import { InstructorCalendar } from '@/components/calendar/InstructorCalendar';
 import { CalendarFilters } from '@/components/calendar/CalendarFilters';
 import { useManagerCalendar } from '@/lib/hooks/useManagerCalendar';
 import { useInstructors, useLessonTypes } from '@/lib/hooks/useSchoolData';
@@ -12,8 +13,9 @@ import { CancelBookingModal } from '@/components/bookings/CancelBookingModal';
 import { format } from 'date-fns';
 import { ManagerBooking } from '@/lib/hooks/useManagerDashboard';
 import { useSearchParams } from 'next/navigation';
+import { useUserRole } from '@/lib/hooks/useUserRole';
 
-function CalendarContent() {
+function ManagerCalendarView() {
   const { 
     bookings, 
     availability, 
@@ -139,6 +141,24 @@ function CalendarContent() {
       />
     </div>
   );
+}
+
+function CalendarContent() {
+  const { data: role, isLoading } = useUserRole();
+
+  if (isLoading) {
+    return <div className="container mx-auto p-6">Loading user role...</div>;
+  }
+
+  if (role === 'manager') {
+    return <ManagerCalendarView />;
+  }
+
+  if (role === 'instructor') {
+    return <InstructorCalendar />;
+  }
+
+  return <div className="container mx-auto p-6">You are not authorized to view this page.</div>;
 }
 
 export default function ManagerCalendarPage() {

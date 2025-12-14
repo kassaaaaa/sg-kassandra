@@ -10,8 +10,8 @@ interface LessonDetailsModalProps {
   isOpen: boolean;
   onClose: () => void;
   booking: ManagerBooking | null;
-  onEdit: (booking: ManagerBooking) => void;
-  onCancel: (booking: ManagerBooking) => void;
+  onEdit?: (booking: ManagerBooking) => void;
+  onCancel?: (booking: ManagerBooking) => void;
 }
 
 const DetailRow = ({ label, value }: { label: string; value: React.ReactNode }) => (
@@ -26,12 +26,12 @@ export function LessonDetailsModal({ isOpen, onClose, booking, onEdit, onCancel 
 
   const handleEdit = () => {
     onClose();
-    onEdit(booking);
+    if (onEdit) onEdit(booking);
   };
 
   const handleCancel = () => {
     onClose();
-    onCancel(booking);
+    if (onCancel) onCancel(booking);
   };
 
   const statusVariant = (status: string) => {
@@ -63,7 +63,7 @@ export function LessonDetailsModal({ isOpen, onClose, booking, onEdit, onCancel 
                 <DetailRow label="Time" value={`${format(startDate, 'p')} - ${format(endDate, 'p')}`} />
                 <DetailRow label="Duration" value={`${duration} minutes`} />
                 <DetailRow label="Location" value={booking.location} />
-                <DetailRow label="Status" value={<Badge variant={statusVariant(booking.status)}>{booking.status}</Badge>} />
+                <DetailRow label="Status" value={<Badge variant={statusVariant(booking.status) as any}>{booking.status}</Badge>} />
             </div>
             <div>
                 <h3 className="text-md font-semibold mb-2 border-b pb-1">Student Information</h3>
@@ -91,12 +91,16 @@ export function LessonDetailsModal({ isOpen, onClose, booking, onEdit, onCancel 
             </Button>
           </div>
           <div className="space-x-2">
-            <Button variant="destructive" onClick={handleCancel}>
-              Cancel Booking
-            </Button>
-            <Button onClick={handleEdit}>
-              Edit Booking
-            </Button>
+            {onCancel && (
+              <Button variant="destructive" onClick={handleCancel}>
+                Cancel Booking
+              </Button>
+            )}
+            {onEdit && (
+              <Button onClick={handleEdit}>
+                Edit Booking
+              </Button>
+            )}
           </div>
         </DialogFooter>
       </DialogContent>
