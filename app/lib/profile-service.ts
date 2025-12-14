@@ -59,7 +59,9 @@ export const ProfileService = {
         };
 
         if (user.role === 'customer') {
-            const customerDetails = user.customer_details?.[0];
+            const customerDetails = Array.isArray(user.customer_details)
+              ? user.customer_details[0]
+              : user.customer_details;
             return {
                 ...base,
                 role: 'customer',
@@ -72,7 +74,9 @@ export const ProfileService = {
                 experience_hours: customerDetails?.experience_hours,
             } as CustomerProfile;
         } else if (user.role === 'instructor') {
-            const instructorDetails = user.instructor_details?.[0];
+            const instructorDetails = Array.isArray(user.instructor_details)
+              ? user.instructor_details[0]
+              : user.instructor_details;
             return {
                 ...base,
                 role: 'instructor',
